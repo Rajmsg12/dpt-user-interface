@@ -1,4 +1,4 @@
-# dpt-user-interface-admin
+# dpt-user-interface
 git init \
 git pull origin main \
 git commit -m "commit message here" \
