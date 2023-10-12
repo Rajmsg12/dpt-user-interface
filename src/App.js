@@ -3,8 +3,19 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import TopMenu from "./components/TopMenu";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./components/homepage/Header";
+import PopularTour from "./components/homepage/PopularTour";
+import PopularAttraction from "./components/homepage/PopularAttraction";
+import Faq from "./components/homepage/Faq";
+import Footer from "./components/homepage/Footer";
+import Banner from './components/homepage/Banner'
+import Memories from './components/homepage/memories'
+import TabSection from './components/homepage/TabSection'
+import TopDestination from "./components/homepage/TopDestination";
+import ChooseDpt from './components/homepage/ChooseDpt'
+import CustomerSay from './components/homepage/CustomerSay'
+import TrendingPlaces from './components/homepage/TrendingPlaces'
+
 import "./App.min.css";
 //const Header = lazy(() => import("./components/Header"));
 //const TopMenu = lazy(() => import("./components/TopMenu"));
@@ -35,44 +46,18 @@ function App() {
     <BrowserRouter>
       <React.Fragment>
         <Header />
-        <TopMenu />
-        <Suspense
-          fallback={
-            <div className="text-white text-center mt-3">Loading...</div>
-          }
-        >
-          <Routes>
-            <Route exact path="/" element={<HomeView/>} />
-            <Route exact path="/account/signin" element={<SignInView/>} />
-            <Route exact path="/account/signup" element={<SignUpView/>} />
-            <Route
-              exact
-              path="/account/forgotpassword"
-              element={<ForgotPasswordView/>}
-            />
-            <Route exact path="/account/profile" element={<MyProfileView/>} />
-            <Route exact path="/account/orders" element={<OrdersView/>} />
-            <Route exact path="/account/wishlist" element={<WishlistView/>} />
-            <Route
-              exact
-              path="/account/notification"
-              element={<NotificationView/>}
-            />
-            <Route exact path="/category" element={<ProductListView/>} />
-            <Route exact path="/product/detail" element={<ProductDetailView/>} />
-            <Route exact path="/star/zone" element={<StarZoneView/>} />
-            <Route exact path="/cart" element={<CartView/>} />
-            <Route exact path="/checkout" element={<CheckoutView />} />
-            <Route exact path="/invoice" element={<InvoiceView />} />
-            <Route exact path="/documentation" element={<DocumentationView/>} />
-            <Route exact path="/contact-us" element={<ContactUsView/>} />
-            <Route exact path="/support" element={<SupportView/>} />
-            <Route exact path="/blog" element={<BlogView/>} />
-            <Route exact path="/blog/detail" element={<BlogDetailView/>} />
-            <Route exact path="/500" element={<InternalServerErrorView/>} />
-            <Route path="*" element={<NotFoundView/>} />
-          </Routes>
-        </Suspense>
+       
+       <Banner/>
+       <TabSection/>
+       <TopDestination/>
+       <PopularTour/>
+       <ChooseDpt/>
+       <CustomerSay/>
+       <TrendingPlaces/>
+        <PopularAttraction/>
+        
+        <Faq/>
+        <Memories/>
         <Footer />
       </React.Fragment>
     </BrowserRouter>
