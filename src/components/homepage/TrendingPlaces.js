@@ -1,9 +1,28 @@
 import React from 'react'
-import '../../Style/header.css'
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const TrendingPlaces = () => {
+    const responsive = {
+        superLargeDesktop: {
+          // the naming can be any, depends on you.
+          breakpoint: { max: 4000, min: 3000 },
+          items: 4
+        },
+        desktop: {
+          breakpoint: { max: 3000, min: 1024 },
+          items: 4
+        },
+        tablet: {
+          breakpoint: { max: 1024, min: 464 },
+          items: 2
+        },
+        mobile: {
+          breakpoint: { max: 464, min: 0 },
+          items: 1
+        }
+      };
     return (
         <div>
     
@@ -15,16 +34,10 @@ const TrendingPlaces = () => {
 
                     <div class="TrendingPlacesSlider">
                         <div class="owl-carousel owl-theme" id="TPSlider">
-                            <Swiper
-                                spaceBetween={20}
-                                slidesPerView={4}
-                                loop={true}  // Enable infinite loop
-                                loopAdditionalSlides={10}  // Add additional slides for looping
-                                onSlideChange={() => console.log('slide change')}
-                                onSwiper={(swiper) => console.log(swiper)}
-                                className="mySwiper"
-                            >
-                                <SwiperSlide>
+                        <Carousel   responsive={responsive} infinite={true}
+                        itemClass="carousel-item-padding-60-px" arrows={false}
+                        >
+                                <div className="carouselItem">
                                     <div class="item">
                                         <div class="SliderBox">
                                             <div class="SliderBoxImg">
@@ -35,8 +48,8 @@ const TrendingPlaces = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
+                                </div>
+                                <div className="carouselItem">
                                     <div class="item">
                                         <div class="SliderBox">
                                             <div class="SliderBoxImg">
@@ -47,8 +60,8 @@ const TrendingPlaces = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
+                                </div>
+                                <div className="carouselItem">
                                     <div class="item">
                                         <div class="SliderBox">
                                             <div class="SliderBoxImg">
@@ -59,8 +72,8 @@ const TrendingPlaces = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
+                                </div>
+                                <div className="carouselItem">
                                     <div class="item">
                                         <div class="SliderBox">
                                             <div class="SliderBoxImg">
@@ -71,8 +84,8 @@ const TrendingPlaces = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </SwiperSlide>
-                            </Swiper>
+                                </div>
+                            </Carousel>
                         </div>
                     </div>
                 </div>

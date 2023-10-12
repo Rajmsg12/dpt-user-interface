@@ -1376,6 +1376,9 @@ footer{
     top:104px;
     background-color:#fff;
 }
+.carouselItem{
+    padding-right: 20px
+}  
 .homepageContent.ondesSticky .tabSection .nav-tabs .nav-link{
     border-top:0px;
     border-bottom: 5px solid transparent;
@@ -1932,3 +1935,23 @@ footer{
 .mobileNone{display: block;}
 .desktopNone {display: none;}
 }
+
+/* your-custom-carousel.css */
+/* Adjust the margin between the text and the arrows */
+.carousel-item-padding-60-px .carousel .react-multi-carousel-arrow {
+    margin-top: 20px; /* Adjust the value to increase or decrease the gap */
+  }
+  
+  /* Style the arrows if needed (e.g., change their color) */
+  .carousel .react-multi-carousel-arrow {
+    background-color: transparent; /* Change the background color as needed */
+    border: 2px solid #000; /* Change the border properties as needed */
+    color: #000; /* Change the arrow color as needed */
+  }
+  
+  /* Style the arrows on hover if needed */
+  .carousel .react-multi-carousel-arrow:hover {
+    background-color: #000; /* Change the hover background color as needed */
+    color: #fff; /* Change the hover arrow color as needed */
+  }
+  

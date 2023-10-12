@@ -1,11 +1,29 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import '../../Style/header.css'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import { Pagination, Navigation } from 'swiper/modules';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const CustomerSay = () => {
+    const responsive = {
+        superLargeDesktop: {
+          // the naming can be any, depends on you.
+          breakpoint: { max: 4000, min: 3000 },
+          items: 1
+        },
+        desktop: {
+          breakpoint: { max: 3000, min: 1024 },
+          items: 1
+        },
+        tablet: {
+          breakpoint: { max: 1024, min: 464 },
+          items: 1
+        },
+        mobile: {
+          breakpoint: { max: 464, min: 0 },
+          items: 1
+        }
+      };
     return (
         <div>
 
@@ -58,17 +76,10 @@ const CustomerSay = () => {
                         <div class="customersayrhs">
                             <div class="customersaySlider">
                                 <div class="owl-carousel owl-theme" id="testiSlider">
-                                    <Swiper
-                                        spaceBetween={20}
-                                        slidesPerView={1}
-                                        loop={true}  // Enable infinite loop
-                                        navigation={true}
-                                        modules={[Pagination, Navigation]}
-                                        loopAdditionalSlides={10}  // Add additional slides for looping
-                                        onSlideChange={() => console.log('slide change')}
-                                        onSwiper={(swiper) => console.log(swiper)}
-                                    >
-                                        <SwiperSlide>
+                                <Carousel   responsive={responsive} infinite={true} arrows={false}
+                                itemClass="carousel-item-padding-60-px" 
+                                >
+                                        <div>
                                             <div class="item">
                                                 <div class="SliderBox">
                                                     <div class="text">
@@ -90,8 +101,8 @@ const CustomerSay = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
+                                        </div>
+                                        <div>
                                             <div class="item">
                                                 <div class="SliderBox">
                                                     <div class="text">
@@ -113,8 +124,8 @@ const CustomerSay = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </SwiperSlide>
-                                    </Swiper>
+                                        </div>
+                                    </Carousel>
                                 </div>
                             </div>
                         </div>
