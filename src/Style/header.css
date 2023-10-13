@@ -222,6 +222,11 @@ right: 0;
     display: flex;
     gap: 10px;
 }
+
+.parentaddtocart{
+    display:flex;
+    gap:10px
+}
 .addtocart a {
     display: flex;
     align-items: center;
@@ -260,6 +265,20 @@ a:hover{text-decoration:none;}
 .login a:first-child {
     border: none;
     padding: 8px 0px;
+}
+
+
+
+/*for rect*/
+.cerculeIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(0 0 0 / 19%);
+    border-radius: 50px;
+    border: 0px;
 }
 
 /*====Banner====*/
@@ -1360,7 +1379,7 @@ footer{
 
 
 /*======== tab sticky ======*/
-.homepageContent.sSticky .tabstycky {
+.homepageContent.ondesSticky .tabstycky {
     position: fixed;
     top: 0;
     height:104px;

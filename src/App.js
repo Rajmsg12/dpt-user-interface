@@ -48,7 +48,7 @@ function App() {
         <Header />
        
        <Banner/>
-       <TabSection/>
+    
        <TopDestination/>
        <PopularTour/>
        <ChooseDpt/>

@@ -16,11 +16,11 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 const Header = () => {
   return (
 
-    <header classNameName="p-3 border-bottom bg-blue">
+    <header className="p-3 border-bottom bg-blue">
       <div className="HeaderWrapper">
         <div className="container">
           <div className="HeaderLayer">
-            <div className="HeaderLhs"><div className="Logo"><Link to="/"><img src="images/logo.png" alt="logo" /></Link>
+            <div className="HeaderLhs"><div className="Logo"><Link to="/"><img src="images/homepage/logo.png" alt="logo" /></Link>
               <div className="desktopNone">
                 <div className="HeaderRHS">
                   <div className="Headerdropdownmenu">
@@ -44,13 +44,13 @@ const Header = () => {
                     </div>
                   </div>
                   <div className="addtocart">
-                    <Link to="/"><img src="images/shopping-cart.png" alt="" /></Link>
-                    <Link to="/"><img src="images/like.png" alt="" /></Link>
-                    <Link to="/" className="userIcon"><img src="images/user.png" alt="" /></Link>
+                    <Link to="/"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
+                    <Link to="/"><img src="images/homepage/like.png" alt="" /></Link>
+                    <Link to="/" className="userIcon"><img src="images/homepage/user.png" alt="" /></Link>
 
                   </div>
 
-                  
+
                 </div>
               </div>
             </div>
@@ -98,14 +98,70 @@ const Header = () => {
                     </ul>
                   </div>
                 </div>
-                <div className="addtocart">
-                  <Link to="/"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
-                  <Link to="/"><img src="images/homepage/like.png" alt="" /></Link>
-                  <Link to="/" className="userIcon"><img src="images/homepage/user.png" alt="" /></Link>
+                <div className="parentaddtocart">
+                  <div className="addtocart">
+                    <Link to="/"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
+                    <Link to="/"><img src="images/homepage/like.png" alt="" /></Link>
+                  </div>
 
+             
+
+                        <div className="btn-group">
+                          <button
+                            type="button"
+                            className="cerculeIcon"
+                            data-toggle="dropdown"
+                            aria-expanded="false"
+                            aria-label="Profile"
+                            data-bs-toggle="dropdown"
+                          >
+                            <FontAwesomeIcon icon={faUser} className="text-light" />
+                          </button>
+                          <ul className="dropdown-menu">
+                            <li>
+                              <Link className="dropdown-item" to="/account/profile">
+                                <IconPersonBadgeFill /> My Profile
+                              </Link>
+                            </li>
+                            <li>
+                              <Link className="dropdown-item" to="/star/zone">
+                                <IconStarFill className="text-warning" /> Star Zone
+                              </Link>
+                            </li>
+                            <li>
+                              <Link className="dropdown-item" to="/account/orders">
+                                <IconListCheck className="text-primary" /> Orders
+                              </Link>
+                            </li>
+                            <li>
+                              <Link className="dropdown-item" to="/account/wishlist">
+                                <IconHeartFill className="text-danger" /> Wishlist
+                              </Link>
+                            </li>
+                            <li>
+                              <hr className="dropdown-divider" />
+                            </li>
+                            <li>
+                              <Link className="dropdown-item" to="/account/notification">
+                                <IconBellFill className="text-primary" /> Notification
+                              </Link>
+                            </li>
+                            <li>
+                              <Link className="dropdown-item" to="/support">
+                                <IconInfoCircleFill className="text-success" /> Support
+                              </Link>
+                            </li>
+                            <li>
+                              <hr className="dropdown-divider" />
+                            </li>
+                            <li>
+                              <Link className="dropdown-item" to="/">
+                                <IconDoorClosedFill className="text-danger" /> Logout
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
                 </div>
-
-
 
               </div>
             </div>
@@ -113,6 +169,7 @@ const Header = () => {
         </div>
       </div>
     </header>
+    
 
   );
 };

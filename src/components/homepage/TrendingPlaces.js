@@ -1,5 +1,4 @@
 import React from 'react'
-import 'swiper/css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -26,60 +25,60 @@ const TrendingPlaces = () => {
     return (
         <div>
     
-            <div class="TrendingPlaces">
-                <div class="container">
-                    <div class="Title">
+            <div className="TrendingPlaces">
+                <div className="container">
+                    <div className="Title">
                         <h2>Trending Places</h2>
                     </div>
 
-                    <div class="TrendingPlacesSlider">
-                        <div class="owl-carousel owl-theme" id="TPSlider">
+                    <div className="TrendingPlacesSlider">
+                        <div className="owl-carousel owl-theme" id="TPSlider">
                         <Carousel   responsive={responsive} infinite={true}
                         itemClass="carousel-item-padding-60-px" arrows={false}
                         >
                                 <div className="carouselItem">
-                                    <div class="item">
-                                        <div class="SliderBox">
-                                            <div class="SliderBoxImg">
+                                    <div className="item">
+                                        <div className="SliderBox">
+                                            <div className="SliderBoxImg">
                                                 <img src="images/homepage/tdimg1.jpg" alt=""/>
                                             </div>
-                                            <div class="SliderBoxContent">
+                                            <div className="SliderBoxContent">
                                                 <h3>Dubai Private City</h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="carouselItem">
-                                    <div class="item">
-                                        <div class="SliderBox">
-                                            <div class="SliderBoxImg">
+                                    <div className="item">
+                                        <div className="SliderBox">
+                                            <div className="SliderBoxImg">
                                                 <img src="images/homepage/tdimg2.jpg" alt=""/>
                                             </div>
-                                            <div class="SliderBoxContent">
+                                            <div className="SliderBoxContent">
                                                 <h3>Burj Al Arab</h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="carouselItem">
-                                    <div class="item">
-                                        <div class="SliderBox">
-                                            <div class="SliderBoxImg">
+                                    <div className="item">
+                                        <div className="SliderBox">
+                                            <div className="SliderBoxImg">
                                                 <img src="images/homepage/tdimg3.jpg" alt=""/>
                                             </div>
-                                            <div class="SliderBoxContent">
+                                            <div className="SliderBoxContent">
                                                 <h3>Dubai Air Travel</h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="carouselItem">
-                                    <div class="item">
-                                        <div class="SliderBox">
-                                            <div class="SliderBoxImg">
+                                    <div className="item">
+                                        <div className="SliderBox">
+                                            <div className="SliderBoxImg">
                                                 <img src="images/homepage/tdimg4.jpg" alt=""/>
                                             </div>
-                                            <div class="SliderBoxContent">
+                                            <div className="SliderBoxContent">
                                                 <h3>Abu Dabi Combo</h3>
                                             </div>
                                         </div>
