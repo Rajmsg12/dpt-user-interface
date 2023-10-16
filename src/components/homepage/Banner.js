@@ -13,7 +13,7 @@ const Banner = () => {
             const formobile = document.querySelector(".formobile");
             const homepageContent = document.querySelector(".homepageContent");
 
-            if (window.scrollY > (tabSection.offsetTop - 118)) {
+            if (window.scrollY >  568) {
                 homepageContent.classList.add("ondesSticky");
             } else {
                 homepageContent.classList.remove("ondesSticky");
@@ -35,7 +35,7 @@ const Banner = () => {
     const searchValue = () => {
 
     }
-   
+
     return (
         <div className={`homepageContent`}>
             <div >
@@ -83,7 +83,7 @@ const Banner = () => {
                                                             <div className="Text">
                                                                 <div className="toptext">When to?</div>
                                                                 <div className="bottomtext">
-                                                                10/16/2023
+                                                                    10/16/2023
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -98,16 +98,16 @@ const Banner = () => {
                                                             <div className="Text">
                                                                 <div className="toptext">Select Persons</div>
                                                                 <div className="bottomtext">
-                                                                <select onChange={searchValue} style={{ border: 'none', outline: 'none', }}>
-                                                                {data.bannerSelectPerson.map((item, index) => (
-                                                                    <option key={index} value={item.country} style={{
-                                                                        border: 'none', // Remove the default border
-                                                                        borderRadius: '10px', // Add border radius
-                                                                    }}>
-                                                                        {item.person}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
+                                                                    <select onChange={searchValue} style={{ border: 'none', outline: 'none', }}>
+                                                                        {data.bannerSelectPerson.map((item, index) => (
+                                                                            <option key={index} value={item.country} style={{
+                                                                                border: 'none', // Remove the default border
+                                                                                borderRadius: '10px', // Add border radius
+                                                                            }}>
+                                                                                {item.person}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -212,337 +212,46 @@ const Banner = () => {
                             </div>
 
                             <div className="TabLayer">
-                                <div className="TabWrapper">
-
-
-                                    <div className="TabBox">
-                                        <div className="img">
-                                            <img src="images/homepage/product1.jpg" alt="" />
-                                            <div className="discountrow">
-                                                <div className="discount">
-                                                    <span>-10%</span>
-                                                </div>
-                                                <div className="wishlistIcon">
-                                                </div>
-                                            </div>
-
-
-                                            <div className="imgBottomRow">
-                                                <div className="rhsimg">
-                                                    <div><img src="images/homepage/choise1.png" alt="" /></div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="TabBoxBody">
-                                            <h4>Dubai Airport Private Transfer</h4>
-                                            <p>We promise, to give you a warm welcome and make you feel comfortable and safe. </p>
-                                            <div className="ReviewRow">
-                                                <span className="location">Dubai, United Arab Emirates</span>
-                                            </div>
-                                        </div>
-                                        <div className="TabBoxFooter">
-                                            <div className="aedLHS">
-                                                <span>Starting from</span>
-                                                <div className="aedtext">AED <strong>2,500</strong> Per 3 Person </div>
-                                            </div>
-                                            <div className="aedRHS">
-                                                1 Hour
-                                            </div>
-                                        </div>
+                            <div className="TabWrapper">
+                              {data.privateJet.map((item, index) => (
+                                <div className="TabBox" key={index}>
+                                  <div className="img">
+                                    <img src={item.imgSrc} alt="" />
+                                    <div className="discountrow">
+                                      <div className="discount">
+                                        <span>{item.discount}</span>
+                                      </div>
+                                      <div className="wishlistIcon">
+                                        {item.wishlistIcon }
+                                      </div>
                                     </div>
-                                    <div className="TabBox">
-                                        <div className="img">
-                                            <img src="images/homepage/product2.jpg" alt="" />
-                                            <div className="discountrow">
-                                                <div className="discount">
-                                                    <span>-20%</span>
-                                                </div>
-                                                <div className="wishlistIcon">
-                                                </div>
-                                            </div>
-
-
-                                            <div className="imgBottomRow">
-
-                                                <div className="rhsimg">
-                                                    <div>
-                                                        <img src="images/homepage/choise1.png" alt="" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                    
+                                    <div className="imgBottomRow">
+                                      <div className="rhsimg">
+                                        <div>
+                                          <img src={item.imgBottomRow.rhsimg} alt="" />
                                         </div>
-                                        <div className="TabBoxBody">
-                                            <h4>6 Hours Dubai Private City Tour</h4>
-                                            <p>Our six hour trip is especially designed for any tourist or visitor on a short stay.</p>
-                                            <div className="ReviewRow">
-                                                <span className="location">Dubai, United Arab Emirates</span>
-                                            </div>
-                                        </div>
-                                        <div className="TabBoxFooter">
-                                            <div className="aedLHS">
-                                                <span>Starting from</span>
-                                                <div className="aedtext">AED <strong>1,020</strong> Per Person </div>
-                                            </div>
-                                            <div className="aedRHS">
-                                                6 Hours
-                                            </div>
-                                        </div>
+                                      </div>
                                     </div>
-                                    <div className="TabBox">
-                                        <div className="img">
-                                            <img src="images/homepage/product3.jpg" alt="" />
-                                            <div className="discountrow">
-                                                <div className="discount">
-                                                    <span>-10%</span>
-                                                </div>
-                                                <div className="wishlistIcon">
-                                                </div>
-                                            </div>
-
-
-                                            <div className="imgBottomRow">
-                                                <div className="lhstext">
-                                                    <span>#1</span>
-                                                    <span>Top Dubai Desert Experience</span>
-                                                </div>
-                                                <div className="rhsimg">
-                                                    <div>
-
-                                                        <img src="images/homepage/choise1.png" alt="" />
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="TabBoxBody">
-                                            <h4>3 Hours Morning Desert Safari </h4>
-                                            <p>The Morning Safari is organized daily throughout the week. </p>
-                                            <div className="ReviewRow">
-                                                <span className="location">Dubai, United Arab Emirates</span>
-                                            </div>
-                                        </div>
-                                        <div className="TabBoxFooter">
-                                            <div className="aedLHS">
-                                                <span>Starting from</span>
-                                                <div className="aedtext">AED <strong>875</strong> upto 4 people</div>
-                                            </div>
-                                            <div className="aedRHS">
-                                                3 Hours
-                                            </div>
-                                        </div>
+                                  </div>
+                                  <div className="TabBoxBody">
+                                    <h4>{item.title}</h4>
+                                    <p>{item.description}</p>
+                                    <div className="ReviewRow">
+                                      <span className="location">{item.location}</span>
                                     </div>
-                                    <div className="TabBox">
-                                        <div className="img">
-                                            <img src="images/homepage/product4.jpg" alt="" />
-                                            <div className="discountrow">
-                                                <div className="discount">
-
-                                                </div>
-                                                <div className="wishlistIcon">
-                                                </div>
-                                            </div>
-
-
-                                            <div className="imgBottomRow">
-
-                                                <div className="rhsimg">
-                                                    <div>
-                                                        <img src="images/homepage/choise2.png" alt="" />
-                                                        <img src="images/choise3.png" alt="" />
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="TabBoxBody">
-                                            <h4>Dubai Creek Dhow Dinner Cruise</h4>
-                                            <p>Enjoy smooth sailing along the creek as night falls with spectacular glittering views.</p>
-                                            <div className="ReviewRow">
-                                                <span className="location">Dubai, United Arab Emirates</span>
-                                            </div>
-                                        </div>
-                                        <div className="TabBoxFooter">
-                                            <div className="aedLHS">
-                                                <span>Starting from</span>
-                                                <div className="aedtext">AED <strong>275</strong> Per Person </div>
-                                            </div>
-                                            <div className="aedRHS">
-                                                2 Hours
-                                            </div>
-                                        </div>
+                                  </div>
+                                  <div className="TabBoxFooter">
+                                    <div className="aedLHS">
+                                      <span>Starting from</span>
+                                      <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
                                     </div>
-                                    <div className="TabBox">
-                                        <div className="img">
-                                            <img src="images/homepage/product5.jpg" alt="" />
-                                            <div className="discountrow">
-                                                <div className="discount">
-
-                                                </div>
-                                                <div className="wishlistIcon">
-                                                </div>
-                                            </div>
-
-
-                                            <div className="imgBottomRow">
-
-                                                <div className="rhsimg">
-                                                    <div>
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="TabBoxBody">
-                                            <h4>Tandem Skydive</h4>
-                                            <p>A tandem skydive is the quickest and easiest way to experience.</p>
-                                            <div className="ReviewRow">
-                                                <span className="location">Dubai, United Arab Emirates</span>
-                                            </div>
-                                        </div>
-                                        <div className="TabBoxFooter">
-                                            <div className="aedLHS">
-                                                <span>Starting from</span>
-                                                <div className="aedtext">AED <strong>2,199</strong> Per Person </div>
-                                            </div>
-                                            <div className="aedRHS">
-                                                4 Hours
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="TabBox">
-                                        <div className="img">
-                                            <img src="images/homepage/product6.jpg" alt="" />
-                                            <div className="discountrow">
-                                                <div className="discount">
-                                                    <span>-15%</span>
-                                                </div>
-                                                <div className="wishlistIcon">
-                                                </div>
-                                            </div>
-
-
-                                            <div className="imgBottomRow">
-                                                <div className="lhstext">
-                                                    <span>#1</span>
-                                                    <span>Top Dubai seaplane tour Experience</span>
-                                                </div>
-                                                <div className="rhsimg">
-                                                    <div>
-
-                                                        <img src="images/homepage/choise2.png" alt="" />
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="TabBoxBody">
-                                            <h4>Seaplane Tour</h4>
-                                            <p>Take your pick from two convenient take-off locations, Jebel Ali or Dubai Creek.</p>
-                                            <div className="ReviewRow">
-                                                <span className="location">Dubai, United Arab Emirates</span>
-                                            </div>
-                                        </div>
-                                        <div className="TabBoxFooter">
-                                            <div className="aedLHS">
-                                                <span>Starting from</span>
-                                                <div className="aedtext">AED <strong>500</strong> Per Person </div>
-                                            </div>
-                                            <div className="aedRHS">
-                                                4 Hours
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="TabBox">
-                                        <div className="img">
-                                            <img src="images/homepage/product7.jpg" alt="" />
-                                            <div className="discountrow">
-                                                <div className="discount">
-                                                    <span>-25%</span>
-                                                </div>
-                                                <div className="wishlistIcon">
-                                                </div>
-                                            </div>
-
-
-                                            <div className="imgBottomRow">
-                                                <div className="lhstext">
-
-                                                </div>
-                                                <div className="rhsimg">
-                                                    <div>
-
-                                                        <img src="images/homepage/choise3.png" alt="" />
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="TabBoxBody">
-                                            <h4>Luxury Yacht Charter</h4>
-                                            <p>We at Dubai Private tour provide Luxury Yachts charter services in Dubai Marina.</p>
-                                            <div className="ReviewRow">
-                                                <span className="location">Dubai, United Arab Emirates</span>
-                                            </div>
-                                        </div>
-                                        <div className="TabBoxFooter">
-                                            <div className="aedLHS">
-                                                <span>Starting from</span>
-                                                <div className="aedtext">AED <strong>250</strong> upto 5 people </div>
-                                            </div>
-                                            <div className="aedRHS">
-                                                6 Days
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="TabBox">
-                                        <div className="img">
-                                            <img src="images/homepage/product8.jpg" alt="" />
-                                            <div className="discountrow">
-                                                <div className="discount">
-
-                                                </div>
-                                                <div className="wishlistIcon">
-                                                </div>
-                                            </div>
-
-
-                                            <div className="imgBottomRow">
-
-                                                <div className="rhsimg">
-
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="TabBoxBody">
-                                            <h4>Etiquette of Arabic Coffee</h4>
-                                            <p>Try Arabic coffee at its best, the cafe is well know for serving premium Arabic Coffee!</p>
-                                            <div className="ReviewRow">
-                                                <span className="location">Dubai, United Arab Emirates</span>
-                                            </div>
-                                        </div>
-                                        <div className="TabBoxFooter">
-                                            <div className="aedLHS">
-                                                <span>Starting from</span>
-                                                <div className="aedtext">AED <strong>250</strong> upto 5 people</div>
-                                            </div>
-                                            <div className="aedRHS">
-                                                8 Hours
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    <div className="aedRHS">{item.duration}</div>
+                                  </div>
                                 </div>
+                              ))}
                             </div>
+                          </div>
 
 
 
@@ -550,28 +259,234 @@ const Banner = () => {
                         <div className="tab-pane fade" id="nav-weddingonyatch" role="tabpanel" aria-labelledby="nav-weddingonyatch-tab">
                             <div className="Title">
                                 <h2>Wedding on yatch</h2>
+                                <div className="TabLayer">
+                                <div className="TabWrapper">
+                                  {data.weddingYatch.map((item, index) => (
+                                    <div className="TabBox" key={index}>
+                                      <div className="img">
+                                        <img src={item.imgSrc} alt="" />
+                                        <div className="discountrow">
+                                          <div className="discount">
+                                            <span>{item.discount}</span>
+                                          </div>
+                                          <div className="wishlistIcon">
+                                            {item.wishlistIcon }
+                                          </div>
+                                        </div>
+                        
+                                        <div className="imgBottomRow">
+                                          <div className="rhsimg">
+                                            <div>
+                                              <img src={item.imgBottomRow.rhsimg} alt="" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="TabBoxBody">
+                                        <h4>{item.title}</h4>
+                                        <p>{item.description}</p>
+                                        <div className="ReviewRow">
+                                          <span className="location">{item.location}</span>
+                                        </div>
+                                      </div>
+                                      <div className="TabBoxFooter">
+                                        <div className="aedLHS">
+                                          <span>Starting from</span>
+                                          <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                                        </div>
+                                        <div className="aedRHS">{item.duration}</div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
                             </div>
                         </div>
                         <div className="tab-pane fade" id="nav-luxurytour" role="tabpanel" aria-labelledby="nav-luxurytour-tab">
                             <div className="Title">
                                 <h2>Luxury Tours</h2>
                             </div>
+                            <div className="TabLayer">
+                            <div className="TabWrapper">
+                              {data.privateJet.map((item, index) => (
+                                <div className="TabBox" key={index}>
+                                  <div className="img">
+                                    <img src={item.imgSrc} alt="" />
+                                    <div className="discountrow">
+                                      <div className="discount">
+                                        <span>{item.discount}</span>
+                                      </div>
+                                      <div className="wishlistIcon">
+                                        {item.wishlistIcon }
+                                      </div>
+                                    </div>
+                    
+                                    <div className="imgBottomRow">
+                                      <div className="rhsimg">
+                                        <div>
+                                          <img src={item.imgBottomRow.rhsimg} alt="" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="TabBoxBody">
+                                    <h4>{item.title}</h4>
+                                    <p>{item.description}</p>
+                                    <div className="ReviewRow">
+                                      <span className="location">{item.location}</span>
+                                    </div>
+                                  </div>
+                                  <div className="TabBoxFooter">
+                                    <div className="aedLHS">
+                                      <span>Starting from</span>
+                                      <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                                    </div>
+                                    <div className="aedRHS">{item.duration}</div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
 
                         </div>
                         <div className="tab-pane fade" id="nav-privatetour" role="tabpanel" aria-labelledby="nav-privatetour-tab">
                             <div className="Title">
                                 <h2>Private Tour</h2>
+                                <div className="TabLayer">
+                                <div className="TabWrapper">
+                                  {data.privateJet.map((item, index) => (
+                                    <div className="TabBox" key={index}>
+                                      <div className="img">
+                                        <img src={item.imgSrc} alt="" />
+                                        <div className="discountrow">
+                                          <div className="discount">
+                                            <span>{item.discount}</span>
+                                          </div>
+                                          <div className="wishlistIcon">
+                                            {item.wishlistIcon }
+                                          </div>
+                                        </div>
+                        
+                                        <div className="imgBottomRow">
+                                          <div className="rhsimg">
+                                            <div>
+                                              <img src={item.imgBottomRow.rhsimg} alt="" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="TabBoxBody">
+                                        <h4>{item.title}</h4>
+                                        <p>{item.description}</p>
+                                        <div className="ReviewRow">
+                                          <span className="location">{item.location}</span>
+                                        </div>
+                                      </div>
+                                      <div className="TabBoxFooter">
+                                        <div className="aedLHS">
+                                          <span>Starting from</span>
+                                          <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                                        </div>
+                                        <div className="aedRHS">{item.duration}</div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
                         </div>
                         <div className="tab-pane fade" id="nav-attractiontickets" role="tabpanel"
                             aria-labelledby="nav-attractiontickets-tab">
                             <div className="Title">
                                 <h2>Attraction Tickets</h2>
+                                <div className="TabLayer">
+                                <div className="TabWrapper">
+                                  {data.privateJet.map((item, index) => (
+                                    <div className="TabBox" key={index}>
+                                      <div className="img">
+                                        <img src={item.imgSrc} alt="" />
+                                        <div className="discountrow">
+                                          <div className="discount">
+                                            <span>{item.discount}</span>
+                                          </div>
+                                          <div className="wishlistIcon">
+                                            {item.wishlistIcon }
+                                          </div>
+                                        </div>
+                        
+                                        <div className="imgBottomRow">
+                                          <div className="rhsimg">
+                                            <div>
+                                              <img src={item.imgBottomRow.rhsimg} alt="" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="TabBoxBody">
+                                        <h4>{item.title}</h4>
+                                        <p>{item.description}</p>
+                                        <div className="ReviewRow">
+                                          <span className="location">{item.location}</span>
+                                        </div>
+                                      </div>
+                                      <div className="TabBoxFooter">
+                                        <div className="aedLHS">
+                                          <span>Starting from</span>
+                                          <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                                        </div>
+                                        <div className="aedRHS">{item.duration}</div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
                         </div>
                         <div className="tab-pane fade" id="nav-chauffeur" role="tabpanel" aria-labelledby="nav-chauffeur-tab">
                             <div className="Title">
                                 <h2>Chauffeur</h2>
+                                <div className="TabLayer">
+                                <div className="TabWrapper">
+                                  {data.privateJet.map((item, index) => (
+                                    <div className="TabBox" key={index}>
+                                      <div className="img">
+                                        <img src={item.imgSrc} alt="" />
+                                        <div className="discountrow">
+                                          <div className="discount">
+                                            <span>{item.discount}</span>
+                                          </div>
+                                          <div className="wishlistIcon">
+                                            {item.wishlistIcon }
+                                          </div>
+                                        </div>
+                        
+                                        <div className="imgBottomRow">
+                                          <div className="rhsimg">
+                                            <div>
+                                              <img src={item.imgBottomRow.rhsimg} alt="" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="TabBoxBody">
+                                        <h4>{item.title}</h4>
+                                        <p>{item.description}</p>
+                                        <div className="ReviewRow">
+                                          <span className="location">{item.location}</span>
+                                        </div>
+                                      </div>
+                                      <div className="TabBoxFooter">
+                                        <div className="aedLHS">
+                                          <span>Starting from</span>
+                                          <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                                        </div>
+                                        <div className="aedRHS">{item.duration}</div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
                         </div>
 

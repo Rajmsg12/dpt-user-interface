@@ -2,6 +2,7 @@ import React from 'react';
 import '../../Style/header.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import {data} from '../../data/index'
 
 const TopDestination = () => {
     const responsive = {
@@ -25,74 +26,39 @@ const TopDestination = () => {
       };
     return (
         <div>
-            <div className="TopDestination">
-                <div className="container">
-                    <div className="Title">
-                        <h2>Top Destinations</h2>
-                    </div>
+        <div className="TopDestination">
+            <div className="container">
+                <div className="Title">
+                    <h2>Top Destinations</h2>
+                </div>
 
-                    <div className="TopDestinationSlider">
-                        <Carousel   responsive={responsive} infinite={true}
-                        itemClass="carousel-item-padding-60-px" arrows={false}
-                        >
-                        
-                            <div className="carouselItem">
+                <div className="TopDestinationSlider">
+                    <Carousel
+                        responsive={responsive}
+                        infinite={true}
+                        itemClass="carousel-item-padding-60-px"
+                        arrows={false}
+                    >
+                        {data.topDestination.map((destination, index) => (
+                            <div key={index} className="carouselItem">
                                 <div className="item">
                                     <div className="SliderBox">
                                         <div className="SliderBoxImg">
-                                            <img src="images/homepage/tdimg1.jpg" alt="" />
+                                            <img src={destination.imgSrc} alt="" />
                                         </div>
                                         <div className="SliderBoxContent">
-                                            <h3>Dubai Private City</h3>
-                                            <p>9 Trips</p>
+                                            <h3>{destination.title}</h3>
+                                            <p>{destination.trips} Trips</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="carouselItem">
-                                <div className="item">
-                                    <div className="SliderBox">
-                                        <div className="SliderBoxImg">
-                                            <img src="images/homepage/tdimg2.jpg" alt="" />
-                                        </div>
-                                        <div className="SliderBoxContent">
-                                            <h3>Burj Al Arab</h3>
-                                            <p>9 Trips</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="carouselItem">
-                                <div className="item">
-                                    <div className="SliderBox">
-                                        <div className="SliderBoxImg">
-                                            <img src="images/homepage/tdimg3.jpg" alt="" />
-                                        </div>
-                                        <div className="SliderBoxContent">
-                                            <h3>Dubai Air Travel</h3>
-                                            <p>9 Trips</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="carouselItem">
-                                <div className="item">
-                                    <div className="SliderBox">
-                                        <div className="SliderBoxImg">
-                                            <img src="images/homepage/tdimg4.jpg" alt="" />
-                                        </div>
-                                        <div className="SliderBoxContent">
-                                            <h3>Abu Dhabi Combo</h3>
-                                            <p>9 Trips</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </Carousel>
-                    </div>
+                        ))}
+                    </Carousel>
                 </div>
             </div>
         </div>
+    </div>
     );
 }
 

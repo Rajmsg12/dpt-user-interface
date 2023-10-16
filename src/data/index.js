@@ -1,22 +1,159 @@
 export const data = {
-  tabs: [
+  //tabs--
+  privateJet: [
     {
-      id: 'nav-privatejet',
-      title: 'Private Jet',
-      items: [
-        {
-          id: 1,
-          image: 'images/homepage/product1.jpg',
-          discount: '-10%',
-          name: 'Dubai Airport Private Transfer',
-          description: 'We promise, to give you a warm welcome and make you feel comfortable and safe.',
-          location: 'Dubai, United Arab Emirates',
-          price: 'AED 2,500 Per 3 Person',
-          duration: '1 Hour',
-        },
-        // Add more items for this tab...
-      ]
-    }
+      imgSrc: "images/homepage/product1.jpg",
+      discount: "-10%",
+      wishlistIcon: true, // true or false
+      imgBottomRow: {
+        rhsimg: "images/homepage/choise1.png",
+      },
+      title: "Dubai Airport Private Transfer",
+      description: "We promise, to give you a warm welcome and make you feel comfortable and safe.",
+      location: "Dubai, United Arab Emirates",
+      money: "2,500",
+      person: "3",
+      duration: "1 Hour",
+
+    },
+    {
+      imgSrc: "images/homepage/ptimg1.jpg",
+      discount: "-25%",
+      wishlistIcon: true, // true or false
+      imgBottomRow: {
+        rhsimg: "images/homepage/choise1.png",
+      },
+      title: "Dubai Creek Dhow Dinner Cruise",
+      description: "Enjoy smooth sailing along the creek as night falls with spectacular glittering views.",
+      location: "Dubai, United Arab Emirates",
+      money: "275",
+      person: "",
+      duration: "4 Hour",
+
+    },
+    {
+      imgSrc: "images/homepage/product2.jpg",
+
+      wishlistIcon: false, // true or false
+      imgBottomRow: {
+        rhsimg: "",
+      },
+      title: "6 Hours Dubai Private City Tour",
+      description: "The Morning Safari is organized daily throughout the week.",
+      location: "Dubai, United Arab Emirates",
+      startingFrom: "AED 3,500 Per 3 Person",
+      money: "2,500",
+      person: "3",
+      duration: "6 Hour",
+
+    },
+    {
+      imgSrc: "images/homepage/product5.jpg",
+      discount: "-15%",
+      wishlistIcon: true, // true or false
+      imgBottomRow: {
+        rhsimg: "images/homepage/choise3.png",
+      },
+      title: "Tandem Skydive",
+      description: "A tandem skydive is the quickest and easiest way to experience.",
+      location: "Dubai, United Arab Emirates",
+      startingFrom: "AED 2,199 Per 2 Person",
+      money: "2,500",
+      person: "3",
+      duration: "2 Hour",
+
+    },
+    // Make sure all properties are defined for each item in the array
+  ],
+  weddingYatch: [
+    {
+      imgSrc: "images/homepage/product1.jpg",
+      discount: "-10%",
+      wishlistIcon: true, // true or false
+      imgBottomRow: {
+        rhsimg: "images/homepage/choise1.png",
+      },
+      title: "Dubai Airport Private Transfer",
+      description: "We promise, to give you a warm welcome and make you feel comfortable and safe.",
+      location: "Dubai, United Arab Emirates",
+      money: "2,500",
+      person: "3",
+      duration: "1 Hour",
+
+    },
+    {
+      imgSrc: "images/homepage/ptimg1.jpg",
+      discount: "-25%",
+      wishlistIcon: true, // true or false
+      imgBottomRow: {
+        rhsimg: "images/homepage/choise1.png",
+      },
+      title: "Dubai Creek Dhow Dinner Cruise",
+      description: "Enjoy smooth sailing along the creek as night falls with spectacular glittering views.",
+      location: "Dubai, United Arab Emirates",
+      money: "275",
+      person: "",
+      duration: "4 Hour",
+
+    },
+    {
+      imgSrc: "images/homepage/product2.jpg",
+
+      wishlistIcon: false, // true or false
+      imgBottomRow: {
+        rhsimg: "",
+      },
+      title: "6 Hours Dubai Private City Tour",
+      description: "The Morning Safari is organized daily throughout the week.",
+      location: "Dubai, United Arab Emirates",
+      startingFrom: "AED 3,500 Per 3 Person",
+      money: "2,500",
+      person: "3",
+      duration: "6 Hour",
+
+    },
+    {
+      imgSrc: "images/homepage/product5.jpg",
+      discount: "-15%",
+      wishlistIcon: true, // true or false
+      imgBottomRow: {
+        rhsimg: "images/homepage/choise3.png",
+      },
+      title: "Tandem Skydive",
+      description: "A tandem skydive is the quickest and easiest way to experience.",
+      location: "Dubai, United Arab Emirates",
+      startingFrom: "AED 2,199 Per 2 Person",
+      money: "2,500",
+      person: "3",
+      duration: "2 Hour",
+
+    },
+
+  ],
+
+  //TOP DESTINATION-------------------------------
+
+  topDestination: [
+    {
+      title: 'Dubai Private City',
+      trips: 9,
+      imgSrc: 'images/homepage/tdimg1.jpg',
+    },
+    {
+      title: 'Burj Al Arab',
+      trips: 9,
+      imgSrc: 'images/homepage/tdimg2.jpg',
+    },
+    {
+      title: 'Dubai Air Travel',
+      trips: 9,
+      imgSrc: 'images/homepage/tdimg3.jpg',
+    },
+    {
+      title: 'Abu Dhabi Combo',
+      trips: 9,
+      imgSrc: 'images/homepage/tdimg4.jpg',
+    },
   ],
 
   banner: [
@@ -39,26 +176,121 @@ export const data = {
       description: " Praesent commodo cursus magna, vel scelerisque nisl.",
     },
   ],
+  //POPULAR DESTINATION---------------------
+  popularTour: [
+    {
+      imgSrc: "images/homepage/product1.jpg",
+      discount: "-10%",
+      wishlistIcon: true, // true or false
+      imgBottomRow: {
+        rhsimg: "images/homepage/choise1.png",
+      },
+      hastag: "#1",
+      hastagHeading: "Top Dubai Creek Dhow Experience",
+      title: "Dubai Airport Private Transfer",
+      description: "We promise, to give you a warm welcome and make you feel comfortable and safe.",
+      location: "Dubai, United Arab Emirates",
+      money: "2,500",
+      person: "3",
+      duration: "1 Hour",
+
+    },
+    {
+      imgSrc: "images/homepage/ptimg1.jpg",
+      discount: "-25%",
+      wishlistIcon: true, // true or false
+      imgBottomRow: {
+        rhsimg: "images/homepage/choise1.png",
+      },
+      title: "Dubai Creek Dhow Dinner Cruise",
+      description: "Enjoy smooth sailing along the creek as night falls with spectacular glittering views.",
+      location: "Dubai, United Arab Emirates",
+      money: "275",
+      person: "",
+      duration: "4 Hour",
+
+    },
+    {
+      imgSrc: "images/homepage/product2.jpg",
+
+      wishlistIcon: false, // true or false
+      imgBottomRow: {
+        rhsimg: "",
+      },
+      title: "6 Hours Dubai Private City Tour",
+      description: "The Morning Safari is organized daily throughout the week.",
+      location: "Dubai, United Arab Emirates",
+      startingFrom: "AED 3,500 Per 3 Person",
+      money: "2,500",
+      person: "3",
+      duration: "6 Hour",
+
+    },
+    {
+      imgSrc: "images/homepage/product5.jpg",
+      discount: "-15%",
+      wishlistIcon: true, // true or false
+      imgBottomRow: {
+        rhsimg: "images/homepage/choise3.png",
+      },
+      hastag: "#5",
+      hastagHeading: "Top Dubai Creek Dhow Experience",
+      title: "Tandem Skydive",
+      description: "A tandem skydive is the quickest and easiest way to experience.",
+      location: "Dubai, United Arab Emirates",
+      startingFrom: "AED 2,199 Per 2 Person",
+      money: "2,500",
+      person: "3",
+      duration: "2 Hour",
+
+    },
+    // Make sure all properties are defined for each item in the array
+  ],
+
+  //TRENDING PLACES---------------
+  trendingPlaces: [
+    // Your data here
+    // For example:
+    {
+      name: 'Dubai Private City',
+      image: 'images/homepage/tdimg1.jpg',
+    },
+    {
+      name: 'Burj Al Arab',
+      image: 'images/homepage/tdimg2.jpg',
+    },
+    {
+      name: 'Dubai Air Travel',
+      image: 'images/homepage/tdimg3.jpg',
+    },
+    {
+      name: 'Abu Dhabi Combo',
+      image: 'images/homepage/tdimg4.jpg',
+    },
+    // Add more items as needed
+  ],
+
+  //BANNER------------------------------
   bannerSearchCountry: [
     {
-      country:"India"
+      country: "India"
     },
     {
-      country:"Dubai"
+      country: "Dubai"
     },
     {
-      country:"Paris"
+      country: "Paris"
     },
   ],
-  bannerSelectPerson:[
+  bannerSelectPerson: [
     {
-      person:'person1'
+      person: 'person1'
     },
     {
-      person:'person2'
+      person: 'person2'
     },
     {
-      person:'person3'
+      person: 'person3'
     }
   ],
   iconProducts: [
