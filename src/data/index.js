@@ -1,4 +1,24 @@
 export const data = {
+  tabs: [
+    {
+      id: 'nav-privatejet',
+      title: 'Private Jet',
+      items: [
+        {
+          id: 1,
+          image: 'images/homepage/product1.jpg',
+          discount: '-10%',
+          name: 'Dubai Airport Private Transfer',
+          description: 'We promise, to give you a warm welcome and make you feel comfortable and safe.',
+          location: 'Dubai, United Arab Emirates',
+          price: 'AED 2,500 Per 3 Person',
+          duration: '1 Hour',
+        },
+        // Add more items for this tab...
+      ]
+    }
+  ],
+
   banner: [
     {
       to: "/link",
@@ -18,6 +38,28 @@ export const data = {
       title: "Third slide label",
       description: " Praesent commodo cursus magna, vel scelerisque nisl.",
     },
+  ],
+  bannerSearchCountry: [
+    {
+      country:"India"
+    },
+    {
+      country:"Dubai"
+    },
+    {
+      country:"Paris"
+    },
+  ],
+  bannerSelectPerson:[
+    {
+      person:'person1'
+    },
+    {
+      person:'person2'
+    },
+    {
+      person:'person3'
+    }
   ],
   iconProducts: [
     {

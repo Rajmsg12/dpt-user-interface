@@ -3,11 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import TopMenu from "./components/TopMenu";
-import Header from "./components/homepage/Header";
+import Header from "./components/common/Header";
 import PopularTour from "./components/homepage/PopularTour";
 import PopularAttraction from "./components/homepage/PopularAttraction";
 import Faq from "./components/homepage/Faq";
-import Footer from "./components/homepage/Footer";
+import Footer from "./components/common/Footer";
 import Banner from './components/homepage/Banner'
 import Memories from './components/homepage/memories'
 import TabSection from './components/homepage/TabSection'

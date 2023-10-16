@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import '../../Style/header.css'
+import { data } from '../../data/index'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Banner = () => {
+    const [startDate, setStartDate] = useState(new Date());
     useEffect(() => {
         const handleScroll = () => {
             const tabSection = document.querySelector(".tabSection");
@@ -28,9 +32,10 @@ const Banner = () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-    const searchValue = ()=>{
-        
+    const searchValue = () => {
+
     }
+   
     return (
         <div className={`homepageContent`}>
             <div >
@@ -53,7 +58,18 @@ const Banner = () => {
                                                             </div>
                                                             <div className="Text">
                                                                 <div className="toptext">Where to?</div>
-                                                                <div className="bottomtext">Dubai</div>
+                                                                <div className="bottomtext">
+                                                                    <select onChange={searchValue} style={{ border: 'none', outline: 'none', }}>
+                                                                        {data.bannerSearchCountry.map((item, index) => (
+                                                                            <option key={index} value={item.country} style={{
+                                                                                border: 'none', // Remove the default border
+                                                                                borderRadius: '10px', // Add border radius
+                                                                            }}>
+                                                                                {item.country}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -66,7 +82,9 @@ const Banner = () => {
                                                             </div>
                                                             <div className="Text">
                                                                 <div className="toptext">When to?</div>
-                                                                <div className="bottomtext">Select Dates</div>
+                                                                <div className="bottomtext">
+                                                                10/16/2023
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -79,7 +97,18 @@ const Banner = () => {
                                                             </div>
                                                             <div className="Text">
                                                                 <div className="toptext">Select Persons</div>
-                                                                <div className="bottomtext">10 Travellers</div>
+                                                                <div className="bottomtext">
+                                                                <select onChange={searchValue} style={{ border: 'none', outline: 'none', }}>
+                                                                {data.bannerSelectPerson.map((item, index) => (
+                                                                    <option key={index} value={item.country} style={{
+                                                                        border: 'none', // Remove the default border
+                                                                        borderRadius: '10px', // Add border radius
+                                                                    }}>
+                                                                        {item.person}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
