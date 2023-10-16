@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import '../../Style/header.css'
 import { data } from '../../data/index'
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Banner = () => {
-    const [startDate, setStartDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(null);
     useEffect(() => {
         const handleScroll = () => {
             const tabSection = document.querySelector(".tabSection");
@@ -82,9 +82,22 @@ const Banner = () => {
                                                             </div>
                                                             <div className="Text">
                                                                 <div className="toptext">When to?</div>
-                                                                <div className="bottomtext">
-                                                                    10/16/2023
-                                                                </div>
+                                                                <DatePicker
+                                                                selected={selectedDate}
+                                                                onChange={(date) => setSelectedDate(date)}
+                                                                dateFormat="MM/dd/yyyy" // You can customize the date format as per your requirement
+                                                                placeholderText="Select Date"
+                                                                customInput={
+                                                                    <input
+                                                                        style={{
+                                                                            border: 'none', // Remove the border
+                                                                            outline: 'none', // Remove the outline
+                                                                            // Add any additional styles as needed
+                                                                        }}
+                                                                    />
+                                                                }
+                                                            />
+                                                            
                                                             </div>
                                                         </div>
                                                     </div>

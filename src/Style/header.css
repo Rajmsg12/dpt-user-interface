@@ -285,7 +285,7 @@ a:hover{text-decoration:none;}
 .BannerTabSection {
     position: relative;
 }
-
+/* 
 .react-datepicker-wrapper {
     border: 1px solid #dbdbdb !important;
     border-radius: 4px;
@@ -305,7 +305,7 @@ a:hover{text-decoration:none;}
     top: 6px;
     left: 10px;
   }
-
+ */
 
 .TabImg{
 padding:150px 0px 340px;
@@ -352,7 +352,6 @@ background-position: top;
     justify-content: space-between;
     align-items: center;
     text-align: left;
-    overflow: hidden;
 }
 
 .bannerSearchWrapper .iconwithText {
