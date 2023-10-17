@@ -3,18 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import TopMenu from "./components/TopMenu";
-import Header from "./components/common/Header";
-import PopularTour from "./components/homepage/PopularTour";
-import PopularAttraction from "./components/homepage/PopularAttraction";
-import Faq from "./components/homepage/Faq";
-import Footer from "./components/common/Footer";
-import Banner from './components/homepage/Banner'
-import Memories from './components/homepage/memories'
-import TabSection from './components/homepage/TabSection'
-import TopDestination from "./components/homepage/TopDestination";
-import ChooseDpt from './components/homepage/ChooseDpt'
-import CustomerSay from './components/homepage/CustomerSay'
-import TrendingPlaces from './components/homepage/TrendingPlaces'
+import DetailSection from "./components/pages/DetailSection";
+import Homepage from "./components/pages/Homepage";
+import DetailPage from './components/pages/DetailSection'
 
 import "./App.min.css";
 //const Header = lazy(() => import("./components/Header"));
@@ -45,20 +36,11 @@ function App() {
   return (
     <BrowserRouter>
       <React.Fragment>
-        <Header />
-       
-       <Banner/>
-    
-       <TopDestination/>
-       <PopularTour/>
-       <ChooseDpt/>
-       <CustomerSay/>
-       <TrendingPlaces/>
-        <PopularAttraction/>
         
-        <Faq/>
-        <Memories/>
-        <Footer />
+        <Routes>
+        <Route exact path="/" element={<Homepage/>} />
+        <Route exact path="/detail-page" element={<DetailPage/>} />
+        </Routes>
       </React.Fragment>
     </BrowserRouter>
   );

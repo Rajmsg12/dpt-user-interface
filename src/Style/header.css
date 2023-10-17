@@ -1351,7 +1351,7 @@ footer{
 }
 .footerMenuBorder::after {
     content: "";
-    background-image: url(../../public//images/homepage/line2.png);
+    background-image: url(../../public/images/homepage/line2.png);
     position: absolute;
     height: 1px;
     background-repeat: no-repeat;
@@ -1440,7 +1440,7 @@ footer{
     filter: brightness(1);
 }
 .homepageContent.ondesSticky .tab-content {
-    padding:120px 0px 65px;
+    
 }
 /*======== tab sticky ======*/
 
@@ -1624,7 +1624,7 @@ footer{
         font-size:13px;
     }
     .homepageContent.ondesSticky .tab-content {
-        padding: 65px 0;
+       
     }
 
 }

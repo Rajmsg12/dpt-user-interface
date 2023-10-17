@@ -284,13 +284,13 @@ export const data = {
   ],
   bannerSelectPerson: [
     {
-      person: 'person1'
+      person: '1'
     },
     {
-      person: 'person2'
+      person: '2'
     },
     {
-      person: 'person3'
+      person: '3'
     }
   ],
   iconProducts: [
