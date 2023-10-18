@@ -39,7 +39,7 @@ function App() {
         
         <Routes>
         <Route exact path="/" element={<Homepage/>} />
-        <Route exact path="/detail-page" element={<DetailPage/>} />
+        <Route exact path="/private-jet" element={<DetailPage/>} />
         </Routes>
       </React.Fragment>
     </BrowserRouter>

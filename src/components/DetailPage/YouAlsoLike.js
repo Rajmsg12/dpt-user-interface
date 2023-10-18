@@ -53,7 +53,7 @@ const YouAlsoLike = () => {
                                                     {tour.imgBottomRow && (
                                                         <span>{tour.imgBottomRow.lhsText}</span>
                                                     )}
-                                                    <div class="lhstext">
+                                                    <div className="lhstext">
                                                     <span>{tour.hastag}</span>
                                                     <span>{tour.hastagHeading}</span>
                                                   </div>

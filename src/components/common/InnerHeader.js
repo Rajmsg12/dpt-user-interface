@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'; // Import the Link component from react
 import '../DetailPage/Style/DetailPage.css'
 
 const InnerHeader = () => {
+  const search=()=>{
+    
+  }
   return (
     <div>
       <header className="innerpageHeader"> {/* Use className instead of class */}
@@ -17,7 +20,7 @@ const InnerHeader = () => {
                 </div>
                 <div className="HeaderSearch"> {/* Use className instead of class */}
                   <form className="form"> {/* Use className instead of class */}
-                    <input type="text" value="" placeholder="Explore Dubai" />
+                    <input type="text" value="" onChange={search} placeholder="Explore Dubai" />
                     <button type="submit" className="SearchIcon"></button>
                   </form>
                 </div>

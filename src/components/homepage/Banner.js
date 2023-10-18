@@ -269,9 +269,12 @@ const Banner = () => {
               </div>
 
               <div className="TabLayer">
-                <div className="TabWrapper">
-                  {data.privateJet.map((item, index) => (
-                    <Link to="/detail-page" className="TabBox" key={index}>
+              <div className="TabWrapper">
+                {data.privateJet.map((item, index) => {
+                  const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-'); // Declare it here
+            
+                  return (
+                    <Link to={`/private-jet?-${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
                         <img src={item.imgSrc} alt="" />
                         <div className="discountrow">
@@ -282,7 +285,7 @@ const Banner = () => {
                             {item.wishlistIcon}
                           </div>
                         </div>
-
+            
                         <div className="imgBottomRow">
                           <div className="rhsimg">
                             <div>
@@ -306,9 +309,11 @@ const Banner = () => {
                         <div className="aedRHS">{item.duration}</div>
                       </div>
                     </Link>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
+            </div>
+            
 
 
 
