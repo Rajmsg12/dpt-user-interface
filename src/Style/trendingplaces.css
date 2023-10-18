@@ -1,0 +1,188 @@
+
+.TopDestination{
+    position: relative;
+}
+
+.Title h2 {
+    font-size: 30px;
+    font-weight: 700;
+    border-left: 5px solid #3DAAD5;
+    padding-inline-start: 30px;
+    margin-bottom: 35px;
+    color: #000;
+}
+.TopDestination .SliderBox {
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px;
+    height:320px;
+    min-height:320px;
+}
+.TopDestination .SliderBox img{
+    width:100%;
+    object-fit: cover;
+    height:320px;
+    min-height:320px;
+}
+.TopDestination .SliderBox::after {
+    content: "";
+    background-image: url(../../public/images/homepage/overlaybox.png);
+    background-repeat: no-repeat;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-position: bottom center;
+    background-size: cover;
+}
+.SliderBoxContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0px 10px 25px 0px;
+    z-index:1;
+}
+
+
+.SliderBoxContent h3 {
+    color: #FFF;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    font-size: 23px;
+    font-weight: 700;
+    margin: 0px;
+    position: relative;
+    border-left: 5px solid #E75729;
+    padding: 2px 0px 2px 15px;
+}
+.SliderBoxContent p {
+    color: #FFF;
+    font-size: 20px;
+    font-family: 'Condiment', cursive;
+    margin: 0px;
+    padding: 0px 0px 0px 15px;
+    position: relative;
+    z-index: 1;
+}
+
+
+/*========Trending Places======*/
+
+.TrendingPlaces{
+    padding:0px 0px 65px;
+}
+
+.TrendingPlacesSlider .SliderBox {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    height: 230px;
+    min-height: 230px;
+}
+
+.TrendingPlacesSlider .SliderBox::after {
+    content: "";
+    background-image: url(../images/overlaydark.png);
+    background-repeat: no-repeat;
+    left: 0;
+    right:0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-position: bottom center;
+    background-size: cover;
+}
+
+.TrendingPlacesSlider .SliderBox .SliderBoxContent h3 {
+    padding: 5px;
+    border: 0px;
+    text-align: center;
+    font-size: 23px;
+}
+
+.TrendingPlacesSlider .SliderBox .SliderBoxContent{
+    padding:0px;
+    top: 45%;
+    left:0;
+    right: 0;
+}
+
+/*========Trending Places======*/
+
+/*=====image hover====*/
+.SliderBoxImg img, .TabBox .img {
+    overflow: hidden;
+}
+.SliderBoxImg img, .TabBox .img img{
+    transition: transform 0.7s;
+    overflow: hidden;
+    transition: .8s;
+}
+.SliderBox:hover .SliderBoxImg img, .TabBox:hover .img img  {
+    -ms-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    transition: .8s;
+}
+.TabBox:hover .img .imgBottomRow .rhsimg img{
+    -ms-transform:none;
+    -webkit-transform:none;
+    transform:none;
+}
+/*=====image hover====*/
+
+
+/*====card hover====*/
+.TabBox{
+    transition: all .5s ease-in-out;
+    -webkit-transition: all .5s ease-in-out;
+}
+.TabBox:hover {
+    box-shadow: 0 1px 10px 0 rgba(0,0,0,.32);
+ 
+}
+
+
+
+@media screen and (max-width:1199px) {
+    .SliderBoxContent h3{
+        font-size:22px;
+    }    
+}
+
+
+
+@media screen and (max-width:1024px) {
+    
+}
+
+
+
+@media screen and (max-width:991px) {
+  .SliderBoxContent h3 {
+        font-size:21px;
+    }
+    .Title h2{
+        padding-inline-start: 15px;
+        font-size:25px;
+        margin-bottom:20px;
+    }
+    .TrendingPlaces {
+        padding: 0px 0px 50px;
+    }
+    
+   
+   
+}
+
+
+@media screen and (max-width:767px) {
+    
+}
+
+
+@media screen and (max-width:575px) {
+    
+}

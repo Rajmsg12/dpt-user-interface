@@ -1,0 +1,66 @@
+/*======== dubaimemories ======*/
+
+.dubaimemoriesIn {
+    text-align: center;
+    padding: 100px 0px;
+    background-image: url(../images/ogbg.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: 50% 40%;
+}
+.dubaimemories {
+    border-top: 2px solid #FA7436;
+    background: linear-gradient(180deg, rgba(242, 89, 40, 0.00) 0%, rgba(242, 89, 40, 0.05) 100%);
+}
+.dubaimemoriesIn h2 {
+    color: #FA7436;
+    font-size: 64px;
+    font-family: 'Condiment', cursive;
+    margin: 0px;
+}
+.dubaimemoriesIn p {
+    color: #000;
+    font-size: 21px;
+    font-weight: 400;
+    text-transform: capitalize;
+    max-width: 650px;
+    margin: 20px auto 15px;
+}
+
+.dubaimemoriesIn a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+    border: 1px solid #000;
+    padding: 12px 35px;
+    border-radius: 50px;
+    display: table;
+    margin: 30px auto 0px;
+    position: relative;
+}
+.dubaimemoriesIn a:hover{
+    background-color: #FA7436;
+    color: #fff;
+    border-color: #FA7436;
+   
+}
+
+/*======== dubaimemories ======*/
+
+
+@media screen and (max-width:991px) {
+    .dubaimemoriesIn{
+        padding:50px 0px;
+    }
+    .dubaimemoriesIn h2{
+        font-size:40px;
+    }
+    .dubaimemoriesIn p{
+        font-size: 16px;
+    }
+    .dubaimemoriesIn a{
+        font-size:16px;
+    }
+}
+
