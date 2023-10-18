@@ -32,10 +32,10 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         onClick={toggleDropdown}
-        style={{ width: '170px',border:'none',position:'relative' }}
+        style={{ width: '170px', border: 'none', position: 'relative' }}
       />
       {isDropdownOpen && (
-        <ul className="options" style={{ width: '170px',position:'absolute',background:'white',top:'101%',padding:'5px',borderRadius:'5px' }}>
+        <ul className="options" style={{ width: '170px', position: 'absolute', background: 'white', top: '101%', padding: '5px', borderRadius: '5px' }}>
           {filteredOptions.map((option, index) => (
             <li
               key={index}
@@ -163,11 +163,11 @@ const Banner = () => {
                               <div className="Text">
                                 <div className="toptext">Select Persons</div>
                                 <div className="bottomtext">
-                                <SearchableSelect
-                                options={data.bannerSelectPerson.map((item) => item.person)}
-                                placeholder="Select Person"
-                                onSelect={handlePersonSelect}
-                              />
+                                  <SearchableSelect
+                                    options={data.bannerSelectPerson.map((item) => item.person)}
+                                    placeholder="Select Person"
+                                    onSelect={handlePersonSelect}
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -269,62 +269,12 @@ const Banner = () => {
               </div>
 
               <div className="TabLayer">
-              <div className="TabWrapper">
-                {data.privateJet.map((item, index) => {
-                  const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-'); // Declare it here
-            
-                  return (
-                    <Link to={`/private-jet?-${titleWithHyphens}`} className="TabBox" key={index}>
-                      <div className="img">
-                        <img src={item.imgSrc} alt="" />
-                        <div className="discountrow">
-                          <div className="discount">
-                            <span>{item.discount}</span>
-                          </div>
-                          <div className="wishlistIcon">
-                            {item.wishlistIcon}
-                          </div>
-                        </div>
-            
-                        <div className="imgBottomRow">
-                          <div className="rhsimg">
-                            <div>
-                              <img src={item.imgBottomRow.rhsimg} alt="" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="TabBoxBody">
-                        <h4>{item.title}</h4>
-                        <p>{item.description}</p>
-                        <div className="ReviewRow">
-                          <span className="location">{item.location}</span>
-                        </div>
-                      </div>
-                      <div className="TabBoxFooter">
-                        <div className="aedLHS">
-                          <span>Starting from</span>
-                          <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
-                        </div>
-                        <div className="aedRHS">{item.duration}</div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-            
+                <div className="TabWrapper">
+                  {data.privateJet.map((item, index) => {
+                    const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-'); // Declare it here
 
-
-
-            </div>
-            <div className="tab-pane fade" id="nav-weddingonyatch" role="tabpanel" aria-labelledby="nav-weddingonyatch-tab">
-              <div className="Title">
-                <h2>Wedding on yatch</h2>
-                <div className="TabLayer">
-                  <div className="TabWrapper">
-                    {data.weddingYatch.map((item, index) => (
-                      <div className="TabBox" key={index}>
+                    return (
+                      <Link to={`/private-jet?-${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
                           <img src={item.imgSrc} alt="" />
                           <div className="discountrow">
@@ -358,9 +308,63 @@ const Banner = () => {
                           </div>
                           <div className="aedRHS">{item.duration}</div>
                         </div>
-                      </div>
-                    ))}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+
+
+
+
+            </div>
+            <div className="tab-pane fade" id="nav-weddingonyatch" role="tabpanel" aria-labelledby="nav-weddingonyatch-tab">
+              <div className="Title">
+                <h2>Wedding on yatch</h2>
+                <div className="TabLayer">
+                  <div className="TabWrapper">
+                    {data.weddingYatch.map((item, index) => {
+                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                      return (
+                        <Link to={`/wedding-on-yacht?${titleWithHyphens}`} className="TabBox" key={index}>
+                          <div className="img">
+                            <img src={item.imgSrc} alt="" />
+                            <div className="discountrow">
+                              <div className="discount">
+                                <span>{item.discount}</span>
+                              </div>
+                              <div className="wishlistIcon">
+                                {item.wishlistIcon}
+                              </div>
+                            </div>
+
+                            <div className="imgBottomRow">
+                              <div className="rhsimg">
+                                <div>
+                                  <img src={item.imgBottomRow.rhsimg} alt="" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="TabBoxBody">
+                            <h4>{item.title}</h4>
+                            <p>{item.description}</p>
+                            <div className="ReviewRow">
+                              <span className="location">{item.location}</span>
+                            </div>
+                          </div>
+                          <div className="TabBoxFooter">
+                            <div className="aedLHS">
+                              <span>Starting from</span>
+                              <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                            </div>
+                            <div className="aedRHS">{item.duration}</div>
+                          </div>
+                        </Link>
+                      );
+                    })}
                   </div>
+
                 </div>
 
               </div>
@@ -371,44 +375,48 @@ const Banner = () => {
               </div>
               <div className="TabLayer">
                 <div className="TabWrapper">
-                  {data.privateJet.map((item, index) => (
-                    <div className="TabBox" key={index}>
-                      <div className="img">
-                        <img src={item.imgSrc} alt="" />
-                        <div className="discountrow">
-                          <div className="discount">
-                            <span>{item.discount}</span>
+                  {data.privateJet.map((item, index) => {
+                    const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                    return (
+                      <Link to={`/luxury-tours?-${titleWithHyphens}`} className="TabBox" key={index}>
+                        <div className="img">
+                          <img src={item.imgSrc} alt="" />
+                          <div className="discountrow">
+                            <div className="discount">
+                              <span>{item.discount}</span>
+                            </div>
+                            <div className="wishlistIcon">
+                              {item.wishlistIcon}
+                            </div>
                           </div>
-                          <div className="wishlistIcon">
-                            {item.wishlistIcon}
-                          </div>
-                        </div>
 
-                        <div className="imgBottomRow">
-                          <div className="rhsimg">
-                            <div>
-                              <img src={item.imgBottomRow.rhsimg} alt="" />
+                          <div className="imgBottomRow">
+                            <div className="rhsimg">
+                              <div>
+                                <img src={item.imgBottomRow.rhsimg} alt="" />
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="TabBoxBody">
-                        <h4>{item.title}</h4>
-                        <p>{item.description}</p>
-                        <div className="ReviewRow">
-                          <span className="location">{item.location}</span>
+                        <div className="TabBoxBody">
+                          <h4>{item.title}</h4>
+                          <p>{item.description}</p>
+                          <div className="ReviewRow">
+                            <span className="location">{item.location}</span>
+                          </div>
                         </div>
-                      </div>
-                      <div className="TabBoxFooter">
-                        <div className="aedLHS">
-                          <span>Starting from</span>
-                          <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                        <div className="TabBoxFooter">
+                          <div className="aedLHS">
+                            <span>Starting from</span>
+                            <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                          </div>
+                          <div className="aedRHS">{item.duration}</div>
                         </div>
-                        <div className="aedRHS">{item.duration}</div>
-                      </div>
-                    </div>
-                  ))}
+                      </Link>
+                    );
+                  })}
                 </div>
+
               </div>
 
             </div>
@@ -417,137 +425,149 @@ const Banner = () => {
                 <h2>Private Tour</h2>
                 <div className="TabLayer">
                   <div className="TabWrapper">
-                    {data.privateJet.map((item, index) => (
-                      <div className="TabBox" key={index}>
-                        <div className="img">
-                          <img src={item.imgSrc} alt="" />
-                          <div className="discountrow">
-                            <div className="discount">
-                              <span>{item.discount}</span>
+                    {data.privateJet.map((item, index) => {
+                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                      return (
+                        <Link to={`/private-tour?-${titleWithHyphens}`} className="TabBox" key={index}>
+                          <div className="img">
+                            <img src={item.imgSrc} alt="" />
+                            <div className="discountrow">
+                              <div className="discount">
+                                <span>{item.discount}</span>
+                              </div>
+                              <div className="wishlistIcon">
+                                {item.wishlistIcon}
+                              </div>
                             </div>
-                            <div className="wishlistIcon">
-                              {item.wishlistIcon}
-                            </div>
-                          </div>
 
-                          <div className="imgBottomRow">
-                            <div className="rhsimg">
-                              <div>
-                                <img src={item.imgBottomRow.rhsimg} alt="" />
+                            <div className="imgBottomRow">
+                              <div className="rhsimg">
+                                <div>
+                                  <img src={item.imgBottomRow.rhsimg} alt="" />
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="TabBoxBody">
-                          <h4>{item.title}</h4>
-                          <p>{item.description}</p>
-                          <div className="ReviewRow">
-                            <span className="location">{item.location}</span>
+                          <div className="TabBoxBody">
+                            <h4>{item.title}</h4>
+                            <p>{item.description}</p>
+                            <div className="ReviewRow">
+                              <span className="location">{item.location}</span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="TabBoxFooter">
-                          <div className="aedLHS">
-                            <span>Starting from</span>
-                            <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                          <div className="TabBoxFooter">
+                            <div className="aedLHS">
+                              <span>Starting from</span>
+                              <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                            </div>
+                            <div className="aedRHS">{item.duration}</div>
                           </div>
-                          <div className="aedRHS">{item.duration}</div>
-                        </div>
-                      </div>
-                    ))}
+                        </Link>
+                      );
+                    })}
                   </div>
+
                 </div>
               </div>
             </div>
-            <div className="tab-pane fade" id="nav-attractiontickets" role="tabpanel"
-              aria-labelledby="nav-attractiontickets-tab">
+            <div className="tab-pane fade" id="nav-attractiontickets" role="tabpanel" aria-labelledby="nav-attractiontickets-tab">
               <div className="Title">
                 <h2>Attraction Tickets</h2>
                 <div className="TabLayer">
                   <div className="TabWrapper">
-                    {data.privateJet.map((item, index) => (
-                      <div className="TabBox" key={index}>
-                        <div className="img">
-                          <img src={item.imgSrc} alt="" />
-                          <div className="discountrow">
-                            <div className="discount">
-                              <span>{item.discount}</span>
+                    {data.privateJet.map((item, index) => {
+                      // Move this line outside of the map function
+                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                      return (
+                        <Link to={`/attraction-tickets?-${titleWithHyphens}`} className="TabBox" key={index}>
+                          <div className="img">
+                            <img src={item.imgSrc} alt="" />
+                            <div className="discountrow">
+                              <div className="discount">
+                                <span>{item.discount}</span>
+                              </div>
+                              <div className="wishlistIcon">
+                                {item.wishlistIcon}
+                              </div>
                             </div>
-                            <div className="wishlistIcon">
-                              {item.wishlistIcon}
-                            </div>
-                          </div>
 
-                          <div className="imgBottomRow">
-                            <div className="rhsimg">
-                              <div>
-                                <img src={item.imgBottomRow.rhsimg} alt="" />
+                            <div className="imgBottomRow">
+                              <div className="rhsimg">
+                                <div>
+                                  <img src={item.imgBottomRow.rhsimg} alt="" />
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="TabBoxBody">
-                          <h4>{item.title}</h4>
-                          <p>{item.description}</p>
-                          <div className="ReviewRow">
-                            <span className="location">{item.location}</span>
+                          <div className="TabBoxBody">
+                            <h4>{item.title}</h4>
+                            <p>{item.description}</p>
+                            <div className="ReviewRow">
+                              <span className="location">{item.location}</span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="TabBoxFooter">
-                          <div className="aedLHS">
-                            <span>Starting from</span>
-                            <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                          <div className="TabBoxFooter">
+                            <div className="aedLHS">
+                              <span>Starting from</span>
+                              <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                            </div>
+                            <div className="aedRHS">{item.duration}</div>
                           </div>
-                          <div className="aedRHS">{item.duration}</div>
-                        </div>
-                      </div>
-                    ))}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="tab-pane fade" id="nav-chauffeur" role="tabpanel" aria-labelledby="nav-chauffeur-tab">
               <div className="Title">
                 <h2>Chauffeur</h2>
                 <div className="TabLayer">
                   <div className="TabWrapper">
-                    {data.privateJet.map((item, index) => (
-                      <div className="TabBox" key={index}>
-                        <div className="img">
-                          <img src={item.imgSrc} alt="" />
-                          <div className="discountrow">
-                            <div className="discount">
-                              <span>{item.discount}</span>
+                    {data.privateJet.map((item, index) => {
+                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                      return (
+                        <Link to={`/chauffeur?-${titleWithHyphens}`} className="TabBox" key={index}>
+                          <div className="img">
+                            <img src={item.imgSrc} alt="" />
+                            <div className="discountrow">
+                              <div className="discount">
+                                <span>{item.discount}</span>
+                              </div>
+                              <div className="wishlistIcon">
+                                {item.wishlistIcon}
+                              </div>
                             </div>
-                            <div className="wishlistIcon">
-                              {item.wishlistIcon}
-                            </div>
-                          </div>
 
-                          <div className="imgBottomRow">
-                            <div className="rhsimg">
-                              <div>
-                                <img src={item.imgBottomRow.rhsimg} alt="" />
+                            <div className="imgBottomRow">
+                              <div className="rhsimg">
+                                <div>
+                                  <img src={item.imgBottomRow.rhsimg} alt="" />
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="TabBoxBody">
-                          <h4>{item.title}</h4>
-                          <p>{item.description}</p>
-                          <div className="ReviewRow">
-                            <span className="location">{item.location}</span>
+                          <div className="TabBoxBody">
+                            <h4>{item.title}</h4>
+                            <p>{item.description}</p>
+                            <div className="ReviewRow">
+                              <span className="location">{item.location}</span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="TabBoxFooter">
-                          <div className="aedLHS">
-                            <span>Starting from</span>
-                            <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                          <div className="TabBoxFooter">
+                            <div className="aedLHS">
+                              <span>Starting from</span>
+                              <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                            </div>
+                            <div className="aedRHS">{item.duration}</div>
                           </div>
-                          <div className="aedRHS">{item.duration}</div>
-                        </div>
-                      </div>
-                    ))}
+                        </Link>
+                      );
+                    })}
                   </div>
+
                 </div>
               </div>
             </div>
