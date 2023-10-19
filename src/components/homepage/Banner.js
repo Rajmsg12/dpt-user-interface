@@ -274,7 +274,7 @@ const Banner = () => {
                     const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-'); // Declare it here
 
                     return (
-                      <Link to={`/private-jet?-${titleWithHyphens}`} className="TabBox" key={index}>
+                      <Link to={`/private-jet/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
                           <img src={item.imgSrc} alt="" />
                           <div className="discountrow">
