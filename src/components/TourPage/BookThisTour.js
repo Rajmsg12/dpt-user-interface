@@ -126,7 +126,7 @@ const BookThisTour = () => {
                                         <select className="form-select">
                                             <option selected>Select Hotel</option>
                                             <option value="1">Hotel Royal Park</option>
-                                            <option value="2">Flora Inn Hotel Dubai</option>
+                                            <option value="2">Flora Inn Hotel Dubai </option>
                                         </select>
                                     </div>{/* formGroup */}
                                 </div>
@@ -176,19 +176,19 @@ const BookThisTour = () => {
                                 <div className="col-md-4">
                                     <div className="mb-3 formGroup infoDetail">
                                         <label>Adults*</label>
-                                        <input type="text" className="form-control" placeholder="No of Adults" maxlength="2" required />
+                                        <input type="text" className="form-control" placeholder="No of Adults" maxLength="2" required />
                                     </div> {/* formGroup */}
                                 </div>
                                 <div className="col-md-4">
                                     <div className="mb-3 formGroup infoDetail">
                                         <label>Children</label>
-                                        <input type="text" className="form-control" placeholder="Age 5-12" maxlength="2" required />
+                                        <input type="text" className="form-control" placeholder="Age 5-12" maxLength="2" required />
                                     </div> {/* formGroup */}
                                 </div>
                                 <div className="col-md-4">
                                     <div className="mb-3 formGroup infoDetail">
                                         <label>Infants</label>
-                                        <input type="text" className="form-control" placeholder="Age < 5" maxlength="2" required />
+                                        <input type="text" className="form-control" placeholder="Age < 5" maxLength="2" required />
                                     </div> {/* formGroup */}
                                 </div>
                                 <div className="col-md-6">
