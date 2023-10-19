@@ -354,6 +354,20 @@ background-position: top;
     text-align: left;
 }
 
+.bannerSearchWrapper input {
+    font-size: 14px;
+    width: 95% !important;
+}
+
+.bannerSearchWrapper .searchable-select {
+    width: 98%;
+}
+
+.bannerSearchWrapper ul.options li {
+    font-size: 14px;
+    font-weight: 400;
+}
+
 .bannerSearchWrapper .iconwithText {
     display: flex;
     align-items: center;
@@ -370,7 +384,7 @@ background-position: top;
     color: #000;
 }
 .bannerSearchWrapper .Text .bottomtext{
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 500;
     color: #000;
 }
@@ -448,6 +462,8 @@ background-position: top;
     background-position: center center;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' className='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
 }
+
+
 /*======banner search=========*/
 
 /*===tab section====*/
