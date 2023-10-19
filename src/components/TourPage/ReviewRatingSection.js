@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Assuming you're using React Router for routing
-import './Style/DetailPage.css'
+import './Style/TourPage.css'
 
 const ReviewRatingSection = () => {
   return (

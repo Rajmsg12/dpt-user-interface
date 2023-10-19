@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Style/DetailPage.css'
+import './Style/TourPage.css'
 import Carousel from 'react-multi-carousel';
 import Faq from './Faq'
 import 'react-multi-carousel/lib/styles.css';
@@ -8,7 +8,7 @@ import CancellationPolicy from './CancellationPolicy';
 import UsefulToKnow from './UsefulToKnow';
 import Itinerary from './Itinerary';
 import WhatToExpect from './WhatToExpect';
-import DetailOverview from './DetailOverview';
+import DetailOverview from './BannerTabs';
 import GetInTouch from './GetInTouch';
 function ContentSection() {
   const responsive = {

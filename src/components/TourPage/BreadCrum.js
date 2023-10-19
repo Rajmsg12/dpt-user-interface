@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import './Style/DetailPage.css'
+import './Style/TourPage.css'
 
 const BreadCrum = () => {
   return (

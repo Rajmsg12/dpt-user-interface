@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import the Link component from react-router-dom
-import '../DetailPage/Style/DetailPage.css'
+import '../TourPage/Style/TourPage.css'
 
 const InnerHeader = () => {
   const search=()=>{

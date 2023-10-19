@@ -1,12 +1,12 @@
 import React from 'react'
 import InnerHeader from '../common/InnerHeader'
-import BreadCrum from '../DetailPage/BreadCrum'
-import TopSection from '../DetailPage/TopSection'
-import ContentSection from '../DetailPage/ContentSection'
+import BreadCrum from '../TourPage/BreadCrum'
+import TopSection from '../TourPage/TopSection'
+import ContentSection from '../TourPage/ContentSection'
 import Footer from '../common/Footer'
 import Memories from '../common/memories'
-import ReviewRatingSection from '../DetailPage/ReviewRatingSection'
-import YouAlsoLike from '../DetailPage/YouAlsoLike'
+import ReviewRatingSection from '../TourPage/ReviewRatingSection'
+import YouAlsoLike from '../TourPage/YouAlsoLike'
 
 const DetailSection = () => {
   return (
