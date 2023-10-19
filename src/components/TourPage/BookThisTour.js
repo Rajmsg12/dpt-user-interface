@@ -2,7 +2,7 @@ import React from 'react'
 
 const BookThisTour = () => {
     return (
-        <div>
+        <>
             <div className="tab-pane fade" id="pills-bookthistour" role="tabpanel" aria-labelledby="pills-bookthistour-tab">
                 <div className="BookThisTourSec">
                     <div className="BookingDetailsHd"><span>Booking Details</span></div>
@@ -243,7 +243,7 @@ const BookThisTour = () => {
                     </div>{/*FormInnerDiv*/}
                 </div>{/*BookThisTourSec*/}
             </div>
-        </div>
+        </>
     )
 }
 

@@ -3,7 +3,7 @@ import IncludedExclusive from './IncludedExclusive'
 
 const Detail = () => {
     return (
-        <div>
+        <>
             <div className="tab-pane fade show active" id="pills-detail" role="tabpanel" aria-labelledby="pills-detail-tab">
                 <div className="OverviewSection">
                     <h3>Overview</h3>
@@ -28,7 +28,7 @@ const Detail = () => {
                 </div>
                 {/* SecondPartTab */}
             </div>
-        </div>
+        </>
     )
 }
 

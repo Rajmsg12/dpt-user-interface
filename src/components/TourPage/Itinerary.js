@@ -16,7 +16,7 @@ const Itinerary = () => {
                                     {/* imgWrapper */}
                                     <div className="Text">
                                         <div className="title">Burj Al Arab | Dubai's Most Iconic Hotel</div>
-                                        <p>Welcome to Burj Al Arab, Dubai's most iconic hotel and a global icon of Arabian luxury.</p>
+                                        <span className="description">Welcome to Burj Al Arab, Dubai's most iconic hotel and a global icon of Arabian luxury.</span>
                                     </div>
                                     {/* Text */}
                                 </div>
@@ -30,7 +30,7 @@ const Itinerary = () => {
                                     {/* imgWrapper */}
                                     <div className="Text">
                                         <div className="title">10 Amazing Inside Burj Al Arab Secrets</div>
-                                        <p>60 minutes open desert ATV Quad biking and another 30 minutes high dunes roller ride.</p>
+                                        <span className="description">60 minutes open desert ATV Quad biking and another 30 minutes high dunes roller ride.</span>
                                     </div>
                                     {/* Text */}
                                 </div>
@@ -44,7 +44,7 @@ const Itinerary = () => {
                                     {/* imgWrapper */}
                                     <div className="Text">
                                         <div className="title"> Burj Al Arab Tour opening five-star hotel</div>
-                                        <p>Welcome to Burj Al Arab, Dubai's most iconic hotel and a global icon of Arabian luxury.</p>
+                                        <span className="description">Welcome to Burj Al Arab, Dubai's most iconic hotel and a global icon of Arabian luxury.</span>
                                     </div>
                                     {/* Text */}
                                 </div>
@@ -58,7 +58,7 @@ const Itinerary = () => {
                                     {/* imgWrapper */}
                                     <div className="Text">
                                         <div className="title"> Inside Burj Al Arab, Dubai - Hotel Interior Design</div>
-                                        <p>60 minutes open desert ATV Quad biking and another 30 minutes high dunes roller ride.</p>
+                                        <span className="description">60 minutes open desert ATV Quad biking and another 30 minutes high dunes roller ride.</span>
                                     </div>
                                     {/* Text */}
                                 </div>
