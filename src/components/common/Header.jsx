@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import '../../components/homepage/Style/homepage.css'
+import '../../Style/header.css'
 import Search from "../Search";
 import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
 import { ReactComponent as IconPersonBadgeFill } from "bootstrap-icons/icons/person-badge-fill.svg";

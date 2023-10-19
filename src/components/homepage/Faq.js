@@ -1,5 +1,5 @@
 import React from 'react'
-import './Style/homepage.css'
+import '../../Style/header.css'
 const Faq = () => {
   return (
     <div>
