@@ -1,5 +1,13 @@
 export const data = {
-  //tabs--
+
+  //TourDetailsBanner------------
+  TourDetailsBanner:[{
+    slider:"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"
+
+  }
+    
+  ],
+  //tabs---------
   privateJet: [
     {
       imgSrc: "images/homepage/product1.jpg",

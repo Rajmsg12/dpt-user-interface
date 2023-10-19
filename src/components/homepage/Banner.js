@@ -4,10 +4,13 @@ import '../../Style/header.css'
 import { data } from '../../data/index'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useNavigate } from 'react-router-dom';
+
 const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -54,6 +57,7 @@ const Banner = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedPerson, setSelectedPerson] = useState('');
+  const Navigate = useNavigate()
 
   const handleCountrySelect = (country) => {
     setSelectedCountry(country);
@@ -326,7 +330,7 @@ const Banner = () => {
                     {data.weddingYatch.map((item, index) => {
                       const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
                       return (
-                        <Link to={`/wedding-on-yacht?${titleWithHyphens}`} className="TabBox" key={index}>
+                        <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
                             <img src={item.imgSrc} alt="" />
                             <div className="discountrow">
@@ -378,7 +382,7 @@ const Banner = () => {
                   {data.privateJet.map((item, index) => {
                     const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
                     return (
-                      <Link to={`/luxury-tours?-${titleWithHyphens}`} className="TabBox" key={index}>
+                      <Link to={`/luxury-tours/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
                           <img src={item.imgSrc} alt="" />
                           <div className="discountrow">
@@ -428,7 +432,7 @@ const Banner = () => {
                     {data.privateJet.map((item, index) => {
                       const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
                       return (
-                        <Link to={`/private-tour?-${titleWithHyphens}`} className="TabBox" key={index}>
+                        <Link to={`/private-tour/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
                             <img src={item.imgSrc} alt="" />
                             <div className="discountrow">
@@ -479,7 +483,7 @@ const Banner = () => {
                       // Move this line outside of the map function
                       const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
                       return (
-                        <Link to={`/attraction-tickets?-${titleWithHyphens}`} className="TabBox" key={index}>
+                        <Link to={`/attraction-tickets/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
                             <img src={item.imgSrc} alt="" />
                             <div className="discountrow">
@@ -529,7 +533,7 @@ const Banner = () => {
                     {data.privateJet.map((item, index) => {
                       const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
                       return (
-                        <Link to={`/chauffeur?-${titleWithHyphens}`} className="TabBox" key={index}>
+                        <Link to={`/chauffeur/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
                             <img src={item.imgSrc} alt="" />
                             <div className="discountrow">

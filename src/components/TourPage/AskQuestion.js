@@ -550,7 +550,7 @@ const AskQuestion = () => {
                         </div>
                         <div className="captcha">
                             <div className="captchaimg">
-                                <img src="images/captcha.png" alt=""/>
+                                <img src="images/homepage/captcha.png" alt=""/>
                             </div>
                         </div>
                     </div>

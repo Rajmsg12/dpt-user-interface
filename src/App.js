@@ -6,6 +6,7 @@ import TopMenu from "./components/TopMenu";
 import DetailSection from "./components/pages/TourSection";
 import Homepage from "./components/pages/Homepage";
 import DetailPage from './components/pages/TourSection'
+import { useParams } from 'react-router-dom';
 
 import "./App.min.css";
 //const Header = lazy(() => import("./components/Header"));
@@ -39,12 +40,12 @@ function App() {
         
         <Routes>
         <Route exact path="/" element={<Homepage/>} />
-        <Route exact path="/private-jet" element={<DetailPage/>} />
-        <Route exact path="/wedding-on-yacht" element={<DetailPage/>} />
-        <Route exact path="/luxury-tours" element={<DetailPage/>} />
-        <Route exact path="/private-tour" element={<DetailPage/>} />
-        <Route exact path="/attraction-tickets" element={<DetailPage/>} />
-        <Route exact path="/chauffeur" element={<DetailPage/>} />
+        <Route exact path="/private-jet/:title" element={<DetailPage/>} />
+        <Route exact path="/wedding-on-yacht/:title" element={<DetailPage/>} />
+        <Route exact path="/luxury-tours/:title" element={<DetailPage/>} />
+        <Route exact path="/private-tour/:title" element={<DetailPage/>} />
+        <Route exact path="/attraction-tickets/:title" element={<DetailPage/>} />
+        <Route exact path="/chauffeur/:title" element={<DetailPage/>} />
         </Routes>
       </React.Fragment>
     </BrowserRouter>
