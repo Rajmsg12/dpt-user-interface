@@ -5,7 +5,7 @@ import Detail from './Detail'
 
 const DetailOverview = () => {
     return (
-        <div>
+        <>
             <div className="DetailTab">
                 <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li className="nav-item" role="presentation">
@@ -30,7 +30,7 @@ const DetailOverview = () => {
                    { /*tab panne*/}
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

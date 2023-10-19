@@ -2,7 +2,7 @@ import React from 'react'
 
 const AskQuestion = () => {
   return (
-    <div>
+    <>
     <div className="tab-pane fade" id="pills-askquestions" role="tabpanel" aria-labelledby="pills-askquestions-tab">
     <div className="BookThisTourSec AskQuestionsSection">
         <div className="FormInnerDiv">
@@ -559,7 +559,7 @@ const AskQuestion = () => {
         </div>{/*FormInnerDiv*/}
     </div>{/*AskQuestionsSection*/}
 </div>
-    </div>
+    </>
   )
 }
 
