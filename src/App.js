@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import TopMenu from "./components/TopMenu";
-import DetailSection from "./components/pages/DetailSection";
+import DetailSection from "./components/pages/TourSection";
 import Homepage from "./components/pages/Homepage";
-import DetailPage from './components/pages/DetailSection'
+import DetailPage from './components/pages/TourSection'
 
 import "./App.min.css";
 //const Header = lazy(() => import("./components/Header"));
