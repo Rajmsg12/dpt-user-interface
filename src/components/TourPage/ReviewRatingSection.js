@@ -11,7 +11,7 @@ const ReviewRatingSection = () => {
             <div className="ReviewsLhs">
               <div className="Title">Reviews</div>
               <div className="RatingPoint">
-                <span>5.0 <img src="images/homepage/ratingstar.png" alt="" /></span>
+                <span>5.0 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /></span>
               </div>
               <div className="reviewText"> 4.5 | 500 Reviews </div>
             </div>
@@ -70,7 +70,7 @@ const ReviewRatingSection = () => {
             <div className="ShowingReviewWidget">
               <div className="ShowingReviewRow">
                 <div className="starwithtext">
-                  <img src="images/homepage/ratingstar.png" alt="" /> Best Tour Experience Ever!
+                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /> Best Tour Experience Ever!
                 </div>
                 <span>John Doe</span>
                 <p>Our tour was an unforgettable experience that I would highly recommend. Our organizer, Ms. Fatima, our tour guide Ms. Maricar, and our safari driver, Mr. Waheed, made it even more special. The journey was hassle-free and truly one for the books.</p>
@@ -78,7 +78,7 @@ const ReviewRatingSection = () => {
               {/* ShowingReviewRow */}
               <div className="ShowingReviewRow">
                 <div className="starwithtext">
-                  <img src="images/homepage/ratingstar.png" alt="" /> Time out with family!
+                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /> Time out with family!
                 </div>
                 <span>Sofia Negiri</span>
                 <p>Had an amazing time with my wife at the desert safari hosted by Dubai Private Tour. Our guide, Waheed, was an expert desert safari driver with 13 years of experience and explained every single detail of the tour to us during the entire trip. Thank you Waheed for making this trip a memorable one. Will definitely recommend anyone looking for an awesome and unforgettable desert safari experience in Dubai!</p>
@@ -86,7 +86,7 @@ const ReviewRatingSection = () => {
               {/* ShowingReviewRow */}
               <div className="ShowingReviewRow">
                 <div className="starwithtext">
-                  <img src="images/homepage/ratingstar.png" alt="" /> Time out with family!
+                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /> Time out with family!
                 </div>
                 <span>Rahul Yadav</span>
                 <p>Wow!!! What an experience of a life time!!! Ateeb my safari driver was simply amazing!!! He was extremely knowledgeable, entertaining and a great fun guy to be around. I highly recommend if anyone is in the Dubai area please do the safari and please ask for Ateeb!!! A life time of memories!!!</p>
@@ -96,7 +96,7 @@ const ReviewRatingSection = () => {
             {/* ShowingReviewWidget */}
             <div className="center">
               <div className="cta">
-                <Link to="#">View More <img src="images/homepage/down-arrow.png" alt="" /></Link>
+                <Link to="#">View More <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697705131/down-arrow_wuatf6.png"} alt="" /></Link>
               </div>
             </div>
           </div>

@@ -43,7 +43,7 @@ function ContentSection() {
                   <div className="item">
                     <div className="DetailpageSlideBox">
                       <div className="imageBox">
-                        <img src="images/homepage/detailpagebanner.jpg" alt="" />
+                        <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"} alt="" />
                       </div>
                       {/* imageBox */}
                       <div className="BannerContent">
@@ -55,7 +55,7 @@ function ContentSection() {
                             <span> Experience</span>
                           </div>
                           <div className="logoimg">
-                            <img src="images/homepage/choise2.png" alt="" />
+                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701524/choise2_yc6jt4.png"} alt="" />
                           </div>
                         </div>
                         {/* bannerContentTop */}
@@ -73,7 +73,7 @@ function ContentSection() {
                   <div className="item">
                     <div className="DetailpageSlideBox">
                       <div className="imageBox">
-                        <img src="images/homepage/detailpagebanner.jpg" alt="" />
+                        <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"} alt="" />
                       </div>
                       {/* imageBox */}
                       <div className="BannerContent">
@@ -85,7 +85,7 @@ function ContentSection() {
                             <span> Experience</span>
                           </div>
                           <div className="logoimg">
-                            <img src="images/homepage/choise2.png" alt="" />
+                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701524/choise2_yc6jt4.png"} alt="" />
                           </div>
                         </div>
                         {/* bannerContentTop */}
@@ -142,7 +142,7 @@ function ContentSection() {
             <div className="Attractions">
               <div className="titleRow">
                 <div className="icon">
-                  <img src="images/homepage/locationicon.png" alt="" />
+                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701972/locationicon_oyxdy0.png"} alt="" />
                 </div>
                 <div className="title">Attractions</div>
               </div>
@@ -159,7 +159,7 @@ function ContentSection() {
             <div className="DubaiPrivateTour">
               <div className="customersayText">
                 <div className="topimg">
-                  <img src="images/homepage/Tripadvisorlogo.png" alt="" />
+                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697702089/Tripadvisorlogo_cc6y9z.png"} alt="" />
                 </div>
                 <h4>Dubai Private Tour</h4>
                 <div className="rating">
@@ -201,7 +201,7 @@ function ContentSection() {
             {/* offerDiv */}
             <div className="TouristDiv">
               <div className="img">
-                <img src="images/homepage/plane.png" alt="" />
+                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697702277/plane_lsvzcu.png"} alt="" />
               </div>
               <span>Dubai</span>
               <span>Tourist Visa</span>

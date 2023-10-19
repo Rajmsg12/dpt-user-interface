@@ -15,7 +15,7 @@ const InnerHeader = () => {
               <div className="HeaderLHS"> {/* Use className instead of class */}
                 <div className="Logo"> {/* Use className instead of class */}
                   <Link to="/">
-                    <img src="images/homepage/innerlogo.png" alt="" />
+                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697702175/innerlogo_u1xrls.png"} alt="" />
                   </Link>
                 </div>
                 <div className="HeaderSearch"> {/* Use className instead of class */}
