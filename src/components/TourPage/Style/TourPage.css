@@ -1175,6 +1175,7 @@ input {
 
 .BookThisTourSec .FormInnerDiv input, .BookThisTourSec .FormInnerDiv select {
   border: 1px solid #D9D9D9;
+  
   border-radius: 5px;
   color: #9D9D9D;
   font-size: 14px;
@@ -1226,6 +1227,7 @@ input {
 .form-control:focus, .form-select:focus {
   border-color: #D9D9D9;
   box-shadow: none;
+ 
 }
 
 .BookThisTourSec .FormInnerDiv .submitcta {
@@ -2427,3 +2429,8 @@ footer {
   }
 }
 /*======== footer ======*/
+
+/* datepicker-styles.css */
+.datepicker-wrapper {
+  width: 150%;
+}

@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import './Style/TourPage.css'
 
 const BookThisTour = () => {
+    const [selectedDate, setSelectedDate] = useState(null);
     return (
         <>
             <div className="tab-pane fade" id="pills-bookthistour" role="tabpanel" aria-labelledby="pills-bookthistour-tab">
@@ -10,12 +14,26 @@ const BookThisTour = () => {
                         <form>
                             <div className="row">
                                 <div className="col-md-6">
-                                    <div className="mb-3 formGroup formarrow">
+                                    <div className="mb-3 ">
                                         <label>Tour Date*</label>
                                         <div className="input-group date" id="datepicker">
-                                            <input type="text" className="form-control" placeholder="Select Tour Date" id="date" />
-                                            <span className="input-group-append">
-                                            </span>
+                                            <DatePicker
+                                                selected={selectedDate}
+                                                onChange={(date) => setSelectedDate(date)}
+                                                dateFormat="MM/dd/yyyy"
+                                                placeholderText="Select Date"
+                                                customInput={
+                                                    <input
+                                                        style={{
+                                                            width: '176%', // Set the width to 100%
+                                                            paddingLeft:"10px"
+                                                        }}
+                                                    />
+                                                }
+                                            />
+
+
+
                                         </div>
                                     </div>{/* formGroup */}
                                 </div>

@@ -8,7 +8,7 @@ import Homepage from "./components/pages/Homepage";
 import DetailPage from './components/pages/TourSection'
 import { useParams } from 'react-router-dom';
 
-import "./App.min.css";
+
 //const Header = lazy(() => import("./components/Header"));
 //const TopMenu = lazy(() => import("./components/TopMenu"));
 const HomeView = lazy(() => import("./views/Home"));
