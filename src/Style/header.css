@@ -318,7 +318,7 @@ background-position: top;
     color: #f25928;
     font-size: 58px;
     font-family: 'Condiment', cursive;
-    position: relative;
+    /* position: relative; */
     top: 45px;
 }
 .BannerContent h1 {
