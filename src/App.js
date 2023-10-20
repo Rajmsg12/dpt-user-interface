@@ -7,6 +7,7 @@ import DetailSection from "./components/pages/TourSection";
 import Homepage from "./components/pages/Homepage";
 import DetailPage from './components/pages/TourSection'
 import { useParams } from 'react-router-dom';
+import TourListing from './components/pages/TourListingMain'
 
 
 //const Header = lazy(() => import("./components/Header"));
@@ -46,6 +47,7 @@ function App() {
         <Route exact path="/private-tour/:title" element={<DetailPage/>} />
         <Route exact path="/attraction-tickets/:title" element={<DetailPage/>} />
         <Route exact path="/chauffeur/:title" element={<DetailPage/>} />
+        <Route exact path='/tours/airport-transfers' element={<TourListing/>} />
         </Routes>
       </React.Fragment>
     </BrowserRouter>

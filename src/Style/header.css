@@ -2009,4 +2009,13 @@ footer{
     background-color: #000; /* Change the hover background color as needed */
     color: #fff; /* Change the hover arrow color as needed */
   }
+  .countryClassError{
+    border:1px solid red;
+  }
+  .classDateError{
+    border:1px solid red;
+  }
+  .classPersonError{
+    border:1px solid red;
+  }
   

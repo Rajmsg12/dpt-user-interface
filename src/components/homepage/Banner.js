@@ -12,6 +12,8 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
 
+
+
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -57,16 +59,47 @@ const Banner = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedPerson, setSelectedPerson] = useState('');
-  const Navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleCountrySelect = (country) => {
     setSelectedCountry(country);
   };
 
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+  };
+
   const handlePersonSelect = (person) => {
     setSelectedPerson(person);
   };
-
+  const handleSearchClick = () => {
+    const countryElement = document.querySelector('.countrySelect');
+    const dateElement = document.querySelector('.datePicker');
+    const personElement = document.querySelector('.personSelect');
+  
+    if (!selectedCountry) {
+      countryElement?.classList.add('countryClassError');
+    } else {
+      countryElement?.classList.remove('countryClassError');
+    }
+  
+    // if (!selectedDate) {
+    //   dateElement?.classList.add('classDateError');
+    // } else {
+    //   dateElement?.classList.remove('classDateError');
+    // }
+  
+   if (!selectedPerson) {
+      personElement?.classList.add('classPersonError');
+    } else {
+      personElement?.classList.remove('classPersonError');
+    }
+  
+    if (selectedCountry &&  selectedPerson) {
+      // This condition should work for navigation.
+      navigate(`/tours/airport-transfers`);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -113,7 +146,7 @@ const Banner = () => {
                     <div className="bannerSearch">
                       <div className="bannerSearchWrapper">
                         <div className="whereto">
-                          <div className="wheretoIN">
+                          <div className="wheretoIN countrySelect">
                             <div className="iconwithText">
                               <div className="icon">
                               </div>
@@ -132,7 +165,7 @@ const Banner = () => {
                         </div>
 
                         <div className="selectdate">
-                          <div className="selectdateIN">
+                          <div className="selectdateIN ">
                             <div className="iconwithText">
                               <div className="icon">
                               </div>
@@ -141,18 +174,18 @@ const Banner = () => {
                                 <DatePicker
                                   selected={selectedDate}
                                   onChange={(date) => setSelectedDate(date)}
-                                  dateFormat="MM/dd/yyyy" // You can customize the date format as per your requirement
+                                  minDate={new Date()}
                                   placeholderText="Select Date"
                                   customInput={
                                     <input
                                       style={{
-                                        border: 'none', // Remove the border
-                                        outline: 'none', // Remove the outline
-                                        // Add any additional styles as needed
+                                        border: "none",
+                                        outline: "none",
                                       }}
                                     />
                                   }
                                 />
+
 
                               </div>
                             </div>
@@ -160,7 +193,7 @@ const Banner = () => {
                         </div>
 
                         <div className="selectperson">
-                          <div className="selectpersonIN">
+                          <div className="selectpersonIN personSelect">
                             <div className="iconwithText">
                               <div className="icon">
                               </div>
@@ -180,7 +213,8 @@ const Banner = () => {
 
                         {/* Replace the <button> with a <Link> */}
                         <div className="SearchBtn">
-                          <button type="submit" className="searchIcon"></button>
+                        <button onClick={handleSearchClick} className="searchIcon"></button>
+
                         </div>
                       </div>
                     </div>
@@ -221,6 +255,7 @@ const Banner = () => {
                             </div>
 
                             <div className="PopupSubmitBtn">
+                            
                               {/* Replace the <button> with a <Link> */}
                               <Link to="/">Search</Link>
                             </div>
