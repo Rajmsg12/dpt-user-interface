@@ -76,28 +76,28 @@ const Banner = () => {
     const countryElement = document.querySelector('.countrySelect');
     const dateElement = document.querySelector('.datePicker');
     const personElement = document.querySelector('.personSelect');
-  
+
     if (!selectedCountry) {
       countryElement?.classList.add('countryClassError');
     } else {
       countryElement?.classList.remove('countryClassError');
     }
-  
+
     // if (!selectedDate) {
     //   dateElement?.classList.add('classDateError');
     // } else {
     //   dateElement?.classList.remove('classDateError');
     // }
-  
-   if (!selectedPerson) {
+
+    if (!selectedPerson) {
       personElement?.classList.add('classPersonError');
     } else {
       personElement?.classList.remove('classPersonError');
     }
-  
-    if (selectedCountry &&  selectedPerson) {
+
+    if (selectedCountry && selectedPerson) {
       // This condition should work for navigation.
-      navigate(`/tours/airport-transfers`);
+      navigate(`/tours/${selectedCountry}`);
     }
   };
 
@@ -213,7 +213,7 @@ const Banner = () => {
 
                         {/* Replace the <button> with a <Link> */}
                         <div className="SearchBtn">
-                        <button onClick={handleSearchClick} className="searchIcon"></button>
+                          <button onClick={handleSearchClick} className="searchIcon"></button>
 
                         </div>
                       </div>
@@ -255,7 +255,7 @@ const Banner = () => {
                             </div>
 
                             <div className="PopupSubmitBtn">
-                            
+
                               {/* Replace the <button> with a <Link> */}
                               <Link to="/">Search</Link>
                             </div>
