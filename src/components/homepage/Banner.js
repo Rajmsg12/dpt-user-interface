@@ -11,23 +11,25 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
-
-
-
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
   const handleSelect = (option) => {
     setSelectedOption(option);
-    setSearchTerm(option); // Update the input with the selected option
+    setSearchTerm(option);
     onSelect(option);
-    setDropdownOpen(false);
+    setDropdownOpen(false); // Close the dropdown after selecting an option
   };
 
-  const filteredOptions = options.filter((option) =>
-    option.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleInputClick = () => {
+    setDropdownOpen(true); // Open the dropdown when the input is clicked
+  };
+
+  // Modify the filteredOptions to limit the results to a maximum of 5 items
+  const filteredOptions = options
+    .filter((option) => option.toLowerCase().includes(searchTerm.toLowerCase()))
+    .slice(0, 5);
 
   return (
     <div className="searchable-select">
@@ -36,7 +38,7 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
         placeholder={placeholder}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onClick={toggleDropdown}
+        onClick={handleInputClick}
         style={{ width: '170px', border: 'none', position: 'relative' }}
       />
       {isDropdownOpen && (
@@ -55,6 +57,9 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
     </div>
   );
 };
+
+
+
 const Banner = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -97,7 +102,8 @@ const Banner = () => {
 
     if (selectedCountry && selectedPerson) {
       // This condition should work for navigation.
-      navigate(`/tours/${selectedCountry}`);
+      const lowerCaseSelectedCountry = selectedCountry.toLowerCase()
+      navigate(`/tours/${lowerCaseSelectedCountry}`);
     }
   };
 
@@ -145,8 +151,8 @@ const Banner = () => {
                   <div className="fordesktop">
                     <div className="bannerSearch">
                       <div className="bannerSearchWrapper">
-                        <div className="whereto">
-                          <div className="wheretoIN countrySelect">
+                        <div className="whereto countrySelect">
+                          <div className="wheretoIN ">
                             <div className="iconwithText">
                               <div className="icon">
                               </div>
@@ -192,8 +198,8 @@ const Banner = () => {
                           </div>
                         </div>
 
-                        <div className="selectperson">
-                          <div className="selectpersonIN personSelect">
+                        <div className="selectperson personSelect">
+                          <div className="selectpersonIN ">
                             <div className="iconwithText">
                               <div className="icon">
                               </div>
@@ -310,7 +316,7 @@ const Banner = () => {
               <div className="TabLayer">
                 <div className="TabWrapper">
                   {data.privateJet.map((item, index) => {
-                    const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-'); // Declare it here
+                    const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase(); // Declare it here
 
                     return (
                       <Link to={`/private-jet/${titleWithHyphens}`} className="TabBox" key={index}>
@@ -363,7 +369,7 @@ const Banner = () => {
                 <div className="TabLayer">
                   <div className="TabWrapper">
                     {data.weddingYatch.map((item, index) => {
-                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
                       return (
                         <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
@@ -415,7 +421,7 @@ const Banner = () => {
               <div className="TabLayer">
                 <div className="TabWrapper">
                   {data.privateJet.map((item, index) => {
-                    const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                    const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
                     return (
                       <Link to={`/luxury-tours/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
@@ -465,7 +471,7 @@ const Banner = () => {
                 <div className="TabLayer">
                   <div className="TabWrapper">
                     {data.privateJet.map((item, index) => {
-                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
                       return (
                         <Link to={`/private-tour/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
@@ -516,7 +522,7 @@ const Banner = () => {
                   <div className="TabWrapper">
                     {data.privateJet.map((item, index) => {
                       // Move this line outside of the map function
-                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
                       return (
                         <Link to={`/attraction-tickets/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
@@ -566,7 +572,7 @@ const Banner = () => {
                 <div className="TabLayer">
                   <div className="TabWrapper">
                     {data.privateJet.map((item, index) => {
-                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-');
+                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
                       return (
                         <Link to={`/chauffeur/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
