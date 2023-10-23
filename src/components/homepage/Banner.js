@@ -74,8 +74,9 @@ const Banner = () => {
     setSelectedDate(date);
   };
 
-  const handlePersonSelect = (person) => {
-    setSelectedPerson(person);
+  const handlePersonSelect = (selectedPerson) => {
+    const selectedText = `${selectedPerson} Travellers`;
+    // Do something with the selectedText, such as displaying it or storing it in a state variable.
   };
   const handleSearchClick = () => {
     const countryElement = document.querySelector('.countrySelect');
@@ -103,7 +104,8 @@ const Banner = () => {
     if (selectedCountry && selectedPerson) {
       // This condition should work for navigation.
       const lowerCaseSelectedCountry = selectedCountry.toLowerCase()
-      navigate(`/tours/${lowerCaseSelectedCountry}`);
+      // navigate(`/tours/${lowerCaseSelectedCountry}`);
+      navigate(`/tours`);
     }
   };
 
@@ -208,8 +210,11 @@ const Banner = () => {
                                 <div className="bottomtext">
                                   <SearchableSelect
                                     options={data.bannerSelectPerson.map((item) => item.person)}
-                                    placeholder="Select Person"
-                                    onSelect={handlePersonSelect}
+                                    placeholder="1 Traveller"
+                                    onSelect={(person) => {
+                                      setSelectedPerson(person);
+                                      handlePersonSelect(person);
+                                    }}
                                   />
                                 </div>
                               </div>

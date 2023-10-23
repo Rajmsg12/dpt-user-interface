@@ -47,7 +47,8 @@ function App() {
         <Route exact path="/private-tour/:title" element={<DetailPage/>} />
         <Route exact path="/attraction-tickets/:title" element={<DetailPage/>} />
         <Route exact path="/chauffeur/:title" element={<DetailPage/>} />
-        <Route exact path='/tours/:country' element={<TourListing/>} />
+        {/* <Route exact path='/tours/:country' element={<TourListing/>} /> */}
+        <Route exact path='/tours' element={<TourListing/>} />
         </Routes>
       </React.Fragment>
     </BrowserRouter>

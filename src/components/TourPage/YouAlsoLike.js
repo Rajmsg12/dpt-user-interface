@@ -39,7 +39,7 @@ const YouAlsoLike = () => {
                                 <div className="item">
                                     <div className="TabBox">
                                         <div className="img">
-                                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697705255/ptimg1_taex9h.jpg"} alt="" />
+                                            <img src={tour.imgSrc} alt="" />
                                             {tour.discount && (
                                                 <div className="discountrow">
                                                     <div className="discount">
