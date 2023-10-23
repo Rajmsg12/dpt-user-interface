@@ -8,10 +8,12 @@ import YouAlsoLike from '../TourPage/YouAlsoLike'
 import TrendingPlaces from '../homepage/TrendingPlaces'
 import BreadCrum from '../TourListing/BreadCrum'
 import TopListing from '../TourListing/TopListingDetail'
+import { useParams } from 'react-router-dom'
 
 const TourListingMain = () => {
+  const {country} = useParams()
   return (
-    <div>
+    <>
     <InnerHeader/>
     <BreadCrum/>
     <TopListing/>
@@ -21,7 +23,7 @@ const TourListingMain = () => {
     <Faq/>
     <Memories/>
     <Footer/>
-    </div>
+    </>
   )
 }
 

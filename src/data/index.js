@@ -1,12 +1,12 @@
 export const data = {
 
-  //TourDetailsBanner------------
-  TourDetailsBanner:[{
-    slider:"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"
-
-  }
-    
-  ],
+    //TourDetailsBanner------------
+    TourDetailsBanner:[{
+      slider:"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"
+  
+    }
+      
+    ],
   //tabs---------
   privateJet: [
     {
