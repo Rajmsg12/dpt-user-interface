@@ -5,17 +5,14 @@ import { data } from '../../data/TourListing';
 import LeftSideFilter from './LeftSideFilter';
 
 const itemsPerPage = 9;
-
 const ListingSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedPrice, setSelectedPrice] = useState(0);
+  const [selectedPrice, setSelectedPrice] = useState(5000); // Initial price value as a number
   const totalItems = data.TourListing.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const filteredData = data.TourListing.filter((tour) => selectedPrice === 0 || tour.price <= selectedPrice);
-  const itemsToShow = filteredData.slice(startIndex, endIndex);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -23,15 +20,22 @@ const ListingSection = () => {
     }
   };
 
-  const handlePriceFilter = (price) => {
-    setSelectedPrice(price);
+  const handlePriceFilter = (newPrice) => {
+    setSelectedPrice(newPrice);
   };
+
+  // Filter items based on the selected price range
+  const filteredData = data.TourListing.filter(
+    (tour) => parseInt(tour.price.replace(',', '')) <= selectedPrice
+  );
+
+  const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
     <div>
       <div className="listingPage">
         <div className="container">
           <div className="listingPageWrapper">
-             <LeftSideFilter handlePriceFilter={handlePriceFilter} />
+          <LeftSideFilter handlePriceFilter={handlePriceFilter} priceRange={selectedPrice} />
             <div className="listingRhs">
               <div className="listingGridTab">
                 <div className="listingToplayer">
@@ -74,7 +78,8 @@ const ListingSection = () => {
                 <div className="tab-content" id="pills-tabContentlisting">
                   <div className="tab-pane fade" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                     <div className="listingRow GridRowWrapper">
-                      {itemsToShow.map((tour) => (
+                    {filteredData.length > 0 ? (
+                      itemsToShow.map((tour) => (
                         <div className="TabBox" key={`grid-${tour.id}`}>
                           <div className="img">
                             <img src={tour.imageSrc} alt="" />
@@ -113,7 +118,10 @@ const ListingSection = () => {
                             <div className="aedRHS">{tour.duration}</div>
                           </div>
                         </div>
-                      ))}
+                        ))
+                        ) : (
+                          <p>No items within the selected price range.</p>
+                        )}
                     </div>
                   </div>
                   <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">

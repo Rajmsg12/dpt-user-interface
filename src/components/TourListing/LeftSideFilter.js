@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-const LeftSideFilter = () => {
+const LeftSideFilter = ({ handlePriceFilter, priceRange }) => {
   return (
     <>
     <div id="sidebarFilter" className="listingLhs">
@@ -155,8 +155,21 @@ const LeftSideFilter = () => {
         </div>
         <div className="RangeSliderIn">
           <div className="rangeSliderTopLayer">
-            <span>0 AED</span>
-            <span>+ 5000 AED</span>
+          <div className="leftSideFilter">
+          <div className="priceRangeSlider">
+            <input
+              type="range"
+              min="0"
+              max="5000"
+              step="1"
+              value={priceRange}
+              onChange={(e) => handlePriceFilter(parseInt(e.target.value))}
+            />
+            <div className="priceRangeLabel">
+              Price Range: AED {priceRange.toLocaleString('en-US')}
+            </div>
+          </div>
+        </div>
           </div>
         </div>
       </div>
