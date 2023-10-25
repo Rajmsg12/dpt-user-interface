@@ -7,7 +7,60 @@ export const data = {
     }
       
     ],
+    //youmayalsoLike----
+    TourListing: [
+        {
+          id: 1,
+          imageSrc:'https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211165/product1_mkxyjl.jpg',
+          discount: "-10%",
+          title: "Dubai Airport Private Transfer",
+          description: "Discover all of Dubai’s top sights with a private tour guide during this full-day city tour. Go back in time and learn about the humble beginnings of the desert city in Old Dubai, including a boat ride aboard an “abra.” Then, see modern sights including Dubai Marina, Burj Al Arab, and tickets.",
+          hastag:"#1 Top Dubai Desert Experience",
+          logo1:"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png",
+          logo2:"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png",
+          location: "Dubai, United Arab Emirates",
+          price: "1,215",
+          person:"",
+          duration: "1 Hour",
+        },
+        {
+          id: 2,
+          imageSrc: 'https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211165/product2_oql3sj.jpg',
+          discount: "-20%",
+          title: "6 Hours Dubai Private City Tour",
+          description: "Our six hour trip is especially designed for any tourist or visitor on a short stay.",
+          location: "Dubai, United Arab Emirates",
+          price: "1,020",
+          person:"3",
+          duration: "6 Hours",
+        },
+        {
+          id: 3,
+          //imageSrc:process.env.PUBLIC_URL + "https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211165/product3_nc0kot.jpg",
+          imageSrc:"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211165/product3_nc0kot.jpg",
+          discount: "-10%",
+          title: "3 Hours Morning Desert Safari",
+          description: "The Morning Safari is organized daily throughout the week.",
+          location: "Dubai, United Arab Emirates",
+          price: "1,075",
+          person: "4",
+          duration: "3 Hours",
+        },
+        {
+          id: 4,
+          imageSrc:"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211165/product4_amof0v.jpg",
+          discount: "",
+          title: "Tandem Skydive",
+          description: "A tandem skydive is the quickest and easiest way to experience.",
+          location: "Dubai, United Arab Emirates",
+          logo2:"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png",
+          price: "2,199",
+          person: "",
+          duration: "4 Hours",
+        }
+    ],
   //tabs---------
+  
   privateJet: [
     {
       imgSrc: "images/homepage/product1.jpg",
@@ -261,19 +314,19 @@ export const data = {
     // For example:
     {
       name: 'Dubai Private City',
-      image: 'images/homepage/tdimg1.jpg',
+      image: 'https://res.cloudinary.com/dqslvlm0d/image/upload/v1698212193/tdimg1_hx8x0s.jpg',
     },
     {
       name: 'Burj Al Arab',
-      image: 'images/homepage/tdimg2.jpg',
+      image: 'https://res.cloudinary.com/dqslvlm0d/image/upload/v1698212193/tdimg2_swhtpo.jpg',
     },
     {
       name: 'Dubai Air Travel',
-      image: 'images/homepage/tdimg3.jpg',
+      image: 'https://res.cloudinary.com/dqslvlm0d/image/upload/v1698212192/tdimg3_rvfzql.jpg',
     },
     {
       name: 'Abu Dhabi Combo',
-      image: 'images/homepage/tdimg4.jpg',
+      image: 'https://res.cloudinary.com/dqslvlm0d/image/upload/v1698212192/tdimg4_jtngjc.jpg',
     },
     // Add more items as needed
   ],

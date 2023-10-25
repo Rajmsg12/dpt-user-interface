@@ -299,7 +299,7 @@ const LeftSideFilter = ({ handlePriceFilter, priceRange }) => {
     <div className="DubaiPrivateTourDiv">
       <div className="customersayText">
         <div className="topimg">
-          <img src="images/homepage/Tripadvisorlogo.png" alt="" />
+          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697702089/Tripadvisorlogo_cc6y9z.png"} alt="" />
         </div>
         <h4>Dubai Private Tour</h4>
         <div className="rating">

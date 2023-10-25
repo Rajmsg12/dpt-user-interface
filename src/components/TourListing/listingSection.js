@@ -54,7 +54,7 @@ const ListingSection = () => {
                           aria-controls="pills-grid"
                           aria-selected="false"
                         >
-                          Grid <img src="images/homepage/grid.png" alt="" />
+                          Grid <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211736/grid_emrbiy.png"} alt="" />
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
@@ -68,7 +68,7 @@ const ListingSection = () => {
                           aria-controls="pills-listing"
                           aria-selected="true"
                         >
-                          <img src="images/homepage/list.png" alt="" />
+                          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211812/list_k2k6ct.png"} alt="" />
                           Listing
                         </button>
                       </li>

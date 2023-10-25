@@ -9,7 +9,7 @@ const GetInTouch = () => {
       <div className="time">5 Hours</div>
       <div className="location">Dubai, United Arab Emirates</div>
       <div className="review">
-        <img src="images/homepage/ratingstar.png" alt="" />4.5 | 500 Reviews
+        <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />4.5 | 500 Reviews
       </div>
       <div className="SocialIcon">
         <div className="shareTag">Share with your friends</div>

@@ -104,8 +104,8 @@ const Banner = () => {
     if (selectedCountry && selectedPerson) {
       // This condition should work for navigation.
       const lowerCaseSelectedCountry = selectedCountry.toLowerCase()
-  // navigate(`/tours/${lowerCaseSelectedCountry}`);
-   navigate(`/tours`);
+   navigate(`/tours/${lowerCaseSelectedCountry}`);
+  //  navigate(`/tours`);
     
     }
   };

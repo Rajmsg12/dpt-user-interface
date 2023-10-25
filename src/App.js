@@ -8,6 +8,9 @@ import Homepage from "./components/pages/Homepage";
 import DetailPage from './components/pages/TourSection'
 import { useParams } from 'react-router-dom';
 import TourListing from './components/pages/TourListingMain'
+import Login from './components/user/Login';
+import Register from "./components/user/Register";
+import Forget from "./components/user/Forget";
 
 
 //const Header = lazy(() => import("./components/Header"));
@@ -40,6 +43,9 @@ function App() {
       <React.Fragment>
         
         <Routes>
+        <Route exact path='/login' element={<Login/>} /> 
+        <Route exact path='/register' element={<Register/>} /> 
+        <Route exact path='/forget-password' element={<Forget/>} /> 
         <Route exact path="/" element={<Homepage/>} />
         <Route exact path="/private-jet/:title" element={<DetailPage/>} />
         <Route exact path="/wedding-on-yacht/:title" element={<DetailPage/>} />
@@ -47,8 +53,8 @@ function App() {
         <Route exact path="/private-tour/:title" element={<DetailPage/>} />
         <Route exact path="/attraction-tickets/:title" element={<DetailPage/>} />
         <Route exact path="/chauffeur/:title" element={<DetailPage/>} />
-        {/* <Route exact path='/tours/:country' element={<TourListing/>} /> */}
-        <Route exact path='/tours' element={<TourListing/>} />
+        <Route exact path='/tours/:country' element={<TourListing/>} /> 
+       { /*<Route exact path='/tours' element={<TourListing/>} />*/}
         </Routes>
       </React.Fragment>
     </BrowserRouter>
