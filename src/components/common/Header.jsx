@@ -119,7 +119,7 @@ const Header = () => {
                                         </button>
                                         <ul className="dropdown-menu">
                                             <li>
-                                                <Link className="dropdown-item" to="/account/profile">
+                                                <Link className="dropdown-item" to="/profile">
                                                     <IconPersonBadgeFill /> My Profile
                                                 </Link>
                                             </li>
@@ -155,7 +155,7 @@ const Header = () => {
                                                 <hr className="dropdown-divider" />
                                             </li>
                                             <li>
-                                                <Link className="dropdown-item" to="/">
+                                                <Link className="dropdown-item" to="/login">
                                                     <IconDoorClosedFill className="text-danger" /> Logout
                                                 </Link>
                                             </li>

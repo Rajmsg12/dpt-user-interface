@@ -2,7 +2,7 @@ export const data = {
 
     //TourDetailsBanner------------
     TourDetailsBanner:[{
-      slider:"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"
+      slider:""
   
     }
       
@@ -11,7 +11,7 @@ export const data = {
     TourListing: [
         {
           id: 1,
-          imageSrc:'https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211165/product1_mkxyjl.jpg',
+          imageSrc:"/images/homepage/product1.jpg",
           discount: "-10%",
           title: "Dubai Airport Private Transfer",
           description: "Discover all of Dubai’s top sights with a private tour guide during this full-day city tour. Go back in time and learn about the humble beginnings of the desert city in Old Dubai, including a boat ride aboard an “abra.” Then, see modern sights including Dubai Marina, Burj Al Arab, and tickets.",
@@ -25,7 +25,7 @@ export const data = {
         },
         {
           id: 2,
-          imageSrc: 'https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211165/product2_oql3sj.jpg',
+          imageSrc: '/images/homepage/product2.jpg',
           discount: "-20%",
           title: "6 Hours Dubai Private City Tour",
           description: "Our six hour trip is especially designed for any tourist or visitor on a short stay.",

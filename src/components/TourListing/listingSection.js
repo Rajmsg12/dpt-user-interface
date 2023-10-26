@@ -82,7 +82,7 @@ const ListingSection = () => {
                       itemsToShow.map((tour) => (
                         <div className="TabBox" key={`grid-${tour.id}`}>
                           <div className="img">
-                            <img src={tour.imageSrc} alt="" />
+                            <img src={process.env.PUBLIC_URL+tour.imageSrc} alt="" />
                             <div className="discountrow">
                               <div className="discount">
                                 <span>{tour.discount}</span>

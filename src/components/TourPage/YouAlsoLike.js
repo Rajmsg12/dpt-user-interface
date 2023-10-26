@@ -39,7 +39,7 @@ const YouAlsoLike = () => {
                                     <div className="item">
                                         <div className="TabBox">
                                             <div className="img">
-                                                <img src={tour.imageSrc} alt="" />
+                                                <img src={process.env.PUBLIC_URL+tour.imageSrc} alt="" />
                                                 {tour.discount && (
                                                     <div className="discountrow">
                                                         <div className="discount">
