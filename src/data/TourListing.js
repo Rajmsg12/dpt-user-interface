@@ -4,7 +4,7 @@ export const data = {
     TourListing: [
       {
         id: 1,
-        imageSrc:"images/homepage/product1.jpg",
+        imageSrc:"/images/homepage/product1.jpg",
         discount: "-10%",
         title: "Dubai Airport Private Transfer",
         description: "Discover all of Dubai’s top sights with a private tour guide during this full-day city tour. Go back in time and learn about the humble beginnings of the desert city in Old Dubai, including a boat ride aboard an “abra.” Then, see modern sights including Dubai Marina, Burj Al Arab, and tickets.",
@@ -18,7 +18,7 @@ export const data = {
       },
       {
         id: 2,
-        imageSrc: "images/homepage/product2.jpg",
+        imageSrc: "/images/homepage/product2.jpg",
         discount: "-20%",
         title: "6 Hours Dubai Private City Tour",
         description: "Our six hour trip is especially designed for any tourist or visitor on a short stay.",
@@ -30,7 +30,7 @@ export const data = {
       {
         id: 3,
         //imageSrc:process.env.PUBLIC_URL + "https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211165/product3_nc0kot.jpg",
-        imageSrc:"images/homepage/product3.jpg",
+        imageSrc:"/images/homepage/product3.jpg",
         discount: "-10%",
         title: "3 Hours Morning Desert Safari",
         description: "The Morning Safari is organized daily throughout the week.",
