@@ -15,7 +15,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://127.0.0.1:8800/login', {
+            const response = await fetch('http://127.0.0.1:9900/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,17 +24,18 @@ const Login = () => {
             });
 
             if (response.ok) {
-                // Login was successful, you can redirect the user to another page or take any necessary action.
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('name', data.name);
                 navigate('/');
             } else {
-                // Login failed, show an error message.
                 setError('Invalid email or password. Please try again.');
             }
         } catch (error) {
-            // Handle network or other errors here.
             setError('An error occurred. Please try again later.');
         }
     };
+
 
     return (
         <div>

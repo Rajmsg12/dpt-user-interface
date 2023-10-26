@@ -3,13 +3,15 @@ import InnerHeader from '../common/InnerHeader';
 import Footer from '../common/Footer';
 import './Style/login.css';
 import {Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   // Define state variables to hold user input
-  const [name, setName] = useState('');
+  const [user_name, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirm_password, setConfirmPassword] = useState('');
+  const navigate =useNavigate()
 
   // Function to handle form submission
   const handleFormSubmit = async (e) => {
@@ -17,15 +19,15 @@ const Register = () => {
 
     // Create a data object to send in the request body
     const data = {
-      name,
+      user_name,
       email,
       password,
-      confirm_password: confirmPassword,
+      confirm_password: confirm_password,
     };
 
     try {
       // Send a POST request to the backend API
-      const response = await fetch('http://127.0.0.1:8800/register', {
+      const response = await fetch('http://127.0.0.1:9900/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,6 +39,7 @@ const Register = () => {
         // Registration successful - you can handle the success scenario here
         // For example, you can redirect the user to a success page or display a success message.
         console.log('Registration successful');
+        navigate('/login')
       } else {
         // Registration failed - handle the error scenario here
         // For example, you can display an error message to the user.
@@ -65,8 +68,8 @@ const Register = () => {
                   className="form-control"
                   placeholder="Full Name"
                   required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={user_name}
+                  onChange={(e) => setUserName(e.target.value)}
                 />
               </div>
               <div className="mb-3 formGroup">
@@ -98,7 +101,7 @@ const Register = () => {
                   className="form-control"
                   placeholder="Confirm Password"
                   required
-                  value={confirmPassword}
+                  value={confirm_password}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
