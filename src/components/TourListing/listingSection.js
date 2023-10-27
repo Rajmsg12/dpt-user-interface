@@ -152,7 +152,7 @@ const ListingSection = () => {
                             <div className="listingBoxTop">
                               <h4>{tour.title}</h4>
                               <div className="ReviewsDivrow">
-                                <img src="images/homepage/ratingstar.png" alt="" />
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
                                 <span>4.5 | 500 Reviews</span>
                               </div>
                               <div className="descrition">
