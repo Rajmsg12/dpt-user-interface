@@ -8,6 +8,7 @@ import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { ReactComponent as IconStarFill } from "bootstrap-icons/icons/star-fill.svg";
 import { ReactComponent as IconListCheck } from "bootstrap-icons/icons/list-check.svg";
 import { ReactComponent as IconDoorClosedFill } from "bootstrap-icons/icons/door-closed.svg";
+import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import { ReactComponent as Shapes } from "bootstrap-icons/icons/heart.svg";
 import { ReactComponent as IconBellFill } from "bootstrap-icons/icons/bell-fill.svg";
 import { ReactComponent as IconInfoCircleFill } from "bootstrap-icons/icons/info-circle-fill.svg";
@@ -88,51 +89,69 @@ const Header = () => {
                                         </div>
                                     </div>
                                     <div className="addtocart">
-                                    <div className="addtocart">
-                                    <Link to="/"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
-                                    <Link to="/"><img src="images/homepage/like.png" alt="" /></Link>
+                                        <div className="addtocart">
+                                            <Link to="/"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
+                                            <Link to="/"><img src="images/homepage/like.png" alt="" /></Link>
 
-                                </div>
-
-
+                                        </div>
 
 
-                                <div className="btn-group">
-                                    <button
-                                        type="button"
-                                        className="cerculeIcon"
-                                        data-toggle="dropdown"
-                                        aria-expanded="false"
-                                        aria-label="Profile"
-                                        data-bs-toggle="dropdown"
-                                    >
-                                        <FontAwesomeIcon icon={faUser} className="text-light" />
-                                    </button>
-                                    <ul className="dropdown-menu">
-                                        <li>
-                                            {isLoggedIn ? (
-                                                <Link to="/profile" className="dropdown-item">
-                                                    <div >
-                                                        <Person className="text-danger" />
-                                                        <span className="userName" style={{ color: "black" }}>{user_name}</span>
-                                                    </div>
 
-                                                </Link>
-                                            ) : (
-                                                <Link to="/login" className="dropdown-item">Login/SignUp</Link>
-                                            )}
-                                        </li>
-                                        {/*<li>
+
+                                        <div className="btn-group">
+                                            <button
+                                                type="button"
+                                                className="cerculeIcon"
+                                                data-toggle="dropdown"
+                                                aria-expanded="false"
+                                                aria-label="Profile"
+                                                data-bs-toggle="dropdown"
+                                            >
+                                                <FontAwesomeIcon icon={faUser} className="text-light" />
+                                            </button>
+                                            <ul className="dropdown-menu">
+                                                <li>
+                                                    {isLoggedIn ? (
+                                                        <div>
+                                                            <Link to="/user-dashboard" className="dropdown-item">
+                                                                <div >
+                                                                    <Person className="text-danger" />
+                                                                    <span className="userName" style={{ color: "black" }}>{user_name}</span>
+                                                                </div>
+                                                            </Link>
+                                                            <li>
+                                                                <hr className="dropdown-divider" />
+                                                            </li>
+                                                            <li>
+                                                                <Link to="/bookings" className="dropdown-item">
+                                                                    <House className="text-danger" /> Bookings
+                                                                </Link>
+                                                            </li>
+                                                            <li>
+                                                                <hr className="dropdown-divider" />
+                                                            </li>
+                                                            <li>
+                                                                <button className="dropdown-item" onClick={handleLogout}>
+                                                                    <IconDoorClosedFill className="text-danger" /> Logout
+                                                                </button>
+                                                            </li>
+                                                        </div>
+
+                                                    ) : (
+                                                        <Link to="/login" className="dropdown-item">Login/SignUp</Link>
+                                                    )}
+                                                </li>
+                                                {/*<li>
                                             <Link className="dropdown-item" to="/star/zone">
                                                 <IconStarFill className="text-warning" /> Star Zone
                                             </Link>
                                         </li>*/}
-                                        {/*    <li>
+                                                {/*    <li>
                                             <Link className="dropdown-item" to="/account/orders">
                                                 <IconListCheck className="text-primary" /> Orders
                                             </Link>
                                         </li>*/}
-                                        {/*   <li>
+                                                {/*   <li>
                                             <Link className="dropdown-item" to="/account/wishlist">
                                                 <Shapes className="text-danger" /> Wishlist
                                             </Link>
@@ -145,21 +164,14 @@ const Header = () => {
                                                 <IconBellFill className="text-primary" /> Notification
                                             </Link>
                                         </li>*/}
-                                        {/*       <li>
+                                                {/*       <li>
                                             <Link className="dropdown-item" to="/support">
                                                 <IconInfoCircleFill className="text-success" /> Support
                                             </Link>
                                         </li>*/}
-                                        <li>
-                                            <hr className="dropdown-divider" />
-                                        </li>
-                                        <li>
-                                            <button className="dropdown-item" onClick={handleLogout}>
-                                                <IconDoorClosedFill className="text-danger" /> Logout
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
+
+                                            </ul>
+                                        </div>
                                     </div>
 
 
@@ -211,51 +223,66 @@ const Header = () => {
                                     </div>
                                 </div>
                                 <div className="parentaddtocart">
-                                <div className="addtocart">
-                                <Link to="/"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
-                                <Link to="/"><img src="images/homepage/like.png" alt="" /></Link>
+                                    <div className="addtocart">
+                                        <Link to="/"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
+                                        <Link to="/"><img src="images/homepage/like.png" alt="" /></Link>
 
-                            </div>
+                                    </div>
 
+                                    <div className="btn-group">
+                                        <button
+                                            type="button"
+                                            className="cerculeIcon"
+                                            data-toggle="dropdown"
+                                            aria-expanded="false"
+                                            aria-label="Profile"
+                                            data-bs-toggle="dropdown"
+                                        >
+                                            <FontAwesomeIcon icon={faUser} className="text-light" />
+                                        </button>
+                                        <ul className="dropdown-menu">
+                                            <li>
+                                                {isLoggedIn ? (
+                                                    <div>
+                                                        <Link to="/user-dashboard" className="dropdown-item">
+                                                            <div >
+                                                                <Person className="text-danger" />
+                                                                <span className="userName" style={{ color: "black" }}>{user_name}</span>
+                                                            </div>
+                                                        </Link>
+                                                        <li>
+                                                            <hr className="dropdown-divider" />
+                                                        </li>
+                                                        <li>
+                                                            <Link to="/bookings" className="dropdown-item">
+                                                                <House className="text-danger" /> Bookings
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <hr className="dropdown-divider" />
+                                                        </li>
+                                                        <li>
+                                                            <button className="dropdown-item" onClick={handleLogout}>
+                                                                <IconDoorClosedFill className="text-danger" /> Logout
+                                                            </button>
+                                                        </li>
+                                                    </div>
 
-
-
-                            <div className="btn-group">
-                                <button
-                                    type="button"
-                                    className="cerculeIcon"
-                                    data-toggle="dropdown"
-                                    aria-expanded="false"
-                                    aria-label="Profile"
-                                    data-bs-toggle="dropdown"
-                                >
-                                    <FontAwesomeIcon icon={faUser} className="text-light" />
-                                </button>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        {isLoggedIn ? (
-                                            <Link to="/profile" className="dropdown-item">
-                                                <div >
-                                                    <Person className="text-danger" />
-                                                    <span className="userName" style={{ color: "black" }}>{user_name}</span>
-                                                </div>
-
-                                            </Link>
-                                        ) : (
-                                            <Link to="/login" className="dropdown-item">Login/SignUp</Link>
-                                        )}
-                                    </li>
-                                    {/*<li>
+                                                ) : (
+                                                    <Link to="/login" className="dropdown-item">Login/SignUp</Link>
+                                                )}
+                                            </li>
+                                            {/*<li>
                                         <Link className="dropdown-item" to="/star/zone">
                                             <IconStarFill className="text-warning" /> Star Zone
                                         </Link>
                                     </li>*/}
-                                    {/*    <li>
+                                            {/*    <li>
                                         <Link className="dropdown-item" to="/account/orders">
                                             <IconListCheck className="text-primary" /> Orders
                                         </Link>
                                     </li>*/}
-                                    {/*   <li>
+                                            {/*   <li>
                                         <Link className="dropdown-item" to="/account/wishlist">
                                             <Shapes className="text-danger" /> Wishlist
                                         </Link>
@@ -268,21 +295,14 @@ const Header = () => {
                                             <IconBellFill className="text-primary" /> Notification
                                         </Link>
                                     </li>*/}
-                                    {/*       <li>
+                                            {/*       <li>
                                         <Link className="dropdown-item" to="/support">
                                             <IconInfoCircleFill className="text-success" /> Support
                                         </Link>
                                     </li>*/}
-                                    <li>
-                                        <hr className="dropdown-divider" />
-                                    </li>
-                                    <li>
-                                        <button className="dropdown-item" onClick={handleLogout}>
-                                            <IconDoorClosedFill className="text-danger" /> Logout
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
+
+                                        </ul>
+                                    </div>
                                 </div>
 
                             </div>

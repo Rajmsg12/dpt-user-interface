@@ -2434,3 +2434,14 @@ footer {
 .datepicker-wrapper {
   width: 150%;
 }
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderRHS .dropdown.userIcon .dropdown-toggle::after{
+  display: none;
+}
+
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderRHS .dropdown.userIcon ul li a {
+  width: auto;
+  min-width: auto;
+  height: auto;
+  min-height: auto;
+  background-color: #fff;
+}

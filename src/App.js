@@ -11,7 +11,7 @@ import TourListing from './components/pages/TourListingMain'
 import Login from './components/user/Login';
 import Register from "./components/user/Register";
 import Forget from "./components/user/Forget";
-import UserProfile from './components/user/UserProfile'
+import UserProfile from './components/user/UserDashboard'
 
 
 //const Header = lazy(() => import("./components/Header"));
@@ -47,7 +47,7 @@ function App() {
         <Route exact path='/login' element={<Login/>} /> 
         <Route exact path='/register' element={<Register/>} /> 
         <Route exact path='/forget-password' element={<Forget/>} /> 
-        <Route exact path='/profile' element={<UserProfile/>} /> 
+        <Route exact path='/user-dashboard' element={<UserProfile/>} /> 
         <Route exact path="/" element={<Homepage/>} />
         <Route exact path="/private-jet/:title" element={<DetailPage/>} />
         <Route exact path="/wedding-on-yacht/:title" element={<DetailPage/>} />
