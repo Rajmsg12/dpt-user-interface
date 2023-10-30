@@ -3,12 +3,14 @@ import UserHeader from '../common/dashboardHeader'
 import Footer from '../common/Footer'
 import { Link } from 'react-router-dom'
 import './Style/dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const UserProfile = () => {
   const [user_name, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -34,6 +36,20 @@ const UserProfile = () => {
         });
     }
   }, []);
+  const handleLogout = () => {
+    fetch('http://127.0.0.1:9900/logout', {
+        method: 'POST',
+    })
+        .then(() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user_name');
+            setIsLoggedIn(false);
+            navigate('/')
+        })
+        .catch(error => {
+            console.error('Logout failed', error);
+        });
+};
   return (
     <>
       <UserHeader />
@@ -67,7 +83,7 @@ const UserProfile = () => {
               <div className="nav-link HelpIcon" id="v-pills-help-tab" data-bs-toggle="pill" data-bs-target="#v-pills-help" role="tab" aria-controls="v-pills-help" aria-selected="false"><img src="images/homepage/customer-supporticon.png" alt="" /> Help</div>
             </div>
             <div className="logoutDiv">
-              <Link to="#"><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
+              <Link  onClick = {handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
             </div>
 
 
