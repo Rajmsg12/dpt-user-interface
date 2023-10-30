@@ -253,23 +253,47 @@ const Banner = () => {
                           <div className="SearchPopupForMobInner">
                             <div className="searchinputformobile popupSearchbar">
                               <button type="submit" className="SearchIconInput"> </button>
-                              <input type="text" value="" onChange={searchValue} placeholder="Search for a place or activity" />
+                              <SearchableSelect
+                                    options={data.bannerSearchCountry.map((item) => item.country)}
+                                    placeholder="Select Country"
+                                    onSelect={handleCountrySelect}
+                                  />
                             </div>
 
                             <div className="SelectdateField">
                               <div className="calendarIcon"></div>
-                              <input type="text" placeholder="Select Dates" />
+                              <DatePicker
+                                  selected={selectedDate}
+                                  onChange={(date) => setSelectedDate(date)}
+                                  minDate={new Date()}
+                                  placeholderText="Select Date"
+                                  customInput={
+                                    <input
+                                      style={{
+                                        border: "none",
+                                        outline: "none",
+                                      }}
+                                    />
+                                  }
+                                />
                             </div>
 
                             <div className="SelectpeopleField">
                               <div className="UserIcon"></div>
-                              <input type="text" placeholder="Select Persons" />
+                              <SearchableSelect
+                              options={data.bannerSelectPerson.map((item) => item.person)}
+                              placeholder="1 Traveller"
+                              onSelect={(person) => {
+                                setSelectedPerson(person);
+                                handlePersonSelect(person);
+                              }}
+                            />
                             </div>
 
                             <div className="PopupSubmitBtn">
 
                               {/* Replace the <button> with a <Link> */}
-                              <Link to="/">Search</Link>
+                             <button onClick={handleSearchClick} className="searchIcon">Search</button>
                             </div>
                           </div>
                         </div>

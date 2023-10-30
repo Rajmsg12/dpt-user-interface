@@ -10,7 +10,10 @@ import Itinerary from './Itinerary';
 import WhatToExpect from './WhatToExpect';
 import DetailOverview from './BannerTabs';
 import GetInTouch from './GetInTouch';
+import { useParams } from 'react-router-dom';
+
 function ContentSection() {
+    const { title } = useParams();
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
