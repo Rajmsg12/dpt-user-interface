@@ -12,6 +12,7 @@ import Login from './components/user/Login';
 import Register from "./components/user/Register";
 import Forget from "./components/user/Forget";
 import UserProfile from './components/user/UserDashboard'
+import Category from './components/pages/cateory'
 
 
 //const Header = lazy(() => import("./components/Header"));
@@ -56,7 +57,8 @@ function App() {
         <Route exact path="/attraction-tickets/:title" element={<DetailPage/>} />
         <Route exact path="/chauffeur/:title" element={<DetailPage/>} />
         <Route exact path='/tours/:country' element={<TourListing/>} /> 
-       { /*<Route exact path='/tours' element={<TourListing/>} />*/}
+        <Route exact path='/plan' element={<Category/>} />
+      {/*  <Route exact path='/plan/:categoryName' element={<Category/>} /> */}
         </Routes>
       </React.Fragment>
     </BrowserRouter>

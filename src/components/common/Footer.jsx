@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import {data} from '../../data/Footer'
 import {
     faTwitter,
     faFacebookF,
@@ -53,52 +54,39 @@ const Footer = () => {
                     </div>
                     <div className="footerWidget">
                         <h6>Tours & Safaris</h6>
+                        
                         <ul>
-                            <li>
-                                <Link to="#">Luxury Tours</Link>
+                        {data.CategoryList.map((item, index) => (
+                            <li key={index}>
+                                {/*<Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>*/}
+                                <Link to={`/plan`}>{item.category}</Link>
                             </li>
-                            <li>
-                                <Link to="#">Budget City Tour</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Dinner Cruise</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Skydive Dubai</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Dune Buggy</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Burg Al Arab Reservations</Link>
-                            </li>
-                            <li>
-                                <Link to="#">City Tours</Link>
-                            </li>
+                        ))}
+                
                         </ul>
                     </div>
                     <div className="footerWidget">
                         <ul>
                             <li>
-                                <Link to="#">Desert Safari</Link>
+                                <Link to="/tours">Desert Safari</Link>
                             </li>
                             <li>
-                                <Link to="#">Expo 2020 Packages</Link>
+                                <Link to="/tours">Expo 2020 Packages</Link>
                             </li>
                             <li>
-                                <Link to="#">Meet Local Emirati</Link>
+                                <Link to="/tours">Meet Local Emirati</Link>
                             </li>
                             <li>
-                                <Link to="#">Seaplane Tour</Link>
+                                <Link to="/tours">Seaplane Tour</Link>
                             </li>
                             <li>
-                                <Link to="#">Ferrari World</Link>
+                                <Link to="/tours">Ferrari World</Link>
                             </li>
                             <li>
-                                <Link to="#">Attractions Tickets</Link>
+                                <Link to="/tours">Attractions Tickets</Link>
                             </li>
                             <li>
-                                <Link to="#">Budget Desert Safaris</Link>
+                                <Link to="/tours">Budget Desert Safaris</Link>
                             </li>
                         </ul>
                     </div>
