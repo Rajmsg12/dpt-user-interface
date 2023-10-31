@@ -1,5 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import Slider from 'rc-slider'; // Import the Slider component
+import 'rc-slider/assets/index.css';
 
 const LeftSideFilter = ({ handlePriceFilter, priceRange }) => {
   return (
@@ -150,29 +152,30 @@ const LeftSideFilter = ({ handlePriceFilter, priceRange }) => {
         </div>
       </div>
       <div className="RangeSlider">
-        <div className="sidebarlabel">
-          <h3>Price</h3>
-        </div>
-        <div className="RangeSliderIn">
-          <div className="rangeSliderTopLayer">
+      <div className="sidebarlabel">
+        <h3>Price</h3>
+      </div>
+      <div className="RangeSliderIn">
+        <div className="rangeSliderTopLayer">
           <div className="leftSideFilter">
-          <div className="priceRangeSlider">
-            <input
-              type="range"
-              min="0"
-              max="5000"
-              step="1"
-              value={priceRange}
-              onChange={(e) => handlePriceFilter(parseInt(e.target.value))}
-            />
-            <div className="priceRangeLabel">
-              Price Range: AED {priceRange.toLocaleString('en-US')}
+            <div className="priceRangeSlider">
+              <Slider
+                min={0}
+                max={5000}
+                step={1}
+                range // Enable the range mode
+                value={priceRange}
+                onChange={(value) => handlePriceFilter(value)}
+              />
+              <div className="priceRangeLabel">
+                Price Range: AED {priceRange[0].toLocaleString('en-US')} - {priceRange[1].toLocaleString('en-US')}
+              </div>
             </div>
           </div>
         </div>
-          </div>
-        </div>
       </div>
+    </div>
+     
       <div className="RatingDiv">
         <div className="sidebarlabel">
           <h3>Rating</h3>

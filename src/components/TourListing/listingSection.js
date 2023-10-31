@@ -7,7 +7,8 @@ import LeftSideFilter from './LeftSideFilter';
 const itemsPerPage = 9;
 const ListingSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedPrice, setSelectedPrice] = useState(5000); // Initial price value as a number
+  const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
+  // Initial price value as a number
   const totalItems = data.TourListing.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -20,14 +21,19 @@ const ListingSection = () => {
     }
   };
 
-  const handlePriceFilter = (newPrice) => {
-    setSelectedPrice(newPrice);
+  const handlePriceFilter = (newPriceRange) => {
+    setSelectedPriceRange(newPriceRange);
   };
+  
 
   // Filter items based on the selected price range
   const filteredData = data.TourListing.filter(
-    (tour) => parseInt(tour.price.replace(',', '')) <= selectedPrice
+    (tour) => {
+      const tourPrice = parseInt(tour.price.replace(',', ''));
+      return tourPrice >= selectedPriceRange[0] && tourPrice <= selectedPriceRange[1];
+    }
   );
+  
 
   const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
@@ -35,7 +41,8 @@ const ListingSection = () => {
       <div className="listingPage">
         <div className="container">
           <div className="listingPageWrapper">
-          <LeftSideFilter handlePriceFilter={handlePriceFilter} priceRange={selectedPrice} />
+          <LeftSideFilter handlePriceFilter={handlePriceFilter} priceRange={selectedPriceRange} />
+
             <div className="listingRhs">
               <div className="listingGridTab">
                 <div className="listingToplayer">
