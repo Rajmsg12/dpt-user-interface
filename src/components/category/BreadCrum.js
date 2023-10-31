@@ -1,7 +1,13 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 const BreadCrum = () => {
+    const { categoryName } = useParams();
+    const formattedCategory = categoryName
+    .split('-') // Split by hyphens
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+    .join(' ');
   return (
     <>
     <div className="BreadcrumbSection">
@@ -14,7 +20,7 @@ const BreadCrum = () => {
           <li className="breadcrumb-item">
             <Link to="/">Caterogy</Link>
           </li>
-          <li className="breadcrumb-item active" aria-current="page"> Dubai Luxury Tours</li>
+          <li className="breadcrumb-item active" aria-current="page">{formattedCategory}</li>
         </ol>
       </nav>
     </div>

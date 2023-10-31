@@ -50,12 +50,12 @@ const ContentSection = () => {
                     <li class="nav-item" role="presentation">
                       <button class="nav-link" id="pills-grid-tab" data-bs-toggle="pill" data-bs-target="#pills-grid"
                         type="button" role="tab" aria-controls="pills-grid" aria-selected="false">Grid <img
-                          src="images/homepage/grid.png" alt=""/></button>
+                          src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211736/grid_emrbiy.png"} alt=""/></button>
                     </li>
                     <li class="nav-item" role="presentation">
                       <button class="nav-link active" id="pills-listing-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-listing" type="button" role="tab" aria-controls="pills-listing"
-                        aria-selected="true"><img src="images/homepage/list.png" alt=""/>Listing</button>
+                        aria-selected="true"><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211812/list_k2k6ct.png"} alt=""/>Listing</button>
                     </li>
                   </ul>
                 </div>

@@ -8,7 +8,7 @@ const categoryLHS = () => {
     <div className="Attractions">
         <div className="titleRow">
             <div className="icon">
-                <img src="images/homepage/locationicon.png" alt="" />
+                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701972/locationicon_oyxdy0.png"} alt="" />
             </div>
             <div className="title">
                 Tour Listing <span className="closeIcon" />
@@ -98,7 +98,7 @@ const categoryLHS = () => {
                         <div className="radioboxText">
                             <div className="radioboxSublabel">
                                 <span className="imageStarRating">
-                                    <img src="images/homepage/ratingstar.png" alt="" />
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738115/ratingstar_nisesy.png"}  alt="" />
                                 </span>
                                 <div className="ratingSubtext" />
                             </div>
@@ -114,7 +114,7 @@ const categoryLHS = () => {
                         <div className="radioboxText">
                             <div className="radioboxSublabel">
                                 <span className="imageStarRating">
-                                    <img src="images/homepage/ratingstar.png" alt="" />
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738115/ratingstar_nisesy.png"}  alt="" />
                                 </span>
                                 <div className="ratingSubtext">&amp; up</div>
                             </div>
@@ -130,7 +130,7 @@ const categoryLHS = () => {
                         <div className="radioboxText">
                             <div className="radioboxSublabel">
                                 <span className="imageStarRating">
-                                    <img src="images/homepage/ratingstar.png" alt="" />
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738115/ratingstar_nisesy.png"} alt="" />
                                 </span>
                                 <div className="ratingSubtext">&amp; up</div>
                             </div>
@@ -146,7 +146,7 @@ const categoryLHS = () => {
                         <div className="radioboxText">
                             <div className="radioboxSublabel">
                                 <span className="imageStarRating">
-                                    <img src="images/homepage/ratingstar.png" alt="" />
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738115/ratingstar_nisesy.png"}  alt="" />
                                 </span>
                                 <div className="ratingSubtext">&amp; up</div>
                             </div>
@@ -159,7 +159,7 @@ const categoryLHS = () => {
     <div className="DubaiPrivateTourDiv">
         <div className="customersayText">
             <div className="topimg">
-                <img src="images/homepage/Tripadvisorlogo.png" alt="" />
+                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697702089/Tripadvisorlogo_cc6y9z.png"} alt="" />
             </div>
             <h4>Dubai Private Tour</h4>
             <div className="rating">
