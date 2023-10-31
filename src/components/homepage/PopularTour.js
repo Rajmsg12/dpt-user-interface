@@ -3,6 +3,7 @@ import '../../Style/header.css'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import {data} from '../../data/index'
+import {Link} from 'react-router-dom'
 
 const PopularTour = () => {
     const responsive = {
@@ -36,7 +37,7 @@ const PopularTour = () => {
                         {data.popularTour.map((tour, index) => (
                             <div className="carouselItem" key={index}>
                                 <div className="item">
-                                    <div className="TabBox">
+                                <Link to={`/plan/${tour.title.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox">
                                         <div className="img">
                                             <img src={tour.imgSrc} alt="" />
                                             {tour.discount && (
@@ -82,7 +83,7 @@ const PopularTour = () => {
                                                 {tour.duration}
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </div>
                             </div>
                         ))}
