@@ -71,6 +71,7 @@ const Login = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
+                            {error && <div className="error-message" style={{color:"green"}}>{error}</div>}
                             <div className="CheckBoxrow">
                                 <div className="form-check">
                                     <input
@@ -93,7 +94,7 @@ const Login = () => {
                                     Login
                                 </button>
                             </div>
-                            {error && <div className="error-message">{error}</div>}
+                         
                             <div className="formGroup">
                                 <div className="CreateAccountLabel">
                                     New User? <Link to="/register">Create an account</Link>

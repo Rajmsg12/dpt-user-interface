@@ -12,6 +12,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirm_password, setConfirmPassword] = useState('');
   const navigate =useNavigate()
+  const [error, setError] = useState('');
 
   // Function to handle form submission
   const handleFormSubmit = async (e) => {
@@ -43,10 +44,10 @@ const Register = () => {
       } else {
         // Registration failed - handle the error scenario here
         // For example, you can display an error message to the user.
-        console.error('Registration failed');
+        setError('Registration failed');
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      setError('An error occurred:', error);
     }
   };
 
@@ -105,6 +106,7 @@ const Register = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
+              {error && <div className="error-message" style={{color:"green"}}>{error}</div>}
               <div className="CheckBoxrow">
                 <div className="form-check">
                   <input
