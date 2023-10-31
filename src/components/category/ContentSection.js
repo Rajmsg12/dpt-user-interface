@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom'
 const ContentSection = () => {
     const itemsPerPage = 9;
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedPrice, setSelectedPrice] = useState(5000); // Initial price value as a number
+    const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
     const totalItems = data.CategoryList.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
   
@@ -21,14 +21,17 @@ const ContentSection = () => {
       }
     };
   
-    const handlePriceFilter = (newPrice) => {
-      setSelectedPrice(newPrice);
-    };
+    const handlePriceFilter = (newPriceRange) => {
+        setSelectedPriceRange(newPriceRange);
+      };
   
     // Filter items based on the selected price range
     const filteredData = data.CategoryList.filter(
-      (tour) => parseInt(tour.price.replace(',', '')) <= selectedPrice
-    );
+        (tour) => {
+          const tourPrice = parseInt(tour.price.replace(',', ''));
+          return tourPrice >= selectedPriceRange[0] && tourPrice <= selectedPriceRange[1];
+        }
+      );
   
     const itemsToShow = filteredData.slice(startIndex, endIndex);
     return (
@@ -37,7 +40,7 @@ const ContentSection = () => {
                 <div className="container">
                     <div className="CategorySectionWrapper">
                     {/*Category LHS------- */}
-                       <CategoryLHS/>
+                       <CategoryLHS handlePriceFilter={handlePriceFilter} priceRange={selectedPriceRange} />
                        <div>
                        <Overview/>
                        <div className="listingRhs">

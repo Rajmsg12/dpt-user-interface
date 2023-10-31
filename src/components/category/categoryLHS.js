@@ -1,7 +1,10 @@
 import React from 'react'
 import {data} from '../../data/Category'
 import {Link} from 'react-router-dom'
-const categoryLHS = () => {
+import Slider from 'rc-slider'; // Import the Slider component
+import 'rc-slider/assets/index.css';
+
+const categoryLHS = ({ handlePriceFilter, priceRange }) => {
   return (
     <>
     <div className="CategoryTopSectionLHS" id="sidebarFilter">
@@ -74,16 +77,29 @@ const categoryLHS = () => {
             </div>
         </div>
         <div className="RangeSlider">
-            <div className="sidebarlabel">
-                <h3>Price</h3>
-            </div>
-            <div className="RangeSliderIn">
-                <div className="rangeSliderTopLayer">
-                    <span>0 AED</span>
-                    <span>+ 5000 AED</span>
-                </div>
-            </div>
+        <div className="sidebarlabel">
+          <h3>Price</h3>
         </div>
+        <div className="RangeSliderIn">
+          <div className="rangeSliderTopLayer">
+            <div className="leftSideFilter">
+              <div className="priceRangeSlider">
+                <Slider
+                  min={0}
+                  max={5000}
+                  step={1}
+                  range // Enable the range mode
+                  value={priceRange}
+                  onChange={(value) => handlePriceFilter(value)}
+                />
+                <div className="priceRangeLabel">
+                  Price Range: AED {priceRange[0].toLocaleString('en-US')} - {priceRange[1].toLocaleString('en-US')}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
         <div className="RatingDiv">
             <div className="sidebarlabel">
                 <h3>Rating</h3>
