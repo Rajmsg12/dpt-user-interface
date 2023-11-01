@@ -24,6 +24,19 @@ const ContentSection = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
+  const handleDurationFilter = (duration) => {
+    setSelectedDurations((prevSelectedDurations) => {
+      if (prevSelectedDurations.includes(duration)) {
+        // If the duration checkbox is already selected, remove it
+        return prevSelectedDurations.filter((d) => d !== duration);
+      } else {
+        // Otherwise, add the duration to the selected durations
+        return [...prevSelectedDurations, duration];
+      }
+    });
+  };
+  
+
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -244,4 +257,6 @@ const ContentSection = () => {
 }
 
 export default ContentSection
+
+
 

@@ -6,7 +6,6 @@ import 'rc-slider/assets/index.css';
 
 const CategoryLHS = ({ handlePriceFilter, priceRange , handleRatingFilterChange, selectedRatingFilter }) => {
     
-      
   return (
     <>
     <div className="CategoryTopSectionLHS" id="sidebarFilter">
