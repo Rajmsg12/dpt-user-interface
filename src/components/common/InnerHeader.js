@@ -103,9 +103,9 @@ const InnerHeader = () => {
                   <Link to="" className="cart"></Link>
                   <Link to="" className="wishlist"></Link>
 
-                  <div class="dropdown userIcon">
-                    <Link class="btn userIconTag dropdown-toggle" to="/" role="button" id="userIcon" data-bs-toggle="dropdown" aria-expanded="false"></Link>
-                    <ul class="dropdown-menu" aria-labelledby="userIcon">
+                  <div className="dropdown userIcon">
+                    <Link className="btn userIconTag dropdown-toggle" to="/" role="button" id="userIcon" data-bs-toggle="dropdown" aria-expanded="false"></Link>
+                    <ul className="dropdown-menu" aria-labelledby="userIcon">
                     <li>
                     {isLoggedIn ? (
                         <div>

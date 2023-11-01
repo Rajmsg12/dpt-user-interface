@@ -76,11 +76,11 @@ const Header = () => {
                                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                 <li><Link className="dropdown-item" to="/">Spanish</Link></li>
                                                 <li><Link className="dropdown-item" to="/">French</Link></li>
-                                                <li><Link className="dropdown-item" href="/">German</Link></li>
+                                                <li><Link className="dropdown-item" to="/">German</Link></li>
                                             </ul>
                                         </div>
                                         <div className="dropdown">
-                                            <Link className="btn dropdown-toggle" href="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <Link className="btn dropdown-toggle" to="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                 AED
                                             </Link>
                                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -110,7 +110,7 @@ const Header = () => {
                                                 <FontAwesomeIcon icon={faUser} className="text-light" />
                                             </button>
                                             <ul className="dropdown-menu">
-                                                <li>
+                                             
                                                     {isLoggedIn ? (
                                                         <div>
                                                             <Link to="/user-dashboard" className="dropdown-item">
@@ -140,7 +140,7 @@ const Header = () => {
                                                     ) : (
                                                         <Link to="/login" className="dropdown-item">Login/SignUp</Link>
                                                     )}
-                                                </li>
+                                             
                                                 {/*<li>
                                             <Link className="dropdown-item" to="/star/zone">
                                                 <IconStarFill className="text-warning" /> Star Zone
@@ -181,7 +181,7 @@ const Header = () => {
                             <div className="hlhsdiv">
                                 <div className="mobileNone">
                                     <div className="tel">
-                                        <Link href="tel:+1 (800) 659 0187">+1 (800) 659 0187</Link>
+                                        <Link to="tel:+1 (800) 659 0187">+1 (800) 659 0187</Link>
                                         <div className="tollfree"><span>Toll Free Number</span><span>USA</span></div>
                                     </div>
                                 </div>
@@ -208,9 +208,9 @@ const Header = () => {
                                             ENG
                                         </Link>
                                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li><Link className="dropdown-item" href="/">Spanish</Link></li>
-                                            <li><Link className="dropdown-item" href="/">French</Link></li>
-                                            <li><Link className="dropdown-item" href="/">German</Link></li>
+                                            <li><Link className="dropdown-item" to="/">Spanish</Link></li>
+                                            <li><Link className="dropdown-item" to="/">French</Link></li>
+                                            <li><Link className="dropdown-item" to="/">German</Link></li>
                                         </ul>
                                     </div>
                                     <div className="dropdown">
@@ -241,7 +241,7 @@ const Header = () => {
                                             <FontAwesomeIcon icon={faUser} className="text-light" />
                                         </button>
                                         <ul className="dropdown-menu">
-                                            <li>
+                                         
                                                 {isLoggedIn ? (
                                                     <div>
                                                         <Link to="/user-dashboard" className="dropdown-item">
@@ -271,7 +271,7 @@ const Header = () => {
                                                 ) : (
                                                     <Link to="/login" className="dropdown-item">Login/SignUp</Link>
                                                 )}
-                                            </li>
+                                        
                                             {/*<li>
                                         <Link className="dropdown-item" to="/star/zone">
                                             <IconStarFill className="text-warning" /> Star Zone
