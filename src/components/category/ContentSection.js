@@ -27,8 +27,16 @@ const ContentSection = () => {
       };
 
       const handleRatingFilterChange = (rating) => {
-        setSelectedRatingFilter(rating);
+        setSelectedRatingFilter((prevRating) => {
+          // If the same rating is clicked again, unselect it
+          if (prevRating === rating) {
+            return null;
+          }
+          // Otherwise, select the new rating
+          return rating;
+        });
       };
+      
         
   
     // Filter items based on the selected price range
@@ -55,18 +63,18 @@ const ContentSection = () => {
                        <Overview/>
                        <div className="listingRhs">
                        <div className="listingGridTab">
-                       <div class="listingToplayer">
-                <div class="Title"><h2>Dubai Luxury Tours</h2></div>
+                       <div className="listingToplayer">
+                <div className="Title"><h2>Dubai Luxury Tours</h2></div>
                 <div>
-                  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="filterDiv"></li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="pills-grid-tab" data-bs-toggle="pill" data-bs-target="#pills-grid"
+                  <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li className="filterDiv"></li>
+                    <li className="nav-item" role="presentation">
+                      <button className="nav-link" id="pills-grid-tab" data-bs-toggle="pill" data-bs-target="#pills-grid"
                         type="button" role="tab" aria-controls="pills-grid" aria-selected="false">Grid <img
                           src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211736/grid_emrbiy.png"} alt=""/></button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="pills-listing-tab" data-bs-toggle="pill"
+                    <li className="nav-item" role="presentation">
+                      <button className="nav-link active" id="pills-listing-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-listing" type="button" role="tab" aria-controls="pills-listing"
                         aria-selected="true"><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211812/list_k2k6ct.png"} alt=""/>Listing</button>
                     </li>

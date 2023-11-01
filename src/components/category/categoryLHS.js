@@ -5,6 +5,8 @@ import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
 
 const CategoryLHS = ({ handlePriceFilter, priceRange , handleRatingFilterChange, selectedRatingFilter }) => {
+    
+      
   return (
     <>
     <div className="CategoryTopSectionLHS" id="sidebarFilter">
@@ -109,12 +111,13 @@ const CategoryLHS = ({ handlePriceFilter, priceRange , handleRatingFilterChange,
         <div>
           <label className="RadioBoxIn">
             <div className="radioboxField">
-              <input
-                type="radio"
-                name="ratingFilter"
-                onClick={() => handleRatingFilterChange(2)}
-                checked={selectedRatingFilter === 2}
-              />
+            <input
+            type="radio"
+            name="ratingFilter"
+            onClick={() => handleRatingFilterChange(2)}
+            checked={selectedRatingFilter === 2}
+          />
+          
               <span className="checkmark" />
             </div>
             <div className="radioboxText">
