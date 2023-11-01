@@ -95,7 +95,7 @@ const ListingSection = () => {
                     <div className="listingRow GridRowWrapper">
                     {filteredData.length > 0 ? (
                       itemsToShow.map((tour) => (
-                        <div className="TabBox" key={`grid-${tour.id}`}>
+                        <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.id}`}>
                           <div className="img">
                             <img src={process.env.PUBLIC_URL+tour.imageSrc} alt="" />
                             <div className="discountrow">
@@ -132,7 +132,7 @@ const ListingSection = () => {
                             </div>
                             <div className="aedRHS">{tour.duration}</div>
                           </div>
-                        </div>
+                        </Link>
                         ))
                         ) : (
                           <p>No items within the selected price range.</p>
@@ -142,7 +142,7 @@ const ListingSection = () => {
                   <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                     <div className="listingRow">
                       {itemsToShow.map((tour) => (
-                        <div className="listingBox" key={`listing-${tour.id}`}>
+                        <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.id}`}>
                           <div className="listingBoxImg">
                             <img src={tour.imageSrc} alt="" />
                             <div className="discountrow">
@@ -187,7 +187,7 @@ const ListingSection = () => {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   </div>
