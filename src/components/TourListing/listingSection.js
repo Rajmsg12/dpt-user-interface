@@ -26,7 +26,14 @@ const ListingSection = () => {
     setSelectedPriceRange(newPriceRange);
   };
   const handleRatingFilterChange = (rating) => {
-    setSelectedRatingFilter(rating);
+    setSelectedRatingFilter((prevRating) => {
+      // If the same rating is clicked again, unselect it
+      if (prevRating === rating) {
+        return null;
+      }
+      // Otherwise, select the new rating
+      return rating;
+    });
   };
     
   
