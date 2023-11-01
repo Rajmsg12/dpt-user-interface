@@ -4,6 +4,7 @@ import { data } from '../../data/Category'
 import CategoryLHS from './categoryLHS'
 import Overview from './Overview'
 import {Link} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 const ContentSection = () => {
     const itemsPerPage = 9;
@@ -12,10 +13,18 @@ const ContentSection = () => {
     const totalItems = data.CategoryList.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const [selectedRatingFilter, setSelectedRatingFilter] = useState(2);
+    const [selectedDurations, setSelectedDurations] = useState([]);
+    const {categoryName} = useParams()
+    const formattedCategory = categoryName
+    .split('-') // Split by hyphens
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+    .join(' ');
+
   
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
   
+    
     const handlePageChange = (page) => {
       if (page >= 1 && page <= totalPages) {
         setCurrentPage(page);
@@ -64,7 +73,7 @@ const ContentSection = () => {
                        <div className="listingRhs">
                        <div className="listingGridTab">
                        <div className="listingToplayer">
-                <div className="Title"><h2>Dubai Luxury Tours</h2></div>
+                <div className="Title"><h2>{formattedCategory}</h2></div>
                 <div>
                   <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li className="filterDiv"></li>

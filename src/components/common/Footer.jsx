@@ -56,7 +56,7 @@ const Footer = () => {
                         <h6>Tours & Safaris</h6>
                         
                         <ul>
-                        {data.CategoryList.map((item, index) => (
+                        {data.CategoryList.slice(0,8).map((item, index) => (
                             <li key={index}>
                                <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
                              {  /* <Link to={`/plan`}>{item.category}</Link>*/}
@@ -67,55 +67,22 @@ const Footer = () => {
                     </div>
                     <div className="footerWidget">
                         <ul>
-                            <li>
-                                <Link to="/tours">Desert Safari</Link>
+                        {data.CategoryList.slice(8,16).map((item, index) => (
+                            <li key={index}>
+                               <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
+                             {  /* <Link to={`/plan`}>{item.category}</Link>*/}
                             </li>
-                            <li>
-                                <Link to="/tours">Expo 2020 Packages</Link>
-                            </li>
-                            <li>
-                                <Link to="/tours">Meet Local Emirati</Link>
-                            </li>
-                            <li>
-                                <Link to="/tours">Seaplane Tour</Link>
-                            </li>
-                            <li>
-                                <Link to="/tours">Ferrari World</Link>
-                            </li>
-                            <li>
-                                <Link to="/tours">Attractions Tickets</Link>
-                            </li>
-                            <li>
-                                <Link to="/tours">Budget Desert Safaris</Link>
-                            </li>
+                        ))}
                         </ul>
                     </div>
                     <div className="footerWidget">
                         <ul>
-                            <li>
-                                <Link to="#">Airport Transfers</Link>
+                        {data.CategoryList.slice(16,24).map((item, index) => (
+                            <li key={index}>
+                               <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
+                             {  /* <Link to={`/plan`}>{item.category}</Link>*/}
                             </li>
-                            <li>
-                                <Link to="#">Budget Airport Layover Tour</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Hot Air Balloon</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Luxury Yacht Charter</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Hotel Bookings</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Helicopter Tour</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Burj Khalifa Reservations</Link>
-                            </li>
-                            <li>
-                                <Link to="#">Stable Tour</Link>
-                            </li>
+                        ))}
                         </ul>
                     </div>
                 </div>
