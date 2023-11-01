@@ -11,6 +11,7 @@ const ContentSection = () => {
     const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
     const totalItems = data.CategoryList.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const [selectedRatingFilter, setSelectedRatingFilter] = useState(2);
   
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -24,14 +25,23 @@ const ContentSection = () => {
     const handlePriceFilter = (newPriceRange) => {
         setSelectedPriceRange(newPriceRange);
       };
+
+      const handleRatingFilterChange = (rating) => {
+        setSelectedRatingFilter(rating);
+      };
+        
   
     // Filter items based on the selected price range
-    const filteredData = data.CategoryList.filter(
-        (tour) => {
-          const tourPrice = parseInt(tour.price.replace(',', ''));
-          return tourPrice >= selectedPriceRange[0] && tourPrice <= selectedPriceRange[1];
-        }
+    const filteredData = data.CategoryList.filter((tour) => {
+      const tourPrice = parseInt(tour.price.replace(',', ''));
+      const tourRating = parseInt(tour.rating);
+      return (
+        tourPrice >= selectedPriceRange[0] &&
+        tourPrice <= selectedPriceRange[1] &&
+        tourRating >= selectedRatingFilter
       );
+    });
+    
   
     const itemsToShow = filteredData.slice(startIndex, endIndex);
     return (
@@ -40,7 +50,7 @@ const ContentSection = () => {
                 <div className="container">
                     <div className="CategorySectionWrapper">
                     {/*Category LHS------- */}
-                       <CategoryLHS handlePriceFilter={handlePriceFilter} priceRange={selectedPriceRange} />
+                       <CategoryLHS handlePriceFilter={handlePriceFilter} priceRange={selectedPriceRange} handleRatingFilterChange={handleRatingFilterChange} selectedRatingFilter={selectedRatingFilter} />
                        <div>
                        <Overview/>
                        <div className="listingRhs">
@@ -141,7 +151,7 @@ const ContentSection = () => {
                                        <h4>{tour.title}</h4>
                                        <div className="ReviewsDivrow">
                                          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
-                                         <span>4.5 | 500 Reviews</span>
+                                         <span>{tour.rating} | 500 Reviews</span>
                                        </div>
                                        <div className="descrition">
                                          <p>{tour.description}</p>
@@ -217,3 +227,4 @@ const ContentSection = () => {
 }
 
 export default ContentSection
+

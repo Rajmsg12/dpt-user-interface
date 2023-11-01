@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
 
-const LeftSideFilter = ({ handlePriceFilter, priceRange }) => {
+const LeftSideFilter = ({ handlePriceFilter, priceRange , handleRatingFilterChange, selectedRatingFilter }) => {
   return (
     <>
     <div id="sidebarFilter" className="listingLhs">
@@ -176,77 +176,97 @@ const LeftSideFilter = ({ handlePriceFilter, priceRange }) => {
       </div>
     </div>
      
-      <div className="RatingDiv">
-        <div className="sidebarlabel">
-          <h3>Rating</h3>
-        </div>
-        <div className="RadioBox">
-          <div>
-            <label className="RadioBoxIn">
-              <div className="radioboxField">
-                <input type="radio" name="radio" />
-                <span className="checkmark"></span>
-              </div>
-              <div className="radioboxText">
-                <div className="radioboxSublabel">
-                  <span className="imageStarRating">
-                    <img src="images/homepage/ratingstar.png" alt="" />
-                  </span>
-                  <div className="ratingSubtext"></div>
-                </div>
-              </div>
-            </label>
-          </div>
-          <div>
-            <label className="RadioBoxIn">
-              <div className="radioboxField">
-                <input type="radio" name="radio" />
-                <span className="checkmark"></span>
-              </div>
-              <div className="radioboxText">
-                <div className="radioboxSublabel">
-                  <span className="imageStarRating">
-                    <img src="images/homepage/ratingstar.png" alt=""
-                    /></span>
-                  <div className="ratingSubtext">& up</div>
-                </div>
-              </div>
-            </label>
-          </div>
-          <div>
-            <label className="RadioBoxIn">
-              <div className="radioboxField">
-                <input type="radio" name="radio" />
-                <span className="checkmark"></span>
-              </div>
-              <div className="radioboxText">
-                <div className="radioboxSublabel">
-                  <span className="imageStarRating">
-                    <img src="images/homepage/ratingstar.png" alt=""
-                    /></span>
-                  <div className="ratingSubtext">& up</div>
-                </div>
-              </div>
-            </label>
-          </div>
-          <div>
-            <label className="RadioBoxIn">
-              <div className="radioboxField">
-                <input type="radio" name="radio" />
-                <span className="checkmark"></span>
-              </div>
-              <div className="radioboxText">
-                <div className="radioboxSublabel">
-                  <span className="imageStarRating">
-                    <img src="images/homepage/ratingstar.png" alt=""
-                    /></span>
-                  <div className="ratingSubtext">& up</div>
-                </div>
-              </div>
-            </label>
-          </div>
-        </div>
+    <div className="RatingDiv">
+    <div className="sidebarlabel">
+        <h3>Rating</h3>
       </div>
+    <div className="RadioBox">
+      <div>
+        <label className="RadioBoxIn">
+          <div className="radioboxField">
+            <input
+              type="radio"
+              name="ratingFilter"
+              onClick={() => handleRatingFilterChange(2)}
+              checked={selectedRatingFilter === 2}
+            />
+            <span className="checkmark" />
+          </div>
+          <div className="radioboxText">
+            <div className="radioboxSublabel">
+              <span className="imageStarRating">
+                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738115/ratingstar_nisesy.png"} alt="" />
+              </span>
+              <div className="ratingSubtext">2+</div>
+            </div>
+          </div>
+        </label>
+      </div>
+      <div>
+        <label className="RadioBoxIn">
+          <div className="radioboxField">
+            <input
+              type="radio"
+              name="ratingFilter"
+              onClick={() => handleRatingFilterChange(3)}
+              checked={selectedRatingFilter === 3}
+            />
+            <span className="checkmark" />
+          </div>
+          <div className="radioboxText">
+            <div className="radioboxSublabel">
+              <span className="imageStarRating">
+                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738115/ratingstar_nisesy.png"} alt="" />
+              </span>
+              <div className="ratingSubtext">3+</div>
+            </div>
+          </div>
+        </label>
+      </div>
+      <div>
+        <label className="RadioBoxIn">
+          <div className="radioboxField">
+            <input
+              type="radio"
+              name="ratingFilter"
+              onClick={() => handleRatingFilterChange(4)}
+              checked={selectedRatingFilter === 4}
+            />
+            <span className="checkmark" />
+          </div>
+          <div className="radioboxText">
+            <div className="radioboxSublabel">
+              <span className="imageStarRating">
+                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738115/ratingstar_nisesy.png"} alt="" />
+              </span>
+              <div className="ratingSubtext">4+</div>
+            </div>
+          </div>
+        </label>
+      </div>
+      <div>
+        <label className="RadioBoxIn">
+          <div className="radioboxField">
+            <input
+              type="radio"
+              name="ratingFilter"
+              onClick={() => handleRatingFilterChange(5)}
+              checked={selectedRatingFilter === 5}
+            />
+            <span className="checkmark" />
+          </div>
+          <div className="radioboxText">
+            <div className="radioboxSublabel">
+              <span className="imageStarRating">
+                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738115/ratingstar_nisesy.png"} alt="" />
+              </span>
+              <div className="ratingSubtext">5</div>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+    </div>
       <div className="SpecialsDiv">
         <div className="sidebarlabel">
           <h3>Specials</h3>

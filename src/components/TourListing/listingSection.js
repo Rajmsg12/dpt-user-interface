@@ -9,6 +9,7 @@ const ListingSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
   // Initial price value as a number
+  const [selectedRatingFilter, setSelectedRatingFilter] = useState(2);
   const totalItems = data.TourListing.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -24,15 +25,22 @@ const ListingSection = () => {
   const handlePriceFilter = (newPriceRange) => {
     setSelectedPriceRange(newPriceRange);
   };
+  const handleRatingFilterChange = (rating) => {
+    setSelectedRatingFilter(rating);
+  };
+    
   
 
   // Filter items based on the selected price range
-  const filteredData = data.TourListing.filter(
-    (tour) => {
-      const tourPrice = parseInt(tour.price.replace(',', ''));
-      return tourPrice >= selectedPriceRange[0] && tourPrice <= selectedPriceRange[1];
-    }
-  );
+  const filteredData = data.TourListing.filter((tour) => {
+    const tourPrice = parseInt(tour.price.replace(',', ''));
+    const tourRating = parseInt(tour.rating);
+    return (
+      tourPrice >= selectedPriceRange[0] &&
+      tourPrice <= selectedPriceRange[1] &&
+      tourRating >= selectedRatingFilter
+    );
+  });
   
 
   const itemsToShow = filteredData.slice(startIndex, endIndex);
@@ -41,7 +49,7 @@ const ListingSection = () => {
       <div className="listingPage">
         <div className="container">
           <div className="listingPageWrapper">
-          <LeftSideFilter handlePriceFilter={handlePriceFilter} priceRange={selectedPriceRange} />
+          <LeftSideFilter handlePriceFilter={handlePriceFilter} priceRange={selectedPriceRange}  handleRatingFilterChange={handleRatingFilterChange} selectedRatingFilter={selectedRatingFilter} />
 
             <div className="listingRhs">
               <div className="listingGridTab">
@@ -160,7 +168,7 @@ const ListingSection = () => {
                               <h4>{tour.title}</h4>
                               <div className="ReviewsDivrow">
                                 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
-                                <span>4.5 | 500 Reviews</span>
+                                <span>{tour.rating} | 500 Reviews</span>
                               </div>
                               <div className="descrition">
                                 <p>{tour.description}</p>
