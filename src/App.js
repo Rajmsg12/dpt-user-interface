@@ -59,6 +59,7 @@ function App() {
         <Route exact path='/tours/:country' element={<TourListing/>} /> 
          {/*    <Route exact path='/plan' element={<Category/>} /> */}
        <Route exact path='/plan/:categoryName' element={<Category/>} />
+       <Route exact path='/plan/:categoryName/:title' element={<DetailPage/>} />
         </Routes>
       </React.Fragment>
     </BrowserRouter>
