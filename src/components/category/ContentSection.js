@@ -21,6 +21,8 @@ const ContentSection = () => {
     .join(' ');
 
 
+
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
@@ -119,7 +121,7 @@ const ContentSection = () => {
                       <div className="listingRow GridRowWrapper">
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
-                            <Link to={`${tour.title}`} className="TabBox" key={`grid-${tour.id}`}>
+                            <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}?=${tour.id}`} className="TabBox" key={`grid-${tour.id}`}>
                               <div className="img">
                                 <img src={process.env.PUBLIC_URL + tour.imageSrc} alt="" />
                                 <div className="discountrow">
@@ -166,7 +168,7 @@ const ContentSection = () => {
                     <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                       <div className="listingRow">
                         {itemsToShow.map((tour) => (
-                          <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.id}`}>
+                          <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}?=${tour.id}`} className="listingBox" key={`listing-${tour.id}`}>
                             <div className="listingBoxImg">
                               <img src={tour.imageSrc} alt="" />
                               <div className="discountrow">

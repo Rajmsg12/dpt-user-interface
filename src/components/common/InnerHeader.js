@@ -16,42 +16,42 @@ const InnerHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-      const token = localStorage.getItem("token");
-      if (token) {
-          fetch('http://127.0.0.1:9900/welcome', {
-              headers: {
-                  Authorization: `Bearer ${token}`
-              }
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch('http://127.0.0.1:9900/welcome', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
 
-          })
+      })
 
-              .then(response => response.json())
+        .then(response => response.json())
 
-              .then(data => {
+        .then(data => {
 
-                  setUserName(data.data.user_name);
-                  setEmail(data.data.email);
-                  setIsLoggedIn(true);
-              })
+          setUserName(data.data.user_name);
+          setEmail(data.data.email);
+          setIsLoggedIn(true);
+        })
 
-              .catch(error => {
-                  console.error("Error fetching user data:", error);
-              });
-      }
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+        });
+    }
   }, []);
 
   const handleLogout = () => {
-      fetch('http://127.0.0.1:9900/logout', {
-          method: 'POST',
+    fetch('http://127.0.0.1:9900/logout', {
+      method: 'POST',
+    })
+      .then(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_name');
+        setIsLoggedIn(false);
       })
-          .then(() => {
-              localStorage.removeItem('token');
-              localStorage.removeItem('user_name');
-              setIsLoggedIn(false);
-          })
-          .catch(error => {
-              console.error('Logout failed', error);
-          });
+      .catch(error => {
+        console.error('Logout failed', error);
+      });
   };
   return (
     <div>
@@ -106,37 +106,37 @@ const InnerHeader = () => {
                   <div className="dropdown userIcon">
                     <Link className="btn userIconTag dropdown-toggle" to="/" role="button" id="userIcon" data-bs-toggle="dropdown" aria-expanded="false"></Link>
                     <ul className="dropdown-menu" aria-labelledby="userIcon">
-                    <li>
-                    {isLoggedIn ? (
+
+                      {isLoggedIn ? (
                         <div>
-                            <Link to="/user-dashboard" className="dropdown-item">
-                                <div >
-                                    <Person className="text-danger" />
-                                    <span className="userName" style={{ color: "black" }}>{user_name}</span>
-                                </div>
+                          <Link to="/user-dashboard" className="dropdown-item">
+                            <div >
+                              <Person className="text-danger" />
+                              <span className="userName" style={{ color: "black" }}>{user_name}</span>
+                            </div>
+                          </Link>
+                          <li>
+                            <hr className="dropdown-divider" />
+                          </li>
+                          <li>
+                            <Link to="/bookings" className="dropdown-item">
+                              <House className="text-danger" /> Bookings
                             </Link>
-                            <li>
-                                <hr className="dropdown-divider" />
-                            </li>
-                            <li>
-                                <Link to="/bookings" className="dropdown-item">
-                                    <House className="text-danger" /> Bookings
-                                </Link>
-                            </li>
-                            <li>
-                                <hr className="dropdown-divider" />
-                            </li>
-                            <li>
-                                <Link className="dropdown-item" onClick={handleLogout}>
-                                    <IconDoorClosedFill className="text-danger" /> Logout
-                                </Link>
-                            </li>
+                          </li>
+                          <li>
+                            <hr className="dropdown-divider" />
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" onClick={handleLogout}>
+                              <IconDoorClosedFill className="text-danger" /> Logout
+                            </Link>
+                          </li>
                         </div>
 
-                    ) : (
+                      ) : (
                         <Link to="/login" className="dropdown-item">Login/SignUp</Link>
-                    )}
-                </li>
+                      )}
+
 
                     </ul>
                   </div>

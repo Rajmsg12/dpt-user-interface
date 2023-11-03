@@ -1,42 +1,5 @@
 export const data = {
-    TourList: [
-        {
-            tour:"4 Hours Dubai Private City Tour With Rolce Royce Ghost"
-        },
-        {
-            tour:"4 Hours Dubai Private City Tour With BMW 735"
-        },
-        {
-            tour:"4 Hours Dubai Private City Tour With Bentley Flying Spurge"
-        },
-        {
-            tour:"4 Hours Dubai Private City Tour With Audi R8"
-        },
-        {
-            tour:"4 Hours Dubai Private City Tour With Mercedes Sprinter"
-        },
-        {
-            tour:"4 Hours Dubai Private City Tour With Ferrari Spider"
-        },   
-        {
-          tour:"4 Hours Dubai Private City Tour With Rolce Royce Ghost"
-      },
-      {
-          tour:"4 Hours Dubai Private City Tour With BMW 735"
-      },
-      {
-          tour:"4 Hours Dubai Private City Tour With Bentley Flying Spurge"
-      },
-      {
-          tour:"4 Hours Dubai Private City Tour With Audi R8"
-      },
-      {
-          tour:"4 Hours Dubai Private City Tour With Mercedes Sprinter"
-      },
-      {
-          tour:"4 Hours Dubai Private City Tour With Ferrari Spider"
-      },  
-],
+
 CategoryList:  [
   {
     id: 1,

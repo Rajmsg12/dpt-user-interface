@@ -152,10 +152,11 @@ const CategoryLHS = ({handlePriceFilter, priceRange, handleRatingFilterChange, s
             <input
             type="radio"
             name="ratingFilter"
-            onClick={() => handleRatingFilterChange(2)}
             checked={selectedRatingFilter === 2}
+            onChange={() => handleRatingFilterChange(2)}
           />
-          
+        
+
               <span className="checkmark" />
             </div>
             <div className="radioboxText">
@@ -174,8 +175,8 @@ const CategoryLHS = ({handlePriceFilter, priceRange, handleRatingFilterChange, s
               <input
                 type="radio"
                 name="ratingFilter"
-                onClick={() => handleRatingFilterChange(3)}
                 checked={selectedRatingFilter === 3}
+                onChange={() => handleRatingFilterChange(3)}
               />
               <span className="checkmark" />
             </div>
@@ -195,8 +196,8 @@ const CategoryLHS = ({handlePriceFilter, priceRange, handleRatingFilterChange, s
               <input
                 type="radio"
                 name="ratingFilter"
-                onClick={() => handleRatingFilterChange(4)}
                 checked={selectedRatingFilter === 4}
+                onChange={() => handleRatingFilterChange(4)}
               />
               <span className="checkmark" />
             </div>
@@ -216,8 +217,8 @@ const CategoryLHS = ({handlePriceFilter, priceRange, handleRatingFilterChange, s
               <input
                 type="radio"
                 name="ratingFilter"
-                onClick={() => handleRatingFilterChange(5)}
                 checked={selectedRatingFilter === 5}
+                onChange={() => handleRatingFilterChange(5)}
               />
               <span className="checkmark" />
             </div>

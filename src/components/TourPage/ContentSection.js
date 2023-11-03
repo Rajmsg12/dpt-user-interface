@@ -11,9 +11,19 @@ import WhatToExpect from './WhatToExpect';
 import DetailOverview from './BannerTabs';
 import GetInTouch from './GetInTouch';
 import { useParams } from 'react-router-dom';
+import {data} from '../../data/Category'
 
 function ContentSection() {
-    const { title } = useParams();
+  const { title } = useParams();
+
+  const url = window.location.href;
+  const spliturl = url.split("=");
+  const id = Number(spliturl[1]); // Convert to a number
+  console.log(id);
+  const ourData = data.CategoryList.filter((item) => item.id === id);
+  console.log(ourData);
+  
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -33,12 +43,13 @@ function ContentSection() {
       items: 1
     }
   };
+
   return (
     <div className="ContentSection">
       <div className="container">
         <div className="ContentSectionWrapper">
           <div className="ContentLHS">
-            <GetInTouch/>
+            <GetInTouch />
             {/* GetinTouch */}
             <div className="DetailPageBanner">
               <div className="owl-carousel owl-theme" id="Detailpageslider">
@@ -111,17 +122,17 @@ function ContentSection() {
               {/* Detailpageslider */}
             </div>
             {/* DetailPageBanner */}
-            <DetailOverview/>
+            <DetailOverview />
             {/* DetailTab */}
-            <WhatToExpect/>
+            <WhatToExpect />
             {/* Whattoexpect */}
-            <Itinerary/>
+            <Itinerary />
             {/* Itinerary */}
-            <CancellationPolicy/>
+            <CancellationPolicy />
             {/* Cancellation Policy */}
-            <UsefulToKnow/>
+            <UsefulToKnow />
             {/* usefultoknow */}
-            <Faq/>
+            <Faq />
             {/* innerPageFaq */}
           </div>
           {/* ContentLHS */}

@@ -9,6 +9,7 @@ import ReviewRatingSection from '../TourPage/ReviewRatingSection'
 import YouAlsoLike from '../TourPage/YouAlsoLike'
 
 const DetailSection = () => {
+ 
   return (
     <div>
       <InnerHeader/>

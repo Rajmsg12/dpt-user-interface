@@ -5,6 +5,11 @@ import './Style/TourPage.css'
 
 const BookThisTour = () => {
     const [selectedDate, setSelectedDate] = useState(null);
+    const url = window.location.href;
+    const spliturl = url.split("=");
+    const id = spliturl[1];
+    console.log(url)
+
     return (
         <>
             <div className="tab-pane fade" id="pills-bookthistour" role="tabpanel" aria-labelledby="pills-bookthistour-tab">
@@ -40,8 +45,8 @@ const BookThisTour = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Preferred Pickup Time</label>
-                                        <select className="form-select">
-                                            <option value="">Select Pickup Time</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select Pickup Time</option>
                                             <option value="00:00 AM">12:00 AM</option>
                                             <option value="00:30 AM">12:30 AM</option>
                                             <option value="01:00 AM">01:00 AM</option>
@@ -96,8 +101,8 @@ const BookThisTour = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Pickup Location*</label>
-                                        <select className="form-select">
-                                            <option value="">Select Pickup Location</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select Pickup Location</option>
                                             <option value="1">Hotel/Apartment</option>
                                             <option value="2">DXB Airport Terminal 1</option>
                                             <option value="3">DXB Airport Terminal 2</option>
@@ -117,8 +122,8 @@ const BookThisTour = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>End Location*</label>
-                                        <select className="form-select">
-                                            <option value="">Select End Location</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select End Location</option>
                                             <option value="1">Hotel/Apartment</option>
                                             <option value="2">DXB Airport Terminal 1</option>
                                             <option value="3">DXB Airport Terminal 2</option>
@@ -141,8 +146,8 @@ const BookThisTour = () => {
                                 <div className="col-md-12">
                                     <div className="mb-3 formGroup">
                                         <label>Hotel Name*</label>
-                                        <select className="form-select">
-                                            <option selected>Select Hotel</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select Hotel</option>
                                             <option value="1">Hotel Royal Park</option>
                                             <option value="2">Flora Inn Hotel Dubai </option>
                                         </select>
@@ -151,8 +156,8 @@ const BookThisTour = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Preferred Guide Language*</label>
-                                        <select className="form-select">
-                                            <option value="">Select  Preferred Guide Language</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select  Preferred Guide Language</option>
                                             <option value="English">English</option>
                                             <option value="Arabic">Arabic</option>
                                             <option value="Spanish">Spanish</option>
@@ -170,8 +175,8 @@ const BookThisTour = () => {
                                 <div className="col-md-3">
                                     <div className="mb-3 formGroup">
                                         <label>Pref.currency</label>
-                                        <select className="form-select">
-                                            <option value="">Select Currency</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select Currency</option>
                                             <option value="USD($)">USD($)</option>
                                             <option value="AED">AED</option>
                                             <option value="EURO">EURO</option>
@@ -183,8 +188,8 @@ const BookThisTour = () => {
                                 <div className="col-md-3">
                                     <div className="mb-3 formGroup">
                                         <label>Payment Mode*</label>
-                                        <select className="form-select">
-                                            <option selected>Select Payment Mode</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select Payment Mode</option>
                                             <option value="1">Pay Now</option>
                                             <option value="2">Pay Later</option>
                                         </select>
@@ -212,8 +217,8 @@ const BookThisTour = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Addition driver</label>
-                                        <select className="form-select">
-                                            <option selected>Select Addition Driver</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select Addition Driver</option>
                                             <option value="1">Select Addition Driver</option>
                                             <option value="2">Select Addition Driver</option>
                                         </select>
@@ -222,8 +227,8 @@ const BookThisTour = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Additional lunch </label>
-                                        <select className="form-select">
-                                            <option selected>Select Additional Lunch</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select Additional Lunch</option>
                                             <option value="1">Select Additional Lunch</option>
                                             <option value="2">Select Additional Lunch</option>
                                         </select>
@@ -232,8 +237,8 @@ const BookThisTour = () => {
                                 <div className="col-md-12">
                                     <div className="mb-3 formGroup">
                                         <label>Additional tickets</label>
-                                        <select className="form-select">
-                                            <option selected>Select Additional tickets</option>
+                                        <select className="form-select" value="0">
+                                            <option value="0">Select Additional tickets</option>
                                             <option value="1">Select Additional tickets</option>
                                             <option value="2">Select Additional tickets</option>
                                         </select>
