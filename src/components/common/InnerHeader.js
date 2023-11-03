@@ -100,8 +100,8 @@ const InnerHeader = () => {
                 </div>
                 {/* Headerdropdownmenu */}
                 <div className="addtocart"> {/* Use className instead of class */}
-                  <Link to="" className="cart"></Link>
-                  <Link to="" className="wishlist"></Link>
+                  <Link to="/cart" className="cart"></Link>
+                  <Link to="/wishlist" className="wishlist"></Link>
 
                   <div className="dropdown userIcon">
                     <Link className="btn userIconTag dropdown-toggle" to="/" role="button" id="userIcon" data-bs-toggle="dropdown" aria-expanded="false"></Link>

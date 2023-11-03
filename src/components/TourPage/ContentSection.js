@@ -130,7 +130,7 @@ function ContentSection() {
               <h4>From</h4>
               <div className="aedrow">
                 <span>AED 2,000</span>
-                <span>USD 15,000</span>
+                <span>USD 2000*0.27</span>
               </div>
               <div className="Person">per person <strong>(2 Days)</strong></div>
               <div className="right">

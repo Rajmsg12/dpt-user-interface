@@ -13,6 +13,8 @@ import Register from "./components/user/Register";
 import Forget from "./components/user/Forget";
 import UserProfile from './components/user/UserDashboard'
 import Category from './components/pages/cateory'
+import Cart from './components/pages/cart'
+
 
 
 //const Header = lazy(() => import("./components/Header"));
@@ -61,6 +63,8 @@ function App() {
          {/*    <Route exact path='/plan' element={<Category/>} /> */}
        <Route exact path='/plan/:categoryName' element={<Category/>} />
        <Route exact path='/plan/:categoryName/:title' element={<DetailPage/>} />
+       <Route exact path='/cart' element={<Cart/>} />
+
         </Routes>
       </React.Fragment>
     </BrowserRouter>

@@ -53,7 +53,7 @@ const LeftSideFilter = ({ handlePriceFilter, priceRange, handleRatingFilterChang
 
             </div>
           </div>
-          <div className="Timeofday">
+        {/*  <div className="Timeofday">
             <div className="sidebarlabel">
               <h3>Time of day</h3>
             </div>
@@ -95,7 +95,7 @@ const LeftSideFilter = ({ handlePriceFilter, priceRange, handleRatingFilterChang
                 </label>
               </div>
             </div>
-          </div>
+              </div>*/}
           <div className="DurationDiv">
             <div className="sidebarlabel">
               <h3>Duration</h3>
@@ -263,7 +263,7 @@ const LeftSideFilter = ({ handlePriceFilter, priceRange, handleRatingFilterChang
               </div>
             </div>
           </div>
-          <div className="SpecialsDiv">
+        {/*  <div className="SpecialsDiv">
             <div className="sidebarlabel">
               <h3>Specials</h3>
             </div>
@@ -313,7 +313,7 @@ const LeftSideFilter = ({ handlePriceFilter, priceRange, handleRatingFilterChang
                 </label>
               </div>
             </div>
-          </div>
+              </div>*/}
         </div>
         <div className="DubaiPrivateTourDiv">
           <div className="customersayText">

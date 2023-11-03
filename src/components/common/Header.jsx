@@ -90,8 +90,8 @@ const Header = () => {
                                     </div>
                                     <div className="addtocart">
                                         <div className="addtocart">
-                                            <Link to="/"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
-                                            <Link to="/"><img src="images/homepage/like.png" alt="" /></Link>
+                                            <Link to="/cart"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
+                                            <Link to="/whishlist"><img src="images/homepage/like.png" alt="" /></Link>
 
                                         </div>
 
@@ -224,8 +224,8 @@ const Header = () => {
                                 </div>
                                 <div className="parentaddtocart">
                                     <div className="addtocart">
-                                        <Link to="/"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
-                                        <Link to="/"><img src="images/homepage/like.png" alt="" /></Link>
+                                        <Link to="/cart"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
+                                        <Link to="/whishlist"><img src="images/homepage/like.png" alt="" /></Link>
 
                                     </div>
 
