@@ -11,7 +11,7 @@ const ListingSection = () => {
   const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
 
   // Initial price value as a number
-  const [selectedRatingFilter, setSelectedRatingFilter] = useState(2);
+  const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const totalItems = data.TourListing.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 

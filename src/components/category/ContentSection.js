@@ -12,7 +12,7 @@ const ContentSection = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
   const totalItems = data.CategoryList.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const [selectedRatingFilter, setSelectedRatingFilter] = useState(2);
+  const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
   const { categoryName } = useParams()
   const formattedCategory = categoryName
