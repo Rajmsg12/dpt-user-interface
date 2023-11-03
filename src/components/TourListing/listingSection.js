@@ -8,6 +8,8 @@ const itemsPerPage = 9;
 const ListingSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
+  const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
+
   // Initial price value as a number
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(2);
   const totalItems = data.TourListing.length;
@@ -20,6 +22,10 @@ const ListingSection = () => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
+  };
+
+  const handleDurationFilterChange = (duration) => {
+    setSelectedDurationFilter(duration);
   };
 
   const handlePriceFilter = (newPriceRange) => {
@@ -35,20 +41,32 @@ const ListingSection = () => {
       return rating;
     });
   };
-    
-  
+
+
 
   // Filter items based on the selected price range
   const filteredData = data.TourListing.filter((tour) => {
     const tourPrice = parseInt(tour.price.replace(',', ''));
     const tourRating = parseInt(tour.rating);
-    return (
-      tourPrice >= selectedPriceRange[0] &&
-      tourPrice <= selectedPriceRange[1] &&
-      tourRating >= selectedRatingFilter
-    );
+
+    if (
+      selectedDurationFilter &&
+      selectedDurationFilter.includes(tour.duration)
+    ) {
+      return (
+        tourPrice >= selectedPriceRange[0] &&
+        tourPrice <= selectedPriceRange[1] &&
+        tourRating >= selectedRatingFilter
+      );
+    } else if (!selectedDurationFilter) {
+      return (
+        tourPrice >= selectedPriceRange[0] &&
+        tourPrice <= selectedPriceRange[1] &&
+        tourRating >= selectedRatingFilter
+      );
+    }
+    return false; // Exclude items that don't match the duration filter
   });
-  
 
   const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
@@ -56,7 +74,13 @@ const ListingSection = () => {
       <div className="listingPage">
         <div className="container">
           <div className="listingPageWrapper">
-          <LeftSideFilter handlePriceFilter={handlePriceFilter} priceRange={selectedPriceRange}  handleRatingFilterChange={handleRatingFilterChange} selectedRatingFilter={selectedRatingFilter} />
+            <LeftSideFilter
+              handlePriceFilter={handlePriceFilter}
+              priceRange={selectedPriceRange}
+              handleRatingFilterChange={handleRatingFilterChange}
+              selectedRatingFilter={selectedRatingFilter}
+              handleDurationFilterChange={handleDurationFilterChange}
+            />
 
             <div className="listingRhs">
               <div className="listingGridTab">
@@ -100,50 +124,50 @@ const ListingSection = () => {
                 <div className="tab-content" id="pills-tabContentlisting">
                   <div className="tab-pane fade" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                     <div className="listingRow GridRowWrapper">
-                    {filteredData.length > 0 ? (
-                      itemsToShow.map((tour) => (
-                        <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.id}`}>
-                          <div className="img">
-                            <img src={process.env.PUBLIC_URL+tour.imageSrc} alt="" />
-                            <div className="discountrow">
-                              <div className="discount">
-                                <span>{tour.discount}</span>
+                      {filteredData.length > 0 ? (
+                        itemsToShow.map((tour) => (
+                          <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.id}`}>
+                            <div className="img">
+                              <img src={process.env.PUBLIC_URL + tour.imageSrc} alt="" />
+                              <div className="discountrow">
+                                <div className="discount">
+                                  <span>{tour.discount}</span>
+                                </div>
+                                <div className="wishlistIcon"></div>
                               </div>
-                              <div className="wishlistIcon"></div>
-                            </div>
-                            <div className="imgBottomRow">
-                              <div className="lhstext">
-                                <span>{tour.hastag}</span>
-                              </div>
-                              <div className="rhsimg">
-                                <div>
-                                  <img src={tour.logo1} alt="" />
-                                  <img src={tour.logo2} alt="" />
+                              <div className="imgBottomRow">
+                                <div className="lhstext">
+                                  <span>{tour.hastag}</span>
+                                </div>
+                                <div className="rhsimg">
+                                  <div>
+                                    <img src={tour.logo1} alt="" />
+                                    <img src={tour.logo2} alt="" />
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="TabBoxBody">
-                            <h4>{tour.title}</h4>
-                            <p>{tour.description}</p>
-                            <div className="ReviewRow">
-                              <span className="location">{tour.location}</span>
-                            </div>
-                          </div>
-                          <div className="TabBoxFooter">
-                            <div className="aedLHS">
-                              <span>Starting from</span>
-                              <div className="aedtext">
-                                AED <strong>{tour.price}</strong> up to {tour.person} people
+                            <div className="TabBoxBody">
+                              <h4>{tour.title}</h4>
+                              <p>{tour.description}</p>
+                              <div className="ReviewRow">
+                                <span className="location">{tour.location}</span>
                               </div>
                             </div>
-                            <div className="aedRHS">{tour.duration}</div>
-                          </div>
-                        </Link>
+                            <div className="TabBoxFooter">
+                              <div className="aedLHS">
+                                <span>Starting from</span>
+                                <div className="aedtext">
+                                  AED <strong>{tour.price}</strong> up to {tour.person} people
+                                </div>
+                              </div>
+                              <div className="aedRHS">{tour.duration}</div>
+                            </div>
+                          </Link>
                         ))
-                        ) : (
-                          <p>No items within the selected price range.</p>
-                        )}
+                      ) : (
+                        <p>No items within the selected price range.</p>
+                      )}
                     </div>
                   </div>
                   <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
@@ -202,7 +226,7 @@ const ListingSection = () => {
                 <div className="paginationSec">
                   <nav aria-label="...">
                     <ul className="pagination">
-                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                      <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
 
                         <Link
                           className="page-link"

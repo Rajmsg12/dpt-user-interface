@@ -179,7 +179,7 @@ CategoryList:  [
     hastag:"#1 Top Dubai Desert Experience",
     price: "5,000",
     person: "",
-    duration: "4 Hours",
+    duration: "2 Days",
   },
   {
     id: 12,
@@ -191,7 +191,7 @@ CategoryList:  [
     location: "Dubai, United Arab Emirates",
     price: "2,500",
     person: "5",
-    duration: "6 Days",
+    duration: "1 Day",
   }
   // Add more tour items here
 ],

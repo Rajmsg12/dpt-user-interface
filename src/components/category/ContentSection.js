@@ -13,7 +13,7 @@ const ContentSection = () => {
   const totalItems = data.CategoryList.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(2);
-  const [selectedDurations, setSelectedDurations] = useState([]);
+  const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
   const { categoryName } = useParams()
   const formattedCategory = categoryName
     .split('-') // Split by hyphens
@@ -24,19 +24,11 @@ const ContentSection = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const handleDurationFilter = (duration) => {
-    setSelectedDurations((prevSelectedDurations) => {
-      if (prevSelectedDurations.includes(duration)) {
-        // If the duration checkbox is already selected, remove it
-        return prevSelectedDurations.filter((d) => d !== duration);
-      } else {
-        // Otherwise, add the duration to the selected durations
-        return [...prevSelectedDurations, duration];
-      }
-    });
-  };
-  
 
+
+  const handleDurationFilterChange = (duration) => {
+    setSelectedDurationFilter(duration);
+  };
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -65,11 +57,24 @@ const ContentSection = () => {
   const filteredData = data.CategoryList.filter((tour) => {
     const tourPrice = parseInt(tour.price.replace(',', ''));
     const tourRating = parseInt(tour.rating);
-    return (
-      tourPrice >= selectedPriceRange[0] &&
-      tourPrice <= selectedPriceRange[1] &&
-      tourRating >= selectedRatingFilter
-    );
+
+    if (
+      selectedDurationFilter &&
+      selectedDurationFilter.includes(tour.duration)
+    ) {
+      return (
+        tourPrice >= selectedPriceRange[0] &&
+        tourPrice <= selectedPriceRange[1] &&
+        tourRating >= selectedRatingFilter
+      );
+    } else if (!selectedDurationFilter) {
+      return (
+        tourPrice >= selectedPriceRange[0] &&
+        tourPrice <= selectedPriceRange[1] &&
+        tourRating >= selectedRatingFilter
+      );
+    }
+    return false; // Exclude items that don't match the duration filter
   });
 
 
@@ -80,7 +85,13 @@ const ContentSection = () => {
         <div className="container">
           <div className="CategorySectionWrapper">
             {/*Category LHS------- */}
-            <CategoryLHS handlePriceFilter={handlePriceFilter} priceRange={selectedPriceRange} handleRatingFilterChange={handleRatingFilterChange} selectedRatingFilter={selectedRatingFilter} />
+            <CategoryLHS
+              handlePriceFilter={handlePriceFilter}
+              priceRange={selectedPriceRange}
+              handleRatingFilterChange={handleRatingFilterChange}
+              selectedRatingFilter={selectedRatingFilter}
+              handleDurationFilterChange={handleDurationFilterChange}
+            />
             <div>
               <Overview />
               <div className="listingRhs">

@@ -4,8 +4,17 @@ import {Link} from 'react-router-dom'
 import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
 
-const CategoryLHS = ({ handlePriceFilter, priceRange , handleRatingFilterChange, selectedRatingFilter }) => {
-    
+const CategoryLHS = ({handlePriceFilter, priceRange, handleRatingFilterChange, selectedRatingFilter, handleDurationFilterChange  }) => {
+    const handleDurationCheckboxChange = (event, selectedDurations) => {
+        if (event.target.checked) {
+          // If the checkbox is checked, set the selected durations
+          handleDurationFilterChange(selectedDurations);
+        } else {
+          // If the checkbox is unchecked, remove the selected durations
+          handleDurationFilterChange(null);
+        }
+      };
+      
   return (
     <>
     <div className="CategoryTopSectionLHS" id="sidebarFilter">
@@ -27,57 +36,87 @@ const CategoryLHS = ({ handlePriceFilter, priceRange , handleRatingFilterChange,
     </div>
     <div className="CategoryTopLHSHd">
         <div className="title">select Preference</div>
+        <div>
         <div className="DurationDiv">
-            <div className="sidebarlabel">
-                <h3>Duration</h3>
+          <div className="sidebarlabel">
+            <h3>Duration</h3>
+          </div>
+          <div className="checkBoxDiv">
+            {/* Checkbox for 1 Hour */}
+            <div>
+              <label className="CheckboxIn">
+                <div className="checkboxField">
+                  <input
+                    type="checkbox"
+                    value="1 Hour"
+                    onChange={(event) =>
+                      handleDurationCheckboxChange(event, ["1 Hour"])
+                    }
+                  />
+                  <span className="checkmark"></span>
+                </div>
+                <div className="checkboxText">
+                  <div className="CheckboxSublabel">1 Hour</div>
+                </div>
+              </label>
             </div>
-            <div className="checkBoxDiv">
-                <div>
-                    <label className="CheckboxIn">
-                        <div className="checkboxField">
-                            <input type="checkbox" />
-                            <span className="checkmark" />
-                        </div>
-                        <div className="checkboxText">
-                            <div className="CheckboxSublabel">Up to 1 hour</div>
-                        </div>
-                    </label>
+            {/* Checkbox for 1 to 4 hours */}
+            <div>
+              <label className="CheckboxIn">
+                <div className="checkboxField">
+                  <input
+                    type="checkbox"
+                    value="1 to 4 hours"
+                    onChange={(event) =>
+                      handleDurationCheckboxChange(event, ["2 Hours", "3 Hours", "4 Hours"])
+                    }
+                  />
+                  <span className="checkmark"></span>
                 </div>
-                <div>
-                    <label className="CheckboxIn">
-                        <div className="checkboxField">
-                            <input type="checkbox" />
-                            <span className="checkmark" />
-                        </div>
-                        <div className="checkboxText">
-                            <div className="CheckboxSublabel">1 to 4 hours</div>
-                        </div>
-                    </label>
+                <div className="checkboxText">
+                  <div className="CheckboxSublabel">1 to 4 hours</div>
                 </div>
-                <div>
-                    <label className="CheckboxIn">
-                        <div className="checkboxField">
-                            <input type="checkbox" />
-                            <span className="checkmark" />
-                        </div>
-                        <div className="checkboxText">
-                            <div className="CheckboxSublabel">4 hours to 1 day</div>
-                        </div>
-                    </label>
-                </div>
-                <div>
-                    <label className="CheckboxIn">
-                        <div className="checkboxField">
-                            <input type="checkbox" />
-                            <span className="checkmark" />
-                        </div>
-                        <div className="checkboxText">
-                            <div className="CheckboxSublabel">1 to 3 days</div>
-                        </div>
-                    </label>
-                </div>
+              </label>
             </div>
+            {/* Checkbox for 4 hours to 1 day */}
+            <div>
+              <label className="CheckboxIn">
+                <div className="checkboxField">
+                  <input
+                    type="checkbox"
+                    value="4 hours to 1 day"
+                    onChange={(event) =>
+                      handleDurationCheckboxChange(event, ["4 Hours", "5 Hours", "6 Hours", "7 Hours", "8 Hours", "9 Hours", "10 Hours", "11 Hours", "12 Hours", "13 Hours", "14 Hours", "15 Hours", "16 Hours", "17 Hours", "18 Hours", "19 Hours", "20 Hours", "21 Hours", "22 Hours", "23 Hours", "24 Hours", "1 Day"])
+                  }
+                  />
+                  <span className="checkmark"></span>
+                </div>
+                <div className="checkboxText">
+                  <div className="CheckboxSublabel">4 hours to 1 day</div>
+                </div>
+              </label>
+            </div>
+            {/* Checkbox for 1 to 3 days */}
+            <div>
+              <label className="CheckboxIn">
+                <div className="checkboxField">
+                  <input
+                    type="checkbox"
+                    value="1 to 3 days"
+                    onChange={(event) =>
+                      handleDurationCheckboxChange(event, ["1 Day", "2 Days", "3 Days"])
+                    }
+                  />
+                  <span className="checkmark"></span>
+                </div>
+                <div className="checkboxText">
+                  <div className="CheckboxSublabel">1 to 3 days</div>
+                </div>
+              </label>
+            </div>
+          </div>
         </div>
+      </div>
         <div className="RangeSlider">
         <div className="sidebarlabel">
           <h3>Price</h3>

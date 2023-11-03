@@ -143,7 +143,7 @@ export const data = {
       hastag: "#1 Top Dubai Desert Experience",
       price: "5,000",
       person: "",
-      duration: "4 Hours",
+      duration: "1 Day",
     },
     {
       id: 12,
@@ -155,7 +155,7 @@ export const data = {
       location: "Dubai, United Arab Emirates",
       price: "2,500",
       person: "5",
-      duration: "6 Days",
+      duration: "2 Days",
     }
     // Add more tour items here
   ],
