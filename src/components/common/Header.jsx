@@ -19,6 +19,7 @@ const Header = () => {
     const [user_name, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [cartCount, setCartCount] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -90,7 +91,10 @@ const Header = () => {
                                     </div>
                                     <div className="addtocart">
                                         <div className="addtocart">
-                                            <Link to="/cart"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
+                                            <Link to="/cart">
+                                                <img src="images/homepage/shopping-cart.png" alt="" />
+                                                {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+                                            </Link>
                                             <Link to="/whishlist"><img src="images/homepage/like.png" alt="" /></Link>
 
                                         </div>
@@ -110,37 +114,37 @@ const Header = () => {
                                                 <FontAwesomeIcon icon={faUser} className="text-light" />
                                             </button>
                                             <ul className="dropdown-menu">
-                                             
-                                                    {isLoggedIn ? (
-                                                        <div>
-                                                            <Link to="/user-dashboard" className="dropdown-item">
-                                                                <div >
-                                                                    <Person className="text-danger" />
-                                                                    <span className="userName" style={{ color: "black" }}>{user_name}</span>
-                                                                </div>
-                                                            </Link>
-                                                            <li>
-                                                                <hr className="dropdown-divider" />
-                                                            </li>
-                                                            <li>
-                                                                <Link to="/bookings" className="dropdown-item">
-                                                                    <House className="text-danger" /> Bookings
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <hr className="dropdown-divider" />
-                                                            </li>
-                                                            <li>
-                                                                <button className="dropdown-item" onClick={handleLogout}>
-                                                                    <IconDoorClosedFill className="text-danger" /> Logout
-                                                                </button>
-                                                            </li>
-                                                        </div>
 
-                                                    ) : (
-                                                        <Link to="/login" className="dropdown-item">Login/SignUp</Link>
-                                                    )}
-                                             
+                                                {isLoggedIn ? (
+                                                    <div>
+                                                        <Link to="/user-dashboard" className="dropdown-item">
+                                                            <div >
+                                                                <Person className="text-danger" />
+                                                                <span className="userName" style={{ color: "black" }}>{user_name}</span>
+                                                            </div>
+                                                        </Link>
+                                                        <li>
+                                                            <hr className="dropdown-divider" />
+                                                        </li>
+                                                        <li>
+                                                            <Link to="/bookings" className="dropdown-item">
+                                                                <House className="text-danger" /> Bookings
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <hr className="dropdown-divider" />
+                                                        </li>
+                                                        <li>
+                                                            <button className="dropdown-item" onClick={handleLogout}>
+                                                                <IconDoorClosedFill className="text-danger" /> Logout
+                                                            </button>
+                                                        </li>
+                                                    </div>
+
+                                                ) : (
+                                                    <Link to="/login" className="dropdown-item">Login/SignUp</Link>
+                                                )}
+
                                                 {/*<li>
                                             <Link className="dropdown-item" to="/star/zone">
                                                 <IconStarFill className="text-warning" /> Star Zone
@@ -224,7 +228,10 @@ const Header = () => {
                                 </div>
                                 <div className="parentaddtocart">
                                     <div className="addtocart">
-                                        <Link to="/cart"><img src="images/homepage/shopping-cart.png" alt="" /></Link>
+                                        <Link to="/cart">
+                                            <img src="images/homepage/shopping-cart.png" alt="" />
+                                            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+                                        </Link>
                                         <Link to="/whishlist"><img src="images/homepage/like.png" alt="" /></Link>
 
                                     </div>
@@ -241,37 +248,37 @@ const Header = () => {
                                             <FontAwesomeIcon icon={faUser} className="text-light" />
                                         </button>
                                         <ul className="dropdown-menu">
-                                         
-                                                {isLoggedIn ? (
-                                                    <div>
-                                                        <Link to="/user-dashboard" className="dropdown-item">
-                                                            <div >
-                                                                <Person className="text-danger" />
-                                                                <span className="userName" style={{ color: "black" }}>{user_name}</span>
-                                                            </div>
-                                                        </Link>
-                                                        <li>
-                                                            <hr className="dropdown-divider" />
-                                                        </li>
-                                                        <li>
-                                                            <Link to="/bookings" className="dropdown-item">
-                                                                <House className="text-danger" /> Bookings
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <hr className="dropdown-divider" />
-                                                        </li>
-                                                        <li>
-                                                            <button className="dropdown-item" onClick={handleLogout}>
-                                                                <IconDoorClosedFill className="text-danger" /> Logout
-                                                            </button>
-                                                        </li>
-                                                    </div>
 
-                                                ) : (
-                                                    <Link to="/login" className="dropdown-item">Login/SignUp</Link>
-                                                )}
-                                        
+                                            {isLoggedIn ? (
+                                                <div>
+                                                    <Link to="/user-dashboard" className="dropdown-item">
+                                                        <div >
+                                                            <Person className="text-danger" />
+                                                            <span className="userName" style={{ color: "black" }}>{user_name}</span>
+                                                        </div>
+                                                    </Link>
+                                                    <li>
+                                                        <hr className="dropdown-divider" />
+                                                    </li>
+                                                    <li>
+                                                        <Link to="/bookings" className="dropdown-item">
+                                                            <House className="text-danger" /> Bookings
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <hr className="dropdown-divider" />
+                                                    </li>
+                                                    <li>
+                                                        <button className="dropdown-item" onClick={handleLogout}>
+                                                            <IconDoorClosedFill className="text-danger" /> Logout
+                                                        </button>
+                                                    </li>
+                                                </div>
+
+                                            ) : (
+                                                <Link to="/login" className="dropdown-item">Login/SignUp</Link>
+                                            )}
+
                                             {/*<li>
                                         <Link className="dropdown-item" to="/star/zone">
                                             <IconStarFill className="text-warning" /> Star Zone

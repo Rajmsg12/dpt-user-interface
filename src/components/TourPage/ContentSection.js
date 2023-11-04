@@ -45,7 +45,9 @@ function ContentSection() {
   };
 
   return (
+   
     <div className="ContentSection">
+    {ourData.map((categoryList, index) => (
       <div className="container">
         <div className="ContentSectionWrapper">
           <div className="ContentLHS">
@@ -57,7 +59,7 @@ function ContentSection() {
                   <div className="item">
                     <div className="DetailpageSlideBox">
                       <div className="imageBox">
-                        <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"} alt="" />
+                        <img src={process.env.PUBLIC_URL + categoryList.imageSrc} alt="" />
                       </div>
                       {/* imageBox */}
                       <div className="BannerContent">
@@ -87,7 +89,7 @@ function ContentSection() {
                   <div className="item">
                     <div className="DetailpageSlideBox">
                       <div className="imageBox">
-                        <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"} alt="" />
+                        <img src={process.env.PUBLIC_URL + categoryList.imageSrc} alt="" />
                       </div>
                       {/* imageBox */}
                       <div className="BannerContent">
@@ -140,10 +142,18 @@ function ContentSection() {
             <div className="fromDiv">
               <h4>From</h4>
               <div className="aedrow">
-                <span>AED 2,000</span>
-                <span>USD 2000*0.27</span>
+              <span>AED {parseFloat(categoryList.price.replace(/,/g, '')).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}</span>
+              
+              <span>USD {typeof categoryList.price === 'string' ? (parseFloat(categoryList.price.replace(/,/g, '')) * 0.27).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }) : 'N/A'}</span>
+              
               </div>
-              <div className="Person">per person <strong>(2 Days)</strong></div>
+              <div className="Person">per {categoryList.person} person <strong>({categoryList.duration})</strong></div>
               <div className="right">
                 <Link to="#">View Offers</Link>
               </div>
@@ -228,8 +238,12 @@ function ContentSection() {
         </div>
         {/* ContentSectionWrapper */}
       </div>
-      {/* container */}
+   
+      ))}
     </div>
+  
   );
 }
 export default ContentSection;
+
+

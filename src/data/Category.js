@@ -77,7 +77,7 @@ CategoryList:  [
     hastag:"#1 Top Dubai Desert Experience",
     price: "250",
     person: "5 ",
-    duration: "6 Days",
+    duration: "2 Days",
   },
   {
     id: 7,
