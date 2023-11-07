@@ -13,7 +13,7 @@ import CustomerSay from '../homepage/CustomerSay'
 import TrendingPlaces from '../homepage/TrendingPlaces'
 const Homepage = () => {
   return (
-    <div>
+    <div className="HomePageMin">
     <React.Fragment>
         <Header />
        

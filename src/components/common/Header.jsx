@@ -62,7 +62,7 @@ const Header = () => {
 
     return (
 
-        <header className="p-3  bg-blue">
+        <header className="HomePageHeader">
             <div className="HeaderWrapper">
                 <div className="container">
                     <div className="HeaderLayer">
