@@ -56,10 +56,68 @@ function ContentSection() {
               <GetInTouch />
               <div className="DetailPageBanner">
                 <div className="owl-carousel owl-theme" id="Detailpageslider">
-                  <Carousel responsive={responsive} infinite={true}>
-                    <div className="item">{/* Your code here */}</div>
-                    <div className="item">{/* Your code here */}</div>
-                  </Carousel>
+                <Carousel responsive={responsive} infinite={true}>
+                <div className="item">
+                  <div className="DetailpageSlideBox">
+                    <div className="imageBox">
+                      <img src={process.env.PUBLIC_URL + categoryList.imageSrc} alt="" />
+                    </div>
+                    {/* imageBox */}
+                    <div className="BannerContent">
+                      <div className="bannerContentTop">
+                        <div className="caption">
+                          <span> #1</span>
+                          <span>Top Dubai</span>
+                          <span>Burj khalifa tour</span>
+                          <span> Experience</span>
+                        </div>
+                        <div className="logoimg">
+                          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701524/choise2_yc6jt4.png"} alt="" />
+                        </div>
+                      </div>
+                      {/* bannerContentTop */}
+                      <div className="BannerTitle">
+                        <h2>Abu Dhabi Amazing Family Private Tour</h2>
+                      </div>
+                    </div>
+                    {/* BannerContent */}
+                    <div className="wishlistTag">
+                      <span>Wishlist</span>
+                    </div>
+                  </div>
+                  {/* DetailpageSlideBox */}
+                </div>
+                <div className="item">
+                  <div className="DetailpageSlideBox">
+                    <div className="imageBox">
+                      <img src={process.env.PUBLIC_URL + categoryList.imageSrc} alt="" />
+                    </div>
+                    {/* imageBox */}
+                    <div className="BannerContent">
+                      <div className="bannerContentTop">
+                        <div className="caption">
+                          <span> #1</span>
+                          <span>Top Dubai</span>
+                          <span>Burj khalifa tour</span>
+                          <span> Experience</span>
+                        </div>
+                        <div className="logoimg">
+                          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701524/choise2_yc6jt4.png"} alt="" />
+                        </div>
+                      </div>
+                      {/* bannerContentTop */}
+                      <div className="BannerTitle">
+                        <h2>Abu Dhabi Amazing Family Private Tour</h2>
+                      </div>
+                    </div>
+                    {/* BannerContent */}
+                    <div className="wishlistTag">
+                      <span>Wishlist</span>
+                    </div>
+                  </div>
+                  {/* DetailpageSlideBox */}
+                </div>
+              </Carousel>
                 </div>
               </div>
               <DetailOverview />
