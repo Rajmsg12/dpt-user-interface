@@ -467,8 +467,9 @@ input {
   font-weight: 500;
   margin-bottom: 8px;
 }
-.ContentRHS .fromDiv a.cta {
+.ContentRHS .fromDiv .cta {
   background-color: #F25928;
+  border:none;
   font-size: 18px;
   color: #fff;
   font-weight: 500;
@@ -2444,4 +2445,467 @@ footer {
   height: auto;
   min-height: auto;
   background-color: #fff;
+}
+.cartPopup .modal-title {
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: #000;
+}
+
+.cartPopup .modal-header .btn-close {
+  opacity: 1;
+  outline: none;
+  box-shadow: none;
+}
+
+.cartPopup .modal-header {
+  padding: 20px 15px;
+}
+
+.cartPopup .modal-body {
+  padding: 0px;
+}
+
+.cartPopup .cartaddedItemDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e5e5e5;
+  padding: 15px;
+  margin: 0px 0px 10px;
+}
+
+.cartPopup .cartaddedItemDiv .itemelment {
+  font-weight: 500;
+  color: #000;
+  font-size: 15px;
+}
+
+.cartPopup .cartaddedItemDiv .totalelement {
+  display: flex;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+}
+
+.cartPopup .cartaddedItemDiv .totalelement {
+  display: flex;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  font-weight: 500;
+  color: #000;
+  font-size: 20px;
+}
+
+.cartPopup .cartaddedItemDiv .totalelement span:last-child {
+  color: #F25928;
+}
+
+.cartPopup .CartBoxWrapper {
+  margin: 0px 10px 10px;
+}
+
+.cartPopup .CartBoxWrapper .CartContentWrapper .BtnGroup .BtnGroupLhs {
+  display: flex;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+}
+
+.cartPopup .CartBoxWrapper .CartContentWrapper .BtnGroup {
+  justify-content: space-between;
+}
+
+.cartPopup .CartBoxWrapper .CartContentWrapper .BtnGroup .cta.fillcta {
+  color: #fff;
+  background-color: #F25928;
+  border-color: #F25928;
+}
+
+.cartPopup .CartBoxWrapper .CartContentWrapper .EditTrashGroup .Edit {
+  display: none;
+}
+
+.cartPopup .CartBoxWrapper .CartContentWrapper .EditTrashGroup div {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  min-height: 22px;
+  background-size: 100%;
+}
+
+/*youmayaloslike*/
+.cartPopup .Title h2 {
+  font-size: 14px;
+  padding: 0px;
+  border: 0px;
+  margin: 0px 0px 15px 4px;
+}
+
+.cartPopup .youmayalsolike {
+  padding: 20px 10px;
+}
+
+.cartPopup .TabBox .img .discountrow .discount span {
+  width: 35px;
+  min-width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.cartPopup .TabBox .img .imgBottomRow .lhstext span {
+  font-size: 15px;
+  line-height: 16px;
+}
+
+.cartPopup .TabBox .img .imgBottomRow .rhsimg div img {
+  width: auto;
+  max-width: 45px;
+}
+
+.cartPopup .TabBox h4 {
+  font-size: 14px;
+  color: #000;
+  font-weight: 600;
+  margin: 0px;
+  min-height: 35px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+}
+
+.cartPopup .TabBox p {
+  margin: 4px 0px 4px;
+  font-size: 11px;
+  font-weight: 400;
+  min-height: 50px;
+}
+
+.cartPopup .TabBox span {
+  font-size: 10px;
+}
+
+.cartPopup .aedtext {
+  font-size: 11px;
+  line-height: 11px;
+}
+
+.cartPopup .aedRHS {
+  font-size: 11px;
+}
+
+.cartPopup .aedtext strong {
+  font-size: 16px;
+}
+
+.cartPopup .owl-dots, .cartPopup .owl-dots {
+  display: none;
+}
+
+.cartPopup .PopularTours {
+  padding: 0px;
+}
+
+.cartPopup .TabBox .img, .cartPopup .TabBox .img > img {
+  position: relative;
+  overflow: hidden;
+  height: 150px;
+}
+
+/*youmayaloslike*/
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 5rem;
+  }
+}
+@media screen and (max-width: 767px) {
+  .cartPopup .cartaddedItemDiv .itemelment {
+    font-size: 12px;
+  }
+  .cartPopup .cartaddedItemDiv .totalelement {
+    font-size: 15px;
+  }
+  .cartPopup .CartBoxWrapper .CartContentWrapper .BtnGroup {
+    flex-direction: column;
+    row-gap: 4px;
+  }
+  .cartPopup .CartBoxWrapper .CartContentWrapper .BtnGroup .cta {
+    display: table;
+  }
+  .cartPopup .CartBoxWrapper .CartContentWrapper .BtnGroup .BtnGroupLhs {
+    -moz-column-gap: 4px;
+         column-gap: 4px;
+  }
+  .cartPopup .CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow span {
+    width: 50%;
+    white-space: inherit;
+  }
+}
+@media screen and (max-width: 575px) {
+  .cartPopup .CartBoxWrapper .CartContentWrapper .BtnGroup .cta {
+    flex: 1;
+    display: flex;
+  }
+  .cartPopup .TabBox p, .cartPopup .TabBox h4 {
+    min-height: auto;
+  }
+  .cartPopup .TabBox .img, .cartPopup .TabBox .img > img {
+    height: 100%;
+  }
+}
+/*Cartpopup*/
+.CartBoxWrapper {
+  border: 1px solid #E7E7E7;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0px 0px 15px;
+  position: relative;
+}
+
+.CartBoxWrapper .CartTopBox {
+  display: flex;
+}
+
+.CartBoxWrapper .CartimgWrapper {
+  width: 180px;
+  height: 135px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+.CartBoxWrapper .CartimgWrapper img {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.CartBoxWrapper .CartContentWrapper {
+  position: relative;
+  display: block;
+  width: calc(100% - 190px);
+  min-width: calc(100% - 190px);
+  margin-left: 10px;
+}
+
+.CartBoxWrapper .CartContentWrapper h4 {
+  color: #000;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0px 0px 3px;
+  padding: 0px 55px 0px 0px;
+}
+
+.CartBoxWrapper .CartContentWrapper .Price {
+  color: #F25928;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0px 0px 12px;
+}
+
+.CartBoxWrapper .CartContentWrapper .BtnGroup {
+  display: flex;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+}
+
+.CartBoxWrapper .CartContentWrapper .BtnGroup .cta {
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid #000;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 9px 12px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -moz-column-gap: 2px;
+       column-gap: 2px;
+  text-transform: capitalize;
+}
+
+.CartBoxWrapper .CartContentWrapper .BtnGroup .cta[aria-expanded=true] {
+  background-color: #F25928;
+  border-color: #F25928;
+  color: #fff;
+}
+
+.CartBoxWrapper .CartContentWrapper .BtnGroup .cta.BookingInfoCta[aria-expanded=true]::after {
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+}
+
+.CartBoxWrapper .CartContentWrapper .BtnGroup .BookingInfoCta::after {
+  content: "";
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  width: 15px;
+  min-width: 15px;
+  height: 15px;
+  min-height: 15px;
+  background-repeat: no-repeat;
+  background-size: 13px;
+  background-position: center center;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+}
+
+.CartBoxWrapper .CartContentWrapper .EditTrashGroup {
+  display: flex;
+  -moz-column-gap: 15px;
+       column-gap: 15px;
+  align-items: center;
+  justify-content: flex-end;
+  width: 50px;
+  min-width: 50px;
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+
+.CartBoxWrapper .CartContentWrapper .EditTrashGroup div {
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  min-height: 16px;
+  cursor: pointer;
+}
+
+.CartBoxWrapper .CartContentWrapper .EditTrashGroup .Edit {
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-fill' viewBox='0 0 16 16'%3E%3Cpath d='M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z'/%3E%3C/svg%3E");
+}
+
+.CartBoxWrapper .CartContentWrapper .EditTrashGroup .Trash {
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle-fill' viewBox='0 0 16 16'%3E%3Cpath d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z'/%3E%3C/svg%3E");
+}
+
+/*BookingInfoData*/
+.CartBottomBox .BookingInfoData {
+  position: relative;
+  padding: 20px 0px 10px;
+}
+
+.CartBottomBox .BookingInfotableData {
+  border: 1px solid #ECECEC;
+}
+
+.CartBottomBox .BookingInfoData .heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  margin: 0px 0px 10px;
+}
+
+.CartBottomBox .BookingInfotableData {
+  border: 1px solid #ECECEC;
+  display: flex;
+}
+
+.CartBottomBox .BookingInfotableData .BookingInfotableDiv {
+  width: 50%;
+}
+
+.CartBottomBox .BookingInfotableData .BookingInfotableDiv:last-child {
+  border-left: 1px solid #ECECEC;
+}
+
+.CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow {
+  display: flex;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  border-bottom: 1px solid #ECECEC;
+  padding: 12px 15px;
+}
+
+.CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow:last-child {
+  border-bottom: 0px;
+}
+
+.CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow span {
+  color: #000;
+  font-weight: 500;
+  font-size: 14px;
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow span:last-child {
+  width: 30%;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 991.33px) {
+  .CartBoxWrapper .CartContentWrapper h4 {
+    font-size: 16px;
+    padding: 0px 45px 0px 0px;
+  }
+  .CartBoxWrapper .CartContentWrapper .Price {
+    font-size: 15px;
+    margin: 0px 0px 5px;
+  }
+  .CartBoxWrapper .CartimgWrapper {
+    width: 110px;
+    height: 83px;
+  }
+  .CartBoxWrapper .CartContentWrapper {
+    width: calc(100% - 110px);
+    min-width: calc(100% - 110px);
+    margin-left: 8px;
+  }
+  .CartBoxWrapper .CartContentWrapper .EditTrashGroup {
+    -moz-column-gap: 8px;
+         column-gap: 8px;
+    width: 40px;
+    min-width: 40px;
+  }
+  .CartBoxWrapper .CartContentWrapper .EditTrashGroup div {
+    background-size: 14px;
+  }
+  .CartBottomBox .BookingInfoData .heading {
+    font-size: 16px;
+  }
+  .CartBoxWrapper .CartContentWrapper .BtnGroup .cta {
+    font-size: 12px;
+    padding: 7px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .CartBottomBox .BookingInfotableData {
+    flex-direction: column;
+  }
+  .CartBottomBox .BookingInfotableData .BookingInfotableDiv {
+    width: 100%;
+  }
+  .CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow:last-child {
+    border-bottom: 1px solid #ECECEC;
+  }
+  .CartBottomBox .BookingInfotableData .BookingInfotableDiv:last-child {
+    border: 0px;
+  }
+  .CartBottomBox .BookingInfotableData {
+    border-bottom: 0px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow span {
+    font-size: 12px;
+  }
 }

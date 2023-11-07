@@ -26,7 +26,7 @@ const YouAlsoLike = () => {
         }
     };
     return (
-        <div>
+        <>
             <div className="PopularTours">
                 <div className="container">
                     <div className="Title">
@@ -97,7 +97,7 @@ const YouAlsoLike = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

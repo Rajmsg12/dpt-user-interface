@@ -52,8 +52,8 @@ const DashboardHeader = () => {
     };
     return (
         <>
-            <header className="userHeader">
-                <div className="customcontainer">
+            <header className="userHeader dashboardMenuOpen  ">
+                <div className="customcontainer ">
                     <div className="userHeaderIn">
                         <div className="userHeaderLhs">
 
