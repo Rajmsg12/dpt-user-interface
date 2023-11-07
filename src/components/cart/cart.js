@@ -1,20 +1,61 @@
-import React from "react";
+import React,{useState , useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "./CartActions";
+import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import './style/cart.css'
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
-  console.log("Cart ", cart)
+  const navigate = useNavigate()
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price, 0);
+  };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [cartCount, setCartCount] = useState("");
+
+  useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (token) {
+          fetch('http://127.0.0.1:9900/welcome', {
+              headers: {
+                  Authorization: `Bearer ${token}`
+              }
+
+          })
+
+              .then(response => response.json())
+
+              .then(data => {
+
+                  setIsLoggedIn(true);
+              })
+
+              .catch(error => {
+                  console.error("Error fetching user data:", error);
+              });
+      }
+  }, []);
+
+  const handleLogout = () => {
+      fetch('http://127.0.0.1:9900/logout', {
+          method: 'POST',
+      })
+          .then(() => {
+              localStorage.removeItem('token');
+              localStorage.removeItem('user_name');
+              setIsLoggedIn(false);
+          })
+          .catch(error => {
+              console.error('Logout failed', error);
+          });
   };
 
   return (
     <div className="CartPageContent">
-      <div className="container">
+    <div className="container">
+      {isLoggedIn ? ( // If user is logged in
         <div className="CartPageContentWrapper">
           <div className="CartPageContenLHS">
             {cart && Array.isArray(cart) && cart.length === 0 ? (
@@ -164,6 +205,18 @@ const Cart = () => {
             )}
           </div>
         </div>
+        ) : (
+          <div className="CenteredLoginButton">
+            <button
+              className="cta"
+              onClick={() => {
+                navigate.push("/login"); // Navigate to the login page
+              }}
+            >
+              Log In
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
