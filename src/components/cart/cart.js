@@ -7,7 +7,7 @@ import './style/cart.css'
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
-  console.log("Cart ", cart);
+  console.log("Cart ", cart)
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price, 0);
   };
