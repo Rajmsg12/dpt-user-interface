@@ -1,6 +1,33 @@
-import React from 'react'
+import React , {useEffect , useState} from 'react'
+import { Editor, EditorState, ContentState, convertFromRaw } from 'draft-js';
 
 const Faq = () => {
+  const [backendData, setBackendData] = useState(null);
+  const url = window.location.href;
+  const spliturl = url.split("/");
+  const slug = spliturl[4];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setBackendData(data);
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+   // Function to convert the JSON data to ContentState
+const convertToContentState = (json) => {
+  const rawContentState = JSON.parse(json);
+  return convertFromRaw(rawContentState);
+};
   return (
     <div>
     <div className="innerPageFaq">
@@ -8,24 +35,15 @@ const Faq = () => {
       <h3>Frequently asked Questions</h3>
     </div>
     <div className="faqRow">
-      <h4>Q. What are the different modes of travel to reach Dubai?</h4>
-      <p>The mosque and palace observe a very strict dress code. Women must wear long loose clothing, ensuring their arms and legs are fully covered with headcover all the time. </p>
+    {backendData && backendData.data && backendData.data.map((tour) => (
+      <div  key={tour.id}>
+        <Editor editorState={EditorState.createWithContent(convertToContentState(tour.asked_questions))} readOnly />
+        </div>
+  
+    ))}
     </div>
     {/* faqRow */}
-    <div className="faqRow">
-      <h4>Q. Do I need a visa to travel in Dubai?</h4>
-      <p>The mosque and palace observe a very strict dress code. Women must wear long loose clothing, ensuring their arms and legs are fully covered with headcover all the time. </p>
-    </div>
-    {/* faqRow */}
-    <div className="faqRow">
-      <h4>Q. What are the different modes of travel to reach Dubai?</h4>
-      <p>The mosque and palace observe a very strict dress code. Women must wear long loose clothing, ensuring their arms and legs are fully covered with headcover all the time. </p>
-    </div>
-    {/* faqRow */}
-    <div className="faqRow">
-      <h4>Q. Do I need a visa to travel in Dubai?</h4>
-      <p>The mosque and palace observe a very strict dress code. Women must wear long loose clothing, ensuring their arms and legs are fully covered with headcover all the time. </p>
-    </div>
+   
     {/* faqRow */}
   </div>
     </div>
