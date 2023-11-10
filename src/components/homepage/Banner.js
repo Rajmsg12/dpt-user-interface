@@ -11,6 +11,7 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
+
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -30,6 +31,8 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const filteredOptions = options
     .filter((option) => option.toLowerCase().includes(searchTerm.toLowerCase()))
     .slice(0, 5);
+
+
 
   return (
     <div className="searchable-select">
@@ -64,6 +67,8 @@ const Banner = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedPerson, setSelectedPerson] = useState('');
+  const [tours, setTours] = useState([]);
+  const [wedding, setWedding] = useState([]);
   const navigate = useNavigate();
 
   const handleCountrySelect = (country) => {
@@ -104,9 +109,9 @@ const Banner = () => {
     if (selectedCountry && selectedPerson) {
       // This condition should work for navigation.
       const lowerCaseSelectedCountry = selectedCountry.toLowerCase()
-   navigate(`/tours/${lowerCaseSelectedCountry}`);
-  //  navigate(`/tours`);
-    
+      navigate(`/tours/${lowerCaseSelectedCountry}`);
+      //  navigate(`/tours`);
+
     }
   };
 
@@ -138,6 +143,32 @@ const Banner = () => {
   const searchValue = () => {
 
   }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/cat/3');
+        const data = await response.json();
+        setTours(data.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/cat/4');
+        const data = await response.json();
+        setWedding(data.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className={`homepageContent`}>
@@ -254,46 +285,46 @@ const Banner = () => {
                             <div className="searchinputformobile popupSearchbar">
                               <button type="submit" className="SearchIconInput"> </button>
                               <SearchableSelect
-                                    options={data.bannerSearchCountry.map((item) => item.country)}
-                                    placeholder="Select Country"
-                                    onSelect={handleCountrySelect}
-                                  />
+                                options={data.bannerSearchCountry.map((item) => item.country)}
+                                placeholder="Select Country"
+                                onSelect={handleCountrySelect}
+                              />
                             </div>
 
                             <div className="SelectdateField">
                               <div className="calendarIcon"></div>
                               <DatePicker
-                                  selected={selectedDate}
-                                  onChange={(date) => setSelectedDate(date)}
-                                  minDate={new Date()}
-                                  placeholderText="Select Date"
-                                  customInput={
-                                    <input
-                                      style={{
-                                        border: "none",
-                                        outline: "none",
-                                      }}
-                                    />
-                                  }
-                                />
+                                selected={selectedDate}
+                                onChange={(date) => setSelectedDate(date)}
+                                minDate={new Date()}
+                                placeholderText="Select Date"
+                                customInput={
+                                  <input
+                                    style={{
+                                      border: "none",
+                                      outline: "none",
+                                    }}
+                                  />
+                                }
+                              />
                             </div>
 
                             <div className="SelectpeopleField">
                               <div className="UserIcon"></div>
                               <SearchableSelect
-                              options={data.bannerSelectPerson.map((item) => item.person)}
-                              placeholder="1 Traveller"
-                              onSelect={(person) => {
-                                setSelectedPerson(person);
-                                handlePersonSelect(person);
-                              }}
-                            />
+                                options={data.bannerSelectPerson.map((item) => item.person)}
+                                placeholder="1 Traveller"
+                                onSelect={(person) => {
+                                  setSelectedPerson(person);
+                                  handlePersonSelect(person);
+                                }}
+                              />
                             </div>
 
                             <div className="PopupSubmitBtn">
 
                               {/* Replace the <button> with a <Link> */}
-                             <button onClick={handleSearchClick} className="searchIcon">Search</button>
+                              <button onClick={handleSearchClick} className="searchIcon">Search</button>
                             </div>
                           </div>
                         </div>
@@ -306,6 +337,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
+
       <div className="tabSection">
 
         <div className="tabstycky">
@@ -345,43 +377,47 @@ const Banner = () => {
 
               <div className="TabLayer">
                 <div className="TabWrapper">
-                  {data.privateJet.map((item, index) => {
-                    const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase(); // Declare it here
+                {tours.map((tour, index) => {
+                  const titleWithHyphens = tour.slug; // Declare it here
 
                     return (
                       <Link to={`/private-jet/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
-                          <img src={item.imgSrc} alt="" />
+                          <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
                           <div className="discountrow">
                             <div className="discount">
-                              <span>{item.discount}</span>
+                              <span>{`${tour.discount}%`}</span>
+                              </div>
+                              <div class="wishlistIcon"></div>
                             </div>
-                            <div className="wishlistIcon">
-                              {item.wishlistIcon}
-                            </div>
-                          </div>
-
-                          <div className="imgBottomRow">
-                            <div className="rhsimg">
-                              <div>
-                                <img src={item.imgBottomRow.rhsimg} alt="" />
+                            <div class="imgBottomRow">
+                              <div class="lhstext">
+                                
+                                <span>{tour.hastag}</span>
+                              </div>
+                              <div class="rhsimg">
+                                <div>
+                                
+                                  <img src="images/choise1.png" alt=""/>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
                         <div className="TabBoxBody">
-                          <h4>{item.title}</h4>
-                          <p>{item.description}</p>
+                          <h4>{tour.tour_name}</h4>
+                          <p>{tour.intro}</p>
                           <div className="ReviewRow">
-                            <span className="location">{item.location}</span>
+                          {tour.destination_info && tour.destination_info.length > 0 && (
+                            <span className="location">{tour.destination_info[0].name}</span>
+                          )}
                           </div>
                         </div>
                         <div className="TabBoxFooter">
                           <div className="aedLHS">
                             <span>Starting from</span>
-                            <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
+                            <div className="aedtext">AED <strong>{tour.tour_price_aed}</strong> Per {tour.person} Person</div>
                           </div>
-                          <div className="aedRHS">{item.duration}</div>
+                          <div className="aedRHS">{tour.tour_duration}</div>
                         </div>
                       </Link>
                     );
@@ -398,42 +434,46 @@ const Banner = () => {
                 <h2>Wedding on yatch</h2>
                 <div className="TabLayer">
                   <div className="TabWrapper">
-                    {data.weddingYatch.map((item, index) => {
-                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
+                  {wedding.map((wedding, index) => {
+                    const titleWithHyphens = wedding.slug; // Declare it here
                       return (
                         <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
-                            <img src={item.imgSrc} alt="" />
+                            <img src={`http://127.0.0.1:8800/data/uploads/${wedding.image}`} alt="" />
                             <div className="discountrow">
                               <div className="discount">
-                                <span>{item.discount}</span>
+                              <span>{`${wedding.discount}%`}</span>
                               </div>
-                              <div className="wishlistIcon">
-                                {item.wishlistIcon}
-                              </div>
+                              <div class="wishlistIcon"></div>
                             </div>
-
-                            <div className="imgBottomRow">
-                              <div className="rhsimg">
+                            <div class="imgBottomRow">
+                              <div class="lhstext">
+                                
+                                <span>{wedding.hastag}</span>
+                              </div>
+                              <div class="rhsimg">
                                 <div>
-                                  <img src={item.imgBottomRow.rhsimg} alt="" />
+                                
+                                  <img src="images/choise1.png" alt=""/>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div className="TabBoxBody">
-                            <h4>{item.title}</h4>
-                            <p>{item.description}</p>
-                            <div className="ReviewRow">
-                              <span className="location">{item.location}</span>
-                            </div>
+                        <div className="TabBoxBody">
+                          <h4>{wedding.tour_name}</h4>
+                          <p>{wedding.intro}</p>
+                          <div className="ReviewRow">
+                          {wedding.destination_info && wedding.destination_info.length > 0 && (
+                            <span className="location">{wedding.destination_info[0].name}</span>
+                          )}
                           </div>
-                          <div className="TabBoxFooter">
-                            <div className="aedLHS">
-                              <span>Starting from</span>
-                              <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
-                            </div>
-                            <div className="aedRHS">{item.duration}</div>
+                        </div>
+                        <div className="TabBoxFooter">
+                          <div className="aedLHS">
+                            <span>Starting from</span>
+                            <div className="aedtext">AED <strong>{wedding.tour_price_aed}</strong> Per {wedding.person} Person</div>
+                          </div>
+                          <div className="aedRHS">{wedding.tour_duration}</div>
                           </div>
                         </Link>
                       );

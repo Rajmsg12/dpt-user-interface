@@ -1,9 +1,29 @@
-import React from 'react';
+import React , {useState , useEffect} from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { data } from '../../data/index'; // Import the data object from the other file
 
 const TrendingPlaces = () => {
+  const [trendingPlaces, setTrendingPlaces] = useState([]);
+
+  const fetchTrendingPlaces = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:9900/emirates/list');
+      const data = await response.json();
+      if (data.status === 'success') {
+        setTrendingPlaces(data.data);
+      } else {
+        console.error('Failed to fetch trending places');
+      }
+    } catch (error) {
+      console.error('Error fetching trending places', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTrendingPlaces();
+  }, []);
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -39,12 +59,12 @@ const TrendingPlaces = () => {
                 itemClass="carousel-item-padding-60-px"
                 arrows={false}
               >
-                {data.trendingPlaces.map((place, index) => (
-                  <div className="carouselItem" key={index}>
+              {trendingPlaces.map((place) => (
+                <div className="carouselItem" key={place.id}>
                     <div className="item">
                       <div className="SliderBox">
                         <div className="SliderBoxImg">
-                          <img src={place.image} alt="" />
+                          <img src={`http://127.0.0.1:8800/data/uploads/${place.image}`} alt="" />
                         </div>
                         <div className="SliderBoxContent">
                           <h3>{place.name}</h3>

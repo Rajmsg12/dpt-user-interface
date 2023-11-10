@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Style/TourPage.css";
@@ -13,16 +13,34 @@ import DetailOverview from "./BannerTabs";
 import GetInTouch from "./GetInTouch";
 import { useParams } from "react-router-dom";
 import { data } from "../../data/Category";
-import Cart from "../cart/Cart";
 import { addToCart } from "../cart/CartActions";
 
 function ContentSection() {
   const { title } = useParams();
+  const [backendData, setBackendData] = useState(null);
   const dispatch = useDispatch();
   const url = window.location.href;
-  const spliturl = url.split("=");
-  const id = Number(spliturl[1]);
-  const ourData = data.CategoryList.filter((item) => item.id === id);
+  const spliturl = url.split("/");
+  const slug = spliturl[4];
+  const ourData = data.CategoryList.filter((item) => item.slug === slug);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setBackendData(data);
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error.message);
+      }
+    };
+
+    fetchData();
+  }, [slug]);
 
   const responsive = {
     superLargeDesktop: {
@@ -47,6 +65,7 @@ function ContentSection() {
     dispatch(addToCart(item));
   };
   const cart = useSelector((state) => state.cart);
+
   return (
     <div className="ContentSection">
       {ourData.map((categoryList) => (
@@ -56,68 +75,76 @@ function ContentSection() {
               <GetInTouch />
               <div className="DetailPageBanner">
                 <div className="owl-carousel owl-theme" id="Detailpageslider">
-                <Carousel responsive={responsive} infinite={true}>
-                <div className="item">
-                  <div className="DetailpageSlideBox">
-                    <div className="imageBox">
-                      <img src={process.env.PUBLIC_URL + categoryList.imageSrc} alt="" />
-                    </div>
-                    {/* imageBox */}
-                    <div className="BannerContent">
-                      <div className="bannerContentTop">
-                        <div className="caption">
-                          <span> #1</span>
-                          <span>Top Dubai</span>
-                          <span>Burj khalifa tour</span>
-                          <span> Experience</span>
+                  <Carousel responsive={responsive} infinite={true}>
+                    <div className="item">
+                      <div className="DetailpageSlideBox">
+                        <div className="imageBox">
+                          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"} alt="" />
                         </div>
-                        <div className="logoimg">
-                          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701524/choise2_yc6jt4.png"} alt="" />
+                        <div className="BannerContent">
+                          <div className="bannerContentTop">
+                            <div className="caption">
+                              <span> #1</span>
+                              <span>Top Dubai</span>
+                              <span>Burj khalifa tour</span>
+                              <span> Experience</span>
+                            </div>
+                            <div className="logoimg">
+                              <img
+                                src={
+                                  "https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701524/choise2_yc6jt4.png"
+                                }
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                          <div className="BannerTitle">
+                            <h2>Abu Dhabi Amazing Family Private Tour</h2>
+                          </div>
                         </div>
-                      </div>
-                      {/* bannerContentTop */}
-                      <div className="BannerTitle">
-                        <h2>Abu Dhabi Amazing Family Private Tour</h2>
-                      </div>
-                    </div>
-                    {/* BannerContent */}
-                    <div className="wishlistTag">
-                      <span>Wishlist</span>
-                    </div>
-                  </div>
-                  {/* DetailpageSlideBox */}
-                </div>
-                <div className="item">
-                  <div className="DetailpageSlideBox">
-                    <div className="imageBox">
-                      <img src={process.env.PUBLIC_URL + categoryList.imageSrc} alt="" />
-                    </div>
-                    {/* imageBox */}
-                    <div className="BannerContent">
-                      <div className="bannerContentTop">
-                        <div className="caption">
-                          <span> #1</span>
-                          <span>Top Dubai</span>
-                          <span>Burj khalifa tour</span>
-                          <span> Experience</span>
-                        </div>
-                        <div className="logoimg">
-                          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701524/choise2_yc6jt4.png"} alt="" />
+                        <div className="wishlistTag">
+                          <span>Wishlist</span>
                         </div>
                       </div>
-                      {/* bannerContentTop */}
-                      <div className="BannerTitle">
-                        <h2>Abu Dhabi Amazing Family Private Tour</h2>
+                    </div>
+                    <div className="item">
+                      <div className="DetailpageSlideBox">
+                        <div className="imageBox">
+                          <img
+                            src={
+                              process.env.PUBLIC_URL +
+                              categoryList.imageSrc
+                            }
+                            alt=""
+                          />
+                        </div>
+                        <div className="BannerContent">
+                          <div className="bannerContentTop">
+                            <div className="caption">
+                              <span> #1</span>
+                              <span>Top Dubai</span>
+                              <span>Burj khalifa tour</span>
+                              <span> Experience</span>
+                            </div>
+                            <div className="logoimg">
+                              <img
+                                src={
+                                  "https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701524/choise2_yc6jt4.png"
+                                }
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                          <div className="BannerTitle">
+                            <h2>Abu Dhabi Amazing Family Private Tour</h2>
+                          </div>
+                        </div>
+                        <div className="wishlistTag">
+                          <span>Wishlist</span>
+                        </div>
                       </div>
                     </div>
-                    {/* BannerContent */}
-                    <div className="wishlistTag">
-                      <span>Wishlist</span>
-                    </div>
-                  </div>
-                  {/* DetailpageSlideBox */}
-                </div>
-              </Carousel>
+                  </Carousel>
                 </div>
               </div>
               <DetailOverview />
@@ -142,9 +169,11 @@ function ContentSection() {
                   </span>
                   <span>
                     USD{" "}
-                    {typeof categoryList.price === "string"
+                    {backendData && backendData.data && backendData.data.length > 0
                       ? (
-                          parseFloat(categoryList.price.replace(/,/g, "")) *
+                          parseFloat(
+                            categoryList.price.replace(/,/g, "")
+                          ) *
                           0.27
                         ).toLocaleString("en-US", {
                           minimumFractionDigits: 2,
@@ -154,13 +183,23 @@ function ContentSection() {
                   </span>
                 </div>
                 <div className="Person">
-                  per {categoryList.person} person{" "}
-                  <strong>({categoryList.duration})</strong>
+                  per {backendData && backendData.data && backendData.data.length > 0
+                    ? backendData.data[0].person
+                    : "N/A"} person{" "}
+                  <strong>(
+                    {backendData && backendData.data && backendData.data.length > 0
+                      ? backendData.data[0].duration
+                      : "N/A"}
+                    )
+                  </strong>
                 </div>
                 <div className="right">
                   <Link to="#">View Offers</Link>
                 </div>
-                <button className="cta" onClick={() => AddToCart(categoryList)}>
+                <button
+                  className="cta"
+                  onClick={() => AddToCart(categoryList)}
+                >
                   Book this Tour
                 </button>
                 <p>
@@ -268,8 +307,8 @@ function ContentSection() {
           </div>
         </div>
       ))}
-      {ourData.length > 0 && <Cart cart={cart} addToCart={AddToCart} />}
     </div>
   );
 }
+
 export default ContentSection;

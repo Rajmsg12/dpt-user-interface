@@ -1,10 +1,11 @@
-import React from 'react';
+import React , {useState , useEffect} from 'react';
 import '../../Style/header.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import {data} from '../../data/index'
 
 const TopDestination = () => {
+    const [destinations, setDestinations] = useState([]);
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.
@@ -24,6 +25,23 @@ const TopDestination = () => {
           items: 1
         }
       };
+      useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:9900/destanition/list');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const responseData = await response.json();
+                setDestinations(responseData.data);
+            } catch (error) {
+                console.error('Error fetching data:', error.message);
+            }
+        };
+    
+        fetchData();
+    }, []);
+
     return (
         <div>
         <div className="TopDestination">
@@ -39,16 +57,16 @@ const TopDestination = () => {
                         itemClass="carousel-item-padding-60-px"
                         arrows={false}
                     >
-                        {data.topDestination.map((destination, index) => (
-                            <div key={index} className="carouselItem">
+                    {destinations.map((destination, index) => (
+                        <div key={index} className="carouselItem">
                                 <div className="item">
                                     <div className="SliderBox">
                                         <div className="SliderBoxImg">
-                                            <img src={destination.imgSrc} alt="" />
+                                            <img src={`http://127.0.0.1:8800/data/uploads/${destination.image}`} alt="" />
                                         </div>
                                         <div className="SliderBoxContent">
-                                            <h3>{destination.title}</h3>
-                                            <p>{destination.trips} Trips</p>
+                                            <h3>{destination.destination_name}</h3>
+                                            <p>{destination.trips} Trips 9</p>
                                         </div>
                                     </div>
                                 </div>

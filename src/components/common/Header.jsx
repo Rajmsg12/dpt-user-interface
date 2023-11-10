@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import '../../Style/header.css'
+import { connect } from 'react-redux';
+import { setUser, logout } from './HeaderAction'; 
 import Search from "../Search";
 import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
 import { ReactComponent as IconPersonBadgeFill } from "bootstrap-icons/icons/person-badge-fill.svg";
@@ -15,36 +17,30 @@ import { ReactComponent as IconInfoCircleFill } from "bootstrap-icons/icons/info
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-const Header = () => {
-    const [user_name, setUserName] = useState('');
+const Header = ({ user, isLoggedIn, setUser, logout }) => {
+    const [first_name, setUserName] = useState('');
     const [email, setEmail] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [cartCount, setCartCount] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            fetch('http://127.0.0.1:9900/welcome', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-
+          fetch('http://127.0.0.1:9900/welcome', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              setUserName(data.data.first_name);
+              setEmail(data.data.email);
+              setUser(data.data); // Assuming data.data contains all user information
             })
-
-                .then(response => response.json())
-
-                .then(data => {
-
-                    setUserName(data.data.user_name);
-                    setEmail(data.data.email);
-                    setIsLoggedIn(true);
-                })
-
-                .catch(error => {
-                    console.error("Error fetching user data:", error);
-                });
+            .catch(error => {
+              console.error("Error fetching user data:", error);
+            });
         }
-    }, []);
+      }, [setUser]);
 
     const handleLogout = () => {
         fetch('http://127.0.0.1:9900/logout', {
@@ -52,8 +48,11 @@ const Header = () => {
         })
             .then(() => {
                 localStorage.removeItem('token');
-                localStorage.removeItem('user_name');
-                setIsLoggedIn(false);
+                setUser(null); // Clear user data in Redux store
+                setUserName(''); // Clear local state
+                setEmail('');
+                setCartCount('');
+                logout();
             })
             .catch(error => {
                 console.error('Logout failed', error);
@@ -114,67 +113,37 @@ const Header = () => {
                                                 <FontAwesomeIcon icon={faUser} className="text-light" />
                                             </button>
                                             <ul className="dropdown-menu">
-
-                                                {isLoggedIn ? (
-                                                    <div>
-                                                        <Link to="/user-dashboard" className="dropdown-item">
-                                                            <div >
-                                                                <Person className="text-danger" />
-                                                                <span className="userName" style={{ color: "black" }}>{user_name}</span>
-                                                            </div>
+                                            {isLoggedIn ? (
+                                                <div>
+                                                    <Link to="/user-dashboard" className="dropdown-item">
+                                                        <div>
+                                                            <Person className="text-danger" />
+                                                            <span className="userName" style={{ color: "black" }}>{first_name}</span>
+                                                        </div>
+                                                    </Link>
+                                                    <li>
+                                                        <hr className="dropdown-divider" />
+                                                    </li>
+                                                    <li>
+                                                        <Link to="/bookings" className="dropdown-item">
+                                                            <House className="text-danger" /> Bookings
                                                         </Link>
-                                                        <li>
-                                                            <hr className="dropdown-divider" />
-                                                        </li>
-                                                        <li>
-                                                            <Link to="/bookings" className="dropdown-item">
-                                                                <House className="text-danger" /> Bookings
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <hr className="dropdown-divider" />
-                                                        </li>
-                                                        <li>
-                                                            <button className="dropdown-item" onClick={handleLogout}>
-                                                                <IconDoorClosedFill className="text-danger" /> Logout
-                                                            </button>
-                                                        </li>
-                                                    </div>
-
-                                                ) : (
+                                                    </li>
+                                                    <li>
+                                                        <hr className="dropdown-divider" />
+                                                    </li>
+                                                    <li>
+                                                        <button className="dropdown-item" onClick={handleLogout}>
+                                                            <IconDoorClosedFill className="text-danger" /> Logout
+                                                        </button>
+                                                    </li>
+                                                </div>
+                                            ) : (
+                                                <li>
                                                     <Link to="/login" className="dropdown-item">Login/SignUp</Link>
-                                                )}
-
-                                                {/*<li>
-                                            <Link className="dropdown-item" to="/star/zone">
-                                                <IconStarFill className="text-warning" /> Star Zone
-                                            </Link>
-                                        </li>*/}
-                                                {/*    <li>
-                                            <Link className="dropdown-item" to="/account/orders">
-                                                <IconListCheck className="text-primary" /> Orders
-                                            </Link>
-                                        </li>*/}
-                                                {/*   <li>
-                                            <Link className="dropdown-item" to="/account/wishlist">
-                                                <Shapes className="text-danger" /> Wishlist
-                                            </Link>
-                                        </li>
-                                        {/*   <li>
-                                            <hr className="dropdown-divider" />
-                                        </li>
-                                  {/*       <li>
-                                            <Link className="dropdown-item" to="/account/notification">
-                                                <IconBellFill className="text-primary" /> Notification
-                                            </Link>
-                                        </li>*/}
-                                                {/*       <li>
-                                            <Link className="dropdown-item" to="/support">
-                                                <IconInfoCircleFill className="text-success" /> Support
-                                            </Link>
-                                        </li>*/}
-
-                                            </ul>
+                                                </li>
+                                            )}
+                                        </ul>
                                         </div>
                                     </div>
 
@@ -248,67 +217,37 @@ const Header = () => {
                                             <FontAwesomeIcon icon={faUser} className="text-light" />
                                         </button>
                                         <ul className="dropdown-menu">
-
-                                            {isLoggedIn ? (
-                                                <div>
-                                                    <Link to="/user-dashboard" className="dropdown-item">
-                                                        <div >
-                                                            <Person className="text-danger" />
-                                                            <span className="userName" style={{ color: "black" }}>{user_name}</span>
-                                                        </div>
+                                        {isLoggedIn ? (
+                                            <div>
+                                                <Link to="/user-dashboard" className="dropdown-item">
+                                                    <div>
+                                                        <Person className="text-danger" />
+                                                        <span className="userName" style={{ color: "black" }}>{first_name}</span>
+                                                    </div>
+                                                </Link>
+                                                <li>
+                                                    <hr className="dropdown-divider" />
+                                                </li>
+                                                <li>
+                                                    <Link to="/bookings" className="dropdown-item">
+                                                        <House className="text-danger" /> Bookings
                                                     </Link>
-                                                    <li>
-                                                        <hr className="dropdown-divider" />
-                                                    </li>
-                                                    <li>
-                                                        <Link to="/bookings" className="dropdown-item">
-                                                            <House className="text-danger" /> Bookings
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <hr className="dropdown-divider" />
-                                                    </li>
-                                                    <li>
-                                                        <button className="dropdown-item" onClick={handleLogout}>
-                                                            <IconDoorClosedFill className="text-danger" /> Logout
-                                                        </button>
-                                                    </li>
-                                                </div>
-
-                                            ) : (
+                                                </li>
+                                                <li>
+                                                    <hr className="dropdown-divider" />
+                                                </li>
+                                                <li>
+                                                    <button className="dropdown-item" onClick={handleLogout}>
+                                                        <IconDoorClosedFill className="text-danger" /> Logout
+                                                    </button>
+                                                </li>
+                                            </div>
+                                        ) : (
+                                            <li>
                                                 <Link to="/login" className="dropdown-item">Login/SignUp</Link>
-                                            )}
-
-                                            {/*<li>
-                                        <Link className="dropdown-item" to="/star/zone">
-                                            <IconStarFill className="text-warning" /> Star Zone
-                                        </Link>
-                                    </li>*/}
-                                            {/*    <li>
-                                        <Link className="dropdown-item" to="/account/orders">
-                                            <IconListCheck className="text-primary" /> Orders
-                                        </Link>
-                                    </li>*/}
-                                            {/*   <li>
-                                        <Link className="dropdown-item" to="/account/wishlist">
-                                            <Shapes className="text-danger" /> Wishlist
-                                        </Link>
-                                    </li>
-                                    {/*   <li>
-                                        <hr className="dropdown-divider" />
-                                    </li>
-                              {/*       <li>
-                                        <Link className="dropdown-item" to="/account/notification">
-                                            <IconBellFill className="text-primary" /> Notification
-                                        </Link>
-                                    </li>*/}
-                                            {/*       <li>
-                                        <Link className="dropdown-item" to="/support">
-                                            <IconInfoCircleFill className="text-success" /> Support
-                                        </Link>
-                                    </li>*/}
-
-                                        </ul>
+                                            </li>
+                                        )}
+                                    </ul>
                                     </div>
                                 </div>
 
@@ -322,4 +261,14 @@ const Header = () => {
 
     );
 };
-export default Header;
+const mapStateToProps = (state) => ({
+    user: state.user.user,
+    isLoggedIn: state.user.isLoggedIn,
+  });
+  
+  const mapDispatchToProps = {
+    setUser,
+    logout,
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Header);

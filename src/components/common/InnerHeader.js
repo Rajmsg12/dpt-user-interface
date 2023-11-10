@@ -11,7 +11,7 @@ const InnerHeader = () => {
 
   }
   const navigate = useNavigate()
-  const [user_name, setUserName] = useState('');
+  const [first_name, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -29,7 +29,7 @@ const InnerHeader = () => {
 
         .then(data => {
 
-          setUserName(data.data.user_name);
+          setUserName(data.data.first_name);
           setEmail(data.data.email);
           setIsLoggedIn(true);
         })
@@ -46,7 +46,7 @@ const InnerHeader = () => {
     })
       .then(() => {
         localStorage.removeItem('token');
-        localStorage.removeItem('user_name');
+        localStorage.removeItem('first_name');
         setIsLoggedIn(false);
       })
       .catch(error => {
@@ -112,7 +112,7 @@ const InnerHeader = () => {
                           <Link to="/user-dashboard" className="dropdown-item">
                             <div >
                               <Person className="text-danger" />
-                              <span className="userName" style={{ color: "black" }}>{user_name}</span>
+                              <span className="userName" style={{ color: "black" }}>{first_name}</span>
                             </div>
                           </Link>
                           <li>
