@@ -1,9 +1,34 @@
-import React from 'react'
+import React , {useEffect , useState} from 'react'
 import AskQuestion from './AskQuestion'
 import BookThisTour from './BookThisTour'
+import { useDispatch, useSelector } from "react-redux";
 import Detail from './Detail'
 
 const DetailOverview = () => {
+    const [backendData, setBackendData] = useState(null);
+    const dispatch = useDispatch();
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[4];
+  
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+      
+            const data = await response.json();
+            setBackendData(data);
+          } catch (error) {
+            console.error("Error fetching data from the backend:", error.message);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
     return (
         <>
             <div className="DetailTab">

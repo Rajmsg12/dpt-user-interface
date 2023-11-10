@@ -1,6 +1,34 @@
-import React from 'react'
+import React , {useEffect , useState} from 'react'
+import { Editor, EditorState, ContentState, convertFromRaw } from 'draft-js';
 
 const WhatToExpect = () => {
+    const [backendData, setBackendData] = useState(null);
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[4];
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+  
+          const data = await response.json();
+          setBackendData(data);
+        } catch (error) {
+          console.error("Error fetching data from the backend:", error.message);
+        }
+      };
+  
+      fetchData();
+    }, []);
+  
+    // Function to convert the JSON data to ContentState
+    const convertToContentState = (json) => {
+      const rawContentState = JSON.parse(json);
+      return convertFromRaw(rawContentState);
+    };
     return (
         <div>
             <div className="Whattoexpect">
@@ -8,11 +36,12 @@ const WhatToExpect = () => {
                     <h3>What to expect</h3>
                 </div>
                 <ul>
-                    <li>For a full refund, you must cancel at least 24 hours before the experience’s start time.</li>
-                    <li>ATV quad ride for each children one bike below 14 years, however specified area..</li>
-                    <li>The mosque and palace observe a very strict dress code. Women must wear long loose clothing, ensuring their arms and legs are fully covered with headcover all the time. For the mosque visit, the company provides a long, local abaya with the scarf (long black dress-attire) for women if needed, must be returned back.</li>
-                    <li>If you cancel less than 24 hours before the experience’s start time, the amount you paid will not be refunded.</li>
-                    <li>Opening time of mosque: 9 AM to 8 PM (everyday) & 5 PM - 8 PM (Fridays).</li>
+                {backendData && backendData.data && backendData.data.map((tour) => (
+                    <div  key={tour.id}>
+                      <Editor editorState={EditorState.createWithContent(convertToContentState(tour.included))} readOnly />
+                      </div>
+                
+                  ))}
                 </ul>
             </div>
         </div>

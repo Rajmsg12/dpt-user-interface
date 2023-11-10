@@ -1,24 +1,47 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { Editor, EditorState, ContentState, convertFromRaw } from 'draft-js';
 
 const CancellationPolicy = () => {
+    const [backendData, setBackendData] = useState(null);
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[4];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                setBackendData(data);
+            } catch (error) {
+                console.error("Error fetching data from the backend:", error.message);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // Function to convert the JSON data to ContentState
+    const convertToContentState = (json) => {
+        const rawContentState = JSON.parse(json);
+        return convertFromRaw(rawContentState);
+    };
     return (
         <div>
             <div className="CancellationPolicy">
                 <div className="titlewithhd">
                     <h3>Cancellation Policy</h3>
                 </div>
-                <p>You can cancel up to 24 hours in advance of the experience for a full refund</p>
                 <div className="datainnerUl">
-                    <div className="UlWrapper">
-                        <div>For a full refund, you must cancel at least 24 hours before the experience’s start time.</div>
-                        <div>If you cancel less than 24 hours before the experience’s start time, the amount you paid will not be refunded.</div>
-                        <div>Cut-off times are based on the experience’s local time.</div>
-                    </div>
-                    {/* UlWrapper */}
-                    <div className="UlWrapper">
-                        <div>Cut-off times are based on the experience’s local time.</div>
-                        <div>Any changes made less than 24 hours before the experience’s start time will not be accepted.</div>
-                    </div>
+                    {backendData && backendData.data && backendData.data.map((tour) => (
+                        <div key={tour.id}>
+                                <Editor editorState={EditorState.createWithContent(convertToContentState(tour.policy))} readOnly />
+                        </div>
+                    ))}
+                  
 
                 </div>
 

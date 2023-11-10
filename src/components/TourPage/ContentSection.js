@@ -24,23 +24,24 @@ function ContentSection() {
   const slug = spliturl[4];
   const ourData = data.CategoryList.filter((item) => item.slug === slug);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:9900/${slug}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+    
+          const data = await response.json();
+          setBackendData(data);
+        } catch (error) {
+          console.error("Error fetching data from the backend:", error.message);
         }
-
-        const data = await response.json();
-        setBackendData(data);
-      } catch (error) {
-        console.error("Error fetching data from the backend:", error.message);
-      }
-    };
-
-    fetchData();
-  }, [slug]);
+      };
+    
+      fetchData();
+    }, []);
+    
 
   const responsive = {
     superLargeDesktop: {
@@ -68,8 +69,8 @@ function ContentSection() {
 
   return (
     <div className="ContentSection">
-      {ourData.map((categoryList) => (
-        <div className="container" key={categoryList.id}>
+    {backendData && backendData.data && backendData.data.map((tour) => (
+      <div className="container" key={tour.id}>
           <div className="ContentSectionWrapper">
             <div className="ContentLHS">
               <GetInTouch />
@@ -79,15 +80,13 @@ function ContentSection() {
                     <div className="item">
                       <div className="DetailpageSlideBox">
                         <div className="imageBox">
-                          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697696847/detailpagebanner_r14h3e.jpg"} alt="" />
+                          <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
                         </div>
                         <div className="BannerContent">
                           <div className="bannerContentTop">
                             <div className="caption">
-                              <span> #1</span>
-                              <span>Top Dubai</span>
-                              <span>Burj khalifa tour</span>
-                              <span> Experience</span>
+                              <span>{tour.hastag}</span>
+                              
                             </div>
                             <div className="logoimg">
                               <img
@@ -99,7 +98,7 @@ function ContentSection() {
                             </div>
                           </div>
                           <div className="BannerTitle">
-                            <h2>Abu Dhabi Amazing Family Private Tour</h2>
+                            <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
                         <div className="wishlistTag">
@@ -111,20 +110,13 @@ function ContentSection() {
                       <div className="DetailpageSlideBox">
                         <div className="imageBox">
                           <img
-                            src={
-                              process.env.PUBLIC_URL +
-                              categoryList.imageSrc
-                            }
-                            alt=""
-                          />
+                            src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
                         </div>
                         <div className="BannerContent">
                           <div className="bannerContentTop">
                             <div className="caption">
-                              <span> #1</span>
-                              <span>Top Dubai</span>
-                              <span>Burj khalifa tour</span>
-                              <span> Experience</span>
+                              <span>{tour.hastag}</span>
+                              
                             </div>
                             <div className="logoimg">
                               <img
@@ -136,7 +128,7 @@ function ContentSection() {
                             </div>
                           </div>
                           <div className="BannerTitle">
-                            <h2>Abu Dhabi Amazing Family Private Tour</h2>
+                            <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
                         <div className="wishlistTag">
@@ -159,46 +151,21 @@ function ContentSection() {
                 <h4>From</h4>
                 <div className="aedrow">
                   <span>
-                    AED{" "}
-                    {parseFloat(
-                      categoryList.price.replace(/,/g, "")
-                    ).toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    AED {tour.tour_price_aed}
                   </span>
                   <span>
-                    USD{" "}
-                    {backendData && backendData.data && backendData.data.length > 0
-                      ? (
-                          parseFloat(
-                            categoryList.price.replace(/,/g, "")
-                          ) *
-                          0.27
-                        ).toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })
-                      : "N/A"}
+                    USD {tour.tour_price_usd}
                   </span>
                 </div>
                 <div className="Person">
-                  per {backendData && backendData.data && backendData.data.length > 0
-                    ? backendData.data[0].person
-                    : "N/A"} person{" "}
-                  <strong>(
-                    {backendData && backendData.data && backendData.data.length > 0
-                      ? backendData.data[0].duration
-                      : "N/A"}
-                    )
-                  </strong>
+                  per {tour.person} person <strong>({tour.tour_duration})</strong>
                 </div>
                 <div className="right">
                   <Link to="#">View Offers</Link>
                 </div>
                 <button
                   className="cta"
-                  onClick={() => AddToCart(categoryList)}
+                  onClick={() => AddToCart(tour)}
                 >
                   Book this Tour
                 </button>

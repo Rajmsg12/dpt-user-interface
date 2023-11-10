@@ -1,20 +1,49 @@
-import React from 'react'
+import React , {useEffect , useState} from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import IncludedExclusive from './IncludedExclusive'
+import { Editor, EditorState, ContentState, convertFromRaw } from 'draft-js';
 
 const Detail = () => {
+    const [backendData, setBackendData] = useState(null);
+    const dispatch = useDispatch();
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[4];
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            setBackendData(data);
+          } catch (error) {
+            console.error("Error fetching data from the backend:", error.message);
+          }
+        };
+    
+        fetchData();
+      }, []);
+    
+      // Function to convert the JSON data to ContentState
+      const convertToContentState = (json) => {
+        const rawContentState = JSON.parse(json);
+        return convertFromRaw(rawContentState);
+      };
     return (
         <>
             <div className="tab-pane fade show active" id="pills-detail" role="tabpanel" aria-labelledby="pills-detail-tab">
-                <div className="OverviewSection">
-                    <h3>Overview</h3>
-                    <p>Head into the desert outside Dubai for an evening of dining and entertainment. First, climb aboard your own quad bike for an adrenaline-fueled adventure through the golden sands. Then, head to a Bedouin-style camp to participate in other activities such as sandboarding or camel riding as you enjoy traditional Arab music and dancing. A full buffet dinner is served in addition to tea, coffee, and other refreshments.</p>
-                    <ul>
-                        <li>Spend an evening at a Bedouin desert camp</li>
-                        <li>Dune bashing, quad biking, and other activities included</li>
-                        <li>Feast on a buffet dinner with non-alcoholic beverages</li>
-                        <li>Hotel pickup and drop-off included</li>
-                    </ul>
-                </div>
+               
+                {backendData && backendData.data && backendData.data.map((tour) => (
+                    <div className="OverviewSection" key={tour.id}> 
+                
+                    <Editor editorState={EditorState.createWithContent(convertToContentState(tour.tour_details))} readOnly />
+                    </div>
+                ))}
+                
+      
                 <div className="SecondPartTab">
                     <ul className="nav nav-pills mb-3" id="pills-tab1" role="tablist">
                         <li className="nav-item" role="presentation">

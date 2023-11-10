@@ -1,34 +1,59 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { Editor, EditorState, ContentState, convertFromRaw } from 'draft-js';
 
 const IncludedExclusive = () => {
+  const [backendData, setBackendData] = useState(null);
+  const url = window.location.href;
+  const spliturl = url.split("/");
+  const slug = spliturl[4];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setBackendData(data);
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Function to convert the JSON data to ContentState
+  const convertToContentState = (json) => {
+    const rawContentState = JSON.parse(json);
+    return convertFromRaw(rawContentState);
+  };
   return (
     <div>
       <div className="tab-content" id="pills-tabContent3">
         <div className="tab-pane fade show active" id="pills-included" role="tabpanel" aria-labelledby="pills-included-tab">
           <div className="datainnerUl">
-            <div className="UlWrapper">
-              <div>Pickup & drop hotel Dubai Cruise terminal & hotel apartments.</div>
-              <div>Alcohol drinks. However simply paying USD 35 unlimited alcoholic drinks for one hour</div>
-              <div>ATV quad ride for each children one bike below 14 years, however specified area.</div>
-            </div>
-            <div className="UlWrapper">
-              <div>Souvenir photos (available to purchase)</div>
-              <div>Pickup & drop hotel Dubai Cruise terminal & hotel apartments.</div>
-            </div>
+            {backendData && backendData.data && backendData.data.map((tour) => (
+              <div className="UlWrapper" key={tour.id}>
+                <Editor editorState={EditorState.createWithContent(convertToContentState(tour.included))} readOnly />
+
+              </div>
+            ))}
           </div>
-          {/* datainnerUl */}
-        </div>
+        </div> {/* datainnerUl */}
+
         <div className="tab-pane fade" id="pills-exclusive" role="tabpanel" aria-labelledby="pills-exclusive-tab">
           <div className="datainnerUl">
             <div className="UlWrapper">
-              <div>Pickup & drop hotel Dubai Cruise terminal & hotel apartments.</div>
-              <div>Alcohol drinks. However simply paying USD 35 unlimited alcoholic drinks for one hour</div>
-              <div>ATV quad ride for each children one bike below 14 years, however specified area.</div>
+            {backendData && backendData.data && backendData.data.map((tour) => (
+              <div className="UlWrapper" key={tour.id}>
+                <Editor editorState={EditorState.createWithContent(convertToContentState(tour.exclusive))} readOnly />
+
+              </div>
+            ))}
             </div>
-            <div className="UlWrapper">
-              <div>Souvenir photos (available to purchase)</div>
-              <div>Pickup & drop hotel Dubai Cruise terminal & hotel apartments.</div>
-            </div>
+            
           </div>
           {/* datainnerUl */}
         </div>
