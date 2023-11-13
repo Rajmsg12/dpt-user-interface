@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom'
 
 const PopularTour = () => {
     const [popular, setPopular] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userType, setUserType] = useState(null);
+    const [userDiscount, setUserDiscount] = useState(null);
 
     const responsive = {
         superLargeDesktop: {
@@ -44,6 +47,26 @@ const PopularTour = () => {
         };
     
         fetchData();
+    }, []);
+
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            fetch('http://127.0.0.1:9900/welcome', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setUserType(data.data.user_type); // Set user type from login API
+                    setUserDiscount(data.data.discount); // Set user discount from login API
+                })
+                .catch(error => {
+                    console.error("Error fetching user data:", error);
+                });
+        }
     }, []);
     
 
@@ -101,7 +124,13 @@ const PopularTour = () => {
                                             <div className="TabBoxFooter">
                                                 <div className="aedLHS">
                                                     <span>Starting from</span>
-                                                    <div className="aedtext">AED <strong>{tour.tour_price_aed}</strong> Per {tour.person} Person</div>
+                                                    {isLoggedIn ? (
+                                                        <div className="aedtext">
+                                                            AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                        </div>
+                                                    ) : (
+                                                        <div className="aedtext">AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person</div>
+                                                    )}
                                                 </div>
                                                 <div className="aedRHS">
                                                     {tour.tour_duration}
@@ -117,6 +146,18 @@ const PopularTour = () => {
             </div>
         </div>
     )
+    function getUserPrice(tour) {
+        if (userType === 2) {
+            // Agent user type
+            return (tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100)).toFixed(2);
+        } else if (userType === 3) {
+            // Normal user type
+            return tour.tour_price_aed;
+        } else {
+            // Default case (handle other user types if needed)
+            return tour.tour_price_aed;
+        }
+    }
 }
 
 export default PopularTour

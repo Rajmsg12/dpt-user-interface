@@ -1,38 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import Carousel from 'react-multi-carousel'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import '../../Style/header.css'
+import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 const CustomerSay = () => {
-    const [testimonials, setTestimonials] = useState([]);
-
     const responsive = {
-        superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 1 },
-        desktop: { breakpoint: { max: 3000, min: 1024 }, items: 1 },
-        tablet: { breakpoint: { max: 1024, min: 464 }, items: 1 },
-        mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 1
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 1
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 1
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
     };
-
-    useEffect(() => {
-        const fetchTestimonials = async () => {
-            try {
-                const response = await fetch('http://127.0.0.1:9900/testimonial/list');
-                const data = await response.json();
-                if (data.status === 'success') {
-                    setTestimonials(data.data);
-                } else {
-                    console.error('Failed to fetch testimonials:', data.message);
-                }
-            } catch (error) {
-                console.error('Error fetching testimonials:', error);
-            }
-        };
-
-        fetchTestimonials();
-    }, []); // Empty dependency array to ensure the effect runs only once on mount
-
     return (
         <div>
+
             <div className="customersays">
                 <div className="container">
                     <div className="Title">
@@ -83,28 +77,54 @@ const CustomerSay = () => {
                             <div className="customersaySlider">
                                 <div className="owl-carousel owl-theme" id="testiSlider">
                                     <Carousel responsive={responsive} infinite={true} arrows={false}
-                                        autoPlay={true} // Add this line for automatic movement
-                                        autoPlaySpeed={5000}
-                                        itemclassName="carousel-item-padding-60-px">
-                                        {testimonials.map((testimonial) => (
-                                            <div key={testimonial.id}>
-                                                <div className="item">
-                                                    <div className="SliderBox">
-                                                        <div className="text">
-                                                            {/* Assuming the description is HTML, dangerouslySetInnerHTML is used */}
-                                                            <p dangerouslySetInnerHTML={{ __html: JSON.parse(testimonial.description).blocks[0].text }} />
+                                        itemclassName="carousel-item-padding-60-px"
+                                    >
+                                        <div>
+                                            <div className="item">
+                                                <div className="SliderBox">
+                                                    <div className="text">
+                                                        <p>What a wonderful afternoon it would have been had we fully completed the tour. (My elderly
+                                                            father became a little overwhelmed with the heat in particular, and so we made the decision to
+                                                            cut the experience short). We cannot fault our guide Zeeba, and our driver Suhas. They were
+                                                            quick thinking and accommodated our needs. Zeeba was very informative during the tour, and she
+                                                            was especially kind when she physically assisted my father. Suhas drove closer where possible,
+                                                            to minimise my father having to walk on sometimes uneven ground in the heat, when it became
+                                                            clear that my father was struggling. My mother and I are very appreciative of their support. A
+                                                            big thank you to Zeeba and Suhas.</p>
+                                                    </div>
+                                                    <div className="ratingstar">
+                                                        <div className="starimg">
+                                                            <img src="images/homepage/ratingstar.png" alt="" />
                                                         </div>
-                                                        <div className="ratingstar">
-                                                            <div className="starimg">
-                                                                <img src="images/homepage/ratingstar.png" alt="" />
-                                                            </div>
-                                                            <h4>{testimonial.name}</h4>
-                                                            <span>{testimonial.country}</span>
-                                                        </div>
+                                                        <h4>Roshnee Chudoory</h4>
+                                                        <span>United Kingdom</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))}
+                                        </div>
+                                        <div>
+                                            <div className="item">
+                                                <div className="SliderBox">
+                                                    <div className="text">
+                                                        <p>What a wonderful afternoon it would have been had we fully completed the tour. (My elderly
+                                                            father became a little overwhelmed with the heat in particular, and so we made the decision to
+                                                            cut the experience short). We cannot fault our guide Zeeba, and our driver Suhas. They were
+                                                            quick thinking and accommodated our needs. Zeeba was very informative during the tour, and she
+                                                            was especially kind when she physically assisted my father. Suhas drove closer where possible,
+                                                            to minimise my father having to walk on sometimes uneven ground in the heat, when it became
+                                                            clear that my father was struggling. My mother and I are very appreciative of their support. A
+                                                            big thank you to Zeeba and Suhas.</p>
+                                                    </div>
+                                                    <div className="ratingstar">
+                                                        <div className="starimg">
+                                                            <img src="images/homepage/ratingstar.png" alt="" />
+                                                        </div>
+                                                        <h4>Roshnee Chudoory</h4>
+                                                        <span>United Kingdom</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </Carousel>
                                 </div>
                             </div>
@@ -113,7 +133,7 @@ const CustomerSay = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default CustomerSay;
+export default CustomerSay
