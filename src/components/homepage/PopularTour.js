@@ -126,10 +126,10 @@ const PopularTour = () => {
                                                     <span>Starting from</span>
                                                     {isLoggedIn ? (
                                                         <div className="aedtext">
-                                                            AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                            AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person
                                                         </div>
                                                     ) : (
-                                                        <div className="aedtext">AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person</div>
+                                                        <div className="aedtext">AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person</div>
                                                     )}
                                                 </div>
                                                 <div className="aedRHS">

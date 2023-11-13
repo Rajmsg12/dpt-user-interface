@@ -23,25 +23,47 @@ function ContentSection() {
   const spliturl = url.split("/");
   const slug = spliturl[4];
   const ourData = data.CategoryList.filter((item) => item.slug === slug);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(null);
+  const [userDiscount, setUserDiscount] = useState(null);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await fetch(`http://127.0.0.1:9900/${slug}`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-    
-          const data = await response.json();
-          setBackendData(data);
-        } catch (error) {
-          console.error("Error fetching data from the backend:", error.message);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      };
-    
-      fetchData();
-    }, []);
-    
+
+        const data = await response.json();
+        setBackendData(data);
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch('http://127.0.0.1:9900/welcome', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setUserType(data.data.user_type); // Set user type from login API
+          setUserDiscount(data.data.discount); // Set user discount from login API
+        })
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, []);
+
 
   const responsive = {
     superLargeDesktop: {
@@ -67,10 +89,12 @@ function ContentSection() {
   };
   const cart = useSelector((state) => state.cart);
 
+
+
   return (
     <div className="ContentSection">
-    {backendData && backendData.data && backendData.data.map((tour) => (
-      <div className="container" key={tour.id}>
+      {backendData && backendData.data && backendData.data.map((tour) => (
+        <div className="container" key={tour.id}>
           <div className="ContentSectionWrapper">
             <div className="ContentLHS">
               <GetInTouch />
@@ -86,7 +110,7 @@ function ContentSection() {
                           <div className="bannerContentTop">
                             <div className="caption">
                               <span>{tour.hastag}</span>
-                              
+
                             </div>
                             <div className="logoimg">
                               <img
@@ -116,7 +140,7 @@ function ContentSection() {
                           <div className="bannerContentTop">
                             <div className="caption">
                               <span>{tour.hastag}</span>
-                              
+
                             </div>
                             <div className="logoimg">
                               <img
@@ -151,10 +175,20 @@ function ContentSection() {
                 <h4>From</h4>
                 <div className="aedrow">
                   <span>
-                    AED {tour.tour_price_aed}
+                    {isLoggedIn ? (
+                      <div>AED {Math.floor(getUserPrice(tour))}</div>
+
+                    ) : (
+                      <div>AED {Math.floor(getUserPrice(tour))}</div>
+                    )}
                   </span>
                   <span>
-                    USD {tour.tour_price_usd}
+                    {isLoggedIn ? (
+                      <div>USD {Math.floor(getUserPriceUsd(tour))}</div>
+
+                    ) : (
+                      <div>USD {Math.floor(getUserPriceUsd(tour))}</div>
+                    )}
                   </span>
                 </div>
                 <div className="Person">
@@ -276,6 +310,33 @@ function ContentSection() {
       ))}
     </div>
   );
+  function getUserPrice(tour) {
+    if (userType === 2) {
+      // Agent user type
+      return (tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100)).toFixed(2);
+    } else if (userType === 3) {
+      // Normal user type
+      return tour.tour_price_aed;
+    } else {
+      // Default case (handle other user types if needed)
+      return tour.tour_price_aed;
+    }
+  
+    // ... (remaining code)
+  }
+  function getUserPriceUsd(tour) {
+    if (userType === 2) {
+      // Agent user type
+      return (tour.tour_price_usd - (tour.tour_price_usd * userDiscount / 100)).toFixed(2);
+    } else if (userType === 3) {
+      // Normal user type
+      return tour.tour_price_usd;
+    } else {
+      // Default case (handle other user types if needed)
+      return tour.tour_price_usd;
+    }
+  }
+  
 }
 
 export default ContentSection;

@@ -442,10 +442,10 @@ const Banner = () => {
                             <span>Starting from</span>
                             {isLoggedIn ? (
                               <div className="aedtext">
-                                  AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                  AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person
                               </div>
                           ) : (
-                              <div className="aedtext">AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person</div>
+                              <div className="aedtext">AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person</div>
                           )}
                           </div>
                           <div className="aedRHS">{tour.tour_duration}</div>
@@ -504,10 +504,10 @@ const Banner = () => {
                             <span>Starting from</span>
                             {isLoggedIn ? (
                               <div className="aedtext">
-                                  AED <strong>{getUserPrice(wedding)}</strong> Per {wedding.person} Person
+                                  AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person
                               </div>
                           ) : (
-                              <div className="aedtext">AED <strong>{getUserPrice(wedding)}</strong> Per {wedding.person} Person</div>
+                              <div className="aedtext">AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person</div>
                           )}
                           </div>
                           <div className="aedRHS">{wedding.tour_duration}</div>
