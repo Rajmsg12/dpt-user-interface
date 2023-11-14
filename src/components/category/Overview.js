@@ -1,28 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 
 const Overview = () => {
+    const [tourData, setTourData] = useState(null);
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[4];
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`http://127.0.0.1:9900/plan/${slug}`);
+                const data = await response.json();
+                if (data.status === 'success' && data.length > 0) {
+                    // Parse JSON content in the description field
+                    const parsedDescription = JSON.parse(data.data[0].description);
+
+                    // Update the state with the parsed data
+                    setTourData({ ...data.data[0], description: parsedDescription });
+                } else {
+                    console.error('Error fetching data:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []); // The empty dependency array ensures that the effect runs only once after the initial render.
+
     return (
         <>
-            <div className="toptext">
-                <div className="Title">
-                    <h2>Overview</h2>
+            {tourData && (
+                <div className="toptext">
+                    <div className="Title">
+                        <h2>{tourData.name}</h2>
+                    </div>
+                    <p>
+                        <strong>{tourData.short_description}</strong>
+                    </p>
+                    <p>{tourData.description.blocks[0].text}</p>
+                    {/* Add more rendering logic for other properties if needed */}
                 </div>
-                <p>
-                    <strong>Choose Classy Luxury Rides To Travel In and Around</strong>
-                </p>
-                <p>
-                    Dubai is a place where people live with A-class amenities, sleep in
-                    A-class Beds and travel in A-class cars. To provide you with the
-                    same travel experience, we at Dubai Private Tour have come up with a
-                    wide range of luxury cars for you to ride in class. When you choose
-                    one of the Dubai luxury tours, you’d get the option for choosing any
-                    car as per your preference. Traveling in taxis and ordinary cars is
-                    fine but when you travel in luxurious and exotic cars you will
-                    achieve the highest level of style, comfort and class.
-                </p>
-            </div>
+            )}
         </>
-    )
-}
+    );
+};
 
-export default Overview
+export default Overview;
