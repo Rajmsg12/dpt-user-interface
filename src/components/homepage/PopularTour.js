@@ -84,7 +84,7 @@ const PopularTour = () => {
                                     <div className="item">
                                         <Link to={`/plan/${tour.slug}`} className="TabBox">
                                             <div className="img">
-                                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211165/product3_nc0kot.jpg"} alt="" />
+                                                <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
                                                 {tour.discount && (
                                                     <div className="discountrow">
                                                         <div className="discount">
@@ -126,10 +126,10 @@ const PopularTour = () => {
                                                     <span>Starting from</span>
                                                     {isLoggedIn ? (
                                                         <div className="aedtext">
-                                                            AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person
+                                                            AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
                                                         </div>
                                                     ) : (
-                                                        <div className="aedtext">AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person</div>
+                                                        <div className="aedtext">AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person</div>
                                                     )}
                                                 </div>
                                                 <div className="aedRHS">

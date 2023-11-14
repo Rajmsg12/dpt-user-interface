@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import './Style/category.css'
 import { data } from '../../data/Category'
 import CategoryLHS from './categoryLHS'
@@ -12,6 +12,7 @@ const ContentSection = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
   const totalItems = data.CategoryList.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+   const [apiData, setApiData] = useState(null);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
   const { categoryName } = useParams()
@@ -19,7 +20,9 @@ const ContentSection = () => {
     .split('-') // Split by hyphens
     .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
     .join(' ');
-
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[4];
 
 
 
@@ -79,8 +82,31 @@ const ContentSection = () => {
     return false; // Exclude items that don't match the duration filter
   });
 
+console.log(slug)
+  // const itemsToShow = filteredData.slice(startIndex, endIndex);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:9900/plan/${slug}`);
+        const result = await response.json();
+        if (result.status === 'success' && result.length > 0) {
+          setApiData(result.data[0]);
+        } else {
+          console.error('Failed to fetch data from the API');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-  const itemsToShow = filteredData.slice(startIndex, endIndex);
+    fetchData();
+  }, []);
+
+  if (!apiData) {
+    return <p>Loading...</p>;
+  }
+
+  const itemsToShow = apiData.tour_info;
   return (
     <>
       <div className="CategoryTopSection">
@@ -121,9 +147,9 @@ const ContentSection = () => {
                       <div className="listingRow GridRowWrapper">
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
-                            <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}?=${tour.id}`} className="TabBox" key={`grid-${tour.id}`}>
+                            <Link to={`${tour.title}?=${tour.id}`} className="TabBox" key={`grid-${tour.id}`}>
                               <div className="img">
-                                <img src={process.env.PUBLIC_URL + tour.imageSrc} alt="" />
+                                <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
                                 <div className="discountrow">
                                   <div className="discount">
                                     <span>{tour.discount}</span>
@@ -143,8 +169,8 @@ const ContentSection = () => {
                                 </div>
                               </div>
                               <div className="TabBoxBody">
-                                <h4>{tour.title}</h4>
-                                <p>{tour.description}</p>
+                                <h4>{tour.Tour_name}</h4>
+                                <p>{tour.tour_intro}</p>
                                 <div className="ReviewRow">
                                   <span className="location">{tour.location}</span>
                                 </div>
@@ -153,10 +179,10 @@ const ContentSection = () => {
                                 <div className="aedLHS">
                                   <span>Starting from</span>
                                   <div className="aedtext">
-                                    AED <strong>{tour.price}</strong> up to {tour.person} people
+                                    AED <strong>{tour.tour_tour_price_aed}</strong> up to {tour.person} people
                                   </div>
                                 </div>
-                                <div className="aedRHS">{tour.duration}</div>
+                                <div className="aedRHS">{tour.tour_tour_duration}</div>
                               </div>
                             </Link>
                           ))
@@ -168,9 +194,9 @@ const ContentSection = () => {
                     <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                       <div className="listingRow">
                         {itemsToShow.map((tour) => (
-                          <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}?=${tour.id}`} className="listingBox" key={`listing-${tour.id}`}>
+                          <Link to={`${tour.title}?=${tour.id}`} className="listingBox" key={`listing-${tour.id}`}>
                             <div className="listingBoxImg">
-                              <img src={tour.imageSrc} alt="" />
+                              <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
                               <div className="discountrow">
                                 <div className="discount">
                                   <span>{tour.discount}</span>
@@ -191,13 +217,13 @@ const ContentSection = () => {
                             </div>
                             <div className="listingBoxContent">
                               <div className="listingBoxTop">
-                                <h4>{tour.title}</h4>
+                                <h4>{tour.Tour_name}</h4>
                                 <div className="ReviewsDivrow">
                                   <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
                                   <span>{tour.rating} | 500 Reviews</span>
                                 </div>
                                 <div className="descrition">
-                                  <p>{tour.description}</p>
+                                  <p>{tour.tour_intro}</p>
                                 </div>
                               </div>
                               <div className="listingBoxFooter">
@@ -208,7 +234,7 @@ const ContentSection = () => {
                                 <div className="listboxrhs">
                                   <div className="startingFromTag">Starting from</div>
                                   <div className="price">
-                                    AED <strong>{tour.price}</strong> Per {tour.person} Person
+                                    AED <strong>{tour.tour_tour_price_aed}</strong> Per {tour.person} Person
                                   </div>
                                 </div>
                               </div>
