@@ -82,7 +82,6 @@ const ContentSection = () => {
     return false; // Exclude items that don't match the duration filter
   });
 
-console.log(slug)
   // const itemsToShow = filteredData.slice(startIndex, endIndex);
   useEffect(() => {
     const fetchData = async () => {
@@ -220,7 +219,7 @@ console.log(slug)
                                 <h4>{tour.Tour_name}</h4>
                                 <div className="ReviewsDivrow">
                                   <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
-                                  <span>{tour.rating} | 500 Reviews</span>
+                                  <span>5 | 500 Reviews</span>
                                 </div>
                                 <div className="descrition">
                                   <p>{tour.tour_intro}</p>

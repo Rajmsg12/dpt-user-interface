@@ -4,15 +4,18 @@ import { useParams } from 'react-router-dom';
 const Banner = () => {
   const { categoryName } = useParams();
   const [tour, setTour] = useState({});
+  const url = window.location.href;
+  const spliturl = url.split("/");
+  const slug = spliturl[3];
 
   useEffect(() => {
     const fetchTourData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/plan/${categoryName}`);
+        const response = await fetch(`http://127.0.0.1:9900/plan/${slug}`);
         const data = await response.json();
 
         if (data.status === 'success') {
-          setTour(data);
+          setTour(data.data[0]);
         } else {
           // Handle error
         }
@@ -22,13 +25,16 @@ const Banner = () => {
     };
 
     fetchTourData();
-  }, [categoryName]);
+  }, [slug]);
+  const backgroundImageUrl = tour.tour_info && tour.tour_info.length > 0
+  ? `url(http://127.0.0.1:8800/data/uploads/${tour.image})`
+  : '';
 
   return (
     <div>
       <div
         className="InnerBanner"
-        style={{ backgroundImage: `url(http://127.0.0.1:8800/data/uploads/${tour.tour_image})` }}
+        style={{ backgroundImage: backgroundImageUrl }} 
       >
         <div className="container">
           <h1>{categoryName.replace(/-/g, ' ')}</h1>
