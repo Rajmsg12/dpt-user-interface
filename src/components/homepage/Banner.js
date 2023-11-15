@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 
 const SearchableSelect = ({ options, placeholder, onSelect }) => {
-  
+
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -77,6 +77,7 @@ const Banner = () => {
   const [tours, setTours] = useState([]);
   const [wedding, setWedding] = useState([]);
   const navigate = useNavigate();
+  const [destinations, setDestinations] = useState([]);
 
   const handleCountrySelect = (country) => {
     setSelectedCountry(country);
@@ -115,8 +116,8 @@ const Banner = () => {
 
     if (selectedCountry && selectedPerson) {
       // This condition should work for navigation.
-      const lowerCaseSelectedCountry = selectedCountry.toLowerCase()
-      navigate(`/tours/${lowerCaseSelectedCountry}`);
+      const encodedCountry = encodeURIComponent(selectedCountry.replace(/\s+/g, '-').toLowerCase());
+      navigate(`/${encodedCountry}`);
       //  navigate(`/tours`);
 
     }
@@ -179,21 +180,37 @@ const Banner = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-        fetch('http://127.0.0.1:9900/welcome', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+      fetch('http://127.0.0.1:9900/welcome', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setUserType(data.data.user_type); // Set user type from login API
+          setUserDiscount(data.data.discount); // Set user discount from login API
         })
-            .then(response => response.json())
-            .then(data => {
-                setUserType(data.data.user_type); // Set user type from login API
-                setUserDiscount(data.data.discount); // Set user discount from login API
-            })
-            .catch(error => {
-                console.error("Error fetching user data:", error);
-            });
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+        });
     }
-}, []);
+  }, []);
+
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/destanition/list');
+        const data = await response.json();
+        if (data.status === 'success') {
+          setDestinations(data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching destinations:', error);
+      }
+    };
+
+    fetchDestinations();
+  }, []);
 
   return (
     <div className={`homepageContent`}>
@@ -219,9 +236,9 @@ const Banner = () => {
                                 <div className="toptext">Where to?</div>
                                 <div className="bottomtext">
                                   <SearchableSelect
-                                    options={data.bannerSearchCountry.map((item) => item.country)}
-                                    placeholder="Select Country"
-                                    onSelect={handleCountrySelect}
+                                    options={destinations.map((destination) => destination.destination_name)}
+                                    placeholder="Select Destination"
+                                    onSelect={handleCountrySelect} // You may need to adjust the onSelect callback if needed
                                   />
                                 </div>
                               </div>
@@ -310,9 +327,9 @@ const Banner = () => {
                             <div className="searchinputformobile popupSearchbar">
                               <button type="submit" className="SearchIconInput"> </button>
                               <SearchableSelect
-                                options={data.bannerSearchCountry.map((item) => item.country)}
-                                placeholder="Select Country"
-                                onSelect={handleCountrySelect}
+                                options={destinations.map((destination) => destination.destination_name)}
+                                placeholder="Select Destination"
+                                onSelect={handleCountrySelect} // You may need to adjust the onSelect callback if needed
                               />
                             </div>
 
@@ -402,8 +419,8 @@ const Banner = () => {
 
               <div className="TabLayer">
                 <div className="TabWrapper">
-                {tours.map((tour, index) => {
-                  const titleWithHyphens = tour.slug; // Declare it here
+                  {tours.map((tour, index) => {
+                    const titleWithHyphens = tour.slug; // Declare it here
 
                     return (
                       <Link to={`/private-jet/${titleWithHyphens}`} className="TabBox" key={index}>
@@ -412,29 +429,29 @@ const Banner = () => {
                           <div className="discountrow">
                             <div className="discount">
                               <span>{`${tour.discount}%`}</span>
-                              </div>
-                              <div class="wishlistIcon"></div>
                             </div>
-                            <div class="imgBottomRow">
-                              <div class="lhstext">
-                                
-                                <span>{tour.hastag}</span>
-                              </div>
-                              <div class="rhsimg">
-                                <div>
-                                
-                                  <img src="images/choise1.png" alt=""/>
-                                </div>
+                            <div class="wishlistIcon"></div>
+                          </div>
+                          <div class="imgBottomRow">
+                            <div class="lhstext">
+
+                              <span>{tour.hastag}</span>
+                            </div>
+                            <div class="rhsimg">
+                              <div>
+
+                                <img src="images/choise1.png" alt="" />
                               </div>
                             </div>
                           </div>
+                        </div>
                         <div className="TabBoxBody">
                           <h4>{tour.tour_name}</h4>
                           <p>{tour.intro}</p>
                           <div className="ReviewRow">
-                          {tour.destination_info && tour.destination_info.length > 0 && (
-                            <span className="location">{tour.destination_info[0].name}</span>
-                          )}
+                            {tour.destination_info && tour.destination_info.length > 0 && (
+                              <span className="location">{tour.destination_info[0].name}</span>
+                            )}
                           </div>
                         </div>
                         <div className="TabBoxFooter">
@@ -442,11 +459,11 @@ const Banner = () => {
                             <span>Starting from</span>
                             {isLoggedIn ? (
                               <div className="aedtext">
-                                  AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person
+                                AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person
                               </div>
-                          ) : (
+                            ) : (
                               <div className="aedtext">AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person</div>
-                          )}
+                            )}
                           </div>
                           <div className="aedRHS">{tour.tour_duration}</div>
                         </div>
@@ -465,52 +482,52 @@ const Banner = () => {
                 <h2>Wedding on yatch</h2>
                 <div className="TabLayer">
                   <div className="TabWrapper">
-                  {wedding.map((wedding, index) => {
-                    const titleWithHyphens = wedding.slug; // Declare it here
+                    {wedding.map((wedding, index) => {
+                      const titleWithHyphens = wedding.slug; // Declare it here
                       return (
                         <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
                           <div className="img">
                             <img src={`http://127.0.0.1:8800/data/uploads/${wedding.image}`} alt="" />
                             <div className="discountrow">
                               <div className="discount">
-                              <span>{`${wedding.discount}%`}</span>
+                                <span>{`${wedding.discount}%`}</span>
                               </div>
                               <div class="wishlistIcon"></div>
                             </div>
                             <div class="imgBottomRow">
                               <div class="lhstext">
-                                
+
                                 <span>{wedding.hastag}</span>
                               </div>
                               <div class="rhsimg">
                                 <div>
-                                
-                                  <img src="images/choise1.png" alt=""/>
+
+                                  <img src="images/choise1.png" alt="" />
                                 </div>
                               </div>
                             </div>
                           </div>
-                        <div className="TabBoxBody">
-                          <h4>{wedding.tour_name}</h4>
-                          <p>{wedding.intro}</p>
-                          <div className="ReviewRow">
-                          {wedding.destination_info && wedding.destination_info.length > 0 && (
-                            <span className="location">{wedding.destination_info[0].name}</span>
-                          )}
+                          <div className="TabBoxBody">
+                            <h4>{wedding.tour_name}</h4>
+                            <p>{wedding.intro}</p>
+                            <div className="ReviewRow">
+                              {wedding.destination_info && wedding.destination_info.length > 0 && (
+                                <span className="location">{wedding.destination_info[0].name}</span>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                        <div className="TabBoxFooter">
-                          <div className="aedLHS">
-                            <span>Starting from</span>
-                            {isLoggedIn ? (
-                              <div className="aedtext">
+                          <div className="TabBoxFooter">
+                            <div className="aedLHS">
+                              <span>Starting from</span>
+                              {isLoggedIn ? (
+                                <div className="aedtext">
                                   AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person
-                              </div>
-                          ) : (
-                              <div className="aedtext">AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person</div>
-                          )}
-                          </div>
-                          <div className="aedRHS">{wedding.tour_duration}</div>
+                                </div>
+                              ) : (
+                                <div className="aedtext">AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person</div>
+                              )}
+                            </div>
+                            <div className="aedRHS">{wedding.tour_duration}</div>
                           </div>
                         </Link>
                       );
@@ -562,11 +579,11 @@ const Banner = () => {
                             <span>Starting from</span>
                             {isLoggedIn ? (
                               <div className="aedtext">
-                                  AED <strong>{getUserPrice(item)}</strong> Per {item.person} Person
+                                AED <strong>{getUserPrice(item)}</strong> Per {item.person} Person
                               </div>
-                          ) : (
+                            ) : (
                               <div className="aedtext">AED <strong>{getUserPrice(item)}</strong> Per {item.person} Person</div>
-                          )}
+                            )}
                           </div>
                           <div className="aedRHS">{item.duration}</div>
                         </div>
@@ -735,18 +752,19 @@ const Banner = () => {
       </div>
     </div>
   );
+
   function getUserPrice(tour) {
     if (userType === 2) {
-        // Agent user type
-        return (tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100)).toFixed(2);
+      // Agent user type
+      return (tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100)).toFixed(2);
     } else if (userType === 3) {
-        // Normal user type
-        return tour.tour_price_aed;
+      // Normal user type
+      return tour.tour_price_aed;
     } else {
-        // Default case (handle other user types if needed)
-        return tour.tour_price_aed;
+      // Default case (handle other user types if needed)
+      return tour.tour_price_aed;
     }
-}
+  }
 }
 
 export default Banner;

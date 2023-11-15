@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from React Router if you are using it
-
+import { useParams } from 'react-router-dom';
 const TopListing = () => {
+  const { country } = useParams();
+  const formattedCategory = country
+  .split('-') // Split by hyphens
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+  .join(' ');
   return (
     <div>
       <div className="TopSection">
         <div className="container">
           <div className="TopSectionWrapper">
-            <h1>Abu Dhabi Amazing Family Private Tour</h1>
+            <h1>{formattedCategory}</h1>
             <div className="TopSectionRHS">
               <div className="telrow">
                 <Link to="tel:+971559554333">+971 55 955 4333</Link>
@@ -27,7 +32,7 @@ const TopListing = () => {
           <div className="GetinTouch">
             <div className="GetinTouchWrapper">
               <div className="time">5 Hours</div>
-              <div className="location">Dubai, United Arab Emirates</div>
+              <div className="location">{formattedCategory}</div>
               <div className="review">
                 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />4.5 | 500 Reviews
               </div>
