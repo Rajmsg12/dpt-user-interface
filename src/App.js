@@ -61,7 +61,7 @@ function App() {
         <Route exact path='/tours/:country' element={<TourListing/>} /> 
         <Route exact path='/tours/:country/:title' element={<DetailPage/>} /> 
          {/*    <Route exact path='/plan' element={<Category/>} /> */}
-       <Route exact path='/plan/:categoryName' element={<Category/>} />
+       <Route exact path='/:categoryName/:title' element={<Category/>} />
        <Route exact path='/plan/:categoryName/:title' element={<DetailPage/>} />
        <Route exact path='/cart' element={<Cart/>} />
 

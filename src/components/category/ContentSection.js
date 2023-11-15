@@ -147,9 +147,9 @@ console.log(slug)
                       <div className="listingRow GridRowWrapper">
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
-                            <Link to={`${tour.title}?=${tour.id}`} className="TabBox" key={`grid-${tour.id}`}>
+                            <Link to={`${tour.title}/${tour.slug}`} className="TabBox" key={`grid-${tour.id}`}>
                               <div className="img">
-                                <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                                <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
                                 <div className="discountrow">
                                   <div className="discount">
                                     <span>{tour.discount}</span>
@@ -194,9 +194,9 @@ console.log(slug)
                     <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                       <div className="listingRow">
                         {itemsToShow.map((tour) => (
-                          <Link to={`${tour.title}?=${tour.id}`} className="listingBox" key={`listing-${tour.id}`}>
+                          <Link to={`${tour.title}/${tour.slug}`} className="listingBox" key={`listing-${tour.id}`}>
                             <div className="listingBoxImg">
-                              <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                              <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
                               <div className="discountrow">
                                 <div className="discount">
                                   <span>{tour.discount}</span>
