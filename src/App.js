@@ -6,6 +6,7 @@ import TopMenu from "./components/TopMenu";
 import DetailSection from "./components/pages/TourSection";
 import Homepage from "./components/pages/Homepage";
 import DetailPage from './components/pages/TourSection'
+import DestinationPage from './components/pages/DestinationDetail'
 import { useParams } from 'react-router-dom';
 import TourListing from './components/pages/TourListingMain'
 import Login from './components/user/Login';
@@ -58,8 +59,8 @@ function App() {
         <Route exact path="/private-tour/:title" element={<DetailPage/>} />
         <Route exact path="/attraction-tickets/:title" element={<DetailPage/>} />
         <Route exact path="/chauffeur/:title" element={<DetailPage/>} />
-        <Route exact path='/:country' element={<TourListing/>} /> 
-        <Route exact path='/:country/:title' element={<DetailPage/>} /> 
+        <Route exact path='/tour/:country' element={<TourListing/>} /> 
+        <Route exact path='/tour/:country/:title' element={<DestinationPage/>} /> 
          {/*    <Route exact path='/plan' element={<Category/>} /> */}
        <Route exact path='/:categoryName' element={<Category/>} />
        <Route exact path='/:categoryName/:title' element={<DetailPage/>} />

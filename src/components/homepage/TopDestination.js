@@ -1,31 +1,32 @@
-import React , {useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Style/header.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import {data} from '../../data/index'
+import { data } from '../../data/index'
+import { Link } from 'react-router-dom'
 
 const TopDestination = () => {
     const [destinations, setDestinations] = useState([]);
     const responsive = {
         superLargeDesktop: {
-          // the naming can be any, depends on you.
-          breakpoint: { max: 4000, min: 3000 },
-          items: 4
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 4
         },
         desktop: {
-          breakpoint: { max: 3000, min: 1024 },
-          items: 4
+            breakpoint: { max: 3000, min: 1024 },
+            items: 4
         },
         tablet: {
-          breakpoint: { max: 1024, min: 464 },
-          items: 2
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
         },
         mobile: {
-          breakpoint: { max: 464, min: 0 },
-          items: 1
+            breakpoint: { max: 464, min: 0 },
+            items: 1
         }
-      };
-      useEffect(() => {
+    };
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch('http://127.0.0.1:9900/destanition/list');
@@ -38,45 +39,46 @@ const TopDestination = () => {
                 console.error('Error fetching data:', error.message);
             }
         };
-    
+
         fetchData();
     }, []);
 
     return (
         <div>
-        <div className="TopDestination">
-            <div className="container">
-                <div className="Title">
-                    <h2>Top Destinations</h2>
-                </div>
+            <div className="TopDestination">
+                <div className="container">
+                    <div className="Title">
+                        <h2>Top Destinations</h2>
+                    </div>
 
-                <div className="TopDestinationSlider">
-                    <Carousel
-                        responsive={responsive}
-                        infinite={true}
-                        itemClass="carousel-item-padding-60-px"
-                        arrows={false}
-                    >
-                    {destinations.map((destination, index) => (
-                        <div key={index} className="carouselItem">
-                                <div className="item">
-                                    <div className="SliderBox">
-                                        <div className="SliderBoxImg">
-                                            <img src={`http://127.0.0.1:8800/data/uploads/${destination.image}`} alt="" />
+                    <div className="TopDestinationSlider">
+                        <Carousel
+                            responsive={responsive}
+                            infinite={true}
+                            itemClass="carousel-item-padding-60-px"
+                            arrows={false}
+                        >
+                            {destinations.map((destination, index) => (
+                                <div key={index} className="carouselItem">
+                                    <Link to={`/tour/${destination.destination_name.replace(/\s+/g, '-').toLowerCase()}`} className="item">
+
+                                        <div className="SliderBox">
+                                            <div className="SliderBoxImg">
+                                                <img src={`http://127.0.0.1:8800/data/uploads/${destination.image}`} alt="" />
+                                            </div>
+                                            <div className="SliderBoxContent">
+                                                <h3>{destination.destination_name}</h3>
+                                                <p>{destination.trips} Trips 9</p>
+                                            </div>
                                         </div>
-                                        <div className="SliderBoxContent">
-                                            <h3>{destination.destination_name}</h3>
-                                            <p>{destination.trips} Trips 9</p>
-                                        </div>
-                                    </div>
+                                    </Link>
                                 </div>
-                            </div>
-                        ))}
-                    </Carousel>
+                            ))}
+                        </Carousel>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     );
 }
 

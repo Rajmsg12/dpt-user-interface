@@ -117,7 +117,7 @@ const Banner = () => {
     if (selectedCountry && selectedPerson) {
       // This condition should work for navigation.
       const encodedCountry = encodeURIComponent(selectedCountry.replace(/\s+/g, '-').toLowerCase());
-      navigate(`/${encodedCountry}`);
+      navigate(`/tour/${encodedCountry}`);
       //  navigate(`/tours`);
 
     }
