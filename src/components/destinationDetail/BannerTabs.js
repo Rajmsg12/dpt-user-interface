@@ -9,7 +9,8 @@ const DetailOverview = () => {
     const dispatch = useDispatch();
     const url = window.location.href;
     const spliturl = url.split("/");
-    const slug = spliturl[4];
+    const slug = spliturl[5];
+    console.log(slug)
   
       useEffect(() => {
         const fetchData = async () => {

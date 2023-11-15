@@ -21,7 +21,7 @@ function ContentSection() {
   const dispatch = useDispatch();
   const url = window.location.href;
   const spliturl = url.split("/");
-  const slug = spliturl[4];
+  const slug = spliturl[5];
   const ourData = data.CategoryList.filter((item) => item.slug === slug);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);
