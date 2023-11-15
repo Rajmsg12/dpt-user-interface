@@ -45,7 +45,7 @@ const PopularTour = () => {
                 console.error('Error fetching popular tours:', error);
             }
         };
-    
+
         fetchData();
     }, []);
 
@@ -68,7 +68,7 @@ const PopularTour = () => {
                 });
         }
     }, []);
-    
+
 
     return (
         <div>
@@ -116,9 +116,9 @@ const PopularTour = () => {
                                                 <h4>{tour.tour_name}</h4>
                                                 <p>{tour.intro}</p>
                                                 <div className="ReviewRow">
-                                                {tour.destination_info && tour.destination_info.length > 0 && (
-                                                    <span className="location">{tour.destination_info[0].name}</span>
-                                                  )}
+                                                    {tour.destination_info && tour.destination_info.length > 0 && (
+                                                        <span className="location">{tour.destination_info[0].name}</span>
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="TabBoxFooter">
@@ -147,17 +147,23 @@ const PopularTour = () => {
         </div>
     )
     function getUserPrice(tour) {
+        let price = 0;
+
         if (userType === 2) {
             // Agent user type
-            return (tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100)).toFixed(2);
+            price = tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100);
         } else if (userType === 3) {
             // Normal user type
-            return tour.tour_price_aed;
+            price = tour.tour_price_aed;
         } else {
             // Default case (handle other user types if needed)
-            return tour.tour_price_aed;
+            price = tour.tour_price_aed;
         }
+
+        // Remove decimal part
+        return Math.floor(price);
     }
+
 }
 
 export default PopularTour
