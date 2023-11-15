@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
-import { data } from '../../data/TourListing';
 import LeftSideFilter from './LeftSideFilter';
 
-const itemsPerPage = 9;
+
 const ListingSection = () => {
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
   const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
-
-  // Initial price value as a number
+  const [apiData, setApiData] = useState(null);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
-  const totalItems = data.TourListing.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+  const itemsPerPage = 9;
+
+
+  const totalItems = data.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
+
+
+  const handleDurationFilterChange = (duration) => {
+    setSelectedDurationFilter(duration);
+  };
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -24,13 +33,10 @@ const ListingSection = () => {
     }
   };
 
-  const handleDurationFilterChange = (duration) => {
-    setSelectedDurationFilter(duration);
-  };
-
   const handlePriceFilter = (newPriceRange) => {
     setSelectedPriceRange(newPriceRange);
   };
+
   const handleRatingFilterChange = (rating) => {
     setSelectedRatingFilter((prevRating) => {
       // If the same rating is clicked again, unselect it
@@ -42,10 +48,10 @@ const ListingSection = () => {
     });
   };
 
-
+  const categoryList = data.CategoryList || [];
 
   // Filter items based on the selected price range
-  const filteredData = data.TourListing.filter((tour) => {
+  const filteredData = categoryList.filter((tour) => {
     const tourPrice = parseInt(tour.price.replace(',', ''));
     const tourRating = parseInt(tour.rating);
 
@@ -67,8 +73,30 @@ const ListingSection = () => {
     }
     return false; // Exclude items that don't match the duration filter
   });
+  // const itemsToShow = filteredData.slice(startIndex, endIndex);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:9900/destination/8`);
+        const result = await response.json();
+        if (result.status === 'success' && result.length > 0) {
+          setApiData(result.data[0]);
+        } else {
+          console.error('Failed to fetch data from the API');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-  const itemsToShow = filteredData.slice(startIndex, endIndex);
+    fetchData();
+  }, []);
+
+  if (!apiData) {
+    return <p>Loading...</p>;
+  }
+
+  const itemsToShow = apiData.tour_info;
   return (
     <div>
       <div className="listingPage">
@@ -124,20 +152,20 @@ const ListingSection = () => {
                 <div className="tab-content" id="pills-tabContentlisting">
                   <div className="tab-pane fade" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                     <div className="listingRow GridRowWrapper">
-                      {filteredData.length > 0 ? (
-                        itemsToShow.map((tour) => (
-                          <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.id}`}>
+                   {
+                      itemsToShow.map((tour) => (
+                          <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.id}`}>
                             <div className="img">
-                              <img src={process.env.PUBLIC_URL + tour.imageSrc} alt="" />
+                              <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
                               <div className="discountrow">
                                 <div className="discount">
-                                  <span>{tour.discount}</span>
+                                  <span>{tour.tour_discount} %</span>
                                 </div>
                                 <div className="wishlistIcon"></div>
                               </div>
                               <div className="imgBottomRow">
                                 <div className="lhstext">
-                                  <span>{tour.hastag}</span>
+                                  <span>{tour.tour_hastag}</span>
                                 </div>
                                 <div className="rhsimg">
                                   <div>
@@ -148,8 +176,8 @@ const ListingSection = () => {
                               </div>
                             </div>
                             <div className="TabBoxBody">
-                              <h4>{tour.title}</h4>
-                              <p>{tour.description}</p>
+                              <h4>{tour.Tour_name}</h4>
+                              <p>{tour.tour_intro}</p>
                               <div className="ReviewRow">
                                 <span className="location">{tour.location}</span>
                               </div>
@@ -158,33 +186,31 @@ const ListingSection = () => {
                               <div className="aedLHS">
                                 <span>Starting from</span>
                                 <div className="aedtext">
-                                  AED <strong>{tour.price}</strong> up to {tour.person} people
+                                  AED <strong>{tour.tour_tour_price_aed}</strong> up to {tour.person} people
                                 </div>
                               </div>
-                              <div className="aedRHS">{tour.duration}</div>
+                              <div className="aedRHS">{tour.tour_tour_duration}</div>
                             </div>
                           </Link>
                         ))
-                      ) : (
-                        <p>No items within the selected price range.</p>
-                      )}
+                      }
                     </div>
                   </div>
                   <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                     <div className="listingRow">
                       {itemsToShow.map((tour) => (
-                        <Link to={`${tour.title.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.id}`}>
+                        <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.id}`}>
                           <div className="listingBoxImg">
-                            <img src={tour.imageSrc} alt="" />
+                            <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
                             <div className="discountrow">
                               <div className="discount">
-                                <span>{tour.discount}</span>
+                                <span>{tour.tour_discount} %</span>
                               </div>
                               <div className="wishlistIcon"></div>
                             </div>
                             <div className="imgBottomRow">
                               <div className="lhstext">
-                                <span>{tour.hastag}</span>
+                                <span>{tour.tour_hastag}</span>
                               </div>
                               <div className="rhsimg">
                                 <div>
@@ -196,13 +222,13 @@ const ListingSection = () => {
                           </div>
                           <div className="listingBoxContent">
                             <div className="listingBoxTop">
-                              <h4>{tour.title}</h4>
+                              <h4>{tour.Tour_name}</h4>
                               <div className="ReviewsDivrow">
                                 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
-                                <span>{tour.rating} | 500 Reviews</span>
+                                <span>5 | 500 Reviews</span>
                               </div>
                               <div className="descrition">
-                                <p>{tour.description}</p>
+                                <p>{tour.tour_intro}</p>
                               </div>
                             </div>
                             <div className="listingBoxFooter">
@@ -213,7 +239,7 @@ const ListingSection = () => {
                               <div className="listboxrhs">
                                 <div className="startingFromTag">Starting from</div>
                                 <div className="price">
-                                  AED <strong>{tour.price}</strong> Per {tour.person} Person
+                                  AED <strong>{tour.tour_tour_price_aed}</strong> Per {tour.person} Person
                                 </div>
                               </div>
                             </div>
