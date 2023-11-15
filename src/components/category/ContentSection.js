@@ -22,7 +22,7 @@ const ContentSection = () => {
     .join(' ');
     const url = window.location.href;
     const spliturl = url.split("/");
-    const slug = spliturl[4];
+    const slug = spliturl[3];
 
 
 
@@ -147,18 +147,18 @@ console.log(slug)
                       <div className="listingRow GridRowWrapper">
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
-                            <Link to={`${tour.title}/${tour.slug}`} className="TabBox" key={`grid-${tour.id}`}>
+                            <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.id}`}>
                               <div className="img">
                                 <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
                                 <div className="discountrow">
                                   <div className="discount">
-                                    <span>{tour.discount}</span>
+                                    <span>{tour.tour_discount} %</span>
                                   </div>
                                   <div className="wishlistIcon"></div>
                                 </div>
                                 <div className="imgBottomRow">
                                   <div className="lhstext">
-                                    <span>{tour.hastag}</span>
+                                    <span>{tour.tour_hastag}</span>
                                   </div>
                                   <div className="rhsimg">
                                     <div>
@@ -194,18 +194,18 @@ console.log(slug)
                     <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                       <div className="listingRow">
                         {itemsToShow.map((tour) => (
-                          <Link to={`${tour.title}/${tour.slug}`} className="listingBox" key={`listing-${tour.id}`}>
+                          <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.id}`}>
                             <div className="listingBoxImg">
                               <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
                               <div className="discountrow">
                                 <div className="discount">
-                                  <span>{tour.discount}</span>
+                                  <span>{tour.tour_discount} %</span>
                                 </div>
                                 <div className="wishlistIcon"></div>
                               </div>
                               <div className="imgBottomRow">
                                 <div className="lhstext">
-                                  <span>{tour.hastag}</span>
+                                  <span>{tour.tour_hastag}</span>
                                 </div>
                                 <div className="rhsimg">
                                   <div>

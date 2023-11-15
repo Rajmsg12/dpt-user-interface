@@ -58,7 +58,7 @@ const Footer = () => {
                         <ul>
                         {data.CategoryList.slice(0,8).map((item, index) => (
                             <li key={index}>
-                               <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
+                               <Link to={`/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
                              {  /* <Link to={`/plan`}>{item.category}</Link>*/}
                             </li>
                         ))}
@@ -69,7 +69,7 @@ const Footer = () => {
                         <ul>
                         {data.CategoryList.slice(8,16).map((item, index) => (
                             <li key={index}>
-                               <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
+                               <Link to={`/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
                              {  /* <Link to={`/plan`}>{item.category}</Link>*/}
                             </li>
                         ))}
@@ -79,7 +79,7 @@ const Footer = () => {
                         <ul>
                         {data.CategoryList.slice(16,24).map((item, index) => (
                             <li key={index}>
-                               <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
+                               <Link to={`/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
                              {  /* <Link to={`/plan`}>{item.category}</Link>*/}
                             </li>
                         ))}
