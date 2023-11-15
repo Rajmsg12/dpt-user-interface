@@ -11,7 +11,6 @@ const GetInTouch = () => {
         const data = await response.json();
 
         if (data.status === 'success' && data.length > 0) {
-          console.log(data.data[0].destination_info[0].name)
           setDestinationInfo(data.data[0].destination_info[0]);
         }
       } catch (error) {

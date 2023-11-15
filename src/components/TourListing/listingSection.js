@@ -51,8 +51,28 @@ const ListingSection = () => {
   const categoryList = data.CategoryList || [];
 
   // Filter items based on the selected price range
-  const filteredData = categoryList.filter((tour) => {
-    const tourPrice = parseInt(tour.price.replace(',', ''));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:9900/destination/8`);
+        const result = await response.json();
+        if (result.status === 'success' && result.length > 0) {
+          setApiData(result.data[0]);
+        } else {
+          console.error('Failed to fetch data from the API');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const filteredData = data.filter((tour) => {
+    const tourPrice = parseInt(tour.tour_info.replace(',', ''));
+    console.log(tourPrice)
     const tourRating = parseInt(tour.rating);
 
     if (
@@ -74,23 +94,6 @@ const ListingSection = () => {
     return false; // Exclude items that don't match the duration filter
   });
   // const itemsToShow = filteredData.slice(startIndex, endIndex);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:9900/destination/8`);
-        const result = await response.json();
-        if (result.status === 'success' && result.length > 0) {
-          setApiData(result.data[0]);
-        } else {
-          console.error('Failed to fetch data from the API');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   if (!apiData) {
     return <p>Loading...</p>;
@@ -113,7 +116,8 @@ const ListingSection = () => {
             <div className="listingRhs">
               <div className="listingGridTab">
                 <div className="listingToplayer">
-                  <div className="productactive">50 activities found</div>
+                <div className="productactive">{filteredData.length} activities found</div>
+
                   <div>
                     <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                       <div className="filterDiv"></div>
@@ -154,7 +158,7 @@ const ListingSection = () => {
                     <div className="listingRow GridRowWrapper">
                    {
                       itemsToShow.map((tour) => (
-                          <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.id}`}>
+                          <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.tour_slug}`}>
                             <div className="img">
                               <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
                               <div className="discountrow">
@@ -199,7 +203,7 @@ const ListingSection = () => {
                   <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                     <div className="listingRow">
                       {itemsToShow.map((tour) => (
-                        <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.id}`}>
+                        <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.tour_slug}`}>
                           <div className="listingBoxImg">
                             <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
                             <div className="discountrow">
