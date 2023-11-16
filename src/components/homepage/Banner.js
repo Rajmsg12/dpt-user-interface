@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import '../../Style/header.css'
-import { data } from '../../data/index'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
@@ -75,7 +74,11 @@ const Banner = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState('');
   const [tours, setTours] = useState([]);
+  const [privates, setPrivates] = useState([]);
   const [wedding, setWedding] = useState([]);
+  const [luxury, setLuxury] = useState([]);
+  const [attraction, setAttraction] = useState([]);
+  const [chauffeur, setChauffeur] = useState([]);
   const navigate = useNavigate();
   const [destinations, setDestinations] = useState([]);
 
@@ -108,13 +111,8 @@ const Banner = () => {
     //   dateElement?.classList.remove('classDateError');
     // }
 
-    if (!selectedPerson) {
-      personElement?.classList.add('classPersonError');
-    } else {
-      personElement?.classList.remove('classPersonError');
-    }
 
-    if (selectedCountry && selectedPerson) {
+    if (selectedCountry ) {
       // This condition should work for navigation.
       const encodedCountry = encodeURIComponent(selectedCountry.replace(/\s+/g, '-').toLowerCase());
       navigate(`/tour/${encodedCountry}`);
@@ -169,7 +167,59 @@ const Banner = () => {
       try {
         const response = await fetch('http://127.0.0.1:9900/cat/4');
         const data = await response.json();
+        setLuxury(data.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/cat/12');
+        const data = await response.json();
         setWedding(data.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/cat/15');
+        const data = await response.json();
+        setAttraction(data.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/cat/16');
+        const data = await response.json();
+        setChauffeur(data.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/cat/14');
+        const data = await response.json();
+        setPrivates(data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -274,27 +324,7 @@ const Banner = () => {
                           </div>
                         </div>
 
-                        <div className="selectperson personSelect">
-                          <div className="selectpersonIN ">
-                            <div className="iconwithText">
-                              <div className="icon">
-                              </div>
-                              <div className="Text">
-                                <div className="toptext">Select Persons</div>
-                                <div className="bottomtext">
-                                  <SearchableSelect
-                                    options={data.bannerSelectPerson.map((item) => item.person)}
-                                    placeholder="1 Traveller"
-                                    onSelect={(person) => {
-                                      setSelectedPerson(person);
-                                      handlePersonSelect(person);
-                                    }}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        
 
                         {/* Replace the <button> with a <Link> */}
                         <div className="SearchBtn">
@@ -351,17 +381,7 @@ const Banner = () => {
                               />
                             </div>
 
-                            <div className="SelectpeopleField">
-                              <div className="UserIcon"></div>
-                              <SearchableSelect
-                                options={data.bannerSelectPerson.map((item) => item.person)}
-                                placeholder="1 Traveller"
-                                onSelect={(person) => {
-                                  setSelectedPerson(person);
-                                  handlePersonSelect(person);
-                                }}
-                              />
-                            </div>
+                            
 
                             <div className="PopupSubmitBtn">
 
@@ -388,7 +408,8 @@ const Banner = () => {
               <div className="nav nav-tabs" id="nav-tab" role="tablist">
                 <button className="nav-link active" id="nav-privatejet-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-privatejet" type="button" role="tab" aria-controls="nav-privatejet"
-                  aria-selected="true"><img src="images/homepage/jet.png" alt="" />Private jet</button>
+                  //src="images/homepage/jet.png"
+                  aria-selected="true"><img  alt="" />Desert Safari</button>
                 <button className="nav-link" id="nav-weddingonyatch-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-weddingonyatch" type="button" role="tab" aria-controls="nav-weddingonyatch"
                   aria-selected="false"><img src="images/homepage/yatch.png" alt="" />Wedding on yatch</button>
@@ -414,7 +435,7 @@ const Banner = () => {
               aria-labelledby="nav-privatejet-tab">
 
               <div className="Title">
-                <h2>Private Jet</h2>
+                <h2>Desert Safari</h2>
               </div>
 
               <div className="TabLayer">
@@ -481,97 +502,40 @@ const Banner = () => {
               <div className="Title">
                 <h2>Wedding on yatch</h2>
                 <div className="TabLayer">
-                  <div className="TabWrapper">
-                    {wedding.map((wedding, index) => {
-                      const titleWithHyphens = wedding.slug; // Declare it here
-                      return (
-                        <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
-                          <div className="img">
-                            <img src={`http://127.0.0.1:8800/data/uploads/${wedding.image}`} alt="" />
-                            <div className="discountrow">
-                              <div className="discount">
-                                <span>{`${wedding.discount}%`}</span>
-                              </div>
-                              <div class="wishlistIcon"></div>
-                            </div>
-                            <div class="imgBottomRow">
-                              <div class="lhstext">
-
-                                <span>{wedding.hastag}</span>
-                              </div>
-                              <div class="rhsimg">
-                                <div>
-
-                                  <img src="images/choise1.png" alt="" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="TabBoxBody">
-                            <h4>{wedding.tour_name}</h4>
-                            <p>{wedding.intro}</p>
-                            <div className="ReviewRow">
-                              {wedding.destination_info && wedding.destination_info.length > 0 && (
-                                <span className="location">{wedding.destination_info[0].name}</span>
-                              )}
-                            </div>
-                          </div>
-                          <div className="TabBoxFooter">
-                            <div className="aedLHS">
-                              <span>Starting from</span>
-                              {isLoggedIn ? (
-                                <div className="aedtext">
-                                  AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person
-                                </div>
-                              ) : (
-                                <div className="aedtext">AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person</div>
-                              )}
-                            </div>
-                            <div className="aedRHS">{wedding.tour_duration}</div>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-            <div className="tab-pane fade" id="nav-luxurytour" role="tabpanel" aria-labelledby="nav-luxurytour-tab">
-              <div className="Title">
-                <h2>Luxury Tours</h2>
-              </div>
-              <div className="TabLayer">
                 <div className="TabWrapper">
-                  {data.privateJet.map((item, index) => {
-                    const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
+                  {wedding.map((wedding, index) => {
+                    const titleWithHyphens = wedding.slug; // Declare it here
+  
                     return (
-                      <Link to={`/luxury-tours/${titleWithHyphens}`} className="TabBox" key={index}>
+                      <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
-                          <img src={item.imgSrc} alt="" />
+                          <img src={`http://127.0.0.1:8800/data/uploads/${wedding.image}`} alt="" />
                           <div className="discountrow">
                             <div className="discount">
-                              <span>{item.discount}</span>
+                              <span>{`${wedding.discount}%`}</span>
                             </div>
-                            <div className="wishlistIcon">
-                              {item.wishlistIcon}
-                            </div>
+                            <div class="wishlistIcon"></div>
                           </div>
-
-                          <div className="imgBottomRow">
-                            <div className="rhsimg">
+                          <div class="imgBottomRow">
+                            <div class="lhstext">
+  
+                              <span>{wedding.hastag}</span>
+                            </div>
+                            <div class="rhsimg">
                               <div>
-                                <img src={item.imgBottomRow.rhsimg} alt="" />
+  
+                                <img src="images/choise1.png" alt="" />
                               </div>
                             </div>
                           </div>
                         </div>
                         <div className="TabBoxBody">
-                          <h4>{item.title}</h4>
-                          <p>{item.description}</p>
+                          <h4>{wedding.tour_name}</h4>
+                          <p>{wedding.intro}</p>
                           <div className="ReviewRow">
-                            <span className="location">{item.location}</span>
+                            {wedding.destination_info && wedding.destination_info.length > 0 && (
+                              <span className="location">{wedding.destination_info[0].name}</span>
+                            )}
                           </div>
                         </div>
                         <div className="TabBoxFooter">
@@ -579,119 +543,199 @@ const Banner = () => {
                             <span>Starting from</span>
                             {isLoggedIn ? (
                               <div className="aedtext">
-                                AED <strong>{getUserPrice(item)}</strong> Per {item.person} Person
+                                AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person
                               </div>
                             ) : (
-                              <div className="aedtext">AED <strong>{getUserPrice(item)}</strong> Per {item.person} Person</div>
+                              <div className="aedtext">AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person</div>
                             )}
                           </div>
-                          <div className="aedRHS">{item.duration}</div>
+                          <div className="aedRHS">{wedding.tour_duration}</div>
                         </div>
                       </Link>
                     );
                   })}
                 </div>
-
               </div>
+              </div>
+            </div>
+            <div className="tab-pane fade" id="nav-luxurytour" role="tabpanel" aria-labelledby="nav-luxurytour-tab">
+              <div className="Title">
+                <h2>Luxury Tours</h2>
+              </div>
+              <div className="TabLayer">
+              <div className="TabWrapper">
+                {luxury.map((luxury, index) => {
+                  const titleWithHyphens = luxury.slug; // Declare it here
+
+                  return (
+                    <Link to={`/luxury-tours/${titleWithHyphens}`} className="TabBox" key={index}>
+                      <div className="img">
+                        <img src={`http://127.0.0.1:8800/data/uploads/${luxury.image}`} alt="" />
+                        <div className="discountrow">
+                          <div className="discount">
+                            <span>{`${luxury.discount}%`}</span>
+                          </div>
+                          <div class="wishlistIcon"></div>
+                        </div>
+                        <div class="imgBottomRow">
+                          <div class="lhstext">
+
+                            <span>{luxury.hastag}</span>
+                          </div>
+                          <div class="rhsimg">
+                            <div>
+
+                              <img src="images/choise1.png" alt="" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="TabBoxBody">
+                        <h4>{luxury.tour_name}</h4>
+                        <p>{luxury.intro}</p>
+                        <div className="ReviewRow">
+                          {luxury.destination_info && luxury.destination_info.length > 0 && (
+                            <span className="location">{luxury.destination_info[0].name}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="TabBoxFooter">
+                        <div className="aedLHS">
+                          <span>Starting from</span>
+                          {isLoggedIn ? (
+                            <div className="aedtext">
+                              AED <strong>{Math.floor(getUserPrice(luxury))}</strong> Per {luxury.person} Person
+                            </div>
+                          ) : (
+                            <div className="aedtext">AED <strong>{Math.floor(getUserPrice(luxury))}</strong> Per {luxury.person} Person</div>
+                          )}
+                        </div>
+                        <div className="aedRHS">{luxury.tour_duration}</div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
 
             </div>
             <div className="tab-pane fade" id="nav-privatetour" role="tabpanel" aria-labelledby="nav-privatetour-tab">
               <div className="Title">
                 <h2>Private Tour</h2>
                 <div className="TabLayer">
-                  <div className="TabWrapper">
-                    {data.privateJet.map((item, index) => {
-                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
-                      return (
-                        <Link to={`/private-tour/${titleWithHyphens}`} className="TabBox" key={index}>
-                          <div className="img">
-                            <img src={item.imgSrc} alt="" />
-                            <div className="discountrow">
-                              <div className="discount">
-                                <span>{item.discount}</span>
-                              </div>
-                              <div className="wishlistIcon">
-                                {item.wishlistIcon}
-                              </div>
-                            </div>
+                <div className="TabWrapper">
+                  {privates.map((privates, index) => {
+                    const titleWithHyphens = privates.slug; // Declare it here
 
-                            <div className="imgBottomRow">
-                              <div className="rhsimg">
-                                <div>
-                                  <img src={item.imgBottomRow.rhsimg} alt="" />
-                                </div>
+                    return (
+                      <Link to={`/private-tour/${titleWithHyphens}`} className="TabBox" key={index}>
+                        <div className="img">
+                          <img src={`http://127.0.0.1:8800/data/uploads/${privates.image}`} alt="" />
+                          <div className="discountrow">
+                            <div className="discount">
+                              <span>{`${privates.discount}%`}</span>
+                            </div>
+                            <div class="wishlistIcon"></div>
+                          </div>
+                          <div class="imgBottomRow">
+                            <div class="lhstext">
+
+                              <span>{privates.hastag}</span>
+                            </div>
+                            <div class="rhsimg">
+                              <div>
+
+                                <img src="images/choise1.png" alt="" />
                               </div>
                             </div>
                           </div>
-                          <div className="TabBoxBody">
-                            <h4>{item.title}</h4>
-                            <p>{item.description}</p>
-                            <div className="ReviewRow">
-                              <span className="location">{item.location}</span>
-                            </div>
+                        </div>
+                        <div className="TabBoxBody">
+                          <h4>{privates.tour_name}</h4>
+                          <p>{privates.intro}</p>
+                          <div className="ReviewRow">
+                            {privates.destination_info && privates.destination_info.length > 0 && (
+                              <span className="location">{privates.destination_info[0].name}</span>
+                            )}
                           </div>
-                          <div className="TabBoxFooter">
-                            <div className="aedLHS">
-                              <span>Starting from</span>
-                              <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
-                            </div>
-                            <div className="aedRHS">{item.duration}</div>
+                        </div>
+                        <div className="TabBoxFooter">
+                          <div className="aedLHS">
+                            <span>Starting from</span>
+                            {isLoggedIn ? (
+                              <div className="aedtext">
+                                AED <strong>{Math.floor(getUserPrice(privates))}</strong> Per {privates.person} Person
+                              </div>
+                            ) : (
+                              <div className="aedtext">AED <strong>{Math.floor(getUserPrice(privates))}</strong> Per {privates.person} Person</div>
+                            )}
                           </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-
+                          <div className="aedRHS">{privates.tour_duration}</div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
+              </div>
               </div>
             </div>
             <div className="tab-pane fade" id="nav-attractiontickets" role="tabpanel" aria-labelledby="nav-attractiontickets-tab">
               <div className="Title">
                 <h2>Attraction Tickets</h2>
                 <div className="TabLayer">
-                  <div className="TabWrapper">
-                    {data.privateJet.map((item, index) => {
-                      // Move this line outside of the map function
-                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
-                      return (
-                        <Link to={`/attraction-tickets/${titleWithHyphens}`} className="TabBox" key={index}>
-                          <div className="img">
-                            <img src={item.imgSrc} alt="" />
-                            <div className="discountrow">
-                              <div className="discount">
-                                <span>{item.discount}</span>
-                              </div>
-                              <div className="wishlistIcon">
-                                {item.wishlistIcon}
-                              </div>
-                            </div>
+                <div className="TabWrapper">
+                {attraction.map((attraction, index) => {
+                  const titleWithHyphens = attraction.slug; // Declare it here
 
-                            <div className="imgBottomRow">
-                              <div className="rhsimg">
-                                <div>
-                                  <img src={item.imgBottomRow.rhsimg} alt="" />
-                                </div>
-                              </div>
+                  return (
+                    <Link to={`/attraction-tour/${titleWithHyphens}`} className="TabBox" key={index}>
+                      <div className="img">
+                        <img src={`http://127.0.0.1:8800/data/uploads/${attraction.image}`} alt="" />
+                        <div className="discountrow">
+                          <div className="discount">
+                            <span>{`${attraction.discount}%`}</span>
+                          </div>
+                          <div class="wishlistIcon"></div>
+                        </div>
+                        <div class="imgBottomRow">
+                          <div class="lhstext">
+
+                            <span>{attraction.hastag}</span>
+                          </div>
+                          <div class="rhsimg">
+                            <div>
+
+                              <img src="images/choise1.png" alt="" />
                             </div>
                           </div>
-                          <div className="TabBoxBody">
-                            <h4>{item.title}</h4>
-                            <p>{item.description}</p>
-                            <div className="ReviewRow">
-                              <span className="location">{item.location}</span>
+                        </div>
+                      </div>
+                      <div className="TabBoxBody">
+                        <h4>{attraction.tour_name}</h4>
+                        <p>{attraction.intro}</p>
+                        <div className="ReviewRow">
+                          {attraction.destination_info && attraction.destination_info.length > 0 && (
+                            <span className="location">{attraction.destination_info[0].name}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="TabBoxFooter">
+                        <div className="aedLHS">
+                          <span>Starting from</span>
+                          {isLoggedIn ? (
+                            <div className="aedtext">
+                              AED <strong>{Math.floor(getUserPrice(attraction))}</strong> Per {attraction.person} Person
                             </div>
-                          </div>
-                          <div className="TabBoxFooter">
-                            <div className="aedLHS">
-                              <span>Starting from</span>
-                              <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
-                            </div>
-                            <div className="aedRHS">{item.duration}</div>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
+                          ) : (
+                            <div className="aedtext">AED <strong>{Math.floor(getUserPrice(attraction))}</strong> Per {attraction.person} Person</div>
+                          )}
+                        </div>
+                        <div className="aedRHS">{attraction.tour_duration}</div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
                 </div>
               </div>
             </div>
@@ -700,48 +744,59 @@ const Banner = () => {
               <div className="Title">
                 <h2>Chauffeur</h2>
                 <div className="TabLayer">
-                  <div className="TabWrapper">
-                    {data.privateJet.map((item, index) => {
-                      const titleWithHyphens = decodeURIComponent(item.title).replace(/ /g, '-').toLowerCase();
-                      return (
-                        <Link to={`/chauffeur/${titleWithHyphens}`} className="TabBox" key={index}>
-                          <div className="img">
-                            <img src={item.imgSrc} alt="" />
-                            <div className="discountrow">
-                              <div className="discount">
-                                <span>{item.discount}</span>
-                              </div>
-                              <div className="wishlistIcon">
-                                {item.wishlistIcon}
-                              </div>
-                            </div>
+                <div className="TabWrapper">
+                {chauffeur.map((chauffeur, index) => {
+                  const titleWithHyphens = chauffeur.slug; // Declare it here
 
-                            <div className="imgBottomRow">
-                              <div className="rhsimg">
-                                <div>
-                                  <img src={item.imgBottomRow.rhsimg} alt="" />
-                                </div>
-                              </div>
+                  return (
+                    <Link to={`/chauffeur/${titleWithHyphens}`} className="TabBox" key={index}>
+                      <div className="img">
+                        <img src={`http://127.0.0.1:8800/data/uploads/${chauffeur.image}`} alt="" />
+                        <div className="discountrow">
+                          <div className="discount">
+                            <span>{`${chauffeur.discount}%`}</span>
+                          </div>
+                          <div class="wishlistIcon"></div>
+                        </div>
+                        <div class="imgBottomRow">
+                          <div class="lhstext">
+
+                            <span>{chauffeur.hastag}</span>
+                          </div>
+                          <div class="rhsimg">
+                            <div>
+
+                              <img src="images/choise1.png" alt="" />
                             </div>
                           </div>
-                          <div className="TabBoxBody">
-                            <h4>{item.title}</h4>
-                            <p>{item.description}</p>
-                            <div className="ReviewRow">
-                              <span className="location">{item.location}</span>
+                        </div>
+                      </div>
+                      <div className="TabBoxBody">
+                        <h4>{chauffeur.tour_name}</h4>
+                        <p>{chauffeur.intro}</p>
+                        <div className="ReviewRow">
+                          {chauffeur.destination_info && chauffeur.destination_info.length > 0 && (
+                            <span className="location">{chauffeur.destination_info[0].name}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="TabBoxFooter">
+                        <div className="aedLHS">
+                          <span>Starting from</span>
+                          {isLoggedIn ? (
+                            <div className="aedtext">
+                              AED <strong>{Math.floor(getUserPrice(chauffeur))}</strong> Per {chauffeur.person} Person
                             </div>
-                          </div>
-                          <div className="TabBoxFooter">
-                            <div className="aedLHS">
-                              <span>Starting from</span>
-                              <div className="aedtext">AED <strong>{item.money}</strong> Per {item.person} Person</div>
-                            </div>
-                            <div className="aedRHS">{item.duration}</div>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
+                          ) : (
+                            <div className="aedtext">AED <strong>{Math.floor(getUserPrice(chauffeur))}</strong> Per {chauffeur.person} Person</div>
+                          )}
+                        </div>
+                        <div className="aedRHS">{chauffeur.tour_duration}</div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
 
                 </div>
               </div>

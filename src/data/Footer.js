@@ -4,23 +4,23 @@ export const data = {
             category:"Luxury Tours"
         },
         {
-            category:"Budget City Tour"
-        },
-        {
-            category:"Dinner Cruise"
-        },
-        {
-            category:"Skydive Dubai"
-        },
-        {
-            category:"Dune Buggy"
-        },
-        {
             category:"Airport Transfers"
+        },
+        {
+            category:"Wedding on yatch"
+        },
+        {
+            category:"Private Jet"
+        },
+        {
+            category:"Private Tour"
+        },
+        {
+            category:"Attraction Tickets"
         },
        
         {
-            category:"Budget Airport Layover Tour"
+            category:"Chauffeur"
         },
         {
             category:"Burg Al Arab Reservations"
