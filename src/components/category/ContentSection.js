@@ -23,6 +23,7 @@ const ContentSection = () => {
     const url = window.location.href;
     const spliturl = url.split("/");
     const slug = spliturl[3];
+    console.log(slug)
 
 
 

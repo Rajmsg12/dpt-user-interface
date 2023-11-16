@@ -9,7 +9,7 @@ const memories = () => {
       <div className="dubaimemoriesIn">
         <h2>Dubai memories you'll never forget.</h2>
         <p>Explore the Emirates experience and plan an unforgettable trip beyond your flight.</p>
-        <Link href="/">Explore Dubai</Link>
+        <Link to="/tour/dubai">Explore Dubai</Link>
       </div>
     </div>
   </div>

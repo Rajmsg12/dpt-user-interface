@@ -2,6 +2,7 @@ import React, { useState ,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
+import { useParams } from 'react-router-dom';
 
 
 const ListingSection = () => {
@@ -11,6 +12,7 @@ const ListingSection = () => {
   const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
   const [apiData, setApiData] = useState(null);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
+  const [activeTab, setActiveTab] = useState("pills-grid");
 
   const itemsPerPage = 9;
 
@@ -54,12 +56,11 @@ const ListingSection = () => {
   const url = window.location.href;
   const spliturl = url.split("/");
   const slug = spliturl[4];
-  console.log(slug)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/destination/${slug}`);
+        const response = await fetch(`http://127.0.0.1:9900/emirates/${slug}`);
         const result = await response.json();
         if (result.status === 'success' && result.length > 0) {
           setApiData(result.data[0]);
@@ -73,6 +74,12 @@ const ListingSection = () => {
 
     fetchData();
   }, []);
+
+  const { title } = useParams();
+  const formattedTitle = title
+  .split('-') // Split by hyphens
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+  .join(' ');
 
   const filteredData = data.filter((tour) => {
     const tourPrice = parseInt(tour.tour_info.replace(',', ''));
@@ -187,7 +194,7 @@ const ListingSection = () => {
                               <h4>{tour.Tour_name}</h4>
                               <p>{tour.tour_intro}</p>
                               <div className="ReviewRow">
-                                <span className="location">{tour.location}</span>
+                                <span className="location">{formattedTitle}</span>
                               </div>
                             </div>
                             <div className="TabBoxFooter">

@@ -61,18 +61,13 @@ const Header = ({ user, isLoggedIn, setUser, logout }) => {
                 console.error('Logout failed', error);
             });
     };
-    const changeLanguage = (lang) => {
-        i18n.changeLanguage(lang, (err, t) => {
-            if (err) return console.log('something went wrong loading', err);
-            setSelectedLanguage(lang);
-            // Force a re-render of the component
-            localStorage.setItem('selectedLanguage', lang);
-        });
-    };
-  
-    
-    
-    
+  const changeLanguage = (lang) => {
+    i18n.changeLanguage(lang, (err, t) => {
+        if (err) return console.log('something went wrong loading', err);
+        setSelectedLanguage(lang);
+    });
+};
+
 
     return (
 
@@ -89,8 +84,8 @@ const Header = ({ user, isLoggedIn, setUser, logout }) => {
                                                 {selectedLanguage.toUpperCase()}
                                             </Link>
                                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li><button className="dropdown-item" onClick={() => changeLanguage('en')}>English</button></li>
-                                            <li><button className="dropdown-item" onClick={() => changeLanguage('es')}>Spanish</button></li>
+                                                <li><button className="dropdown-item" onClick={() => changeLanguage('en')}>English</button></li>
+                                                <li><button className="dropdown-item" onClick={() => changeLanguage('es')}>Spanish</button></li>
                                                 <li><button className="dropdown-item" onClick={() => changeLanguage('fr')}>French</button></li>
                                                 <li><button className="dropdown-item" onClick={() => changeLanguage('de')}>German</button></li>
                                             </ul>

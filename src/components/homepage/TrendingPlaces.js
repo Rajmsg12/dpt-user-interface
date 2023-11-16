@@ -62,7 +62,7 @@ const TrendingPlaces = () => {
               >
               {trendingPlaces.map((place) => (
                 ///trending-tour/${place.destination_name.replace(/\s+/g, '-').toLowerCase()}
-                <Link to={`/trending-tour/dubai-private-tour`}  className="carouselItem" key={place.id}>
+                <Link to={`/trending-tour/${place.slug}`}  className="carouselItem" key={place.id}>
                     <div className="item">
                       <div className="SliderBox">
                         <div className="SliderBoxImg">
