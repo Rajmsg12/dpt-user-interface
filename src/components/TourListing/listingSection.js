@@ -51,11 +51,15 @@ const ListingSection = () => {
   const categoryList = data.CategoryList || [];
 
   // Filter items based on the selected price range
+  const url = window.location.href;
+  const spliturl = url.split("/");
+  const slug = spliturl[4];
+  console.log(slug)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/destination/8`);
+        const response = await fetch(`http://127.0.0.1:9900/destination/${slug}`);
         const result = await response.json();
         if (result.status === 'success' && result.length > 0) {
           setApiData(result.data[0]);
