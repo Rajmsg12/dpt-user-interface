@@ -2,6 +2,7 @@ import React , {useState , useEffect} from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { data } from '../../data/index'; // Import the data object from the other file
+import {Link} from 'react-router-dom'
 
 const TrendingPlaces = () => {
   const [trendingPlaces, setTrendingPlaces] = useState([]);
@@ -60,7 +61,8 @@ const TrendingPlaces = () => {
                 arrows={false}
               >
               {trendingPlaces.map((place) => (
-                <div className="carouselItem" key={place.id}>
+                ///trending-tour/${place.destination_name.replace(/\s+/g, '-').toLowerCase()}
+                <Link to={`/trending-tour/dubai-private-tour`}  className="carouselItem" key={place.id}>
                     <div className="item">
                       <div className="SliderBox">
                         <div className="SliderBoxImg">
@@ -71,7 +73,7 @@ const TrendingPlaces = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </Carousel>
             </div>

@@ -17,6 +17,8 @@ import Category from './components/pages/cateory'
 import Cart from './components/pages/cart'
 import { I18nextProvider } from 'react-i18next';
 import i18n from './components/i18n'; // Path to your i18n.js file
+import TrendingPlaces from "./components/pages/trendingPlaces";
+import TrendingDetails from './components/pages/trendingPlaces'
 
 
 
@@ -80,6 +82,8 @@ function App() {
         <Route exact path="/chauffeur/:title" element={<DetailPage/>} />
         <Route exact path='/tour/:country' element={<TourListing/>} /> 
         <Route exact path='/tour/:country/:title' element={<DestinationPage/>} /> 
+        <Route exact path='trending-tour/dubai-private-tour' element={<TrendingPlaces/>} /> 
+        <Route exact path='/trendingtour/:country/:title' element={<TrendingDetails/>} /> 
          {/*    <Route exact path='/plan' element={<Category/>} /> */}
        <Route exact path='/:categoryName' element={<Category/>} />
        <Route exact path='/:categoryName/:title' element={<DetailPage/>} />
