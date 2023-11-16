@@ -11,8 +11,9 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate()
   const calculateTotal = () => {
-    return cart.reduce((total, item) => total + item.price, 0);
+    return Number(cart.reduce((total, item) => total + (getUserPrice(item)), 0));
   };
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartCount, setCartCount] = useState("");
 
@@ -192,7 +193,7 @@ const Cart = () => {
                       <div className="OrderSummaryTablerow">
                         <span>Tax</span>
                         <span>
-                          AED <strong>0.00</strong>
+                           <strong>18 %</strong>
                         </span>
                       </div>
                       <div className="OrderSummaryTablerow">
