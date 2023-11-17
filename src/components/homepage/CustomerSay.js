@@ -16,17 +16,36 @@ const CustomerSay = () => {
 
     useEffect(() => {
         const fetchTestimonials = async () => {
-            try {
-                const response = await fetch('http://127.0.0.1:9900/testimonial/list');
-                const data = await response.json();
-                setTestimonials(data.data);
-            } catch (error) {
-                console.error('Error fetching testimonials:', error);
-            }
+          try {
+            const response = await fetch('http://127.0.0.1:9900/testimonial/list');
+            const data = await response.json();
+            setTestimonials(data.data);
+          } catch (error) {
+            console.error('Error fetching testimonials:', error);
+          }
         };
-
+    
         fetchTestimonials();
-    }, []);
+    
+        // Add TripAdvisor widget scripts dynamically
+        const tripAdvisorScript = document.createElement('script');
+        tripAdvisorScript.src =
+          'https://www.jscache.com/wejs?wtype=selfserveprop&amp;uniq=642&amp;locationId=2510773&amp;lang=en_US&amp;rating=true&amp;nreviews=2&amp;writereviewlink=true&amp;popIdx=true&amp;iswide=false&amp;border=true&amp;display_version=2';
+        tripAdvisorScript.async = true;
+        document.head.appendChild(tripAdvisorScript);
+    
+        const widgetEmbedScript = document.createElement('script');
+        widgetEmbedScript.src =
+          'https://www.tripadvisor.com/WidgetEmbed-selfserveprop?border=true&amp;popIdx=true&amp;iswide=false&amp;locationId=2510773&amp;display_version=2&amp;uniq=642&amp;rating=true&amp;lang=en_US&amp;nreviews=2&amp;writereviewlink=true';
+        widgetEmbedScript.async = true;
+        document.head.appendChild(widgetEmbedScript);
+    
+        // Cleanup script tags when the component is unmounted
+        return () => {
+          document.head.removeChild(tripAdvisorScript);
+          document.head.removeChild(widgetEmbedScript);
+        };
+      }, []);
 
     return (
         <div>
@@ -36,45 +55,143 @@ const CustomerSay = () => {
                         <h2>What our customer says!</h2>
                     </div>
                     <div className="customersaysrow">
-                        <div className="customersaylhs">
-                            <div className="customersayText">
-                                <div className="topimg">
-                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697702089/Tripadvisorlogo_cc6y9z.png"} alt="" />
-                                </div>
-                                <h4>Dubai Private Tour</h4>
-                                <div className="rating">
-                                    <span className="Recentrating">
-                                        Recent Traveler Rating
-                                    </span>
-                                    <div className="reviewtwxt">
-                                        <ul>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                        </ul>
-                                        <span>2,444 Revies</span>
-                                    </div>
-                                </div>
-
-                                <div className="Ranking">
-                                    <span>
-                                        Tripadvisor Ranking
-                                    </span>
-                                    <h5>#112 of 2070 Outdoor activities in dubai</h5>
-                                </div>
-                                <div className="Recent">
-                                    <span>Recent Travelers Reviews</span>
-                                    <p>“Happy with their timely response and I got cheaper tickets from any other site.”</p>
-                                    <p>“Best Service And Support Guidance Fast Booking.”</p>
-                                </div>
-                                <div className="link">
-                                    <Link to="#">Read reviews </Link>
-                                    <Link to="#">Write a review</Link>
-                                </div>
-                            </div>
+                    <div
+                    className="TA_selfserveprop"
+                    id="TA_selfserveprop642"
+                    style={{ width: "100%" }}
+                  >
+                    <div id="CDSWIDSSP" className="widSSP widSSPnarrow" style={{ width: 240 }}>
+                      <div className="widSSPData" style={{ border: "1px solid #589442" }}>
+                        <div className="widSSPBranding">
+                          <dl>
+                            <dt>
+                              <Link target="_blank" to="https://www.tripadvisor.com/">
+                                <img
+                                  src="https://www.tripadvisor.com/img/cdsi/img2/branding/150_logo-11900-2.png"
+                                  alt="TripAdvisor"
+                                />
+                              </Link>
+                            </dt>
+                            <dt className="widSSPTagline">
+                              Know better. Book better. Go better.
+                            </dt>
+                          </dl>
                         </div>
+                        {/*/ cdsBranding*/}
+                        <div className="widSSPComponent">
+                          <div className="widSSPSummary">
+                            <dl>
+                              <Link
+                                target="_blank"
+                                to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                                onclick="ta.cds.handleTALink(11900,this);return true;"
+                                rel="nofollow"
+                              >
+                                <dt className="widSSPH18">Dubai Private Tour</dt>
+                              </Link>
+                            </dl>
+                          </div>
+                          {/*/ cdsSummary*/}{" "}
+                        </div>
+                        {/*/ cdsComponent*/}
+                        <div className="widSSPComponent widSSPOptional">
+                          <div className="widSSPTrvlRtng">
+                            <dl>
+                              <dt className="widSSPH11">TripAdvisor Traveler Rating</dt>
+                              <dd>
+                                <div className="widSSPOverall">
+                                  <img
+                                    src="https://static.tacdn.com/img2/ratings/traveler/s5.0.gif"
+                                    alt="5.0 of 5 bubbles"
+                                    className="rsImg"
+                                  />
+                                  <div>
+                                    Based on <b>1,420</b> traveler reviews
+                                  </div>
+                                </div>
+                                {/*/ overall */}{" "}
+                              </dd>
+                            </dl>
+                          </div>
+                        </div>
+                        {/*/ cdsComponent */}
+                        <div className="widSSPWrap widSSPOptional">
+                          <div className="widSSPInformation">
+                            <div className="widSSPWrap">
+                              <div className="widSSPPopIdx widSSPSingle">
+                                <b>TripAdvisor Ranking</b>
+                                <span className="widSSPPopIdxData">
+                                  {" "}
+                                  <span className="widSSPPopIdxData widSSPPopIdxNumbers">
+                                    {" "}
+                                    <sup>#</sup>5 of 341{" "}
+                                  </span>{" "}
+                                  Outdoor Activities in Dubai{" "}
+                                </span>
+                              </div>
+                              {/*/ popIdx*/}{" "}
+                            </div>
+                            {/*/ cdsWrap*/}{" "}
+                          </div>
+                          {/*/ cdsInformation*/}{" "}
+                        </div>
+                        {/*/ cdsWrap*/}
+                        <div className="widSSPComponent widSSPOptional">
+                          <dl className="widSSPReviews">
+                            <dt className="widSSPH11">Most Recent Traveler Reviews</dt>
+                            <dd className="widSSPOneReview">
+                              <ul className="widSSPBullet">
+                                <li>
+                                  <span className="widSSPDate">Dec 21, 2016:</span>{" "}
+                                  <span className="widSSPQuote">“Excellent your group”</span>
+                                </li>
+                                <li>
+                                  <span className="widSSPDate">Dec 20, 2016:</span>{" "}
+                                  <span className="widSSPQuote">
+                                    “Quick way to explore Dubai if you...”
+                                  </span>
+                                </li>
+                              </ul>
+                              {/*/ bullet*/}{" "}
+                            </dd>
+                            {/*/ hReview*/}
+                          </dl>
+                        </div>
+                        <div className="widSSPAll">
+                          <ul className="widSSPReadReview">
+                            <li>
+                              <a
+                                href="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                                id="allreviews"
+                                onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
+                                rel="nofollow"
+                              >
+                                Read reviews
+                              </a>
+                            </li>
+                          </ul>
+                          <ul className="widSSPWriteReview">
+                            <li>
+                              <a
+                                href="https://www.tripadvisor.com/UserReview-g295424-d2510773-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                                id="writereview"
+                                onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
+                                rel="nofollow"
+                              >
+                                Write a review
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        {/*/ cdsAll*/}
+                        <div className="widSSPLegal">© 2016 TripAdvisor LLC</div>
+                        {/*/ cdsLegal*/}{" "}
+                      </div>
+                      {/*/ cdsData*/}
+                    </div>
+                    {/*/ CDSPOP.cdsBx*/}
+                  </div>
+                  
 
                         <div className="customersayrhs">
                             <div className="customersaySlider">
