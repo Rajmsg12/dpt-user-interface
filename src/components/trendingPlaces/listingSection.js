@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
 import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
-const ListingSection = () => {
+const ListingSection = ({ selectedCurrency }) => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
@@ -13,6 +14,10 @@ const ListingSection = () => {
   const [apiData, setApiData] = useState(null);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const [activeTab, setActiveTab] = useState("pills-grid");
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(null);
+  const [userDiscount, setUserDiscount] = useState(null);
 
   const itemsPerPage = 9;
 
@@ -74,6 +79,24 @@ const ListingSection = () => {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        fetch('http://127.0.0.1:9900/welcome', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setUserType(data.data.user_type); // Set user type from login API
+                setUserDiscount(data.data.discount); // Set user discount from login API
+            })
+            .catch(error => {
+                console.error("Error fetching user data:", error);
+            });
+    }
+}, []);
 
   const { title } = useParams();
   const formattedTitle = title
@@ -109,8 +132,8 @@ const ListingSection = () => {
   if (!apiData) {
     return <p>Loading...</p>;
   }
-
   const itemsToShow = apiData.tour_info;
+  
   return (
     <div>
       <div className="listingPage">
@@ -198,12 +221,28 @@ const ListingSection = () => {
                               </div>
                             </div>
                             <div className="TabBoxFooter">
-                              <div className="aedLHS">
-                                <span>Starting from</span>
+                            <div className="aedLHS">
+                            <span>Starting from</span>
+                            {isLoggedIn ? (
                                 <div className="aedtext">
-                                  AED <strong>{tour.tour_tour_price_aed}</strong> up to {tour.person} people
+                                    {selectedCurrency === "AED" ? (
+                                        <span>AED</span>
+                                    ) : (
+                                        <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
                                 </div>
-                              </div>
+                            ) : (
+                                <div className="aedtext">
+                                    {selectedCurrency === "AED" ? (
+                                        <span>AED</span>
+                                    ) : (
+                                        <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                </div>
+                            )}
+                        </div>
                               <div className="aedRHS">{tour.tour_tour_duration}</div>
                             </div>
                           </Link>
@@ -254,8 +293,27 @@ const ListingSection = () => {
                               <div className="listboxrhs">
                                 <div className="startingFromTag">Starting from</div>
                                 <div className="price">
-                                  AED <strong>{tour.tour_tour_price_aed}</strong> Per {tour.person} Person
+                                {isLoggedIn ? (
+                                  <div >
+                                      {selectedCurrency === "AED" ? (
+                                          <span>AED</span>
+                                      ) : (
+                                          <span>USD</span>
+                                      )}
+                                      <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                  </div>
+                              ) : (
+                                  <div>
+                                      {selectedCurrency === "AED" ? (
+                                          <span>AED</span>
+                                      ) : (
+                                          <span>USD</span>
+                                      )}
+                                      <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                  </div>
+                              )}
                                 </div>
+                              
                               </div>
                             </div>
                           </div>
@@ -311,6 +369,31 @@ const ListingSection = () => {
       </div>
     </div>
   );
-};
+  function getUserPrice(tour) {
+    let price = 0;
 
-export default ListingSection;
+    if (userType === 2) {
+        // Agent user type
+        price =
+            selectedCurrency === "AED"
+                ? tour.tour_tour_price_aed - (tour.tour_tour_price_aed * userDiscount) / 100
+                : tour.tour_tour_price_usd - (tour.tour_tour_price_usd * userDiscount) / 100;
+    } else if (userType === 3) {
+        // Normal user type
+        price = selectedCurrency === "AED" ? tour.tour_tour_price_aed : tour.tour_tour_price_usd;
+    } else {
+        // Default case (handle other user types if needed)
+        price = selectedCurrency === "AED" ? tour.tour_tour_price_aed :  tour.tour_tour_price_usd;
+    }
+
+    // Remove decimal part
+    return Math.floor(price);
+}
+
+}
+const mapStateToProps = (state) => ({
+selectedCurrency: state.currency.selectedCurrency,
+// ... (other state mappings)
+});
+
+export default connect(mapStateToProps)(ListingSection);

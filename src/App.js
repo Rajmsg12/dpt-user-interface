@@ -15,8 +15,6 @@ import Forget from "./components/user/Forget";
 import UserProfile from './components/user/UserDashboard'
 import Category from './components/pages/cateory'
 import Cart from './components/pages/cart'
-import { I18nextProvider } from 'react-i18next';
-import i18n from './components/i18n'; // Path to your i18n.js file
 import TrendingPlaces from "./components/pages/trendingPlaces";
 import TrendingDetails from './components/pages/TrendingDetail'
 
@@ -47,24 +45,8 @@ import TrendingDetails from './components/pages/TrendingDetail'
 // const BlogDetailView = lazy(() => import("./views/blog/Detail"));
 
 function App() {
-  useEffect(() => {
-    // Wait for i18n initialization
-    i18n.init({
-      // Your i18n configuration
-    }, (err, t) => {
-      if (err) return console.log('something went wrong loading', err);
 
-      // Check if there's a selected language in local storage
-      const selectedLanguage = localStorage.getItem('selectedLanguage');
-
-      // If there is, set it as the initial language
-      if (selectedLanguage) {
-        i18n.changeLanguage(selectedLanguage);
-      }
-    });
-  }, []);
   return (
-    <I18nextProvider i18n={i18n}>
     <BrowserRouter>
       <React.Fragment>
         
@@ -92,7 +74,6 @@ function App() {
         </Routes>
       </React.Fragment>
     </BrowserRouter>
-    </I18nextProvider>
   );
 }
 
