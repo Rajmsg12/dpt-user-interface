@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import '../../Style/header.css'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { connect } from 'react-redux';
 import { data } from '../../data/index'
 import { Link } from 'react-router-dom'
 
-const PopularTour = () => {
+const PopularTour = ({ selectedCurrency }) => {
     const [popular, setPopular] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
@@ -126,12 +127,25 @@ const PopularTour = () => {
                                                     <span>Starting from</span>
                                                     {isLoggedIn ? (
                                                         <div className="aedtext">
-                                                            AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                            {selectedCurrency === "AED" ? (
+                                                                <span>AED</span>
+                                                            ) : (
+                                                                <span>USD</span>
+                                                            )}
+                                                            <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
                                                         </div>
                                                     ) : (
-                                                        <div className="aedtext">AED <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person</div>
+                                                        <div className="aedtext">
+                                                            {selectedCurrency === "AED" ? (
+                                                                <span>AED</span>
+                                                            ) : (
+                                                                <span>USD</span>
+                                                            )}
+                                                            <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                        </div>
                                                     )}
                                                 </div>
+                                        
                                                 <div className="aedRHS">
                                                     {tour.tour_duration}
                                                 </div>
@@ -148,22 +162,29 @@ const PopularTour = () => {
     )
     function getUserPrice(tour) {
         let price = 0;
-
+    
         if (userType === 2) {
             // Agent user type
-            price = tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100);
+            price =
+                selectedCurrency === "AED"
+                    ? tour.tour_price_aed - (tour.tour_price_aed * userDiscount) / 100
+                    : tour.tour_price_usd - (tour.tour_price_usd * userDiscount) / 100;
         } else if (userType === 3) {
             // Normal user type
-            price = tour.tour_price_aed;
+            price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
         } else {
             // Default case (handle other user types if needed)
-            price = tour.tour_price_aed;
+            price = selectedCurrency === "AED" ? tour.tour_price_aed :  tour.tour_price_usd;
         }
-
+    
         // Remove decimal part
         return Math.floor(price);
     }
 
 }
+const mapStateToProps = (state) => ({
+    selectedCurrency: state.currency.selectedCurrency,
+    // ... (other state mappings)
+});
 
-export default PopularTour
+export default connect(mapStateToProps)(PopularTour);

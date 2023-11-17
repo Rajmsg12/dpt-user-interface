@@ -4,6 +4,7 @@ import '../../Style/header.css'
 import { connect } from 'react-redux';
 import { setUser, logout } from './HeaderAction';
 import Search from "../Search";
+import { useLanguage } from './LanguageContext';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
 import { ReactComponent as IconPersonBadgeFill } from "bootstrap-icons/icons/person-badge-fill.svg";
@@ -17,13 +18,19 @@ import { ReactComponent as IconBellFill } from "bootstrap-icons/icons/bell-fill.
 import { ReactComponent as IconInfoCircleFill } from "bootstrap-icons/icons/info-circle-fill.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { setCurrency } from './CurrencyRedux/currencyAction';
 
-const Header = ({ user, isLoggedIn, setUser, logout }) => {
+const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurrency }) => {
     const [first_name, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [cartCount, setCartCount] = useState("");
-    const { t, i18n } = useTranslation();
-    const [selectedLanguage, setSelectedLanguage] = useState("en");
+    const { language, changeLanguage } = useLanguage();
+    const { t } = useTranslation();
+
+    const handleCurrencyChange = (currency) => {
+        setCurrency(currency);
+        // Additional logic to update prices in the UI or fetch new data if needed
+    };
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -61,13 +68,6 @@ const Header = ({ user, isLoggedIn, setUser, logout }) => {
                 console.error('Logout failed', error);
             });
     };
-  const changeLanguage = (lang) => {
-    i18n.changeLanguage(lang, (err, t) => {
-        if (err) return console.log('something went wrong loading', err);
-        setSelectedLanguage(lang);
-    });
-};
-
 
     return (
 
@@ -81,23 +81,52 @@ const Header = ({ user, isLoggedIn, setUser, logout }) => {
                                     <div className="Headerdropdownmenu">
                                         <div className="dropdown">
                                             <Link className="btn dropdown-toggle" to="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                {selectedLanguage.toUpperCase()}
+                                                {language.toUpperCase()}
                                             </Link>
                                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <li><button className="dropdown-item" onClick={() => changeLanguage('en')}>English</button></li>
-                                                <li><button className="dropdown-item" onClick={() => changeLanguage('es')}>Spanish</button></li>
-                                                <li><button className="dropdown-item" onClick={() => changeLanguage('fr')}>French</button></li>
-                                                <li><button className="dropdown-item" onClick={() => changeLanguage('de')}>German</button></li>
+                                                <li>
+                                                    <button className="dropdown-item" onClick={() => changeLanguage('en')}>
+                                                        English
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button className="dropdown-item" onClick={() => changeLanguage('fr')}>
+                                                        French
+                                                    </button>
+                                                </li>
                                             </ul>
                                         </div>
                                         <div className="dropdown">
-                                            <Link className="btn dropdown-toggle" to="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                AED
+                                            <Link
+                                                className="btn dropdown-toggle"
+                                                to="/"
+                                                role="button"
+                                                id="dropdownMenuLink"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                            >
+                                                {selectedCurrency}
                                             </Link>
                                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <li><Link className="dropdown-item" to="/">USD $</Link></li>
+                                                <li>
+                                                    <button
+                                                        className="dropdown-item"
+                                                        onClick={() => handleCurrencyChange('AED')}
+                                                    >
+                                                        AED
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button
+                                                        className="dropdown-item"
+                                                        onClick={() => handleCurrencyChange('USD')}
+                                                    >
+                                                        USD $
+                                                    </button>
+                                                </li>
                                             </ul>
                                         </div>
+
                                     </div>
                                     <div className="addtocart">
                                         <div className="addtocart">
@@ -189,23 +218,52 @@ const Header = ({ user, isLoggedIn, setUser, logout }) => {
                                 <div className="Headerdropdownmenu">
                                     <div className="dropdown">
                                         <Link className="btn dropdown-toggle" to="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            {selectedLanguage.toUpperCase()}
+                                            ENG
                                         </Link>
                                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li><button className="dropdown-item" onClick={() => changeLanguage('en')}>English</button></li>
-                                            <li><button className="dropdown-item" onClick={() => changeLanguage('es')}>Spanish</button></li>
-                                            <li><button className="dropdown-item" onClick={() => changeLanguage('fr')}>French</button></li>
-                                            <li><button className="dropdown-item" onClick={() => changeLanguage('de')}>German</button></li>
+                                            <li>
+                                                <button className="dropdown-item" onClick={() => changeLanguage('en')}>
+                                                    English
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button className="dropdown-item" onClick={() => changeLanguage('fr')}>
+                                                    French
+                                                </button>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div className="dropdown">
-                                        <Link className="btn dropdown-toggle" to="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            AED
+                                        <Link
+                                            className="btn dropdown-toggle"
+                                            to="/"
+                                            role="button"
+                                            id="dropdownMenuLink"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                        >
+                                            {selectedCurrency}
                                         </Link>
                                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li><Link className="dropdown-item" to="/">USD $</Link></li>
+                                            <li>
+                                                <button
+                                                    className="dropdown-item"
+                                                    onClick={() => handleCurrencyChange('AED')}
+                                                >
+                                                    AED
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    className="dropdown-item"
+                                                    onClick={() => handleCurrencyChange('USD')}
+                                                >
+                                                    USD $
+                                                </button>
+                                            </li>
                                         </ul>
                                     </div>
+
                                 </div>
                                 <div className="parentaddtocart">
                                     <div className="addtocart">
@@ -276,11 +334,13 @@ const Header = ({ user, isLoggedIn, setUser, logout }) => {
 const mapStateToProps = (state) => ({
     user: state.user.user,
     isLoggedIn: state.user.isLoggedIn,
+    selectedCurrency: state.currency.selectedCurrency,
 });
 
 const mapDispatchToProps = {
     setUser,
     logout,
+    setCurrency,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

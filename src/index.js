@@ -5,6 +5,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import { LanguageProvider } from './components/common/LanguageContext';
 import rootReducer from "./reducers";
 import { loadState, saveState } from "./localStorage";
 const persistedState = loadState();
@@ -16,7 +17,9 @@ store.subscribe(() => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <App />
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>
   </Provider>
 );
 

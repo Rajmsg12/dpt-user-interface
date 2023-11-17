@@ -127,7 +127,7 @@ const ListingSection = () => {
                       <div className="filterDiv"></div>
                       <li className="nav-item" role="presentation">
                         <button
-                          className="nav-link"
+                          className="nav-link active"
                           id="pills-grid-tab"
                           data-bs-toggle="pill"
                           data-bs-target="#pills-grid"
@@ -141,7 +141,7 @@ const ListingSection = () => {
                       </li>
                       <li className="nav-item" role="presentation">
                         <button
-                          className="nav-link active"
+                          className="nav-link "
                           id="pills-listing-tab"
                           data-bs-toggle="pill"
                           data-bs-target="#pills-listing"
@@ -158,7 +158,7 @@ const ListingSection = () => {
                   </div>
                 </div>
                 <div className="tab-content" id="pills-tabContentlisting">
-                  <div className="tab-pane fade" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
+                  <div className="tab-pane fade  show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                     <div className="listingRow GridRowWrapper">
                    {
                       itemsToShow.map((tour) => (
@@ -204,7 +204,7 @@ const ListingSection = () => {
                       }
                     </div>
                   </div>
-                  <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
+                  <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                     <div className="listingRow">
                       {itemsToShow.map((tour) => (
                         <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.tour_slug}`}>

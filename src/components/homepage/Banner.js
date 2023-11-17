@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'; // Import Link from React Router
 import '../../Style/header.css'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const SearchableSelect = ({ options, placeholder, onSelect }) => {
@@ -66,7 +67,7 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
 
 
 
-const Banner = () => {
+const Banner = ({selectedCurrency}) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [userType, setUserType] = useState(null);
@@ -476,16 +477,28 @@ const Banner = () => {
                           </div>
                         </div>
                         <div className="TabBoxFooter">
-                          <div className="aedLHS">
-                            <span>Starting from</span>
-                            {isLoggedIn ? (
-                              <div className="aedtext">
-                                AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person
-                              </div>
-                            ) : (
-                              <div className="aedtext">AED <strong>{Math.floor(getUserPrice(tour))}</strong> Per {tour.person} Person</div>
-                            )}
-                          </div>
+                        <div className="aedLHS">
+                        <span>Starting from</span>
+                        {isLoggedIn ? (
+                            <div className="aedtext">
+                                {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                ) : (
+                                    <span>USD</span>
+                                )}
+                                <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                            </div>
+                        ) : (
+                            <div className="aedtext">
+                                {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                ) : (
+                                    <span>USD</span>
+                                )}
+                                <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                            </div>
+                        )}
+                    </div>
                           <div className="aedRHS">{tour.tour_duration}</div>
                         </div>
                       </Link>
@@ -539,16 +552,28 @@ const Banner = () => {
                           </div>
                         </div>
                         <div className="TabBoxFooter">
-                          <div className="aedLHS">
-                            <span>Starting from</span>
-                            {isLoggedIn ? (
-                              <div className="aedtext">
-                                AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person
-                              </div>
-                            ) : (
-                              <div className="aedtext">AED <strong>{Math.floor(getUserPrice(wedding))}</strong> Per {wedding.person} Person</div>
-                            )}
-                          </div>
+                        <div className="aedLHS">
+                        <span>Starting from</span>
+                        {isLoggedIn ? (
+                            <div className="aedtext">
+                                {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                ) : (
+                                    <span>USD</span>
+                                )}
+                                <strong>{getUserPrice(wedding)}</strong> Per {wedding.person} Person
+                            </div>
+                        ) : (
+                            <div className="aedtext">
+                                {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                ) : (
+                                    <span>USD</span>
+                                )}
+                                <strong>{getUserPrice(wedding)}</strong> Per {wedding.person} Person
+                            </div>
+                        )}
+                    </div>
                           <div className="aedRHS">{wedding.tour_duration}</div>
                         </div>
                       </Link>
@@ -600,16 +625,28 @@ const Banner = () => {
                         </div>
                       </div>
                       <div className="TabBoxFooter">
-                        <div className="aedLHS">
-                          <span>Starting from</span>
-                          {isLoggedIn ? (
-                            <div className="aedtext">
-                              AED <strong>{Math.floor(getUserPrice(luxury))}</strong> Per {luxury.person} Person
-                            </div>
-                          ) : (
-                            <div className="aedtext">AED <strong>{Math.floor(getUserPrice(luxury))}</strong> Per {luxury.person} Person</div>
-                          )}
-                        </div>
+                      <div className="aedLHS">
+                      <span>Starting from</span>
+                      {isLoggedIn ? (
+                          <div className="aedtext">
+                              {selectedCurrency === "AED" ? (
+                                  <span>AED</span>
+                              ) : (
+                                  <span>USD</span>
+                              )}
+                              <strong>{getUserPrice(luxury)}</strong> Per {luxury.person} Person
+                          </div>
+                      ) : (
+                          <div className="aedtext">
+                              {selectedCurrency === "AED" ? (
+                                  <span>AED</span>
+                              ) : (
+                                  <span>USD</span>
+                              )}
+                              <strong>{getUserPrice(luxury)}</strong> Per {luxury.person} Person
+                          </div>
+                      )}
+                  </div>
                         <div className="aedRHS">{luxury.tour_duration}</div>
                       </div>
                     </Link>
@@ -660,16 +697,28 @@ const Banner = () => {
                           </div>
                         </div>
                         <div className="TabBoxFooter">
-                          <div className="aedLHS">
-                            <span>Starting from</span>
-                            {isLoggedIn ? (
-                              <div className="aedtext">
-                                AED <strong>{Math.floor(getUserPrice(privates))}</strong> Per {privates.person} Person
-                              </div>
-                            ) : (
-                              <div className="aedtext">AED <strong>{Math.floor(getUserPrice(privates))}</strong> Per {privates.person} Person</div>
-                            )}
-                          </div>
+                        <div className="aedLHS">
+                        <span>Starting from</span>
+                        {isLoggedIn ? (
+                            <div className="aedtext">
+                                {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                ) : (
+                                    <span>USD</span>
+                                )}
+                                <strong>{getUserPrice(privates)}</strong> Per {privates.person} Person
+                            </div>
+                        ) : (
+                            <div className="aedtext">
+                                {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                ) : (
+                                    <span>USD</span>
+                                )}
+                                <strong>{getUserPrice(privates)}</strong> Per {privates.person} Person
+                            </div>
+                        )}
+                    </div>
                           <div className="aedRHS">{privates.tour_duration}</div>
                         </div>
                       </Link>
@@ -720,16 +769,28 @@ const Banner = () => {
                         </div>
                       </div>
                       <div className="TabBoxFooter">
-                        <div className="aedLHS">
-                          <span>Starting from</span>
-                          {isLoggedIn ? (
-                            <div className="aedtext">
-                              AED <strong>{Math.floor(getUserPrice(attraction))}</strong> Per {attraction.person} Person
-                            </div>
-                          ) : (
-                            <div className="aedtext">AED <strong>{Math.floor(getUserPrice(attraction))}</strong> Per {attraction.person} Person</div>
-                          )}
-                        </div>
+                      <div className="aedLHS">
+                      <span>Starting from</span>
+                      {isLoggedIn ? (
+                          <div className="aedtext">
+                              {selectedCurrency === "AED" ? (
+                                  <span>AED</span>
+                              ) : (
+                                  <span>USD</span>
+                              )}
+                              <strong>{getUserPrice(attraction)}</strong> Per {attraction.person} Person
+                          </div>
+                      ) : (
+                          <div className="aedtext">
+                              {selectedCurrency === "AED" ? (
+                                  <span>AED</span>
+                              ) : (
+                                  <span>USD</span>
+                              )}
+                              <strong>{getUserPrice(attraction)}</strong> Per {attraction.person} Person
+                          </div>
+                      )}
+                  </div>
                         <div className="aedRHS">{attraction.tour_duration}</div>
                       </div>
                     </Link>
@@ -781,16 +842,28 @@ const Banner = () => {
                         </div>
                       </div>
                       <div className="TabBoxFooter">
-                        <div className="aedLHS">
-                          <span>Starting from</span>
-                          {isLoggedIn ? (
-                            <div className="aedtext">
-                              AED <strong>{Math.floor(getUserPrice(chauffeur))}</strong> Per {chauffeur.person} Person
-                            </div>
-                          ) : (
-                            <div className="aedtext">AED <strong>{Math.floor(getUserPrice(chauffeur))}</strong> Per {chauffeur.person} Person</div>
-                          )}
-                        </div>
+                      <div className="aedLHS">
+                      <span>Starting from</span>
+                      {isLoggedIn ? (
+                          <div className="aedtext">
+                              {selectedCurrency === "AED" ? (
+                                  <span>AED</span>
+                              ) : (
+                                  <span>USD</span>
+                              )}
+                              <strong>{getUserPrice(chauffeur)}</strong> Per {chauffeur.person} Person
+                          </div>
+                      ) : (
+                          <div className="aedtext">
+                              {selectedCurrency === "AED" ? (
+                                  <span>AED</span>
+                              ) : (
+                                  <span>USD</span>
+                              )}
+                              <strong>{getUserPrice(chauffeur)}</strong> Per {chauffeur.person} Person
+                          </div>
+                      )}
+                  </div>
                         <div className="aedRHS">{chauffeur.tour_duration}</div>
                       </div>
                     </Link>
@@ -809,17 +882,30 @@ const Banner = () => {
   );
 
   function getUserPrice(tour) {
+    let price = 0;
+
     if (userType === 2) {
-      // Agent user type
-      return (tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100)).toFixed(2);
+        // Agent user type
+        price =
+            selectedCurrency === "AED"
+                ? tour.tour_price_aed - (tour.tour_price_aed * userDiscount) / 100
+                : tour.tour_price_usd - (tour.tour_price_usd * userDiscount) / 100;
     } else if (userType === 3) {
-      // Normal user type
-      return tour.tour_price_aed;
+        // Normal user type
+        price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
     } else {
-      // Default case (handle other user types if needed)
-      return tour.tour_price_aed;
+        // Default case (handle other user types if needed)
+        price = selectedCurrency === "AED" ? tour.tour_price_aed :  tour.tour_price_usd;
     }
-  }
+
+    // Remove decimal part
+    return Math.floor(price);
 }
 
-export default Banner;
+}
+const mapStateToProps = (state) => ({
+selectedCurrency: state.currency.selectedCurrency,
+// ... (other state mappings)
+});
+
+export default connect(mapStateToProps)(Banner);
