@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Style/header.css';
 
 const Faq = () => {
@@ -9,7 +9,11 @@ const Faq = () => {
       try {
         const response = await fetch('http://127.0.0.1:9900/faq/list');
         const data = await response.json();
-        setFaqData(data.data);
+        if (data.status === 'success') {
+          setFaqData(data.data);
+        } else {
+          console.error('Error fetching FAQ data');
+        }
       } catch (error) {
         console.error('Error fetching FAQ data:', error);
       }
@@ -18,6 +22,39 @@ const Faq = () => {
     fetchData();
   }, []);
 
+  const renderFaqItems = () => {
+    return faqData.map((faq) => (
+      <div className="faqBox" key={faq.id}>
+        <div className="accordion" id={`accordionExample${faq.id}`}>
+          <div className="accordion-item">
+            <h2 className="accordion-header" id={`heading${faq.id}`}>
+              <button
+                className="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target={`#collapse${faq.id}`}
+                aria-expanded="false"
+                aria-controls={`collapse${faq.id}`}
+              >
+                {faq.name}
+              </button>
+            </h2>
+            <div
+              id={`collapse${faq.id}`}
+              className="accordion-collapse collapse"
+              aria-labelledby={`heading${faq.id}`}
+              data-bs-parent={`#accordionExample${faq.id}`}
+            >
+              <div className="accordion-body">
+                <p>{faq.description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ));
+  };
+
   return (
     <div>
       <div className="accordionDiv">
@@ -25,36 +62,8 @@ const Faq = () => {
           <div className="accordionDivIN">
             <h2>Frequently asked Questions</h2>
             <div className="accordionDivWrapper">
-              <div className="faqBox">
-                <div className="accordion" id="accordionExample">
-                  {faqData.map((faqItem) => (
-                    <div className="accordion-item" key={faqItem.id}>
-                      <h2 className="accordion-header" id={`heading${faqItem.id}`}>
-                        <button
-                          className="accordion-button collapsed"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target={`#collapse${faqItem.id}`}
-                          aria-expanded="false"
-                          aria-controls={`collapse${faqItem.id}`}
-                        >
-                          {faqItem.name}
-                        </button>
-                      </h2>
-                      <div
-                        id={`collapse${faqItem.id}`}
-                        className="accordion-collapse collapse"
-                        aria-labelledby={`heading${faqItem.id}`}
-                        data-bs-parent="#accordionExample"
-                      >
-                        <div className="accordion-body">
-                          <p>{faqItem.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              {renderFaqItems().slice(0, faqData.length / 2)}
+              {renderFaqItems().slice(faqData.length / 2)}
             </div>
           </div>
         </div>

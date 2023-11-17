@@ -121,7 +121,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                         className="dropdown-item"
                                                         onClick={() => handleCurrencyChange('USD')}
                                                     >
-                                                        USD $
+                                                        USD 
                                                     </button>
                                                 </li>
                                             </ul>
@@ -258,7 +258,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                     className="dropdown-item"
                                                     onClick={() => handleCurrencyChange('USD')}
                                                 >
-                                                    USD $
+                                                    USD 
                                                 </button>
                                             </li>
                                         </ul>
