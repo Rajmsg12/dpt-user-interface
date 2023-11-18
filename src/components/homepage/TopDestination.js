@@ -60,7 +60,7 @@ const TopDestination = () => {
                         >
                             {destinations.map((destination, index) => (
                                 <div key={index} className="carouselItem">
-                                    <Link to={`/tour/${destination.destination_name.replace(/\s+/g, '-').toLowerCase()}`} className="item">
+                                    <Link to={`/destination/${destination.destination_name.replace(/\s+/g, '-').toLowerCase()}`} className="item">
 
                                         <div className="SliderBox">
                                             <div className="SliderBoxImg">

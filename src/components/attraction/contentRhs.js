@@ -135,7 +135,7 @@ const ListingSection = ({ selectedCurrency }) => {
   const itemsToShow = apiData.tour_info;
   
   return (
-    <div>
+    <>
       <div className="listingPage">
         <div className="container">
           <div className="listingPageWrapper">
@@ -367,7 +367,7 @@ const ListingSection = ({ selectedCurrency }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
   function getUserPrice(tour) {
     let price = 0;

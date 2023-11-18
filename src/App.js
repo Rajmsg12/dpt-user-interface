@@ -63,14 +63,17 @@ function App() {
         <Route exact path="/private-tour/:title" element={<DetailPage/>} />
         <Route exact path="/attraction-tickets/:title" element={<DetailPage/>} />
         <Route exact path="/chauffeur/:title" element={<DetailPage/>} />
-        <Route exact path='/tour/:country' element={<TourListing/>} /> 
-        <Route exact path='/tour/:country/:title' element={<DestinationPage/>} /> 
+        <Route exact path='/destination/:country' element={<TourListing/>} /> 
+        <Route exact path='/destination/:country/:title' element={<DestinationPage/>} /> 
         <Route exact path='trending-tour/:title' element={<TrendingPlaces/>} /> 
         <Route exact path='/trending-tour/:country/:title' element={<TrendingDetails/>} /> 
+        <Route exact path='tour/:title' element={<TrendingPlaces/>} /> 
+        <Route exact path='/tour/:country/:title' element={<TrendingDetails/>} /> 
          {/*    <Route exact path='/plan' element={<Category/>} /> */}
        <Route exact path='/:categoryName' element={<Category/>} />
        <Route exact path='/:categoryName/:title' element={<DetailPage/>} />
        <Route exact path='/attraction/:attractionName' element={<Attraction/>} />
+       
        <Route exact path='/cart' element={<Cart/>} />
 
         </Routes>

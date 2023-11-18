@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 
 const PopularTour = ({ selectedCurrency }) => {
     const [popular, setPopular] = useState([]);
+    const [sticker, setSticker] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
@@ -39,6 +40,8 @@ const PopularTour = ({ selectedCurrency }) => {
                 const result = await response.json();
                 if (result.status === 'success') {
                     setPopular(result.data);
+                    setSticker(result.data.map(tour => tour.sticker));
+
                 } else {
                     console.error('Error fetching popular tours:', result.message);
                 }
@@ -62,7 +65,8 @@ const PopularTour = ({ selectedCurrency }) => {
                 .then(response => response.json())
                 .then(data => {
                     setUserType(data.data.user_type); // Set user type from login API
-                    setUserDiscount(data.data.discount); // Set user discount from login API
+                    setUserDiscount(data.data.discount); 
+            
                 })
                 .catch(error => {
                     console.error("Error fetching user data:", error);
