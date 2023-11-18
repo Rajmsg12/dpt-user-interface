@@ -54,14 +54,13 @@ const ListingSection = () => {
   const url = window.location.href;
   const spliturl = url.split("/");
   const slug = spliturl[4];
-  console.log(slug)
 
 // ... (previous code)
 
 useEffect(() => {
   const fetchData = async () => {
     try {
-      const searchQuery = "Dubai";
+      const searchQuery = `${slug}`;
       const response = await fetch("http://127.0.0.1:9900/search", {
         method: "POST",
         headers: {
