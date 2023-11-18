@@ -17,6 +17,7 @@ import Category from './components/pages/cateory'
 import Cart from './components/pages/cart'
 import TrendingPlaces from "./components/pages/trendingPlaces";
 import TrendingDetails from './components/pages/TrendingDetail'
+import Attraction from './components/pages/attraction'
 
 
 
@@ -69,6 +70,7 @@ function App() {
          {/*    <Route exact path='/plan' element={<Category/>} /> */}
        <Route exact path='/:categoryName' element={<Category/>} />
        <Route exact path='/:categoryName/:title' element={<DetailPage/>} />
+       <Route exact path='/attraction/:attractionName' element={<Attraction/>} />
        <Route exact path='/cart' element={<Cart/>} />
 
         </Routes>
