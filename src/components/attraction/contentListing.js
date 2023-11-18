@@ -1,10 +1,40 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './Style/attraction.css'
-import ContentRhs from './contentRhs'
-import ContentLhs from './contentLhs'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './Style/attraction.css';
+import ContentRhs from './contentRhs';
+import { convertFromRaw, Editor, EditorState } from 'draft-js';
+import 'draft-js/dist/Draft.css'; 
 
-const contentListing = () => {
+const ContentListing = () => {
+  const [tour, setTour] = useState({});
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const url = window.location.href;
+  const spliturl = url.split("/");
+  const slug = spliturl[4];
+  
+  useEffect(() => {
+    const fetchTourData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:9900/popular-attraction/${slug}`);
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          setTour(data.data[0]);
+
+          // Parse the JSON string and convert it to Draft.js content state
+          const rawContent = JSON.parse(data.data[0].description);
+          const contentState = convertFromRaw(rawContent);
+          setEditorState(EditorState.createWithContent(contentState));
+        } else {
+          // Handle error
+        }
+      } catch (error) {
+        // Handle error
+      }
+    };
+
+    fetchTourData();
+  }, [slug]);
   return (
     <div>
     <>
@@ -57,55 +87,10 @@ const contentListing = () => {
               <div className="container">
                 <h2>The Basics</h2>
                 <img src="images/homepage/listproduct1.png" alt="" />
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-                  doloribus iste excepturi soluta in ut amet id perspiciatis
-                  asperiores ipsum quae cum sunt quod nisi reprehenderit sequi,
-                  ipsa quia voluptates? Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Ducimus doloribus iste excepturi soluta in ut
-                  amet id perspiciatis asperiores ipsum quae cum sunt quod nisi
-                  reprehenderit sequi, ipsa quia voluptates? Lorem ipsum dolor sit
-                  amet consectetur adipisicing elit. Ducimus doloribus iste
-                  excepturi soluta in ut amet id perspiciatis asperiores ipsum
-                  quae cum sunt quod nisi reprehenderit sequi, ipsa quia
-                  voluptates? Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Ducimus doloribus iste excepturi soluta in ut amet id
-                  perspiciatis asperiores ipsum quae cum sunt quod nisi
-                  reprehenderit sequi, ipsa quia voluptates? Lorem ipsum dolor sit
-                  amet consectetur adipisicing elit. Ducimus doloribus iste
-                  excepturi soluta in ut amet id perspiciatis asperiores ipsum
-                  quae cum sunt quod nisi reprehenderit sequi, ipsa quia
-                  voluptates? Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Ducimus doloribus iste excepturi soluta in ut amet id
-                  perspiciatis asperiores ipsum quae cum sunt quod nisi
-                  reprehenderit sequi, ipsa quia voluptates?
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-                  doloribus iste excepturi soluta in ut amet id perspiciatis
-                  asperiores ipsum quae cum sunt quod nisi reprehenderit sequi,
-                  ipsa quia voluptates? Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Ducimus doloribus iste excepturi soluta in ut
-                  amet id perspiciatis asperiores ipsum quae cum sunt quod nisi
-                  reprehenderit sequi, ipsa quia voluptates? Lorem ipsum dolor sit
-                  amet consectetur adipisicing elit. Ducimus doloribus iste
-                  excepturi soluta in ut amet id perspiciatis asperiores ipsum
-                  quae cum sunt quod nisi reprehenderit sequi, ipsa quia
-                  voluptates? Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Ducimus doloribus iste excepturi soluta in ut amet id
-                  perspiciatis asperiores ipsum quae cum sunt quod nisi
-                  reprehenderit sequi, ipsa quia voluptates? Lorem ipsum dolor sit
-                  amet consectetur adipisicing elit. Ducimus doloribus iste
-                  excepturi soluta in ut amet id perspiciatis asperiores ipsum
-                  quae cum sunt quod nisi reprehenderit sequi, ipsa quia
-                  voluptates? Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Ducimus doloribus iste excepturi soluta in ut amet id
-                  perspiciatis asperiores ipsum quae cum sunt quod nisi
-                  reprehenderit sequi, ipsa quia voluptates?
-                </p>
-                <Link href="/" className="cta">
-                  View all 137 experiences
-                </Link>
+                <p><Editor editorState={editorState} readOnly={true} /></p>
+              {/*   <Link href="/" className="cta">
+                 View all 137 experiences
+                </Link>*/} 
                 <div className="ThingstwoSection">
                   <div className="row">
                     <div className="col-md-6">
@@ -448,4 +433,4 @@ const contentListing = () => {
   )
 }
 
-export default contentListing
+export default ContentListing;

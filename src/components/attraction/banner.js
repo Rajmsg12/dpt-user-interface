@@ -1,19 +1,47 @@
-import React from 'react'
-import './Style/attraction.css'
-const banner = () => {
+import React , {useState , useEffect} from 'react';
+import './Style/attraction.css';
+import { useParams } from 'react-router-dom';
+
+const Banner = () => {
+    const { attractionName } = useParams();
+    const [tour, setTour] = useState({});
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[4];
+    useEffect(() => {
+        const fetchTourData = async () => {
+          try {
+            const response = await fetch(`http://127.0.0.1:9900/popular-attraction/${slug}`);
+            const data = await response.json();
+    
+            if (data.status === 'success') {
+              setTour(data.data[0]);
+            } else {
+              // Handle error
+            }
+          } catch (error) {
+            // Handle error
+          }
+        };
+    
+        fetchTourData();
+      }, [slug]);
+      const backgroundImageUrl = tour 
+  ? `url(http://127.0.0.1:8800/data/uploads/${tour.image})`
+  : '';
+    
     return (
         <div>
             <div
                 className="InnerBanner"
-                style={{ backgroundImage: "url(images/innerbanner.jpg)" }}
+                style={{ backgroundImage: backgroundImageUrl }} 
             >
                 <div className="container">
-                    <h1>Attraction Detail</h1>
+                    <h1>{attractionName.replace(/-/g, ' ')}</h1>
                 </div>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default banner
+export default Banner;
