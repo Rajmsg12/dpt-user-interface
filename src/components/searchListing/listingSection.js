@@ -56,23 +56,37 @@ const ListingSection = () => {
   const slug = spliturl[4];
   console.log(slug)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:9900/destination/${slug}`);
-        const result = await response.json();
-        if (result.status === 'success' && result.length > 0) {
-          setApiData(result.data[0]);
-        } else {
-          console.error('Failed to fetch data from the API');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+// ... (previous code)
 
-    fetchData();
-  }, []);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const searchQuery = "Dubai";
+      const response = await fetch("http://127.0.0.1:9900/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ search: searchQuery }),
+      });
+      const result = await response.json();
+      if (result.status === 'success' && result.length > 0) {
+        setApiData(result.data);
+        console.log(result.data)
+
+      } else {
+        console.error('Failed to fetch data from the API');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  fetchData();
+}, []);
+ 
+
+
 
   const filteredData = data.filter((tour) => {
     const tourPrice = parseInt(tour.tour_info.replace(',', ''));
@@ -99,11 +113,11 @@ const ListingSection = () => {
   });
   // const itemsToShow = filteredData.slice(startIndex, endIndex);
 
+  const itemsToShow = apiData ;
+
   if (!apiData) {
     return <p>Loading...</p>;
   }
-
-  const itemsToShow = apiData.tour_info;
   return (
     <div>
       <div className="listingPage">
@@ -160,20 +174,20 @@ const ListingSection = () => {
                 <div className="tab-content" id="pills-tabContentlisting">
                   <div className="tab-pane fade  show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                     <div className="listingRow GridRowWrapper">
-                   {
-                      itemsToShow.map((tour) => (
-                          <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.tour_slug}`}>
+                    {itemsToShow.map((tour) => (
+                      <Link to={`${tour.slug}`} className="TabBox" key={`grid-${tour.slug}`}>
+                          
                             <div className="img">
-                              <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
+                              <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
                               <div className="discountrow">
                                 <div className="discount">
-                                  <span>{tour.tour_discount} %</span>
+                                  <span>{tour.discount} %</span>
                                 </div>
                                 <div className="wishlistIcon"></div>
                               </div>
                               <div className="imgBottomRow">
                                 <div className="lhstext">
-                                  <span>{tour.tour_hastag}</span>
+                                  <span>{tour.hastag}</span>
                                 </div>
                                 <div className="rhsimg">
                                   <div>
@@ -184,20 +198,20 @@ const ListingSection = () => {
                               </div>
                             </div>
                             <div className="TabBoxBody">
-                              <h4>{tour.Tour_name}</h4>
-                              <p>{tour.tour_intro}</p>
+                              <h4>{tour.tour_name}</h4>
+                              <p>{tour.intro}</p>
                               <div className="ReviewRow">
-                                <span className="location">{tour.location}</span>
+                                <span className="location">{tour.destination_info[0].name}</span>
                               </div>
                             </div>
                             <div className="TabBoxFooter">
                               <div className="aedLHS">
                                 <span>Starting from</span>
                                 <div className="aedtext">
-                                  AED <strong>{tour.tour_tour_price_aed}</strong> up to {tour.person} people
+                                  AED <strong>{tour.tour_price_aed}</strong> up to {tour.person} people
                                 </div>
                               </div>
-                              <div className="aedRHS">{tour.tour_tour_duration}</div>
+                              <div className="aedRHS">{tour.tour_duration}</div>
                             </div>
                           </Link>
                         ))
@@ -209,16 +223,16 @@ const ListingSection = () => {
                       {itemsToShow.map((tour) => (
                         <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.tour_slug}`}>
                           <div className="listingBoxImg">
-                            <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
+                            <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
                             <div className="discountrow">
                               <div className="discount">
-                                <span>{tour.tour_discount} %</span>
+                                <span>{tour.discount} %</span>
                               </div>
                               <div className="wishlistIcon"></div>
                             </div>
                             <div className="imgBottomRow">
                               <div className="lhstext">
-                                <span>{tour.tour_hastag}</span>
+                                <span>{tour.hastag}</span>
                               </div>
                               <div className="rhsimg">
                                 <div>
@@ -230,13 +244,13 @@ const ListingSection = () => {
                           </div>
                           <div className="listingBoxContent">
                             <div className="listingBoxTop">
-                              <h4>{tour.Tour_name}</h4>
+                              <h4>{tour.tour_name}</h4>
                               <div className="ReviewsDivrow">
                                 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
                                 <span>5 | 500 Reviews</span>
                               </div>
                               <div className="descrition">
-                                <p>{tour.tour_intro}</p>
+                                <p>{tour.intro}</p>
                               </div>
                             </div>
                             <div className="listingBoxFooter">
@@ -247,7 +261,7 @@ const ListingSection = () => {
                               <div className="listboxrhs">
                                 <div className="startingFromTag">Starting from</div>
                                 <div className="price">
-                                  AED <strong>{tour.tour_tour_price_aed}</strong> Per {tour.person} Person
+                                  AED <strong>{tour.tour_price_aed}</strong> Per {tour.person} Person
                                 </div>
                               </div>
                             </div>

@@ -16,6 +16,7 @@ import UserProfile from './components/user/UserDashboard'
 import Category from './components/pages/cateory'
 import Cart from './components/pages/cart'
 import TrendingPlaces from "./components/pages/trendingPlaces";
+import SearchListing from './components/pages/SearchListingMain'
 import TrendingDetails from './components/pages/TrendingDetail'
 import Attraction from './components/pages/attraction'
 
@@ -67,7 +68,7 @@ function App() {
         <Route exact path='/destination/:country/:title' element={<DestinationPage/>} /> 
         <Route exact path='trending-tour/:title' element={<TrendingPlaces/>} /> 
         <Route exact path='/trending-tour/:country/:title' element={<TrendingDetails/>} /> 
-        <Route exact path='tour/:title' element={<TrendingPlaces/>} /> 
+        <Route exact path='tour/:title' element={<SearchListing/>} /> 
         <Route exact path='/tour/:country/:title' element={<TrendingDetails/>} /> 
          {/*    <Route exact path='/plan' element={<Category/>} /> */}
        <Route exact path='/:categoryName' element={<Category/>} />
