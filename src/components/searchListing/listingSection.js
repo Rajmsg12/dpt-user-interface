@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
@@ -17,7 +17,7 @@ const ListingSection = () => {
 
   const totalItems = data.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
@@ -55,35 +55,35 @@ const ListingSection = () => {
   const spliturl = url.split("/");
   const slug = spliturl[4];
 
-// ... (previous code)
+  // ... (previous code)
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const searchQuery = `${slug}`;
-      const response = await fetch("http://127.0.0.1:9900/search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ search: searchQuery }),
-      });
-      const result = await response.json();
-      if (result.status === 'success' && result.length > 0) {
-        setApiData(result.data);
-        console.log(result.data)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const searchQuery = `${slug}`;
+        const response = await fetch("http://127.0.0.1:9900/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ search: searchQuery }),
+        });
+        const result = await response.json();
+        if (result.status === 'success' && result.length > 0) {
+          setApiData(result.data);
+          console.log(result.data.map(tour => tour.sticker_info[0].id[0]))
 
-      } else {
-        console.error('Failed to fetch data from the API');
+        } else {
+          console.error('Failed to fetch data from the API');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+    };
 
-  fetchData();
-}, []);
- 
+    fetchData();
+  }, []);
+
 
 
 
@@ -112,7 +112,7 @@ useEffect(() => {
   });
   // const itemsToShow = filteredData.slice(startIndex, endIndex);
 
-  const itemsToShow = apiData ;
+  const itemsToShow = apiData;
 
   if (!apiData) {
     return <p>Loading...</p>;
@@ -133,7 +133,7 @@ useEffect(() => {
             <div className="listingRhs">
               <div className="listingGridTab">
                 <div className="listingToplayer">
-                <div className="productactive">{filteredData.length} activities found</div>
+                  <div className="productactive">{filteredData.length} activities found</div>
 
                   <div>
                     <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -173,47 +173,71 @@ useEffect(() => {
                 <div className="tab-content" id="pills-tabContentlisting">
                   <div className="tab-pane fade  show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                     <div className="listingRow GridRowWrapper">
-                    {itemsToShow.map((tour) => (
-                      <Link to={`${tour.slug}`} className="TabBox" key={`grid-${tour.slug}`}>
-                          
-                            <div className="img">
-                              <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
-                              <div className="discountrow">
-                                <div className="discount">
-                                  <span>{tour.discount} %</span>
-                                </div>
-                                <div className="wishlistIcon"></div>
+                      {itemsToShow.map((tour) => (
+                        <Link to={`${tour.slug}`} className="TabBox" key={`grid-${tour.slug}`}>
+
+                          <div className="img">
+                            <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                            <div className="discountrow">
+                              <div className="discount">
+                                <span>{tour.discount} %</span>
                               </div>
-                              <div className="imgBottomRow">
-                                <div className="lhstext">
-                                  <span>{tour.hastag}</span>
-                                </div>
-                                <div className="rhsimg">
-                                  <div>
-                                    <img src={tour.logo1} alt="" />
-                                    <img src={tour.logo2} alt="" />
-                                  </div>
-                                </div>
+                              <div className="wishlistIcon"></div>
+                            </div>
+                            <div className="imgBottomRow">
+                              <div className="lhstext">
+                                <span>{tour.hastag}</span>
+                              </div>
+                              <div className="rhsimg">
+                               
+                                  {tour.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info.length > 1 && (
+                                    <img
+                                      src={tour.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+                             
+                              </div>
+
+
+                            </div>
+                          </div>
+                          <div className="TabBoxBody">
+                            <h4>{tour.tour_name}</h4>
+                            <p>{tour.intro}</p>
+                            <div className="ReviewRow">
+                              <span className="location">{tour.destination_info[0].name}</span>
+                            </div>
+                          </div>
+                          <div className="TabBoxFooter">
+                            <div className="aedLHS">
+                              <span>Starting from</span>
+                              <div className="aedtext">
+                                AED <strong>{tour.tour_price_aed}</strong> up to {tour.person} people
                               </div>
                             </div>
-                            <div className="TabBoxBody">
-                              <h4>{tour.tour_name}</h4>
-                              <p>{tour.intro}</p>
-                              <div className="ReviewRow">
-                                <span className="location">{tour.destination_info[0].name}</span>
-                              </div>
-                            </div>
-                            <div className="TabBoxFooter">
-                              <div className="aedLHS">
-                                <span>Starting from</span>
-                                <div className="aedtext">
-                                  AED <strong>{tour.tour_price_aed}</strong> up to {tour.person} people
-                                </div>
-                              </div>
-                              <div className="aedRHS">{tour.tour_duration}</div>
-                            </div>
-                          </Link>
-                        ))
+                            <div className="aedRHS">{tour.tour_duration}</div>
+                          </div>
+                        </Link>
+                      ))
                       }
                     </div>
                   </div>
@@ -235,10 +259,34 @@ useEffect(() => {
                               </div>
                               <div className="rhsimg">
                                 <div>
-                                  <img src={tour.logo1} alt="" />
-                                  <img src={tour.logo2} alt="" />
+                                  {tour.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info.length > 1 && (
+                                    <img
+                                      src={tour.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
                                 </div>
                               </div>
+
+
                             </div>
                           </div>
                           <div className="listingBoxContent">
