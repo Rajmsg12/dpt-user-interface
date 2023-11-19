@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
@@ -14,7 +14,7 @@ const ListingSection = ({ selectedCurrency }) => {
   const [apiData, setApiData] = useState(null);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const [activeTab, setActiveTab] = useState("pills-grid");
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
@@ -24,7 +24,7 @@ const ListingSection = ({ selectedCurrency }) => {
 
   const totalItems = data.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
@@ -82,27 +82,27 @@ const ListingSection = ({ selectedCurrency }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-        fetch('http://127.0.0.1:9900/welcome', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+      fetch('http://127.0.0.1:9900/welcome', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setUserType(data.data.user_type); // Set user type from login API
+          setUserDiscount(data.data.discount); // Set user discount from login API
         })
-            .then(response => response.json())
-            .then(data => {
-                setUserType(data.data.user_type); // Set user type from login API
-                setUserDiscount(data.data.discount); // Set user discount from login API
-            })
-            .catch(error => {
-                console.error("Error fetching user data:", error);
-            });
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+        });
     }
-}, []);
+  }, []);
 
   const { title } = useParams();
   const formattedTitle = title
-  .split('-') // Split by hyphens
-  .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-  .join(' ');
+    .split('-') // Split by hyphens
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+    .join(' ');
 
   const filteredData = data.filter((tour) => {
     const tourPrice = parseInt(tour.tour_info.replace(',', ''));
@@ -133,7 +133,7 @@ const ListingSection = ({ selectedCurrency }) => {
     return <p>Loading...</p>;
   }
   const itemsToShow = apiData.tour_info;
-  
+
   return (
     <div>
       <div className="listingPage">
@@ -150,7 +150,7 @@ const ListingSection = ({ selectedCurrency }) => {
             <div className="listingRhs">
               <div className="listingGridTab">
                 <div className="listingToplayer">
-                <div className="productactive">{apiData.tour_info.length} activities found</div>
+                  <div className="productactive">{apiData.tour_info.length} activities found</div>
 
                   <div>
                     <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -190,8 +190,8 @@ const ListingSection = ({ selectedCurrency }) => {
                 <div className="tab-content" id="pills-tabContentlisting">
                   <div className="tab-pane fade show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                     <div className="listingRow GridRowWrapper">
-                   {
-                      itemsToShow.map((tour) => (
+                      {
+                        itemsToShow.map((tour) => (
                           <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.tour_slug}`}>
                             <div className="img">
                               <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
@@ -206,10 +206,32 @@ const ListingSection = ({ selectedCurrency }) => {
                                   <span>{tour.tour_hastag}</span>
                                 </div>
                                 <div className="rhsimg">
-                                  <div>
-                                    <img src={tour.logo1} alt="" />
-                                    <img src={tour.logo2} alt="" />
-                                  </div>
+
+                                  {tour.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info.length > 1 && (
+                                    <img
+                                      src={tour.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+
                                 </div>
                               </div>
                             </div>
@@ -221,28 +243,28 @@ const ListingSection = ({ selectedCurrency }) => {
                               </div>
                             </div>
                             <div className="TabBoxFooter">
-                            <div className="aedLHS">
-                            <span>Starting from</span>
-                            {isLoggedIn ? (
-                                <div className="aedtext">
+                              <div className="aedLHS">
+                                <span>Starting from</span>
+                                {isLoggedIn ? (
+                                  <div className="aedtext">
                                     {selectedCurrency === "AED" ? (
-                                        <span>AED</span>
+                                      <span>AED</span>
                                     ) : (
-                                        <span>USD</span>
+                                      <span>USD</span>
                                     )}
                                     <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
-                                </div>
-                            ) : (
-                                <div className="aedtext">
+                                  </div>
+                                ) : (
+                                  <div className="aedtext">
                                     {selectedCurrency === "AED" ? (
-                                        <span>AED</span>
+                                      <span>AED</span>
                                     ) : (
-                                        <span>USD</span>
+                                      <span>USD</span>
                                     )}
                                     <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
-                                </div>
-                            )}
-                        </div>
+                                  </div>
+                                )}
+                              </div>
                               <div className="aedRHS">{tour.tour_tour_duration}</div>
                             </div>
                           </Link>
@@ -267,10 +289,32 @@ const ListingSection = ({ selectedCurrency }) => {
                                 <span>{tour.tour_hastag}</span>
                               </div>
                               <div className="rhsimg">
-                                <div>
-                                  <img src={tour.logo1} alt="" />
-                                  <img src={tour.logo2} alt="" />
-                                </div>
+
+                                {tour.sticker_info[0].id === '1' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info[0].id === '2' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info[0].id === '3' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info.length > 1 && (
+                                  <img
+                                    src={tour.sticker_info[1].id}
+                                    alt=""
+                                  />
+                                )}
+
                               </div>
                             </div>
                           </div>
@@ -293,27 +337,27 @@ const ListingSection = ({ selectedCurrency }) => {
                               <div className="listboxrhs">
                                 <div className="startingFromTag">Starting from</div>
                                 <div className="price">
-                                {isLoggedIn ? (
-                                  <div >
+                                  {isLoggedIn ? (
+                                    <div >
                                       {selectedCurrency === "AED" ? (
-                                          <span>AED</span>
+                                        <span>AED</span>
                                       ) : (
-                                          <span>USD</span>
+                                        <span>USD</span>
                                       )}
                                       <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
-                                  </div>
-                              ) : (
-                                  <div>
+                                    </div>
+                                  ) : (
+                                    <div>
                                       {selectedCurrency === "AED" ? (
-                                          <span>AED</span>
+                                        <span>AED</span>
                                       ) : (
-                                          <span>USD</span>
+                                        <span>USD</span>
                                       )}
                                       <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
-                                  </div>
-                              )}
+                                    </div>
+                                  )}
                                 </div>
-                              
+
                               </div>
                             </div>
                           </div>
@@ -373,27 +417,27 @@ const ListingSection = ({ selectedCurrency }) => {
     let price = 0;
 
     if (userType === 2) {
-        // Agent user type
-        price =
-            selectedCurrency === "AED"
-                ? tour.tour_tour_price_aed - (tour.tour_tour_price_aed * userDiscount) / 100
-                : tour.tour_tour_price_usd - (tour.tour_tour_price_usd * userDiscount) / 100;
+      // Agent user type
+      price =
+        selectedCurrency === "AED"
+          ? tour.tour_tour_price_aed - (tour.tour_tour_price_aed * userDiscount) / 100
+          : tour.tour_tour_price_usd - (tour.tour_tour_price_usd * userDiscount) / 100;
     } else if (userType === 3) {
-        // Normal user type
-        price = selectedCurrency === "AED" ? tour.tour_tour_price_aed : tour.tour_tour_price_usd;
+      // Normal user type
+      price = selectedCurrency === "AED" ? tour.tour_tour_price_aed : tour.tour_tour_price_usd;
     } else {
-        // Default case (handle other user types if needed)
-        price = selectedCurrency === "AED" ? tour.tour_tour_price_aed :  tour.tour_tour_price_usd;
+      // Default case (handle other user types if needed)
+      price = selectedCurrency === "AED" ? tour.tour_tour_price_aed : tour.tour_tour_price_usd;
     }
 
     // Remove decimal part
     return Math.floor(price);
-}
+  }
 
 }
 const mapStateToProps = (state) => ({
-selectedCurrency: state.currency.selectedCurrency,
-// ... (other state mappings)
+  selectedCurrency: state.currency.selectedCurrency,
+  // ... (other state mappings)
 });
 
 export default connect(mapStateToProps)(ListingSection);
