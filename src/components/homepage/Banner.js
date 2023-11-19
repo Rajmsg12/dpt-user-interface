@@ -288,7 +288,7 @@ const Banner = ({ selectedCurrency }) => {
                                 <div className="bottomtext">
                                   <SearchableSelect
                                     options={destinations.map((destination) => destination.destination_name)}
-                                    placeholder="Select Destination"
+                                    placeholder="Search"
                                     onSelect={handleCountrySelect} // You may need to adjust the onSelect callback if needed
                                   />
                                 </div>
@@ -359,7 +359,7 @@ const Banner = ({ selectedCurrency }) => {
                               <button type="submit" className="SearchIconInput"> </button>
                               <SearchableSelect
                                 options={destinations.map((destination) => destination.destination_name)}
-                                placeholder="Select Destination"
+                                placeholder="Search"
                                 onSelect={handleCountrySelect} // You may need to adjust the onSelect callback if needed
                               />
                             </div>

@@ -52,15 +52,23 @@ const ListingSection = () => {
 
   // Filter items based on the selected price range
   const url = window.location.href;
-  const spliturl = url.split("/");
-  const slug = spliturl[4];
+  const splitUrl = url.split("/");
+  const slug = splitUrl[4];
+  
+  // Split the slug into words using hyphen as the separator
+  const words = slug.split('-');
+  
+  // Capitalize the first letter of each word and join them with a space
+  const convertedText = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  
+  
 
   // ... (previous code)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const searchQuery = `${slug}`;
+        const searchQuery = `${convertedText}`;
         const response = await fetch("http://127.0.0.1:9900/search", {
           method: "POST",
           headers: {
@@ -71,7 +79,6 @@ const ListingSection = () => {
         const result = await response.json();
         if (result.status === 'success' && result.length > 0) {
           setApiData(result.data);
-          console.log(result.data.map(tour => tour.sticker_info[0].id[0]))
 
         } else {
           console.error('Failed to fetch data from the API');
