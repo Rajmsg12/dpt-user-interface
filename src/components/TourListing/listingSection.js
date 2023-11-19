@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
@@ -17,7 +17,7 @@ const ListingSection = () => {
 
   const totalItems = data.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
@@ -120,7 +120,7 @@ const ListingSection = () => {
             <div className="listingRhs">
               <div className="listingGridTab">
                 <div className="listingToplayer">
-                <div className="productactive">{filteredData.length} activities found</div>
+                  <div className="productactive">{filteredData.length} activities found</div>
 
                   <div>
                     <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -160,8 +160,8 @@ const ListingSection = () => {
                 <div className="tab-content" id="pills-tabContentlisting">
                   <div className="tab-pane fade  show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                     <div className="listingRow GridRowWrapper">
-                   {
-                      itemsToShow.map((tour) => (
+                      {
+                        itemsToShow.map((tour) => (
                           <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.tour_slug}`}>
                             <div className="img">
                               <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
@@ -176,10 +176,32 @@ const ListingSection = () => {
                                   <span>{tour.tour_hastag}</span>
                                 </div>
                                 <div className="rhsimg">
-                                  <div>
-                                    <img src={tour.logo1} alt="" />
-                                    <img src={tour.logo2} alt="" />
-                                  </div>
+
+                                  {tour.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info.length > 1 && (
+                                    <img
+                                      src={tour.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+
                                 </div>
                               </div>
                             </div>
@@ -187,7 +209,7 @@ const ListingSection = () => {
                               <h4>{tour.Tour_name}</h4>
                               <p>{tour.tour_intro}</p>
                               <div className="ReviewRow">
-                                <span className="location">{tour.location}</span>
+                                <span className="location">{tour.destination_info[0].name}</span>
                               </div>
                             </div>
                             <div className="TabBoxFooter">
@@ -221,10 +243,32 @@ const ListingSection = () => {
                                 <span>{tour.tour_hastag}</span>
                               </div>
                               <div className="rhsimg">
-                                <div>
-                                  <img src={tour.logo1} alt="" />
-                                  <img src={tour.logo2} alt="" />
-                                </div>
+
+                                {tour.sticker_info[0].id === '1' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info[0].id === '2' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info[0].id === '3' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info.length > 1 && (
+                                  <img
+                                    src={tour.sticker_info[1].id}
+                                    alt=""
+                                  />
+                                )}
+
                               </div>
                             </div>
                           </div>

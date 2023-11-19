@@ -65,8 +65,8 @@ const PopularTour = ({ selectedCurrency }) => {
                 .then(response => response.json())
                 .then(data => {
                     setUserType(data.data.user_type); // Set user type from login API
-                    setUserDiscount(data.data.discount); 
-            
+                    setUserDiscount(data.data.discount);
+
                 })
                 .catch(error => {
                     console.error("Error fetching user data:", error);
@@ -109,11 +109,32 @@ const PopularTour = ({ selectedCurrency }) => {
                                                         </div>
                                                     </div>
                                                     <div className="rhsimg">
-                                                        {tour.imgBottomRow && (
-                                                            <div>
-                                                                <img src={tour.imgBottomRow.rhsimg} alt="" />
-                                                            </div>
+
+                                                        {tour.sticker_info[0].id === '1' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                                                alt=""
+                                                            />
                                                         )}
+                                                        {tour.sticker_info[0].id === '2' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                        {tour.sticker_info[0].id === '3' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                        {tour.sticker_info.length > 1 && (
+                                                            <img
+                                                                src={tour.sticker_info[1].id}
+                                                                alt=""
+                                                            />
+                                                        )}
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -149,7 +170,7 @@ const PopularTour = ({ selectedCurrency }) => {
                                                         </div>
                                                     )}
                                                 </div>
-                                        
+
                                                 <div className="aedRHS">
                                                     {tour.tour_duration}
                                                 </div>
@@ -166,7 +187,7 @@ const PopularTour = ({ selectedCurrency }) => {
     )
     function getUserPrice(tour) {
         let price = 0;
-    
+
         if (userType === 2) {
             // Agent user type
             price =
@@ -178,9 +199,9 @@ const PopularTour = ({ selectedCurrency }) => {
             price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
         } else {
             // Default case (handle other user types if needed)
-            price = selectedCurrency === "AED" ? tour.tour_price_aed :  tour.tour_price_usd;
+            price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
         }
-    
+
         // Remove decimal part
         return Math.floor(price);
     }
