@@ -7,14 +7,9 @@ import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const SearchableSelect = ({ options, placeholder, onSelect }) => {
-
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-
-
-
-
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -31,12 +26,13 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
     setDropdownOpen(true); // Open the dropdown when the input is clicked
   };
 
-  // Modify the filteredOptions to limit the results to a maximum of 5 items
-  const filteredOptions = options
-    .filter((option) => option.toLowerCase().includes(searchTerm.toLowerCase()))
-    .slice(0, 5);
-
-
+  // Include the search term in filtered options
+  const filteredOptions = [
+    searchTerm,
+    ...options
+      .filter((option) => option.toLowerCase().includes(searchTerm.toLowerCase()))
+      .slice(0, 4), // Adjust the number of options as needed
+  ];
 
   return (
     <div className="searchable-select">
@@ -69,7 +65,7 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
 
 const Banner = ({selectedCurrency}) => {
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [searchCountry, setSearchCountry] = useState('');
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -83,8 +79,8 @@ const Banner = ({selectedCurrency}) => {
   const navigate = useNavigate();
   const [destinations, setDestinations] = useState([]);
 
-  const handleCountrySelect = (country) => {
-    setSelectedCountry(country);
+  const handleCountrySearch = (country) => {
+    setSearchCountry(country);
   };
 
   const handleDateSelect = (date) => {
@@ -100,22 +96,22 @@ const Banner = ({selectedCurrency}) => {
     const dateElement = document.querySelector('.datePicker');
     const personElement = document.querySelector('.personSelect');
 
-    if (!selectedCountry) {
+    if (!searchCountry) {
       countryElement?.classList.add('countryClassError');
     } else {
       countryElement?.classList.remove('countryClassError');
     }
 
-    // if (!selectedDate) {
-    //   dateElement?.classList.add('classDateError');
-    // } else {
-    //   dateElement?.classList.remove('classDateError');
-    // }
+    if (!selectedDate) {
+      dateElement?.classList.add('classDateError');
+    } else {
+      dateElement?.classList.remove('classDateError');
+    }
 
 
-    if (selectedCountry ) {
+    if (searchCountry ) {
       // This condition should work for navigation.
-      const encodedCountry = encodeURIComponent(selectedCountry.replace(/\s+/g, '-').toLowerCase());
+      const encodedCountry = encodeURIComponent(searchCountry.replace(/\s+/g, '-').toLowerCase());
       navigate(`/tour/${encodedCountry}`);
       //  navigate(`/tours`);
 
@@ -289,7 +285,7 @@ const Banner = ({selectedCurrency}) => {
                                   <SearchableSelect
                                     options={destinations.map((destination) => destination.destination_name)}
                                     placeholder="Search"
-                                    onSelect={handleCountrySelect} // You may need to adjust the onSelect callback if needed
+                                    onSelect={handleCountrySearch} // You may need to adjust the onSelect callback if needed
                                   />
                                 </div>
                               </div>
@@ -360,7 +356,7 @@ const Banner = ({selectedCurrency}) => {
                               <SearchableSelect
                                 options={destinations.map((destination) => destination.destination_name)}
                                 placeholder="Search"
-                                onSelect={handleCountrySelect} // You may need to adjust the onSelect callback if needed
+                                onSelect={handleCountrySearch} // You may need to adjust the onSelect callback if needed
                               />
                             </div>
 
