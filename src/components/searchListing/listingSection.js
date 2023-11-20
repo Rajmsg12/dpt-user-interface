@@ -122,7 +122,7 @@ const ListingSection = () => {
   const itemsToShow = apiData;
 
   if (!apiData) {
-    return <p>Loading...</p>;
+    return <p>No Data Found</p>;
   }
   return (
     <div>
