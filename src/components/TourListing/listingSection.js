@@ -120,7 +120,7 @@ const ListingSection = () => {
             <div className="listingRhs">
               <div className="listingGridTab">
                 <div className="listingToplayer">
-                  <div className="productactive">{filteredData.length} activities found</div>
+                  <div className="productactive">{itemsToShow.length} activities found</div>
 
                   <div>
                     <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">

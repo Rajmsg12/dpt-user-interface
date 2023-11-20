@@ -455,12 +455,34 @@ const Banner = ({selectedCurrency}) => {
 
                               <span>{tour.hastag}</span>
                             </div>
-                            <div class="rhsimg">
-                              <div>
-
-                                <img src="images/choise1.png" alt="" />
+                            <div className="rhsimg">
+                               
+                                  {tour.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info.length > 1 && (
+                                    <img
+                                      src={tour.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+                             
                               </div>
-                            </div>
                           </div>
                         </div>
                         <div className="TabBoxBody">
@@ -530,12 +552,34 @@ const Banner = ({selectedCurrency}) => {
   
                               <span>{wedding.hastag}</span>
                             </div>
-                            <div class="rhsimg">
-                              <div>
-  
-                                <img src="images/choise1.png" alt="" />
+                            <div className="rhsimg">
+                               
+                                  {wedding.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {wedding.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {wedding.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {wedding.sticker_info.length > 1 && (
+                                    <img
+                                      src={wedding.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+                             
                               </div>
-                            </div>
                           </div>
                         </div>
                         <div className="TabBoxBody">
@@ -603,12 +647,34 @@ const Banner = ({selectedCurrency}) => {
 
                             <span>{luxury.hastag}</span>
                           </div>
-                          <div class="rhsimg">
-                            <div>
-
-                              <img src="images/choise1.png" alt="" />
-                            </div>
-                          </div>
+                          <div className="rhsimg">
+                               
+                                  {luxury.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {luxury.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {luxury.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {luxury.sticker_info.length > 1 && (
+                                    <img
+                                      src={luxury.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+                             
+                              </div>
                         </div>
                       </div>
                       <div className="TabBoxBody">
@@ -675,12 +741,34 @@ const Banner = ({selectedCurrency}) => {
 
                               <span>{privates.hastag}</span>
                             </div>
-                            <div class="rhsimg">
-                              <div>
-
-                                <img src="images/choise1.png" alt="" />
-                              </div>
-                            </div>
+                            <div className="rhsimg">
+                               
+                            {privates.sticker_info[0].id === '1' && (
+                              <img
+                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                alt=""
+                              />
+                            )}
+                            {privates.sticker_info[0].id === '2' && (
+                              <img
+                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                alt=""
+                              />
+                            )}
+                            {privates.sticker_info[0].id === '3' && (
+                              <img
+                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                alt=""
+                              />
+                            )}
+                            {privates.sticker_info.length > 1 && (
+                              <img
+                                src={privates.sticker_info[1].id}
+                                alt=""
+                              />
+                            )}
+                       
+                        </div>
                           </div>
                         </div>
                         <div className="TabBoxBody">
@@ -747,12 +835,34 @@ const Banner = ({selectedCurrency}) => {
 
                             <span>{attraction.hastag}</span>
                           </div>
-                          <div class="rhsimg">
-                            <div>
-
-                              <img src="images/choise1.png" alt="" />
-                            </div>
-                          </div>
+                          <div className="rhsimg">
+                               
+                                  {attraction.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {attraction.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {attraction.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {attraction.sticker_info.length > 1 && (
+                                    <img
+                                      src={attraction.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+                             
+                              </div>
                         </div>
                       </div>
                       <div className="TabBoxBody">
@@ -820,12 +930,34 @@ const Banner = ({selectedCurrency}) => {
 
                             <span>{chauffeur.hastag}</span>
                           </div>
-                          <div class="rhsimg">
-                            <div>
-
-                              <img src="images/choise1.png" alt="" />
-                            </div>
-                          </div>
+                          <div className="rhsimg">
+                               
+                                  {chauffeur.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {chauffeur.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {chauffeur.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {chauffeur.sticker_info.length > 1 && (
+                                    <img
+                                      src={chauffeur.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+                             
+                              </div>
                         </div>
                       </div>
                       <div className="TabBoxBody">

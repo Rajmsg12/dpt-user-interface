@@ -150,13 +150,13 @@ const ContentSection = ({selectedCurrency}) => {
                     <div>
                       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li className="filterDiv"></li>
-                        <li className="nav-item" role="presentation">
+                        <li className="nav-item active" role="presentation">
                           <button className="nav-link" id="pills-grid-tab" data-bs-toggle="pill" data-bs-target="#pills-grid"
                             type="button" role="tab" aria-controls="pills-grid" aria-selected="false">Grid <img
                               src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211736/grid_emrbiy.png"} alt="" /></button>
                         </li>
                         <li className="nav-item" role="presentation">
-                          <button className="nav-link active" id="pills-listing-tab" data-bs-toggle="pill"
+                          <button className="nav-link " id="pills-listing-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-listing" type="button" role="tab" aria-controls="pills-listing"
                             aria-selected="true"><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211812/list_k2k6ct.png"} alt="" />Listing</button>
                         </li>
@@ -164,7 +164,7 @@ const ContentSection = ({selectedCurrency}) => {
                     </div>
                   </div>
                   <div className="tab-content" id="pills-tabContentlisting">
-                    <div className="tab-pane fade" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
+                    <div className="tab-pane fade show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                       <div className="listingRow GridRowWrapper">
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
@@ -215,7 +215,7 @@ const ContentSection = ({selectedCurrency}) => {
                                 <h4>{tour.Tour_name}</h4>
                                 <p>{tour.tour_intro}</p>
                                 <div className="ReviewRow">
-                                  <span className="location">{tour.location}</span>
+                                  <span className="location">{tour.destination_info[0].name}</span>
                                 </div>
                               </div>
                               <div className="TabBoxFooter">
@@ -250,7 +250,7 @@ const ContentSection = ({selectedCurrency}) => {
                         )}
                       </div>
                     </div>
-                    <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
+                    <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                       <div className="listingRow">
                         {itemsToShow.map((tour) => (
                           <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.id}`}>
