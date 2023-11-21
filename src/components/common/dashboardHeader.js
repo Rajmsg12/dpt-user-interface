@@ -4,6 +4,7 @@ import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 const DashboardHeader = () => {
     const navigate = useNavigate()
@@ -14,7 +15,7 @@ const DashboardHeader = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            fetch('http://127.0.0.1:9900/welcome', {
+            fetch(`${config.baseUrl}/welcome`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -37,7 +38,7 @@ const DashboardHeader = () => {
     }, []);
 
     const handleLogout = () => {
-        fetch('http://127.0.0.1:9900/logout', {
+        fetch(`${config.baseUrl}/logout`, {
             method: 'POST',
         })
             .then(() => {

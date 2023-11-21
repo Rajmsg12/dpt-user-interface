@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import config from '../../config';
 
 const Overview = () => {
     const [tourData, setTourData] = useState(null);
@@ -9,7 +10,7 @@ const Overview = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:9900/plan/${slug}`);
+                const response = await fetch(`${config.baseUrl}/plan/${slug}`);
                 const data = await response.json();
                 if (data.status === 'success' && data.length > 0) {
                     // Parse JSON content in the description field

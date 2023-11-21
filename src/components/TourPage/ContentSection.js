@@ -14,6 +14,7 @@ import GetInTouch from "./GetInTouch";
 import { useParams } from "react-router-dom";
 import { data } from "../../data/Category";
 import { addToCart } from "../cart/CartActions";
+import config from "../../config";
 
 function ContentSection() {
   const { title } = useParams();
@@ -30,7 +31,7 @@ function ContentSection() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+        const response = await fetch(`${config.baseUrl}/${slug}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -48,7 +49,7 @@ function ContentSection() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch('http://127.0.0.1:9900/welcome', {
+      fetch(`${config.baseUrl}/welcome`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -62,6 +63,24 @@ function ContentSection() {
           console.error("Error fetching user data:", error);
         });
     }
+  }, []);
+  const [attractions, setAttractions] = useState([]);
+
+  useEffect(() => {
+    const fetchAttractions = async () => {
+      try {
+        const response = await fetch(`${config.baseUrl}/popular-attraction/list`);
+        if (response.data.status === 'success') {
+          setAttractions(response.data.data);
+        } else {
+          console.error('Error fetching attractions');
+        }
+      } catch (error) {
+        console.error('Error fetching attractions', error);
+      }
+    };
+
+    fetchAttractions();
   }, []);
 
 
@@ -221,18 +240,9 @@ function ContentSection() {
                   <div className="title">Attractions</div>
                 </div>
                 <ul>
-                  <li>
-                    4 Hours Dubai Private City Tour With Rolce Royce Ghost
-                  </li>
-                  <li>4 Hours Dubai Private City Tour With Audi R8</li>
-                  <li>
-                    4 Hours Dubai Private City Tour With Lamborghini Aventador
-                  </li>
-                  <li>5 Hours Dubai Private City Tour With Audi R8</li>
-                  <li>
-                    8 Hours Dubai Private City Tour With Lamborghini Aventador
-                  </li>
-                  <li>4 Hours Dubai Private City Tour With Audi R8</li>
+                  {attractions.map((attraction) => (
+                    <li key={attraction.id}><Link to={`/attraction/${attraction.slug}`}>{attraction.name}</Link></li>
+                  ))}
                 </ul>
               </div>
               <div className="DubaiPrivateTour">

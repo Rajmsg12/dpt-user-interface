@@ -3,6 +3,7 @@ import InnerHeader from '../common/InnerHeader';
 import Footer from '../common/Footer';
 import './Style/login.css';
 import { Link } from 'react-router-dom';
+import config from '../../config';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://127.0.0.1:9900/login', {
+            const response = await fetch(`${config.baseUrl}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

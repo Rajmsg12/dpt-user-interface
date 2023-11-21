@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -149,7 +150,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/cat/3');
+        const response = await fetch(`${config.baseUrl}/cat/3`);
         const data = await response.json();
         setTours(data.data);
       } catch (error) {
@@ -162,7 +163,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/cat/4');
+        const response = await fetch(`${config.baseUrl}/cat/4`);
         const data = await response.json();
         setLuxury(data.data);
       } catch (error) {
@@ -175,7 +176,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/cat/12');
+        const response = await fetch(`${config.baseUrl}/cat/12`);
         const data = await response.json();
         setWedding(data.data);
       } catch (error) {
@@ -188,7 +189,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/cat/15');
+        const response = await fetch(`${config.baseUrl}/cat/15`);
         const data = await response.json();
         setAttraction(data.data);
       } catch (error) {
@@ -201,7 +202,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/cat/16');
+        const response = await fetch(`${config.baseUrl}/cat/16`);
         const data = await response.json();
         setChauffeur(data.data);
       } catch (error) {
@@ -214,7 +215,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/cat/14');
+        const response = await fetch(`${config.baseUrl}/cat/14`);
         const data = await response.json();
         setPrivates(data.data);
       } catch (error) {
@@ -227,7 +228,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch('http://127.0.0.1:9900/welcome', {
+      fetch(`${config.baseUrl}/welcome`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -246,7 +247,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/destanition/list');
+        const response = await fetch(`${config.baseUrl}/destanition/list`);
         const data = await response.json();
         if (data.status === 'success') {
           setDestinations(data.data);

@@ -1,15 +1,20 @@
-import React , {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Style/TourPage.css'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { data } from '../../data/index'
+import config from '../../config';
 
-const YouAlsoLike = ({selectedCurrency}) => {
+const YouAlsoLike = ({ selectedCurrency }) => {
     const [tourData, setTourData] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
+    const [backendData, setBackendData] = useState(null);
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[5];
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -29,25 +34,62 @@ const YouAlsoLike = ({selectedCurrency}) => {
             items: 1
         }
     };
-
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:9900/tour-list');
+                const response = await fetch(`${config.baseUrl}/${slug}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
                 const data = await response.json();
-                setTourData(data.data);
+                console.log("Initial data from API:", data);
+
+                setBackendData(data); // Store the entire response
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error("Error fetching data from the backend:", error.message);
             }
         };
 
         fetchData();
-    }, []);
+    }, [slug]);
+
+    useEffect(() => {
+        if (!backendData || backendData.length === 0) {
+            console.log("No backend data available yet.");
+            return;
+        }
+
+        const categorySlug = backendData.data[0].category_slug;
+        console.log("Category Slug:", categorySlug);
+
+        const fetchTourData = async () => {
+            try {
+                const response = await fetch(`${config.baseUrl}/plan/${categorySlug}`);
+                const result = await response.json();
+                console.log("Tour Data from API:", result);
+
+                if (result.status === 'success' && result.data && result.data.length > 0) {
+                    setTourData(result.data);
+                } else {
+                    console.error('Failed to fetch data from the API');
+                }
+            } catch (error) {
+                console.error('Error fetching tour data:', error);
+            }
+        };
+
+        fetchTourData();
+    }, [backendData]);
+    
+
+ 
+      const itemsToShow = tourData;
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            fetch('http://127.0.0.1:9900/welcome', {
+            fetch(`${config.baseUrl}/welcome`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -74,107 +116,108 @@ const YouAlsoLike = ({selectedCurrency}) => {
                     </div>
                     <div className="PopularToursSlider">
                         <Carousel responsive={responsive} infinite={true} itemclassName="carousel-item-padding-60-px" arrows={false}>
-                        {tourData.map((tour, index) => (
-                            <div className="carouselItem" key={tour.id}>
-                            <div className="item">
-                                <Link to={`/plan/${tour.slug}`} className="TabBox">
-                                    <div className="img">
-                                        <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
-                                        {tour.discount && (
-                                            <div className="discountrow">
-                                                <div className="discount">
-                                                    <span>{`${tour.discount}%`}</span>
-                                                </div>
-                                                <div className="wishlistIcon"></div>
-                                            </div>
-                                        )}
-                                        <div className="imgBottomRow">
-                                            <div className="lhs-text">
-                                                {tour.imgBottomRow && (
-                                                    <span>{tour.imgBottomRow.lhsText}</span>
+                            {itemsToShow.map((tour, index) => (
+                                <div className="carouselItem" key={tour.id}>
+                                    <div className="item">
+                                        <Link to={`/plan/${tour.slug}`} className="TabBox">
+                                            <div className="img">
+                                                <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                                                {tour.discount && (
+                                                    <div className="discountrow">
+                                                        <div className="discount">
+                                                            <span>{`${tour.tour_discount}%`}</span>
+                                                        </div>
+                                                        <div className="wishlistIcon"></div>
+                                                    </div>
                                                 )}
-                                                <div className="lhstext">
-                                                    <span>{tour.hastag}</span>
-                                                    <span>{tour.hastagHeading}</span>
-                                                </div>
-                                            </div>
-                                            <div className="rhsimg">
+                                                <div className="imgBottomRow">
+                                                    <div className="lhs-text">
+                                                        {tour.imgBottomRow && (
+                                                            <span>{tour.imgBottomRow.lhsText}</span>
+                                                        )}
+                                                        <div className="lhstext">
+                                                            <span>{tour.tour_hastag}</span>
+                                                            <span>{tour.hastagHeading}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="rhsimg">
 
-                                                {tour.sticker_info[0].id === '1' && (
-                                                    <img
-                                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                                        alt=""
-                                                    />
-                                                )}
-                                                {tour.sticker_info[0].id === '2' && (
-                                                    <img
-                                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                                        alt=""
-                                                    />
-                                                )}
-                                                {tour.sticker_info[0].id === '3' && (
-                                                    <img
-                                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                                        alt=""
-                                                    />
-                                                )}
-                                                {tour.sticker_info.length > 1 && (
-                                                    <img
-                                                        src={tour.sticker_info[1].id}
-                                                        alt=""
-                                                    />
-                                                )}
+                                                        {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '1' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                                                alt=""
+                                                            />
+                                                        )}
 
+                                                        {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '2' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                        {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '3' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                        {tour.sticker_info && tour.sticker_info.length > 1 && (
+                                                            <img
+                                                                src={tour.sticker_info[1].id}
+                                                                alt=""
+                                                            />
+                                                        )}
+
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="TabBoxBody">
-                                        <h4>{tour.tour_name}</h4>
-                                        <p>{tour.intro}</p>
-                                        <div className="ReviewRow">
-                                            {tour.destination_info && tour.destination_info.length > 0 && (
-                                                <span className="location">{tour.destination_info[0].name}</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="TabBoxFooter">
-                                        <div className="aedLHS">
-                                            <span>Starting from</span>
-                                            {isLoggedIn ? (
-                                                <div className="aedtext">
-                                                    {selectedCurrency === "AED" ? (
-                                                        <span>AED</span>
-                                                    ) : (
-                                                        <span>USD</span>
+                                            <div className="TabBoxBody">
+                                                <h4>{tour.Tour_name}</h4>
+                                                <p>{tour.tour_intro}</p>
+                                                <div className="ReviewRow">
+                                                    {tour.destination_info && tour.destination_info.length > 0 && (
+                                                        <span className="location">{tour.destination_info[0].name}</span>
                                                     )}
-                                                    <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
                                                 </div>
-                                            ) : (
-                                                <div className="aedtext">
-                                                    {selectedCurrency === "AED" ? (
-                                                        <span>AED</span>
+                                            </div>
+                                            <div className="TabBoxFooter">
+                                                <div className="aedLHS">
+                                                    <span>Starting from</span>
+                                                    {isLoggedIn ? (
+                                                        <div className="aedtext">
+                                                            {selectedCurrency === "AED" ? (
+                                                                <span>AED</span>
+                                                            ) : (
+                                                                <span>USD</span>
+                                                            )}
+                                                            <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                        </div>
                                                     ) : (
-                                                        <span>USD</span>
+                                                        <div className="aedtext">
+                                                            {selectedCurrency === "AED" ? (
+                                                                <span>AED</span>
+                                                            ) : (
+                                                                <span>USD</span>
+                                                            )}
+                                                            <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                        </div>
                                                     )}
-                                                    <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
                                                 </div>
-                                            )}
-                                        </div>
 
-                                        <div className="aedRHS">
-                                            {tour.tour_duration}
-                                        </div>
+                                                <div className="aedRHS">
+                                                    {tour.tour_duration}
+                                                </div>
+                                            </div>
+                                        </Link>
                                     </div>
-                                </Link>
-                            </div>
-                        </div>
+                                </div>
                             ))}
                         </Carousel>
                     </div>
                 </div>
             </div>
         </>
-        
+
     )
     function getUserPrice(tour) {
         let price = 0;

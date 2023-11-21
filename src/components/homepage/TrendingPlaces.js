@@ -3,13 +3,14 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { data } from '../../data/index'; // Import the data object from the other file
 import {Link} from 'react-router-dom'
+import config from '../../config';
 
 const TrendingPlaces = () => {
   const [trendingPlaces, setTrendingPlaces] = useState([]);
 
   const fetchTrendingPlaces = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:9900/emirates/list');
+      const response = await fetch(`${config.baseUrl}/emirates/list`);
       const data = await response.json();
       if (data.status === 'success') {
         setTrendingPlaces(data.data);

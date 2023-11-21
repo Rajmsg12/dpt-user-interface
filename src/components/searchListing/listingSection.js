@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
+import config from '../../config';
 
 
 const ListingSection = () => {
@@ -69,7 +70,7 @@ const ListingSection = () => {
     const fetchData = async () => {
       try {
         const searchQuery = `${convertedText}`;
-        const response = await fetch("http://127.0.0.1:9900/search", {
+        const response = await fetch(`${config.baseUrl}/search`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -118,6 +119,7 @@ const ListingSection = () => {
     return false; // Exclude items that don't match the duration filter
   });
   // const itemsToShow = filteredData.slice(startIndex, endIndex);
+  console.log(filteredData)
 
   const itemsToShow = apiData;
 

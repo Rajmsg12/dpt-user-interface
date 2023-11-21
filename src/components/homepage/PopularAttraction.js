@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import config from '../../config';
 
 const PopularAttraction = () => {
   const [attractions, setAttractions] = useState([]);
@@ -8,7 +9,7 @@ const PopularAttraction = () => {
   useEffect(() => {
     const fetchAttractions = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:9900/popular-attraction/list');
+        const response = await axios.get(`${config.baseUrl}/popular-attraction/list`);
         if (response.data.status === 'success') {
           setAttractions(response.data.data);
         } else {

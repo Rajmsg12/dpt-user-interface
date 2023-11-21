@@ -14,6 +14,8 @@ import GetInTouch from "./GetInTouch";
 import { useParams } from "react-router-dom";
 import { data } from "../../data/Category";
 import { addToCart } from "../cart/CartActions";
+import axios from 'axios';
+import config from "../../config";
 
 function ContentSection() {
   const { title } = useParams();
@@ -22,6 +24,7 @@ function ContentSection() {
   const url = window.location.href;
   const spliturl = url.split("/");
   const slug = spliturl[5];
+
   const ourData = data.CategoryList.filter((item) => item.slug === slug);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);
@@ -30,7 +33,7 @@ function ContentSection() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+        const response = await fetch(`${config.baseUrl}/${slug}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -44,11 +47,29 @@ function ContentSection() {
 
     fetchData();
   }, []);
+  const [attractions, setAttractions] = useState([]);
+
+  useEffect(() => {
+    const fetchAttractions = async () => {
+      try {
+        const response = await axios.get(`${config.baseUrl}/popular-attraction/list`);
+        if (response.data.status === 'success') {
+          setAttractions(response.data.data);
+        } else {
+          console.error('Error fetching attractions');
+        }
+      } catch (error) {
+        console.error('Error fetching attractions', error);
+      }
+    };
+
+    fetchAttractions();
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch('http://127.0.0.1:9900/welcome', {
+      fetch(`${config.baseUrl}/welcome`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -113,34 +134,34 @@ function ContentSection() {
 
                             </div>
                             <div className="logoimg">
-                            <div className="rhsimg">
+                              <div className="rhsimg">
 
-                            {tour.sticker_info[0].id === '1' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                alt=""
-                              />
-                            )}
-                            {tour.sticker_info[0].id === '2' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                alt=""
-                              />
-                            )}
-                            {tour.sticker_info[0].id === '3' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                alt=""
-                              />
-                            )}
-                            {tour.sticker_info.length > 1 && (
-                              <img
-                                src={tour.sticker_info[1].id}
-                                alt=""
-                              />
-                            )}
+                                {tour.sticker_info[0].id === '1' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info[0].id === '2' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info[0].id === '3' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info.length > 1 && (
+                                  <img
+                                    src={tour.sticker_info[1].id}
+                                    alt=""
+                                  />
+                                )}
 
-                          </div>
+                              </div>
                             </div>
                           </div>
                           <div className="BannerTitle">
@@ -242,158 +263,150 @@ function ContentSection() {
                   </div>
                   <div className="title">Attractions</div>
                 </div>
+                {/*  ATTRACTION */}
                 <ul>
-                  <li>
-                    4 Hours Dubai Private City Tour With Rolce Royce Ghost
-                  </li>
-                  <li>4 Hours Dubai Private City Tour With Audi R8</li>
-                  <li>
-                    4 Hours Dubai Private City Tour With Lamborghini Aventador
-                  </li>
-                  <li>5 Hours Dubai Private City Tour With Audi R8</li>
-                  <li>
-                    8 Hours Dubai Private City Tour With Lamborghini Aventador
-                  </li>
-                  <li>4 Hours Dubai Private City Tour With Audi R8</li>
+                  {attractions.map((attraction) => (
+                    <li key={attraction.id}><Link to={`/attraction/${attraction.slug}`}>{attraction.name}</Link></li>
+                  ))}
                 </ul>
               </div>
               <div className="DubaiPrivateTour">
-              <div
-              className="TA_selfserveprop"
-              id="TA_selfserveprop642"
-              style={{ width: "100%" }}
-            >
-              <div id="CDSWIDSSP" className="widSSP widSSPnarrow" style={{ width: 240 }}>
-                <div className="widSSPData" style={{ border: "1px solid #589442" }}>
-                  <div className="widSSPBranding">
-                    <dl>
-                      <dt>
-                        <Link target="_blank" to="https://www.tripadvisor.com/">
-                          <img
-                            src="https://www.tripadvisor.com/img/cdsi/img2/branding/150_logo-11900-2.png"
-                            alt="TripAdvisor"
-                          />
-                        </Link>
-                      </dt>
-                      <dt className="widSSPTagline">
-                        Know better. Book better. Go better.
-                      </dt>
-                    </dl>
-                  </div>
-                  {/*/ cdsBranding*/}
-                  <div className="widSSPComponent">
-                    <div className="widSSPSummary">
-                      <dl>
-                        <Link
-                          target="_blank"
-                          to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
-                          onclick="ta.cds.handleTALink(11900,this);return true;"
-                          rel="nofollow"
-                        >
-                          <dt className="widSSPH18">Dubai Private Tour</dt>
-                        </Link>
-                      </dl>
-                    </div>
-                    {/*/ cdsSummary*/}{" "}
-                  </div>
-                  {/*/ cdsComponent*/}
-                  <div className="widSSPComponent widSSPOptional">
-                    <div className="widSSPTrvlRtng">
-                      <dl>
-                        <dt className="widSSPH11">TripAdvisor Traveler Rating</dt>
-                        <dd>
-                          <div className="widSSPOverall">
-                            <img
-                              src="https://static.tacdn.com/img2/ratings/traveler/s5.0.gif"
-                              alt="5.0 of 5 bubbles"
-                              className="rsImg"
-                            />
-                            <div>
-                              Based on <b>1,420</b> traveler reviews
-                            </div>
-                          </div>
-                          {/*/ overall */}{" "}
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                  {/*/ cdsComponent */}
-                  <div className="widSSPWrap widSSPOptional">
-                    <div className="widSSPInformation">
-                      <div className="widSSPWrap">
-                        <div className="widSSPPopIdx widSSPSingle">
-                          <b>TripAdvisor Ranking</b>
-                          <span className="widSSPPopIdxData">
-                            {" "}
-                            <span className="widSSPPopIdxData widSSPPopIdxNumbers">
-                              {" "}
-                              <sup>#</sup>5 of 341{" "}
-                            </span>{" "}
-                            Outdoor Activities in Dubai{" "}
-                          </span>
-                        </div>
-                        {/*/ popIdx*/}{" "}
+                <div
+                  className="TA_selfserveprop"
+                  id="TA_selfserveprop642"
+                  style={{ width: "100%" }}
+                >
+                  <div id="CDSWIDSSP" className="widSSP widSSPnarrow" style={{ width: 240 }}>
+                    <div className="widSSPData" style={{ border: "1px solid #589442" }}>
+                      <div className="widSSPBranding">
+                        <dl>
+                          <dt>
+                            <Link target="_blank" to="https://www.tripadvisor.com/">
+                              <img
+                                src="https://www.tripadvisor.com/img/cdsi/img2/branding/150_logo-11900-2.png"
+                                alt="TripAdvisor"
+                              />
+                            </Link>
+                          </dt>
+                          <dt className="widSSPTagline">
+                            Know better. Book better. Go better.
+                          </dt>
+                        </dl>
                       </div>
-                      {/*/ cdsWrap*/}{" "}
-                    </div>
-                    {/*/ cdsInformation*/}{" "}
-                  </div>
-                  {/*/ cdsWrap*/}
-                  <div className="widSSPComponent widSSPOptional">
-                    <dl className="widSSPReviews">
-                      <dt className="widSSPH11">Most Recent Traveler Reviews</dt>
-                      <dd className="widSSPOneReview">
-                        <ul className="widSSPBullet">
+                      {/*/ cdsBranding*/}
+                      <div className="widSSPComponent">
+                        <div className="widSSPSummary">
+                          <dl>
+                            <Link
+                              target="_blank"
+                              to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                              onclick="ta.cds.handleTALink(11900,this);return true;"
+                              rel="nofollow"
+                            >
+                              <dt className="widSSPH18">Dubai Private Tour</dt>
+                            </Link>
+                          </dl>
+                        </div>
+                        {/*/ cdsSummary*/}{" "}
+                      </div>
+                      {/*/ cdsComponent*/}
+                      <div className="widSSPComponent widSSPOptional">
+                        <div className="widSSPTrvlRtng">
+                          <dl>
+                            <dt className="widSSPH11">TripAdvisor Traveler Rating</dt>
+                            <dd>
+                              <div className="widSSPOverall">
+                                <img
+                                  src="https://static.tacdn.com/img2/ratings/traveler/s5.0.gif"
+                                  alt="5.0 of 5 bubbles"
+                                  className="rsImg"
+                                />
+                                <div>
+                                  Based on <b>1,420</b> traveler reviews
+                                </div>
+                              </div>
+                              {/*/ overall */}{" "}
+                            </dd>
+                          </dl>
+                        </div>
+                      </div>
+                      {/*/ cdsComponent */}
+                      <div className="widSSPWrap widSSPOptional">
+                        <div className="widSSPInformation">
+                          <div className="widSSPWrap">
+                            <div className="widSSPPopIdx widSSPSingle">
+                              <b>TripAdvisor Ranking</b>
+                              <span className="widSSPPopIdxData">
+                                {" "}
+                                <span className="widSSPPopIdxData widSSPPopIdxNumbers">
+                                  {" "}
+                                  <sup>#</sup>5 of 341{" "}
+                                </span>{" "}
+                                Outdoor Activities in Dubai{" "}
+                              </span>
+                            </div>
+                            {/*/ popIdx*/}{" "}
+                          </div>
+                          {/*/ cdsWrap*/}{" "}
+                        </div>
+                        {/*/ cdsInformation*/}{" "}
+                      </div>
+                      {/*/ cdsWrap*/}
+                      <div className="widSSPComponent widSSPOptional">
+                        <dl className="widSSPReviews">
+                          <dt className="widSSPH11">Most Recent Traveler Reviews</dt>
+                          <dd className="widSSPOneReview">
+                            <ul className="widSSPBullet">
+                              <li>
+                                <span className="widSSPDate">Dec 21, 2016:</span>{" "}
+                                <span className="widSSPQuote">“Excellent your group”</span>
+                              </li>
+                              <li>
+                                <span className="widSSPDate">Dec 20, 2016:</span>{" "}
+                                <span className="widSSPQuote">
+                                  “Quick way to explore Dubai if you...”
+                                </span>
+                              </li>
+                            </ul>
+                            {/*/ bullet*/}{" "}
+                          </dd>
+                          {/*/ hReview*/}
+                        </dl>
+                      </div>
+                      <div className="widSSPAll">
+                        <ul className="widSSPReadReview">
                           <li>
-                            <span className="widSSPDate">Dec 21, 2016:</span>{" "}
-                            <span className="widSSPQuote">“Excellent your group”</span>
-                          </li>
-                          <li>
-                            <span className="widSSPDate">Dec 20, 2016:</span>{" "}
-                            <span className="widSSPQuote">
-                              “Quick way to explore Dubai if you...”
-                            </span>
+                            <a
+                              href="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                              id="allreviews"
+                              onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
+                              rel="nofollow"
+                            >
+                              Read reviews
+                            </a>
                           </li>
                         </ul>
-                        {/*/ bullet*/}{" "}
-                      </dd>
-                      {/*/ hReview*/}
-                    </dl>
+                        <ul className="widSSPWriteReview">
+                          <li>
+                            <a
+                              href="https://www.tripadvisor.com/UserReview-g295424-d2510773-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                              id="writereview"
+                              onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
+                              rel="nofollow"
+                            >
+                              Write a review
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      {/*/ cdsAll*/}
+                      <div className="widSSPLegal">© 2016 TripAdvisor LLC</div>
+                      {/*/ cdsLegal*/}{" "}
+                    </div>
+                    {/*/ cdsData*/}
                   </div>
-                  <div className="widSSPAll">
-                    <ul className="widSSPReadReview">
-                      <li>
-                        <a
-                          href="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
-                          id="allreviews"
-                          onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
-                          rel="nofollow"
-                        >
-                          Read reviews
-                        </a>
-                      </li>
-                    </ul>
-                    <ul className="widSSPWriteReview">
-                      <li>
-                        <a
-                          href="https://www.tripadvisor.com/UserReview-g295424-d2510773-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
-                          id="writereview"
-                          onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
-                          rel="nofollow"
-                        >
-                          Write a review
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  {/*/ cdsAll*/}
-                  <div className="widSSPLegal">© 2016 TripAdvisor LLC</div>
-                  {/*/ cdsLegal*/}{" "}
+                  {/*/ CDSPOP.cdsBx*/}
                 </div>
-                {/*/ cdsData*/}
-              </div>
-              {/*/ CDSPOP.cdsBx*/}
-            </div>
               </div>
               <div className="offerDiv">
                 <div className="offer">10% OFF</div>
@@ -439,7 +452,7 @@ function ContentSection() {
       // Default case (handle other user types if needed)
       return tour.tour_price_aed;
     }
-  
+
     // ... (remaining code)
   }
   function getUserPriceUsd(tour) {
@@ -454,7 +467,7 @@ function ContentSection() {
       return tour.tour_price_usd;
     }
   }
-  
+
 }
 
 export default ContentSection;

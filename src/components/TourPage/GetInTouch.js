@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import config from '../../config';
 
 const GetInTouch = () => {
   const [destinationInfo, setDestinationInfo] = useState({});
@@ -7,7 +8,7 @@ const GetInTouch = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/dubai-rirport-private-transfer');
+        const response = await fetch(`${config.baseUrl}/dubai-rirport-private-transfer`);
         const data = await response.json();
 
         if (data.status === 'success' && data.length > 0) {

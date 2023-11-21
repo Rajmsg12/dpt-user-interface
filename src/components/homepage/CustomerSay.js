@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../../Style/header.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import config from '../../config';
 
 const CustomerSay = () => {
     const [testimonials, setTestimonials] = useState([]);
@@ -17,7 +18,7 @@ const CustomerSay = () => {
     useEffect(() => {
         const fetchTestimonials = async () => {
           try {
-            const response = await fetch('http://127.0.0.1:9900/testimonial/list');
+            const response = await fetch(`${config.baseUrl}/testimonial/list`);
             const data = await response.json();
             setTestimonials(data.data);
           } catch (error) {

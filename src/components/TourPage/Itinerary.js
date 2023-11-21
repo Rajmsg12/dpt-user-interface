@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import config from '../../config';
 
 const Itinerary = () => {
     const [itineraryData, setItineraryData] = useState([]);
@@ -8,7 +9,7 @@ const Itinerary = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+                const response = await fetch(`${config.baseUrl}/${slug}`);
                 const data = await response.json();
                 if (data.status === 'success' && data.data.length > 0) {
                     setItineraryData(data.data[0].itinerary_info);

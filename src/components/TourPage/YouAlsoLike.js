@@ -4,6 +4,7 @@ import './Style/TourPage.css'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { data } from '../../data/index'
+import config from '../../config';
 
 const YouAlsoLike = ({selectedCurrency}) => {
     const [tourData, setTourData] = useState([]);
@@ -33,7 +34,7 @@ const YouAlsoLike = ({selectedCurrency}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:9900/tour-list');
+                const response = await fetch(`${config.baseUrl}/tour-list`);
                 const data = await response.json();
                 setTourData(data.data);
             } catch (error) {
@@ -47,7 +48,7 @@ const YouAlsoLike = ({selectedCurrency}) => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            fetch('http://127.0.0.1:9900/welcome', {
+            fetch(`${config.baseUrl}/welcome`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

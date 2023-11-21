@@ -4,6 +4,7 @@ import './Style/attraction.css';
 import ContentRhs from './contentRhs';
 import { convertFromRaw, Editor, EditorState } from 'draft-js';
 import 'draft-js/dist/Draft.css';
+import config from '../../config';
 
 const ContentListing = () => {
   const [tour, setTour] = useState({});
@@ -15,7 +16,7 @@ const ContentListing = () => {
   useEffect(() => {
     const fetchTourData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/popular-attraction/${slug}`);
+        const response = await fetch(`${config.baseUrl}/popular-attraction/${slug}`);
         const data = await response.json();
 
         if (data.status === 'success') {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import '../../Style/header.css'
+import config from "../../config";
 import { connect } from 'react-redux';
 import { setUser, logout } from './HeaderAction';
 import Search from "../Search";
@@ -35,7 +36,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            fetch('http://127.0.0.1:9900/welcome', {
+            fetch(`${config.baseUrl}/welcome`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -53,7 +54,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
     }, [setUser]);
 
     const handleLogout = () => {
-        fetch('http://127.0.0.1:9900/logout', {
+        fetch(`${config.baseUrl}/logout`, {
             method: 'POST',
         })
             .then(() => {

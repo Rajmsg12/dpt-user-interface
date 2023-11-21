@@ -1,6 +1,7 @@
 import React , {useState , useEffect} from 'react';
 import './Style/attraction.css';
 import { useParams } from 'react-router-dom';
+import config from '../../config'
 
 const Banner = () => {
     const { attractionName } = useParams();
@@ -11,7 +12,7 @@ const Banner = () => {
     useEffect(() => {
         const fetchTourData = async () => {
           try {
-            const response = await fetch(`http://127.0.0.1:9900/popular-attraction/${slug}`);
+            const response = await fetch(`${config.baseUrl}/popular-attraction/${slug}`);
             const data = await response.json();
     
             if (data.status === 'success') {

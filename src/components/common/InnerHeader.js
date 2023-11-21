@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { ReactComponent as IconDoorClosedFill } from "bootstrap-icons/icons/door-closed.svg";
 import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
+import config from '../../config';
 
 const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -104,7 +105,7 @@ const InnerHeader = () => {
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/destanition/list');
+        const response = await fetch(`${config.baseUrl}/destanition/list`);
         const data = await response.json();
         if (data.status === 'success') {
           setDestinations(data.data);
@@ -146,7 +147,7 @@ const InnerHeader = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch('http://127.0.0.1:9900/welcome', {
+      fetch(`${config.baseUrl}/welcome`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -169,7 +170,7 @@ const InnerHeader = () => {
   }, []);
 
   const handleLogout = () => {
-    fetch('http://127.0.0.1:9900/logout', {
+    fetch(`${config.baseUrl}/logout`, {
       method: 'POST',
     })
       .then(() => {

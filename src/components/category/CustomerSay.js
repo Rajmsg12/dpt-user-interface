@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './Style/category.css'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import config from '../../config';
 
 const Review = () => {
     const [testimonials, setTestimonials] = useState([]);
@@ -16,7 +17,7 @@ const Review = () => {
     useEffect(() => {
         const fetchTestimonials = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:9900/testimonial/list');
+                const response = await fetch('${config.baseUrl}/testimonial/list');
                 const data = await response.json();
                 setTestimonials(data.data);
             } catch (error) {

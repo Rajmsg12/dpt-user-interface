@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Editor, EditorState, ContentState, convertFromRaw } from 'draft-js';
-
+import config from '../../config';
 const IncludedExclusive = () => {
   const [backendData, setBackendData] = useState(null);
   const url = window.location.href;
@@ -9,7 +9,7 @@ const IncludedExclusive = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+        const response = await fetch(`${config.baseUrl}/${slug}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

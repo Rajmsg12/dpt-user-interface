@@ -1,6 +1,7 @@
 import React , {useState , useEffect} from 'react'
 import './Style/category.css'
 import { useParams } from 'react-router-dom';
+import config from '../../config';
 
 const CategoryToursDescription = () => {
     const [tourData, setTourData] = useState(null);
@@ -17,7 +18,7 @@ const CategoryToursDescription = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:9900/plan/${slug}`);
+                const response = await fetch(`${config.baseUrl}/plan/${slug}`);
                 const data = await response.json();
                 if (data.status === 'success' && data.length > 0) {
                     // Parse JSON content in the description field

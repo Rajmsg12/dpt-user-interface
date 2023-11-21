@@ -1,5 +1,5 @@
-import React, { Suspense, lazy , useEffect} from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import TopMenu from "./components/TopMenu";
@@ -21,43 +21,18 @@ import TrendingDetails from './components/pages/TrendingDetail'
 import Attraction from './components/pages/attraction'
 
 
-
-//const Header = lazy(() => import("./components/Header"));
-//const TopMenu = lazy(() => import("./components/TopMenu"));
-// const HomeView = lazy(() => import("./views/Home"));
-// const SignInView = lazy(() => import("./views/account/SignIn"));
-// const SignUpView = lazy(() => import("./views/account/SignUp"));
-// const ForgotPasswordView = lazy(() => import("./views/account/ForgotPassword"));
-// const OrdersView = lazy(() => import("./views/account/Orders"));
-// const WishlistView = lazy(() => import("./views/account/Wishlist"));
-// const NotificationView = lazy(() => import("./views/account/Notification"));
-// const MyProfileView = lazy(() => import("./views/account/MyProfile"));
-// const ProductListView = lazy(() => import("./views/product/List"));
-// const ProductDetailView = lazy(() => import("./views/product/Detail"));
-// const StarZoneView = lazy(() => import("./views/product/StarZone"));
-// const CartView = lazy(() => import("./views/cart/Cart"));
-// const CheckoutView = lazy(() => import("./views/cart/Checkout"));
-// const InvoiceView = lazy(() => import("./views/cart/Invoice"));
-// const DocumentationView = lazy(() => import("./views/Documentation"));
-// const NotFoundView = lazy(() => import("./views/pages/404"));
-// const InternalServerErrorView = lazy(() => import("./views/pages/500"));
-// const ContactUsView = lazy(() => import("./views/pages/ContactUs"));
-// const SupportView = lazy(() => import("./views/pages/Support"));
-// const BlogView = lazy(() => import("./views/blog/Blog"));
-// const BlogDetailView = lazy(() => import("./views/blog/Detail"));
-
 function App() {
 
   return (
-    <BrowserRouter>
+    <Router basename={'/'}>
       <React.Fragment>
         
         <Routes>
+        <Route exact path='/' element={<Homepage/>} /> 
         <Route exact path='/login' element={<Login/>} /> 
         <Route exact path='/register' element={<Register/>} /> 
         <Route exact path='/forget-password' element={<Forget/>} /> 
         <Route exact path='/user-dashboard' element={<UserProfile/>} /> 
-        <Route exact path="/" element={<Homepage/>} />
         <Route exact path="/private-jet/:title" element={<DetailPage/>} />
         <Route exact path="/wedding-on-yacht/:title" element={<DetailPage/>} />
         <Route exact path="/luxury-tours/:title" element={<DetailPage/>} />
@@ -79,7 +54,7 @@ function App() {
 
         </Routes>
       </React.Fragment>
-    </BrowserRouter>
+    </Router>
   );
 }
 

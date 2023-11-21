@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
+import config from '../../config';
 
 
 const ListingSection = () => {
@@ -59,7 +60,7 @@ const ListingSection = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/destination/${slug}`);
+        const response = await fetch(`${config.baseUrl}/destination/${slug}`);
         const result = await response.json();
         if (result.status === 'success' && result.length > 0) {
           setApiData(result.data[0]);

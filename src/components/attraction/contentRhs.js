@@ -4,6 +4,7 @@ import '../../components/TourListing/Styles/TourListing.css';
 import LeftSideFilter from './contentLhs';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import config from '../../config';
 
 
 const ListingSection = ({ selectedCurrency }) => {
@@ -65,7 +66,7 @@ const ListingSection = ({ selectedCurrency }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/emirates/dubai`);
+        const response = await fetch(`${config.baseUrl}/emirates/dubai`);
         const result = await response.json();
         if (result.status === 'success' && result.length > 0) {
           setApiData(result.data[0]);
@@ -82,7 +83,7 @@ const ListingSection = ({ selectedCurrency }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-        fetch('http://127.0.0.1:9900/welcome', {
+        fetch(`${config.baseUrl}/welcome`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

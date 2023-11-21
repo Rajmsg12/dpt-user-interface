@@ -4,6 +4,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { data } from '../../data/index'
 import { Link } from 'react-router-dom'
+import config from '../../config';
 
 const TopDestination = () => {
     const [destinations, setDestinations] = useState([]);
@@ -29,7 +30,7 @@ const TopDestination = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:9900/destanition/list');
+                const response = await fetch(`${config.baseUrl}/destanition/list`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }

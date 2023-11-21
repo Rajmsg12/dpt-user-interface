@@ -5,6 +5,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { connect } from 'react-redux';
 import { data } from '../../data/index'
 import { Link } from 'react-router-dom'
+import config from '../../config';
 
 const PopularTour = ({ selectedCurrency }) => {
     const [popular, setPopular] = useState([]);
@@ -36,7 +37,7 @@ const PopularTour = ({ selectedCurrency }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:9900/populartours/list');
+                const response = await fetch(`${config.baseUrl}/populartours/list`);
                 const result = await response.json();
                 if (result.status === 'success') {
                     setPopular(result.data);
@@ -57,7 +58,7 @@ const PopularTour = ({ selectedCurrency }) => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            fetch('http://127.0.0.1:9900/welcome', {
+            fetch(`${config.baseUrl}/welcome`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

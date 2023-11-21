@@ -3,6 +3,7 @@ import InnerHeader from '../common/InnerHeader';
 import Footer from '../common/Footer';
 import './Style/login.css';
 import { Link } from 'react-router-dom';
+import config from '../../config';
 
 const Forget = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ const Forget = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://127.0.0.1:9900/forget-password', {
+      const response = await fetch(`${config.baseUrl}/forget-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

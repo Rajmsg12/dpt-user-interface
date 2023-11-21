@@ -3,6 +3,7 @@ import AskQuestion from './AskQuestion'
 import BookThisTour from './BookThisTour'
 import { useDispatch, useSelector } from "react-redux";
 import Detail from './Detail'
+import config from '../../config';
 
 const DetailOverview = () => {
     const [backendData, setBackendData] = useState(null);
@@ -14,7 +15,7 @@ const DetailOverview = () => {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await fetch(`http://127.0.0.1:9900/${slug}`);
+            const response = await fetch(`${config.baseUrl}/${slug}`);
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }

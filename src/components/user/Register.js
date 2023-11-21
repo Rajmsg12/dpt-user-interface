@@ -4,6 +4,7 @@ import Footer from '../common/Footer';
 import './Style/login.css';
 import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 const Register = () => {
   // Define state variables to hold user input
@@ -28,7 +29,7 @@ const Register = () => {
 
     try {
       // Send a POST request to the backend API
-      const response = await fetch('http://127.0.0.1:9900/register', {
+      const response = await fetch(`${config.baseUrl}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

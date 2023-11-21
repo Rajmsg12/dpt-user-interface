@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
 import { useParams } from 'react-router-dom';
+import config from '../../config';
 import { connect } from 'react-redux';
 
 
@@ -65,7 +66,7 @@ const ListingSection = ({ selectedCurrency }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:9900/emirates/${slug}`);
+        const response = await fetch(`${config.baseUrl}/emirates/${slug}`);
         const result = await response.json();
         if (result.status === 'success' && result.length > 0) {
           setApiData(result.data[0]);
@@ -82,7 +83,7 @@ const ListingSection = ({ selectedCurrency }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch('http://127.0.0.1:9900/welcome', {
+      fetch(`${config.baseUrl}/welcome`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -106,7 +107,7 @@ const ListingSection = ({ selectedCurrency }) => {
 
   const filteredData = data.filter((tour) => {
     const tourPrice = parseInt(tour.tour_info.replace(',', ''));
-    console.log(tourPrice)
+    
     const tourRating = parseInt(tour.rating);
 
     if (
@@ -128,6 +129,7 @@ const ListingSection = ({ selectedCurrency }) => {
     return false; // Exclude items that don't match the duration filter
   });
   // const itemsToShow = filteredData.slice(startIndex, endIndex);
+  console.log(filteredData)
 
   if (!apiData) {
     return <p>Loading...</p>;

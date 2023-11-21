@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import './style/cart.css'
 import { getUserPrice } from './PriceUtlis';
+import config from "../../config";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Cart = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch('http://127.0.0.1:9900/welcome', {
+      fetch(`${config.baseUrl}/welcome`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -41,7 +42,7 @@ const Cart = () => {
   }, []);
 
   const handleLogout = () => {
-    fetch('http://127.0.0.1:9900/logout', {
+    fetch(`${config.baseUrl}/logout`, {
       method: 'POST',
     })
       .then(() => {

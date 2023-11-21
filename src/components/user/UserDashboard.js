@@ -4,6 +4,7 @@ import Footer from '../common/Footer'
 import { Link } from 'react-router-dom'
 import './Style/dashboard.css';
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 
 const UserProfile = () => {
@@ -15,7 +16,7 @@ const UserProfile = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch('http://127.0.0.1:9900/welcome', {
+      fetch(`${config.baseUrl}/welcome`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -37,7 +38,7 @@ const UserProfile = () => {
     }
   }, []);
   const handleLogout = () => {
-    fetch('http://127.0.0.1:9900/logout', {
+    fetch(`${config.baseUrl}/logout`, {
         method: 'POST',
     })
         .then(() => {
