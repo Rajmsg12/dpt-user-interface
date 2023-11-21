@@ -15,6 +15,8 @@ const YouAlsoLike = ({ selectedCurrency }) => {
     const url = window.location.href;
     const spliturl = url.split("/");
     const slug = spliturl[5];
+
+
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -43,9 +45,9 @@ const YouAlsoLike = ({ selectedCurrency }) => {
                 }
 
                 const data = await response.json();
-                console.log("Initial data from API:", data);
+                // console.log("Initial data from API:", data.data[0].category_slug);
 
-                setBackendData(data); // Store the entire response
+                setBackendData(data.data[0].category_slug); // Store the entire response
             } catch (error) {
                 console.error("Error fetching data from the backend:", error.message);
             }
@@ -53,38 +55,8 @@ const YouAlsoLike = ({ selectedCurrency }) => {
 
         fetchData();
     }, [slug]);
-
-    useEffect(() => {
-        if (!backendData || backendData.length === 0) {
-            console.log("No backend data available yet.");
-            return;
-        }
-
-        const categorySlug = backendData.data[0].category_slug;
-        console.log("Category Slug:", categorySlug);
-
-        const fetchTourData = async () => {
-            try {
-                const response = await fetch(`${config.baseUrl}/plan/${categorySlug}`);
-                const result = await response.json();
-                console.log("Tour Data from API:", result);
-
-                if (result.status === 'success' && result.data && result.data.length > 0) {
-                    setTourData(result.data);
-                } else {
-                    console.error('Failed to fetch data from the API');
-                }
-            } catch (error) {
-                console.error('Error fetching tour data:', error);
-            }
-        };
-
-        fetchTourData();
-    }, [backendData]);
-    
-
- 
-      const itemsToShow = tourData;
+    const categorySlug = backendData
+    // console.log(`slug : ${categorySlug}`)
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -106,6 +78,28 @@ const YouAlsoLike = ({ selectedCurrency }) => {
         }
     }, []);
 
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`${config.baseUrl}/plan/${categorySlug}`);
+            const result = await response.json();
+            if (result.status === 'success' && result.length > 0) {
+              setBackendData(result.data);
+            } else {
+              console.error('Failed to fetch data from the API');
+            }
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+      if (!backendData || !backendData.tour_info) {
+        return <p>Loading...</p>;
+    }
+    const itemsToShow = backendData.tour_info;
+    
 
     return (
         <>
@@ -116,7 +110,8 @@ const YouAlsoLike = ({ selectedCurrency }) => {
                     </div>
                     <div className="PopularToursSlider">
                         <Carousel responsive={responsive} infinite={true} itemclassName="carousel-item-padding-60-px" arrows={false}>
-                            {itemsToShow.map((tour, index) => (
+                     
+                          {  itemsToShow.map((tour) => (
                                 <div className="carouselItem" key={tour.id}>
                                     <div className="item">
                                         <Link to={`/plan/${tour.slug}`} className="TabBox">
@@ -211,7 +206,7 @@ const YouAlsoLike = ({ selectedCurrency }) => {
                                         </Link>
                                     </div>
                                 </div>
-                            ))}
+                                ))}
                         </Carousel>
                     </div>
                 </div>
