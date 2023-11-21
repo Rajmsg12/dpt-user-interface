@@ -81,10 +81,10 @@ const YouAlsoLike = ({ selectedCurrency }) => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await fetch(`${config.baseUrl}/plan/${categorySlug}`);
+            const response = await fetch(`${config.baseUrl}/plan/desert-safari`);
             const result = await response.json();
             if (result.status === 'success' && result.length > 0) {
-              setBackendData(result.data);
+              setBackendData(result.data[0]);
             } else {
               console.error('Failed to fetch data from the API');
             }
@@ -116,7 +116,7 @@ const YouAlsoLike = ({ selectedCurrency }) => {
                                     <div className="item">
                                         <Link to={`/plan/${tour.slug}`} className="TabBox">
                                             <div className="img">
-                                                <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                                                <img src={`http://127.0.0.1:8800/data/uploads/${tour.tour_image}`} alt="" />
                                                 {tour.discount && (
                                                     <div className="discountrow">
                                                         <div className="discount">
