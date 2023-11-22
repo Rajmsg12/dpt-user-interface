@@ -124,7 +124,7 @@ function ContentSection() {
                     <div className="item">
                       <div className="DetailpageSlideBox">
                         <div className="imageBox">
-                          <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                          <img src={`${config.imageUrl}/${tour.image}`} alt="" />
                         </div>
                         <div className="BannerContent">
                           <div className="bannerContentTop">
@@ -154,7 +154,7 @@ function ContentSection() {
                       <div className="DetailpageSlideBox">
                         <div className="imageBox">
                           <img
-                            src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                            src={`${config.imageUrl}/${tour.image}`} alt="" />
                         </div>
                         <div className="BannerContent">
                           <div className="bannerContentTop">

@@ -90,7 +90,7 @@ const PopularTour = ({ selectedCurrency }) => {
                                     <div className="item">
                                         <Link to={`/plan/${tour.slug}`} className="TabBox">
                                             <div className="img">
-                                                <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                                                <img src={`${config.imageUrl}/${tour.image}`} alt="" />
                                                 {tour.discount && (
                                                     <div className="discountrow">
                                                         <div className="discount">

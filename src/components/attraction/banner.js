@@ -28,7 +28,7 @@ const Banner = () => {
         fetchTourData();
       }, [slug]);
       const backgroundImageUrl = tour 
-  ? `url(http://127.0.0.1:8800/data/uploads/${tour.image})`
+  ? `url(${config.imageUrl}/${tour.image})`
   : '';
     
     return (

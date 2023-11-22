@@ -68,7 +68,7 @@ const Cart = () => {
                   <div key={index} className="CartBoxWrapper">
                     <div className="CartTopBox">
                       <div className="CartimgWrapper">
-                        <img src={`http://127.0.0.1:8800/data/uploads/${item.image}`} alt={item.tour_name} />
+                        <img src={`${config.imageUrl}/${item.image}`} alt={item.tour_name} />
                       </div>
                       {/*CartimgWrapper*/}
                       <div className="CartContentWrapper">

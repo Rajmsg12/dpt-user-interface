@@ -444,7 +444,7 @@ const Banner = ({selectedCurrency}) => {
                     return (
                       <Link to={`/private-jet/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
-                          <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                          <img src={`${config.imageUrl}/${tour.image}`} alt="" />
                           <div className="discountrow">
                             <div className="discount">
                               <span>{`${tour.discount}%`}</span>
@@ -541,7 +541,7 @@ const Banner = ({selectedCurrency}) => {
                     return (
                       <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
-                          <img src={`http://127.0.0.1:8800/data/uploads/${wedding.image}`} alt="" />
+                          <img src={`${config.imageUrl}/${wedding.image}`} alt="" />
                           <div className="discountrow">
                             <div className="discount">
                               <span>{`${wedding.discount}%`}</span>
@@ -636,7 +636,7 @@ const Banner = ({selectedCurrency}) => {
                   return (
                     <Link to={`/luxury-tours/${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
-                        <img src={`http://127.0.0.1:8800/data/uploads/${luxury.image}`} alt="" />
+                        <img src={`${config.imageUrl}/${luxury.image}`} alt="" />
                         <div className="discountrow">
                           <div className="discount">
                             <span>{`${luxury.discount}%`}</span>
@@ -730,7 +730,7 @@ const Banner = ({selectedCurrency}) => {
                     return (
                       <Link to={`/private-tour/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
-                          <img src={`http://127.0.0.1:8800/data/uploads/${privates.image}`} alt="" />
+                          <img src={`${config.imageUrl}/${privates.image}`} alt="" />
                           <div className="discountrow">
                             <div className="discount">
                               <span>{`${privates.discount}%`}</span>
@@ -824,7 +824,7 @@ const Banner = ({selectedCurrency}) => {
                   return (
                     <Link to={`/attraction-tour/${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
-                        <img src={`http://127.0.0.1:8800/data/uploads/${attraction.image}`} alt="" />
+                        <img src={`${config.imageUrl}/${attraction.image}`} alt="" />
                         <div className="discountrow">
                           <div className="discount">
                             <span>{`${attraction.discount}%`}</span>
@@ -919,7 +919,7 @@ const Banner = ({selectedCurrency}) => {
                   return (
                     <Link to={`/chauffeur/${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
-                        <img src={`http://127.0.0.1:8800/data/uploads/${chauffeur.image}`} alt="" />
+                        <img src={`${config.imageUrl}/${chauffeur.image}`} alt="" />
                         <div className="discountrow">
                           <div className="discount">
                             <span>{`${chauffeur.discount}%`}</span>

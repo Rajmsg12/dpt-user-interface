@@ -65,7 +65,7 @@ const TopDestination = () => {
 
                                         <div className="SliderBox">
                                             <div className="SliderBoxImg">
-                                                <img src={`http://127.0.0.1:8800/data/uploads/${destination.image}`} alt="" />
+                                                <img src={`${config.imageUrl}/${destination.image}`} alt="" />
                                             </div>
                                             <div className="SliderBoxContent">
                                                 <h3>{destination.destination_name}</h3>

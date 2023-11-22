@@ -67,7 +67,7 @@ const TrendingPlaces = () => {
                     <div className="item">
                       <div className="SliderBox">
                         <div className="SliderBoxImg">
-                          <img src={`http://127.0.0.1:8800/data/uploads/${place.image}`} alt="" />
+                          <img src={`${config.imageUrl}/${place.image}`} alt="" />
                         </div>
                         <div className="SliderBoxContent">
                           <h3>{place.name}</h3>

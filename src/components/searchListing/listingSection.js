@@ -186,7 +186,7 @@ const ListingSection = () => {
                         <Link to={`${tour.slug}`} className="TabBox" key={`grid-${tour.slug}`}>
 
                           <div className="img">
-                            <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                            <img src={`${config.imageUrl}/${tour.image}`} alt="" />
                             <div className="discountrow">
                               <div className="discount">
                                 <span>{tour.discount} %</span>
@@ -255,7 +255,7 @@ const ListingSection = () => {
                       {itemsToShow.map((tour) => (
                         <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.tour_slug}`}>
                           <div className="listingBoxImg">
-                            <img src={`http://127.0.0.1:8800/data/uploads/${tour.image}`} alt="" />
+                            <img src={`${config.imageUrl}/${tour.image}`} alt="" />
                             <div className="discountrow">
                               <div className="discount">
                                 <span>{tour.discount} %</span>

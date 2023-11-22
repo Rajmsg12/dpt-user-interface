@@ -45,7 +45,7 @@ const Itinerary = () => {
                                 >
                                     <div className="parentWrapper">
                                         <div className="imgWrapper">
-                                            <img src={`http://127.0.0.1:8800/data/uploads/${item.image}`} alt="" />
+                                            <img src={`${config.imageUrl}/${item.image}`} alt="" />
                                         </div>
                                         <div className="Text">
                                             <div className="title">{item.name}</div>
@@ -65,7 +65,7 @@ const Itinerary = () => {
                                     aria-labelledby={`v-pills-itinerary${index + 1}-tab`}
                                 >
                                     <div className="TabImg1">
-                                        <img src={`http://127.0.0.1:8800/data/uploads/${item.image}`} alt="" />
+                                        <img src={`${config.imageUrl}/${item.image}`} alt="" />
                                     </div>
                                 </div>
                             ))}
