@@ -139,7 +139,7 @@ const Footer = () => {
                             <Link to="#">Careers</Link>
                         </li>*/}
                         <li>
-                            <Link to="/blog">Blog</Link>
+                            <Link to="https://www.dubaiprivatetour.com/blog/">Blog</Link>
                         </li>
                         {/*   <li>
                          <Link to="#">FAQ</Link>

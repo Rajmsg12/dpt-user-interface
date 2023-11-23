@@ -152,8 +152,8 @@ const ContentSection = ({selectedCurrency}) => {
                       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li className="filterDiv"></li>
                         <li className="nav-item active" role="presentation">
-                          <button className="nav-link" id="pills-grid-tab" data-bs-toggle="pill" data-bs-target="#pills-grid"
-                            type="button" role="tab" aria-controls="pills-grid" aria-selected="false">Grid <img
+                          <button className="nav-link active" id="pills-grid-tab" data-bs-toggle="pill" data-bs-target="#pills-grid"
+                            type="button" role="tab" aria-controls="pills-grid" aria-selected="true">Grid <img
                               src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211736/grid_emrbiy.png"} alt="" /></button>
                         </li>
                         <li className="nav-item" role="presentation">
