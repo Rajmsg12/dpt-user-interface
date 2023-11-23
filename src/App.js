@@ -20,6 +20,11 @@ import SearchListing from './components/pages/SearchListingMain'
 import TrendingDetails from './components/pages/TrendingDetail'
 import Attraction from './components/pages/attraction'
 import BillingDetails from "./components/pages/billingDetails";
+import TermCondition from "./components/pages/termCondition";
+import CancellationPolicy from "./components/pages/cancellationPolicy";
+import PrivacyPolicy from './components/privacyPolicy/privacyPolicy'
+import ContactUs from './components/conatctUs/contactUs'
+import AboutUs from "./components/aboutUs/about";
 
 
 function App() {
@@ -51,6 +56,11 @@ function App() {
        <Route exact path='/:categoryName/:title' element={<DetailPage/>} />
        <Route exact path='/attraction/:attractionName' element={<Attraction/>} />
        <Route exact path='/billing-detail' element={<BillingDetails/>} />
+       <Route exact path='/cancellation-policy' element={<CancellationPolicy/>} />
+       <Route exact path='/term-condition' element={<TermCondition/>} />
+       <Route exact path='/privacy-policy' element={<PrivacyPolicy/>} />
+       <Route exact path='/contact-us' element={<ContactUs/>} />
+       <Route exact path='/about-us' element={<AboutUs/>} />
        
        <Route exact path='/cart' element={<Cart/>} />
 

@@ -133,7 +133,7 @@ const Footer = () => {
                             <Link to="/contact-us">Contact us</Link>
                         </li>
                         <li>
-                            <Link to="/about">About</Link>
+                            <Link to="/about-us">About us</Link>
                         </li>
                         {/*  <li>
                             <Link to="#">Careers</Link>
@@ -153,7 +153,7 @@ const Footer = () => {
                     </div>
                     <div className="footerBottomRhs">
                         <Link to="/privacy-policy">Privacy Policy</Link>
-                        <Link to="term-condition">Terms & Conditions</Link>
+                        <Link to="/term-condition">Terms & Conditions</Link>
                         <Link to="/cancellation-policy">Cancellation Policy</Link>
                         {/*   <Link to="#">Sitemap</Link>*/}
                     </div>
