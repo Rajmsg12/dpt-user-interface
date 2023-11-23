@@ -1,31 +1,31 @@
-import React , {useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import {data} from '../../data/Footer'
+import { data } from '../../data/Footer'
 
 
 const Footer = () => {
     const [categories, setCategories] = useState([]);
+    const currentYear = new Date().getFullYear();
 
     useEffect(() => {
-      const fetchCategories = async () => {
-        try {
-          const response = await fetch('http://127.0.0.1:9900/categories/cat-list');
-          const data = await response.json();
-          
-          if (data && data.data && Array.isArray(data.data)) {
-            console.log('Fetched categories:', data.data);
-            setCategories(data.data);
-          } else {
-            console.error('No categories found in the response:', data);
-            setCategories([]); // Set to an empty array if 'data.data' is not present, not an array, or undefined
-          }
-        } catch (error) {
-          console.error('Error fetching categories:', error);
-        }
-      };
-    
-      fetchCategories();
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:9900/categories/cat-list');
+                const data = await response.json();
+
+                if (data && data.data && Array.isArray(data.data)) {
+                    setCategories(data.data);
+                } else {
+                    console.error('No categories found in the response:', data);
+                    setCategories([]); // Set to an empty array if 'data.data' is not present, not an array, or undefined
+                }
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategories();
     }, []);
     return (
 
@@ -68,35 +68,35 @@ const Footer = () => {
                     </div>
                     <div className="footerWidget">
                         <h6>Tours & Safaris</h6>
-                        
+
                         <ul>
-                        {categories.slice(0,8).map((item, index) => (
-                            <li key={index}>
-                            <Link to={`/${item.slug}`}>{item.name}</Link>
-                             {  /* <Link to={`/plan`}>{item.category}</Link>*/}
-                            </li>
-                        ))}
-                
+                            {categories.slice(0, 8).map((item, index) => (
+                                <li key={index}>
+                                    <Link to={`/${item.slug}`}>{item.name}</Link>
+                                    {  /* <Link to={`/plan`}>{item.category}</Link>*/}
+                                </li>
+                            ))}
+
                         </ul>
                     </div>
                     <div className="footerWidget">
                         <ul>
-                        {categories.slice(0,8).map((item, index) => (
-                            <li key={index}>
-                            <Link to={`/${item.slug}`}>{item.name}</Link>
-                             {  /* <Link to={`/plan`}>{item.category}</Link>*/}
-                            </li>
-                        ))}
+                            {categories.slice(0, 8).map((item, index) => (
+                                <li key={index}>
+                                    <Link to={`/${item.slug}`}>{item.name}</Link>
+                                    {  /* <Link to={`/plan`}>{item.category}</Link>*/}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                     <div className="footerWidget">
                         <ul>
-                        {categories.slice(0,8).map((item, index) => (
-                            <li key={index}>
-                            <Link to={`/${item.slug}`}>{item.name}</Link>
-                             {  /* <Link to={`/plan`}>{item.category}</Link>*/}
-                            </li>
-                        ))}
+                            {categories.slice(0, 8).map((item, index) => (
+                                <li key={index}>
+                                    <Link to={`/${item.slug}`}>{item.name}</Link>
+                                    {  /* <Link to={`/plan`}>{item.category}</Link>*/}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>
@@ -135,27 +135,27 @@ const Footer = () => {
                         <li>
                             <Link to="/about">About</Link>
                         </li>
-                      {/*  <li>
+                        {/*  <li>
                             <Link to="#">Careers</Link>
-                        </li>*/} 
+                        </li>*/}
                         <li>
                             <Link to="/blog">Blog</Link>
                         </li>
-                       {/*   <li>
+                        {/*   <li>
                          <Link to="#">FAQ</Link>
-                        </li>*/} 
+                        </li>*/}
                     </ul>
                 </div>
                 <div className="footerMenuBorder"></div>
                 <div className="footerBottom">
                     <div className="footerBottomLhs">
-                        <p>Copyright 2022. All Rights Reserved.</p>
+                        <p>Copyright {currentYear}. All Rights Reserved.</p>
                     </div>
                     <div className="footerBottomRhs">
                         <Link to="/privacy-policy">Privacy Policy</Link>
                         <Link to="term-condition">Terms & Conditions</Link>
                         <Link to="/cancellation-policy">Cancellation Policy</Link>
-                     {/*   <Link to="#">Sitemap</Link>*/}
+                        {/*   <Link to="#">Sitemap</Link>*/}
                     </div>
                 </div>
             </div>

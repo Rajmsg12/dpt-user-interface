@@ -53,8 +53,9 @@ function ContentSection() {
         const response = await fetch(`${config.baseUrl}/popular-attraction/list`);
         if (response.data.status === 'success') {
           setAttractions(response.data.data);
+          console.log(response.data.data.map(tour=>tour.name))
         } else {
-          console.error('Error fetching attractions');
+          console.error('Error fetching attractions',response.data.data);
         }
       } catch (error) {
         console.error('Error fetching attractions', error);
@@ -82,6 +83,7 @@ function ContentSection() {
         });
     }
   }, []);
+  
 
 
   const responsive = {
@@ -240,9 +242,9 @@ function ContentSection() {
                   <div className="title">Attractions</div>
                 </div>
                 <ul>
-                {attractions.map((attraction) => (
-                  <li key={attraction.id}><Link to={`/attraction/${attraction.slug}`}>{attraction.name}</Link></li>
-                ))}
+                  {attractions.map((attraction) => (
+                    <li key={attraction.id}><Link to={`/attraction/${attraction.slug}`}>{attraction.name}</Link></li>
+                  ))}
               </ul>
               </div>
               <div className="DubaiPrivateTour">
