@@ -1,19 +1,32 @@
-import React from "react";
+import React , {useState , useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import {data} from '../../data/Footer'
-import {
-    faTwitter,
-    faFacebookF,
-    faInstagram,
-    faYoutube,
-    faApple,
-    faWindows,
-    faAndroid,
-} from "@fortawesome/free-brands-svg-icons";
 
 
 const Footer = () => {
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+      const fetchCategories = async () => {
+        try {
+          const response = await fetch('http://127.0.0.1:9900/categories/cat-list');
+          const data = await response.json();
+          
+          if (data && data.data && Array.isArray(data.data)) {
+            console.log('Fetched categories:', data.data);
+            setCategories(data.data);
+          } else {
+            console.error('No categories found in the response:', data);
+            setCategories([]); // Set to an empty array if 'data.data' is not present, not an array, or undefined
+          }
+        } catch (error) {
+          console.error('Error fetching categories:', error);
+        }
+      };
+    
+      fetchCategories();
+    }, []);
     return (
 
         <footer>
@@ -57,9 +70,9 @@ const Footer = () => {
                         <h6>Tours & Safaris</h6>
                         
                         <ul>
-                        {data.CategoryList.slice(0,8).map((item, index) => (
+                        {categories.slice(0,8).map((item, index) => (
                             <li key={index}>
-                               <Link to={`/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
+                            <Link to={`/${item.slug}`}>{item.name}</Link>
                              {  /* <Link to={`/plan`}>{item.category}</Link>*/}
                             </li>
                         ))}
@@ -68,9 +81,9 @@ const Footer = () => {
                     </div>
                     <div className="footerWidget">
                         <ul>
-                        {data.CategoryList.slice(8,16).map((item, index) => (
+                        {categories.slice(0,8).map((item, index) => (
                             <li key={index}>
-                               <Link to={`/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
+                            <Link to={`/${item.slug}`}>{item.name}</Link>
                              {  /* <Link to={`/plan`}>{item.category}</Link>*/}
                             </li>
                         ))}
@@ -78,9 +91,9 @@ const Footer = () => {
                     </div>
                     <div className="footerWidget">
                         <ul>
-                        {data.CategoryList.slice(16,24).map((item, index) => (
+                        {categories.slice(0,8).map((item, index) => (
                             <li key={index}>
-                               <Link to={`/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
+                            <Link to={`/${item.slug}`}>{item.name}</Link>
                              {  /* <Link to={`/plan`}>{item.category}</Link>*/}
                             </li>
                         ))}
@@ -117,20 +130,20 @@ const Footer = () => {
                 <div className="footerMenu">
                     <ul>
                         <li>
-                            <Link to="#">Contact us</Link>
+                            <Link to="/contact-us">Contact us</Link>
                         </li>
                         <li>
-                            <Link to="#">About</Link>
+                            <Link to="/about">About</Link>
                         </li>
-                        <li>
+                      {/*  <li>
                             <Link to="#">Careers</Link>
-                        </li>
+                        </li>*/} 
                         <li>
-                            <Link to="#">Blog</Link>
+                            <Link to="/blog">Blog</Link>
                         </li>
-                        <li>
-                            <Link to="#">FAQ</Link>
-                        </li>
+                       {/*   <li>
+                         <Link to="#">FAQ</Link>
+                        </li>*/} 
                     </ul>
                 </div>
                 <div className="footerMenuBorder"></div>
@@ -139,10 +152,10 @@ const Footer = () => {
                         <p>Copyright 2022. All Rights Reserved.</p>
                     </div>
                     <div className="footerBottomRhs">
-                        <Link to="#">Privacy Policy</Link>
-                        <Link to="#">Terms & Conditions</Link>
-                        <Link to="#">Cancellation Policy</Link>
-                        <Link to="#">Sitemap</Link>
+                        <Link to="/privacy-policy">Privacy Policy</Link>
+                        <Link to="term-condition">Terms & Conditions</Link>
+                        <Link to="/cancellation-policy">Cancellation Policy</Link>
+                     {/*   <Link to="#">Sitemap</Link>*/}
                     </div>
                 </div>
             </div>

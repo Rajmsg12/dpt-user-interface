@@ -19,6 +19,7 @@ import TrendingPlaces from "./components/pages/trendingPlaces";
 import SearchListing from './components/pages/SearchListingMain'
 import TrendingDetails from './components/pages/TrendingDetail'
 import Attraction from './components/pages/attraction'
+import BillingDetails from "./components/pages/billingDetails";
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
        <Route exact path='/:categoryName' element={<Category/>} />
        <Route exact path='/:categoryName/:title' element={<DetailPage/>} />
        <Route exact path='/attraction/:attractionName' element={<Attraction/>} />
+       <Route exact path='/billing-detail' element={<BillingDetails/>} />
        
        <Route exact path='/cart' element={<Cart/>} />
 

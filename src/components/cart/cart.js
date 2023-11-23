@@ -204,7 +204,7 @@ const Cart = () => {
                         </span>
                       </div>
                       <div className="ProceedCheckoutCta">
-                        <button className="cta">Proceed to Checkout</button>
+                        <Link to="/billing-detail" className="cta">Proceed to Checkout</Link>
                       </div>
                     </div>
                   </div>
