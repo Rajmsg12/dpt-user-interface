@@ -1,10 +1,27 @@
-import React from 'react';
+import React , {useEffect , useState} from 'react';
 import { data } from '../../data/Category'
 import { Link } from 'react-router-dom'
 import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
 
 const CategoryLHS = ({ handlePriceFilter, priceRange, handleRatingFilterChange, selectedRatingFilter, handleDurationFilterChange }) => {
+  const [tourList, setTourList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/tour-list');
+        const data = await response.json();
+        console.log('API Response:', data.data.map(item=>item.tour_name)); // Log the response
+        setTourList(data.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
   const handleDurationCheckboxChange = (event, selectedDurations) => {
     if (event.target.checked) {
       // If the checkbox is checked, set the selected durations
@@ -28,10 +45,10 @@ const CategoryLHS = ({ handlePriceFilter, priceRange, handleRatingFilterChange, 
             </div>
           </div>
           <ul>
-            {data && data.CategoryList.slice(0, 8).map((item, index) => (
-              <li key={index}><Link to={`/plan/${item.title.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: 'black' }}>{item.title}</Link></li>
-            ))}
-          </ul>
+          { tourList.slice(0, 8).map((item, index) => (
+            <li key={index}><Link to={`/plan/${item.tour_name.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: 'black' }}>{item.tour_name}</Link></li>
+          ))}
+        </ul>
 
         </div>
         <div className="CategoryTopLHSHd">

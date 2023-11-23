@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
@@ -6,6 +6,28 @@ import { data } from '../../data/TourListing'
 
 const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange , priceRange, handleRatingFilterChange, selectedRatingFilter }) => {
   const [showAllCategories, setShowAllCategories] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/categories/cat-list');
+        const data = await response.json();
+        
+        if (data && data.data && Array.isArray(data.data)) {
+          console.log('Fetched categories:', data.data);
+          setCategories(data.data);
+        } else {
+          console.error('No categories found in the response:', data);
+          setCategories([]); // Set to an empty array if 'data.data' is not present, not an array, or undefined
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+  
+    fetchCategories();
+  }, []);
 
   const toggleCategories = () => {
     setShowAllCategories(!showAllCategories);
@@ -34,17 +56,16 @@ const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange , priceRa
               </div>
               <ul>
                 {showAllCategories
-                  ? data.CategoryList.map((item, index) => (
-                    <li key={index}>
-                      <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
-                    </li>
-                  ))
-                  : data.CategoryList.slice(0, 8).map((item, index) => (
-                    <li key={index}>
-                      <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
-                    </li>
-                  ))
-                }
+                  ? categories.map((item, index) => (
+                      <li key={index}>
+                        <Link to={`/plan/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
+                      </li>
+                    ))
+                  : categories.slice(0, 8).map((item, index) => (
+                      <li key={index}>
+                        <Link to={`/plan/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
+                      </li>
+                    ))}
               </ul>
             </div>
             <div className="ViewMoreCta">

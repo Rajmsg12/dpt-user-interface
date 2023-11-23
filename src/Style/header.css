@@ -274,6 +274,8 @@
         justify-content: space-between;
         align-items: center;
         text-align: left;
+        max-width: 645px;
+        margin: 38px auto 0;
     }
     
     .HomePageMin .bannerSearchWrapper input {
@@ -295,11 +297,12 @@
         align-items: center;
     }
     .HomePageMin .whereto, .HomePageMin .selectdate, .HomePageMin .selectperson {
-        flex: 0 0 26%;
+        flex: 0 0 45%;
     }
     .HomePageMin .selectdate {
-        flex: 0 0 28%;
+        flex: 0 0 40%;
     }
+   
     .HomePageMin .bannerSearchWrapper .Text .toptext {
         font-size: 14px;
         font-weight: 400;
@@ -336,10 +339,13 @@
         width: 0.5px;
         height: 45px;
         position: absolute;
-        right: -5px;
+        right: 0px;
         bottom: 0;
         top: 50%;
         transform: translateY(-50%);
+    }
+    .HomePageMin .bannerSearchWrapper .selectdate::after{
+        display: none;
     }
     .HomePageMin .bannerSearchWrapper .selectdate, .HomePageMin .bannerSearchWrapper  .selectperson{
       padding:7px;

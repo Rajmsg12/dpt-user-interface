@@ -1,11 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
 import { data } from '../../data/TourListing'
 
 const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange , priceRange, handleRatingFilterChange, selectedRatingFilter }) => {
+
   const [showAllCategories, setShowAllCategories] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9900/categories/cat-list');
+        const data = await response.json();
+        
+        if (data && data.data && Array.isArray(data.data)) {
+          console.log('Fetched categories:', data.data);
+          setCategories(data.data);
+        } else {
+          console.error('No categories found in the response:', data);
+          setCategories([]); // Set to an empty array if 'data.data' is not present, not an array, or undefined
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+  
+    fetchCategories();
+  }, []);
+  
 
   const toggleCategories = () => {
     setShowAllCategories(!showAllCategories);
@@ -19,6 +43,7 @@ const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange , priceRa
       handleDurationFilterChange(null);
     }
   };
+  
   return (
     <>
       <div id="sidebarFilter" className="listingLhs">
@@ -34,17 +59,16 @@ const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange , priceRa
               </div>
               <ul>
                 {showAllCategories
-                  ? data.CategoryList.map((item, index) => (
-                    <li key={index}>
-                      <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
-                    </li>
-                  ))
-                  : data.CategoryList.slice(0, 8).map((item, index) => (
-                    <li key={index}>
-                      <Link to={`/plan/${item.category.toLowerCase().replace(/\s+/g, '-')}`}>{item.category}</Link>
-                    </li>
-                  ))
-                }
+                  ? categories.map((item, index) => (
+                      <li key={index}>
+                        <Link to={`/plan/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
+                      </li>
+                    ))
+                  : categories.slice(0, 8).map((item, index) => (
+                      <li key={index}>
+                        <Link to={`/plan/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
+                      </li>
+                    ))}
               </ul>
             </div>
             <div className="ViewMoreCta">
@@ -62,49 +86,7 @@ const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange , priceRa
 
             </div>
           </div>
-        {/*  <div className="Timeofday">
-            <div className="sidebarlabel">
-              <h3>Time of day</h3>
-            </div>
-            <div className="checkBoxDiv">
-              <div>
-                <label className="CheckboxIn">
-                  <div className="checkboxField">
-                    <input type="checkbox" />
-                    <span className="checkmark"></span>
-                  </div>
-                  <div className="checkboxText">
-                    <div className="Checkboxlabel">Morning Starts</div>
-                    <div className="CheckboxSublabel">before 12pm</div>
-                  </div>
-                </label>
-              </div>
-              <div>
-                <label className="CheckboxIn">
-                  <div className="checkboxField">
-                    <input type="checkbox" />
-                    <span className="checkmark"></span>
-                  </div>
-                  <div className="checkboxText">
-                    <div className="Checkboxlabel">Afternoon Starts</div>
-                    <div className="CheckboxSublabel">after 12pm Evening</div>
-                  </div>
-                </label>
-              </div>
-              <div>
-                <label className="CheckboxIn">
-                  <div className="checkboxField">
-                    <input type="checkbox" />
-                    <span className="checkmark"></span>
-                  </div>
-                  <div className="checkboxText">
-                    <div className="Checkboxlabel">Night Starts</div>
-                    <div className="CheckboxSublabel">after 5pm</div>
-                  </div>
-                </label>
-              </div>
-            </div>
-              </div>*/}
+       
               <div className="DurationDiv">
               <div className="sidebarlabel">
                 <h3>Duration</h3>

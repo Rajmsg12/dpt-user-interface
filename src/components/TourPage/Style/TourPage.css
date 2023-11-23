@@ -1082,6 +1082,7 @@ input {
   position: relative;
   top: 5px;
   margin: 0px 12px 0px 0px;
+  display: none;
 }
 .DetailTab .SecondPartTab {
   background-color: #fff;
@@ -1118,20 +1119,20 @@ input {
   border-top: 16px solid #3DAAD5;
 }
 .DetailTab .SecondPartTab .datainnerUl {
-  display: flex;
-  gap: 30px;
+  /* display: flex;
+  gap: 30px; */
   padding: 40px 0px 0px;
 }
 .DetailTab .SecondPartTab .datainnerUl .UlWrapper {
-  flex: 0 0 48%;
+  flex: 0 0 100%;
 }
-.DetailTab .SecondPartTab .datainnerUl .UlWrapper div {
-  font-size: 16px;
+.DetailTab .SecondPartTab .datainnerUl .UlWrapper li{
+  font-size: 14px;
   color: #000;
-  padding: 0px 0px 15px 25px;
+  padding: 0px 0px 15px 0px;
   position: relative;
 }
-.DetailTab .SecondPartTab .datainnerUl .UlWrapper div::after {
+/* .DetailTab .SecondPartTab .datainnerUl .UlWrapper div:after{
   content: "";
   background-image: url(../../../../public/images/homepage/tick.png);
   background-repeat: no-repeat;
@@ -1142,7 +1143,7 @@ input {
   height: 18px;
   background-size: 17px;
   background-position: left top 2px;
-}
+} */
 
 .BookThisTourSec {
   padding-top: 40px;
