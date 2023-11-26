@@ -144,6 +144,7 @@ input {
   overflow: hidden;
   padding: 0px 0px 0px 25px;
   gap: 10px;
+  justify-content: space-between;
 }
 
 .innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch .form input {
@@ -289,7 +290,7 @@ input {
 }
 .BreadcrumbSection .breadcrumb {
   margin: 0px;
-  padding: 15px 0px 5px;
+  padding: 15px 0px;
 }
 .BreadcrumbSection .breadcrumb li {
   color: #f25928;
@@ -1228,7 +1229,7 @@ input {
 }
 
 /*listingRow*/
-.listingBox {
+.listingBox{
   position: relative;
   display: flex;
   border: 1px solid #E0E0E0;
@@ -1259,8 +1260,11 @@ input {
 }
 
 .listingBox .listingBoxContent {
-  flex: 0 0 60%;
-  padding: 0px 0px 0px 15px;
+    flex: 0 0 60%;
+    padding: 0px 0px 0px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .listingBox .listingBoxImg .discountrow {
@@ -1340,12 +1344,13 @@ input {
   font-weight: 600;
   color: #000;
   margin: 0px;
-  min-height: 50px;
+  min-height:auto;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  margin-bottom: 8px;
 }
 
 .listingBox .listingBoxContent .listingBoxTop .ReviewsDivrow {
@@ -1465,6 +1470,11 @@ input {
   transform: rotate(180deg);
 }
 
+@media screen and (max-width: 1199px) {
+  .listingBox .listingBoxContent .listingBoxFooter .listboxlhs span {
+    font-size: 13px;
+  }
+}
 @media screen and (max-width: 1024px) {
   .listingBox .listingBoxContent .listingBoxFooter .listboxrhs .startingFromTag {
     font-size: 12px;
@@ -1482,10 +1492,6 @@ input {
     font-size: 12px;
     margin-top: 5px;
   }
-  .listingBox .listingBoxContent .listingBoxFooter {
-    margin: 10px 0px 0px;
-    padding: 5px 0px 0px;
-  }
 }
 @media screen and (max-width: 991.33px) {
   .listingToplayer ul li button.nav-link {
@@ -1498,13 +1504,16 @@ input {
   }
 }
 @media screen and (max-width: 767px) {
-  .listingBox {
+  .listingBox{
     padding: 12px;
     margin-bottom: 15px;
     flex-direction: column;
   }
   .listingBox .listingBoxContent .listingBoxTop .descrition p {
     -webkit-line-clamp: initial;
+    min-height: auto;
+  }
+  .listingBox .listingBoxContent .listingBoxTop .descrition {
     min-height: auto;
   }
   .listingBox .listingBoxContent .listingBoxTop h4 {
@@ -1524,8 +1533,8 @@ input {
     flex-direction: column;
   }
   .listingBox .listingBoxContent .listingBoxFooter .listboxlhs {
-    width: 100%;
     justify-content: space-between;
+    width: 100%;
   }
   .listboxrhs {
     display: flex;
@@ -1568,6 +1577,7 @@ input {
   margin: 4px;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
+  display: block;
 }
 
 .GridRowWrapper .TabBox:hover {
@@ -1648,14 +1658,14 @@ input {
 }
 
 .GridRowWrapper .TabBox .img .imgBottomRow .lhstext span {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 900;
   text-transform: uppercase;
   color: #fff;
   width: auto;
   min-width: auto;
   line-height: 20px;
-  display: block;
+  display: table-header-group;
 }
 
 .GridRowWrapper .TabBox .img img {
@@ -1710,11 +1720,13 @@ input {
 }
 
 .GridRowWrapper .aedtext strong {
-  font-size: 20px;
+  font-size: 18px;
+  margin:0px 2px;
+
 }
 
 .GridRowWrapper .aedRHS {
-  font-size: 13px;
+  font-size: 12px;
   color: #000;
   font-weight: 500;
   white-space: nowrap;
@@ -1723,7 +1735,6 @@ input {
 .GridRowWrapper .TabBoxBody {
   padding: 15px 12px 15px;
   border-bottom: 1px solid #F1F1F1;
-  min-height: 220px;
 }
 
 .GridRowWrapper .ReviewRow {
@@ -1777,6 +1788,9 @@ input {
 @media screen and (max-width: 1199px) {
   .GridRowWrapper .TabBox .img .imgBottomRow .lhstext span {
     font-size: 16px;
+  }
+  .GridRowWrapper .aedRHS {
+    font-size: 12px;
   }
 }
 @media screen and (max-width: 1120px) {
@@ -1972,6 +1986,7 @@ input {
   margin: 4px;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
+  display: block;
 }
 
 .TabBox:hover {
@@ -2101,17 +2116,18 @@ input {
   color: #FA7436;
   font-size: 14px;
   font-weight: 500;
-  line-height: 16px;
+  line-height: 12px;
   margin-top: 6px;
   white-space: nowrap;
 }
 
 .aedtext strong {
-  font-size: 20px;
+  font-size: 18px;
+  margin:0px 2px;
 }
 
 .aedRHS {
-  font-size: 13px;
+  font-size: 12px;
   color: #000;
   font-weight: 500;
   white-space: nowrap;
@@ -2188,3 +2204,16 @@ input {
   }
 }
 
+
+.DubaiPrivateTourDiv .widSSPnarrow {
+  width: 100% !important;
+  margin: 0px 0px 30px;
+}
+
+
+@media screen and (max-width:991px) {
+  .container{
+      max-width:100% !important;
+      min-width:100% !important;
+  }
+}

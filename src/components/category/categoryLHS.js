@@ -3,14 +3,15 @@ import { data } from '../../data/Category'
 import { Link } from 'react-router-dom'
 import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
+import config from '../../config'
 
-const CategoryLHS = ({ handlePriceFilter, priceRange, handleRatingFilterChange, selectedRatingFilter, handleDurationFilterChange }) => {
+const CategoryLHS = ({ handlePriceFilter, priceRange, handleCloseSidebar, handleRatingFilterChange, selectedRatingFilter, handleDurationFilterChange }) => {
   const [tourList, setTourList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:9900/tour-list');
+        const response = await fetch('tour-list');
         const data = await response.json();
         console.log('API Response:', data.data.map(item=>item.tour_name)); // Log the response
         setTourList(data.data);
@@ -41,7 +42,7 @@ const CategoryLHS = ({ handlePriceFilter, priceRange, handleRatingFilterChange, 
               <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697701972/locationicon_oyxdy0.png"} alt="" />
             </div>
             <div className="title">
-              Tour Listing <span className="closeIcon" />
+              Tour Listing <span className="closeIcon" onClick={handleCloseSidebar}/>
             </div>
           </div>
           <ul>

@@ -17,7 +17,7 @@ const Review = () => {
     useEffect(() => {
         const fetchTestimonials = async () => {
             try {
-                const response = await fetch('${config.baseUrl}/testimonial/list');
+                const response = await fetch(`${config.baseUrl}/testimonial/list`);
                 const data = await response.json();
                 setTestimonials(data.data);
             } catch (error) {

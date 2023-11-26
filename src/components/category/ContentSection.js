@@ -20,6 +20,7 @@ const ContentSection = ({selectedCurrency}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
+  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
   const { categoryName } = useParams()
   const formattedCategory = categoryName
     .split('-') // Split by hyphens
@@ -28,6 +29,13 @@ const ContentSection = ({selectedCurrency}) => {
     const url = window.location.href;
     const spliturl = url.split("/");
     const slug = spliturl[3];
+    const handleToggleSidebarMenu = () => {
+      setIsSidebarMenuOpen((prevIsSidebarMenuOpen) => !prevIsSidebarMenuOpen);
+    };
+  
+    const handleCloseSidebar = () => {
+      setIsSidebarMenuOpen(false);
+    };
 
 
 
@@ -131,7 +139,8 @@ const ContentSection = ({selectedCurrency}) => {
   const itemsToShow = apiData.tour_info;
   return (
     <>
-      <div className="CategoryTopSection">
+    <div className={`CategoryTopSection ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''}`}>
+    
         <div className="container">
           <div className="CategorySectionWrapper">
             {/*Category LHS------- */}
@@ -141,6 +150,7 @@ const ContentSection = ({selectedCurrency}) => {
               handleRatingFilterChange={handleRatingFilterChange}
               selectedRatingFilter={selectedRatingFilter}
               handleDurationFilterChange={handleDurationFilterChange}
+              handleCloseSidebar={handleCloseSidebar}
             />
             <div>
               <Overview />
@@ -150,7 +160,7 @@ const ContentSection = ({selectedCurrency}) => {
                     <div className="Title"><h2>{formattedCategory}</h2></div>
                     <div>
                       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <li className="filterDiv"></li>
+                      <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>
                         <li className="nav-item active" role="presentation">
                           <button className="nav-link active" id="pills-grid-tab" data-bs-toggle="pill" data-bs-target="#pills-grid"
                             type="button" role="tab" aria-controls="pills-grid" aria-selected="true">Grid <img

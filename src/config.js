@@ -4,5 +4,5 @@ const config = {
     imageUrl:'http://127.0.0.1:8800/data/uploads'
   };
   
-  export default config;
+export default config;
   

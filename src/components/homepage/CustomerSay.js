@@ -56,6 +56,7 @@ const CustomerSay = () => {
                         <h2>What our customer says!</h2>
                     </div>
                     <div className="customersaysrow">
+                    <div className="customersaylhs">
                     <div
                     className="TA_selfserveprop"
                     id="TA_selfserveprop642"
@@ -191,6 +192,7 @@ const CustomerSay = () => {
                       {/*/ cdsData*/}
                     </div>
                     {/*/ CDSPOP.cdsBx*/}
+                  </div>
                   </div>
                   
 

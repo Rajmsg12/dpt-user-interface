@@ -209,7 +209,7 @@ const InnerHeader = () => {
               {/* HeaderLHS */}
               <div className="HeaderRHS"> {/* Use className instead of class */}
                 <div className="Headerdropdownmenu"> {/* Use className instead of class */}
-                  <div className="dropdown"> {/* Use className instead of class */}
+              {/*     <div className="dropdown">Use className instead of class
                     <Link to="" className="btn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> ENG </Link>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                       <li>
@@ -223,7 +223,7 @@ const InnerHeader = () => {
                       </li>
                     </ul>
                   </div>
-               {/*  <div className="dropdown"> {/* Use className instead of class 
+                <div className="dropdown"> {/* Use className instead of class 
                     <Link to="" className="btn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> AED </Link>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                       <li>

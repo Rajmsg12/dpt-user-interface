@@ -9,14 +9,20 @@ import config from "../../config";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart.cart);
+  let cartdata = localStorage.getItem("cartdata");
+  const [cart, setCart] = useState([]);
+  // const cart = useSelector((state) => state.cart.cart);
+  console.log(cart)
+
   const navigate = useNavigate()
   const calculateTotal = () => {
     return Number(cart.reduce((total, item) => total + (getUserPrice(item)), 0));
   };
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartCount, setCartCount] = useState("");
+  const [expandedItemIndex, setExpandedItemIndex] = useState(null);
+  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,20 +46,31 @@ const Cart = () => {
         });
     }
   }, []);
+  useEffect(() => {
+   // Fetch cart data from localStorage when the component mounts
+   const storedCart = localStorage.getItem("cartdata");
+   if (storedCart) {
+     setCart(JSON.parse(storedCart));
+   }
+ }, []);
 
-  const handleLogout = () => {
-    fetch(`${config.baseUrl}/logout`, {
-      method: 'POST',
-    })
-      .then(() => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user_name');
-        setIsLoggedIn(false);
-      })
-      .catch(error => {
-        console.error('Logout failed', error);
-      });
-  };
+ const handleRemoveFromCart = (itemIndex) => {
+   // Remove item from the cart
+   const updatedCart = cart.filter((_, index) => index !== itemIndex);
+   setCart(updatedCart);
+
+   // If the removed item was the one that was expanded, setExpandedItemIndex(null);
+   if (expandedItemIndex !== null && expandedItemIndex === itemIndex) {
+     setExpandedItemIndex(null);
+   }
+
+   // Update localStorage with the modified cart
+   localStorage.setItem("cartdata", JSON.stringify(updatedCart));
+ };
+  
+  
+  
+
 
   return (
     <div className="CartPageContent">
@@ -68,39 +85,42 @@ const Cart = () => {
                   <div key={index} className="CartBoxWrapper">
                     <div className="CartTopBox">
                       <div className="CartimgWrapper">
-                        <img src={`${config.imageUrl}/${item.image}`} alt={item.tour_name} />
+                        <img src={`${config.imageUrl}/${item.tourImage}`} alt={item.tourName} />
                       </div>
                       {/*CartimgWrapper*/}
                       <div className="CartContentWrapper">
-                        <h4>{item.tour_name}</h4>
+                        <h4>{item.tourName}</h4>
                         <div className="Price">
-                        {getUserPrice(item) && (
-                          <>
-                            AED{" "}
-                            <strong>
-                              {Math.floor(getUserPrice(item)).toLocaleString("en-US", {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </strong>
-                          </>
-                        )}
-                      </div>
+                          {getUserPrice(item) && (
+                            <>
+                              AED{" "}
+                              <strong>
+                                {Math.floor(getUserPrice(item)).toLocaleString("en-US", {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </strong>
+                            </>
+                          )}
+                        </div>
                         <div className="BtnGroup">
                           <Link
                             href="#"
                             className="cta BookingInfoCta"
                             data-bs-toggle="collapse"
-                            data-bs-target="#collapseExample1"
-                            aria-expanded="false"
-                            aria-controls="collapseExample1"
+                            data-bs-target={`#collapseExample${index}`}
+                            aria-expanded={expandedItemIndex === index}
+                            aria-controls={`collapseExample${index}`}
+                            onClick={() => setExpandedItemIndex(index)}
                           >
                             Booking Info
                           </Link>
+
                         </div>
                         <div className="EditTrashGroup">
-                          <div className="Edit" />
-                          <div onClick={() => dispatch(removeFromCart(item.id))} className="Trash" />
+                        {/*   <div className="Edit" />*/}
+                          <div onClick={() => handleRemoveFromCart(index)} className="Trash" />
+
                         </div>
                         {/*EditTrashGroup*/}
                       </div>
@@ -108,34 +128,34 @@ const Cart = () => {
                     </div>
                     {/*CartTopBox*/}
                     <div className="CartBottomBox">
-                      <div className="collapse" id="collapseExample1">
+                    <div className="collapse" id={`collapseExample${index}`}>
                         <div className="BookingInfoData">
                           <div className="heading">Booking Info</div>
                           <div className="BookingInfotableData">
                             <div className="BookingInfotableDiv">
                               <div className="BookingInfotablerow">
                                 <span>Tour Date*</span>
-                                <span>20/Dec/2023</span>
+                                <span>{item.tourDate}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                               <div className="BookingInfotablerow">
                                 <span>Pickup Location*</span>
-                                <span>Dubai</span>
+                                <span>{item.preferredPickupLocation}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                               <div className="BookingInfotablerow">
                                 <span>Preferred Guide Language*</span>
-                                <span>English</span>
+                                <span>{item.preferredGuidedLanguage}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                               <div className="BookingInfotablerow">
                                 <span>Adults*</span>
-                                <span>2</span>
+                                <span>{item.adults}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                               <div className="BookingInfotablerow">
                                 <span>Children</span>
-                                <span>1</span>
+                                <span>{item.children}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                             </div>
@@ -143,27 +163,29 @@ const Cart = () => {
                             <div className="BookingInfotableDiv">
                               <div className="BookingInfotablerow">
                                 <span>Preferred Pickup Time* </span>
-                                <span>2:00PM</span>
+
+                                <span>{item.preferredPickupTime}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                               <div className="BookingInfotablerow">
+
                                 <span>End Location*</span>
-                                <span>Burj Khalifa</span>
+                                <span>{item.preferredEndLocation}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                               <div className="BookingInfotablerow">
                                 <span>Pref.currency</span>
-                                <span>AED</span>
+                                <span>{item.preferredCurrency}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                               <div className="BookingInfotablerow">
                                 <span>Infants</span>
-                                <span>0</span>
+                                <span>{item.infants}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                               <div className="BookingInfotablerow">
                                 <span>Payment Mode*</span>
-                                <span>Pay Later</span>
+                                <span>{item.preferredPay}</span>
                               </div>
                               {/*BookingInfotablerow*/}
                             </div>
@@ -194,7 +216,7 @@ const Cart = () => {
                       <div className="OrderSummaryTablerow">
                         <span>Tax</span>
                         <span>
-                           <strong>18 %</strong>
+                          <strong>18 %</strong>
                         </span>
                       </div>
                       <div className="OrderSummaryTablerow">

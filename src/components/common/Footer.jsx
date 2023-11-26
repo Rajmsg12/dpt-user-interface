@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { data } from '../../data/Footer'
+import config from '../../config'
 
 
 const Footer = () => {
@@ -11,7 +12,7 @@ const Footer = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:9900/categories/cat-list');
+                const response = await fetch(`${config.baseUrl}/categories/cat-list`);
                 const data = await response.json();
 
                 if (data && data.data && Array.isArray(data.data)) {

@@ -547,7 +547,7 @@
             display: block;
         }
     
-        .HomePageMin .TabBox .img img {
+        .TabBox .img img {
         width: 100%;
         object-fit: cover;
     }
@@ -580,18 +580,18 @@
     }
     .HomePageMin .aedtext {
         color: #FA7436;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 500;
         line-height: 16px;
         margin-top: 6px;
         white-space: nowrap;
     }
     .HomePageMin .aedtext strong {
-        font-size: 20px;
-        
+        font-size: 18px;
+        margin: 0px 2px;
     }
     .HomePageMin .aedRHS {
-        font-size: 13px;
+        font-size: 12px;
         color: #000;
         font-weight: 500;
         white-space: nowrap;
@@ -920,8 +920,10 @@
     
     /*========Trending Places======*/
     
-    .HomePageMin .TrendingPlaces{
-        padding:0px 0px 65px;
+    .HomePageMin .TrendingPlaces {
+        padding: 0px 0px 65px;
+        background-color: #fff;
+        margin: 0px;
     }
     
     .HomePageMin .TrendingPlacesSlider .SliderBox {
@@ -1012,7 +1014,7 @@
     .HomePageMin .accordionDivWrapper {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
+        gap: 0px 30px;
     }
     .HomePageMin .faqBox .accordion-button:not(.collapsed) {
         background-color: rgba(217, 217, 217, 0.25);
@@ -1362,8 +1364,9 @@
         top:104px;
         background-color:#fff;
     }
-    .HomePageMin .carouselItem{
-        padding-right: 20px
+   .carouselItem{
+        margin-right: 20px;
+        display: block;
     }  
     .homepageContent.ondesSticky .tabSection .nav-tabs .nav-link{
         border-top:0px;
@@ -1392,10 +1395,14 @@
     /*======== tab sticky ======*/
     
     /*=====image hover====*/
-    .HomePageMin .SliderBoxImg img, .HomePageMin .TabBox .img {
+    .SliderBoxImg img, .TabBox .img {
         overflow: hidden;
+        width:100%;
     }
-    .HomePageMin .SliderBoxImg img, .HomePageMin .TabBox .img img{
+   .SliderBoxImg .img, .TabBox .img>img {
+        height: 250px;
+    }
+    .HomePageMin .SliderBoxImg .img, .HomePageMin .TabBox .img img{
         transition: transform 0.7s;
         overflow: hidden;
         transition: .8s;
@@ -1440,17 +1447,32 @@
         justify-content: space-between;
         position: relative;
         background-color: #fff;
-        overflow: hidden;
+        /* overflow: hidden; */
         outline: none;
         align-items: center;
     }
-    
+    .searchinputformobile.popupSearchbar ul {
+        z-index: 2;
+        text-align: left;
+        font-size: 14px;
+        color: #000;
+        padding: 8px !important;
+        font-weight: 400;
+        line-height: 22px;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+    .searchinputformobile.popupSearchbar .searchable-select, .searchinputformobile.popupSearchbar .SelectdateField {
+        width: 100%;
+    }
     .searchinputformobile input {
         border: 0px;
-        width: 100%;
+        width: 100% !important;
         font-size: 15px;
         outline: none;
         font-family: 'Poppins', sans-serif;
+    }
+    .SearchPopupForMobInner [class*="datepicker"][class*="wrapper"] {
+        width: 100%;
     }
     /* .searchinputformobile input::placeholder{
         color: #000;
@@ -1500,7 +1522,7 @@
         justify-content: space-between;
         position: relative;
         background-color: #fff;
-        overflow: hidden;
+        /* overflow: hidden; */
         outline: none;
         align-items: center;
         margin:15px 0px 0px;
@@ -1529,7 +1551,7 @@
         background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-person-fill' viewBox='0 0 16 16'%3E%3Cpath d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z'/%3E%3C/svg%3E") !important;
     }
     .offcanvas{
-        --bs-offcanvas-height:290px;
+        --bs-offcanvas-height:230px;
     }
     .HomePageMin .PopupSubmitBtn button {
         border: 0px;
@@ -1543,6 +1565,14 @@
         margin-top: 15px;
         border-radius: 4px;
         padding: 10px;
+    }
+
+    .SearchPopupForMobInner .SelectdateField .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after, .SearchPopupForMobInner .SelectdateField .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before {
+        left: -90px !important;
+        right: auto !important;
+    }
+    .HomePageMin .offcanvas-body {
+        overflow-y: inherit;
     }
     
     /*=======search for mobile=======*/
@@ -1578,6 +1608,7 @@
             grid-template-columns: repeat(3,1fr);
             gap: 20px;
         }
+        
         .HomePageMin .TabBox{
             width:auto;
         }
@@ -1627,7 +1658,7 @@
             background-color: #fff;
         }
         .homepageContent.ondesSticky .tab-content{
-            padding:65px 0px;
+            padding:40px 0px;
         }
         /* .homepageContent.ondesSticky .tabSection .nav-tabs .nav-link{
             border-bottom: 2px solid transparent;
@@ -1635,6 +1666,13 @@
         .homepageContent.ondesSticky .tabSection .nav-tabs .nav-link:hover, .homepageContent.ondesSticky .tabSection .nav-tabs .nav-link.active {
             border-bottom: 2px solid #f25928;
         } */
+
+        .HomePageMin .PopularAttractions{
+            padding: 0px 0px 40px;
+        }
+        .HomePageMin .accordionDivIN{
+            margin: 0px 0px 40px;
+        }
      
     }
     
@@ -1708,10 +1746,10 @@
                 font-size:16px;
             }
             .HomePageMin .dubaimemoriesIn, .HomePageMin .customersays, .HomePageMin .chooseDpt, .HomePageMin .PopularTours, .HomePageMin .tab-content{
-                padding:50px 0px;
+                padding:40px 0px;
             }
             .HomePageMin .TrendingPlaces {
-                padding: 0px 0px 50px;
+                padding: 0px 0px 40px;
             }
             .fordesktop{
                 display: none;
@@ -1949,4 +1987,14 @@
       color: #ff0000;
       }
       
+    /*add new css*/
+    .customersaysrow .widSSPnarrow {
+        width: 100% !important;
+    }
     
+    @media screen and (max-width:991px) {
+        .container{
+            max-width:100% !important;
+            min-width:100% !important;
+        }
+}

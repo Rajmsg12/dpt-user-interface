@@ -80,7 +80,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                             <div className="desktopNone">
                                 <div className="HeaderRHS">
                                     <div className="Headerdropdownmenu">
-                                        <div className="dropdown">
+                                   {/*  <div className="dropdown">
                                             <Link className="btn dropdown-toggle" to="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                 {language.toUpperCase()}
                                             </Link>
@@ -96,7 +96,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                     </button>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </div>*/} 
                                         <div className="dropdown">
                                             <Link
                                                 className="btn dropdown-toggle"
@@ -217,7 +217,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                         <div className="mobileNone">
                             <div className="HeaderRHS">
                                 <div className="Headerdropdownmenu">
-                                    <div className="dropdown">
+                                  {/*    <div className="dropdown">
                                         <Link className="btn dropdown-toggle" to="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                             ENG
                                         </Link>
@@ -233,7 +233,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                 </button>
                                             </li>
                                         </ul>
-                                    </div>
+                                                </div>*/}
                                     <div className="dropdown">
                                         <Link
                                             className="btn dropdown-toggle"
