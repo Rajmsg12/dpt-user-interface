@@ -77,6 +77,9 @@ const InnerHeader = () => {
   const [userDiscount, setUserDiscount] = useState(null);
   const [selectedPerson, setSelectedPerson] = useState('');
   const [destinations, setDestinations] = useState([]);
+  let cartdata = localStorage.getItem("cartdata");
+  let cartData = cartdata ? JSON.parse(cartdata) : [];
+  console.log(cartData.length)
 
   const handleCountrySearch = (country) => {
     setSearchCountry(country);
@@ -99,8 +102,8 @@ const InnerHeader = () => {
       window.location.reload();
     }
   };
-  
-  
+
+
 
   useEffect(() => {
     const fetchDestinations = async () => {
@@ -209,7 +212,7 @@ const InnerHeader = () => {
               {/* HeaderLHS */}
               <div className="HeaderRHS"> {/* Use className instead of class */}
                 <div className="Headerdropdownmenu"> {/* Use className instead of class */}
-              {/*     <div className="dropdown">Use className instead of class
+                  {/*     <div className="dropdown">Use className instead of class
                     <Link to="" className="btn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> ENG </Link>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                       <li>
@@ -234,7 +237,10 @@ const InnerHeader = () => {
                 </div>
                 {/* Headerdropdownmenu */}
                 <div className="addtocart"> {/* Use className instead of class */}
-                  <Link to="/cart" className="cart"></Link>
+                  <Link to="/cart" className="cart Cartparenticon">
+                    {/* Cart Icon */}
+                    <span className="badgeCart"  style={{ 'color':'black' }}>{cartData.length}</span>
+                  </Link>
                   <Link to="/wishlist" className="wishlist"></Link>
 
                   <div className="dropdown userIcon">

@@ -12,3 +12,9 @@ export const removeFromCart = (itemId) => {
     payload: itemId,
   };
 };
+
+export const addPrice = () => {
+  return {
+    type: "ADD_PRICE",
+  };
+};

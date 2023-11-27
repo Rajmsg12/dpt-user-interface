@@ -20,6 +20,7 @@ import AskQuestion from './AskQuestion'
 import Detail from './Detail'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import {useNavigate}  from "react-router-dom";
 import './Style/TourPage.css'
 
 function ContentSection() {
@@ -34,6 +35,7 @@ function ContentSection() {
   const [selectedEndLocation, setSelectedEndLocation] = useState("0");
 
   const [tourImage, setTourImage] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -141,6 +143,7 @@ function ContentSection() {
     // If all checks pass, proceed with adding to cart or other actions
     setIsFormValid(true);
     AddToCart(/* pass your item here */);
+   navigate('/cart')
   };
 
 

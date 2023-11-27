@@ -27,6 +27,9 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
     const [cartCount, setCartCount] = useState("");
     const { language, changeLanguage } = useLanguage();
     const { t } = useTranslation();
+    let cartdata = localStorage.getItem("cartdata");
+    let cartData = cartdata ? JSON.parse(cartdata) : [];
+    console.log(cartData.length)
 
     const handleCurrencyChange = (currency) => {
         setCurrency(currency);
@@ -80,7 +83,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                             <div className="desktopNone">
                                 <div className="HeaderRHS">
                                     <div className="Headerdropdownmenu">
-                                   {/*  <div className="dropdown">
+                                        {/*  <div className="dropdown">
                                             <Link className="btn dropdown-toggle" to="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                 {language.toUpperCase()}
                                             </Link>
@@ -96,7 +99,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                     </button>
                                                 </li>
                                             </ul>
-                                        </div>*/} 
+                                        </div>*/}
                                         <div className="dropdown">
                                             <Link
                                                 className="btn dropdown-toggle"
@@ -122,7 +125,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                         className="dropdown-item"
                                                         onClick={() => handleCurrencyChange('USD')}
                                                     >
-                                                        USD 
+                                                        USD
                                                     </button>
                                                 </li>
                                             </ul>
@@ -133,7 +136,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                         <div className="addtocart">
                                             <Link to="/cart">
                                                 <img src="images/homepage/shopping-cart.png" alt="" />
-                                                {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+                                                {cartData.length > 0 && <span className="cart-count">{cartData.length}</span>}
                                             </Link>
                                             <Link to="/whishlist"><img src="images/homepage/like.png" alt="" /></Link>
 
@@ -217,7 +220,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                         <div className="mobileNone">
                             <div className="HeaderRHS">
                                 <div className="Headerdropdownmenu">
-                                  {/*    <div className="dropdown">
+                                    {/*    <div className="dropdown">
                                         <Link className="btn dropdown-toggle" to="/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                             ENG
                                         </Link>
@@ -259,7 +262,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                     className="dropdown-item"
                                                     onClick={() => handleCurrencyChange('USD')}
                                                 >
-                                                    USD 
+                                                    USD
                                                 </button>
                                             </li>
                                         </ul>
@@ -270,7 +273,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                     <div className="addtocart">
                                         <Link to="/cart">
                                             <img src="images/homepage/shopping-cart.png" alt="" />
-                                            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+                                            {cartData.length > 0 && <span className="cart-count">{cartData.length}</span>}
                                         </Link>
                                         <Link to="/whishlist"><img src="images/homepage/like.png" alt="" /></Link>
 

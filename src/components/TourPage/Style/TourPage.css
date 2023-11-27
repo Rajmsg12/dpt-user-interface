@@ -2971,6 +2971,25 @@ footer {
   font-size: 14px;
 }
 
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderRHS .addtocart a{
+  position: relative;
+}
+span.badgeCart {
+  background-color: #f25928;
+  width: 15px;
+  min-width: 15px;
+  height: 15px;
+  min-height: 15px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #fff !important;
+  border-radius: 100px;
+  right: 0;
+}
+
 @media screen and (max-width: 991.33px) {
   .CartBoxWrapper .CartContentWrapper h4 {
     font-size: 16px;
