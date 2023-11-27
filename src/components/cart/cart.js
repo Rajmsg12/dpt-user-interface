@@ -170,7 +170,15 @@ const Cart = () => {
                               <div className="BookingInfotablerow">
 
                                 <span>End Location*</span>
-                                <span>{item.preferredEndLocation}</span>
+                              
+                                {item.preferredEndLocation === "Any Other Places in Dubai" ? (
+                                  <>
+                                    {item.otherPlaceName}, {item.otherPlaceAddress} , {item.otherPlaceTelephone}
+                                  </>
+                                ) : 
+                                  item.preferredEndLocation
+                                }
+                                
                               </div>
                               {/*BookingInfotablerow*/}
                               <div className="BookingInfotablerow">

@@ -553,6 +553,9 @@ input {
   overflow: hidden;
   margin-bottom: 30px;
 }
+.DubaiPrivateTour {
+  margin: 0px 0px 30px;
+}
 .ContentRHS .Attractions .titleRow {
   display: flex;
   align-items: center;

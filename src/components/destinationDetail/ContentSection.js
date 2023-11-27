@@ -31,6 +31,8 @@ function ContentSection() {
   const [tourName, setTourName] = useState("");
   const [tourPriceAed, setTourPriceAed] = useState("");
   const [tourPriceUsd, setTourPriceUsd] = useState("");
+  const [selectedEndLocation, setSelectedEndLocation] = useState("0");
+
   const [tourImage, setTourImage] = useState("");
 
   useEffect(() => {
@@ -73,6 +75,9 @@ function ContentSection() {
     additionalLunch: '0',
     additionalTickets: '0',
     specialRequest: '',
+    otherPlaceName:'',
+    otherPlaceAddress:'',
+    otherPlaceTelephone:'',
     //  tourPrice:"",
     //   tourName:"",
     //  tourImage:""
@@ -444,16 +449,32 @@ function ContentSection() {
                               <div className="mb-3 formGroup">
                                 <label>End Location*</label>
                                 <select
-                                  className="form-select"
-                                  value={formData.preferredEndLocation} // Set the value dynamically based on the state
-                                  onChange={(e) => handleInputChange(e, 'preferredEndLocation')} // Pass the name to handleInputChange
-                                >
-                                  <option value="0">Select Pickup Location</option>
-                                  <option value="Hotel/Apartment">Hotel/Apartment</option>
-                                  <option value="DXB Airport Terminal 1">DXB Airport Terminal 1</option>
-                                  <option value="Abu Dhabi Hotel">Abu Dhabi Hotel</option>
-                                  {/* ... (other options) */}
-                                </select>
+                                className="form-select"
+                                value={selectedEndLocation}
+                                onChange={(e) => {
+                                  handleInputChange(e, 'preferredEndLocation');
+                                  setSelectedEndLocation(e.target.value);
+                                }}
+                              >
+                                <option value="0">Select Pickup Location</option>
+                                <option value="Hotel/Apartment">Hotel/Apartment</option>
+                                <option value="DXB Airport Terminal 1">DXB Airport Terminal 1</option>
+                                <option value="Abu Dhabi Hotel">Abu Dhabi Hotel</option>
+                                <option value="Any Other Places in Dubai">Any Other Places in Dubai</option>
+                              </select>
+                              {selectedEndLocation === "Any Other Places in Dubai" && (
+                                <div className="col-md-12">
+                                
+                                    <label>Place Name</label>
+                                    <input className="form-control" placeholder="Place Name" rows="3" name="otherPlaceName"></input>
+                                  <label>Place Address</label>
+                                  <input className="form-control" placeholder="Residence Address" rows="3" name="otherPlaceAddress"></input>
+                                  <label>Place Telephone</label>
+                                  <input className="form-control" placeholder="Residence Telephone" rows="3" name="otherPlaceTelephone"></input>
+                              
+                                </div>
+                              )}
+                              
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-12">

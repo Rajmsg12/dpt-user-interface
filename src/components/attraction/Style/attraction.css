@@ -2223,14 +2223,20 @@ a img.aligncenter {
 }
 
 .paginationSec ul.pagination li a {
-  background-color: #f25928;
+  background-color: #fff;
   color: #fff;
   border-radius: 4px !important;
-  border: 0px;
   font-size: 14px;
   font-weight: 400;
   width: 80px;
   text-align: center;
+  border: 1px solid #dbdbdb;
+  color: #9f9f9f;
+}
+.paginationSec ul.pagination li.page-item.active a {
+  border-color: #FA7436;
+  color: #fff;
+  background-color: #FA7436;
 }
 .page-link:focus{
   box-shadow: none;
