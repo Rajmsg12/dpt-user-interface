@@ -82,7 +82,7 @@ function ContentSection() {
     //   tourName:"",
     //  tourImage:""
   });
-
+  const formId = "tourForm";
   // State to control the display of the popup
   const [showPopup, setShowPopup] = useState(false);
   const url1 = window.location.href;
@@ -362,7 +362,7 @@ function ContentSection() {
                     <div className="BookThisTourSec">
                       <div className="BookingDetailsHd"><span>Booking Details</span></div>
                       <div className="FormInnerDiv">
-                        <form onSubmit={handleFormSubmit}>
+                      <form id={formId} onSubmit={handleFormSubmit}>
                           <div className="row">
                             <div className="col-md-6">
                               <div className="mb-3 ">
@@ -711,11 +711,8 @@ function ContentSection() {
                 <div className="right">
                   <Link to="#">View Offers</Link>
                 </div>
-                <button
-                  className="cta"
-                  onClick={handleFormSubmit}
-                >
-                  Book this Tour
+                <button type="submit" form="tourForm" className="cta">
+                  Book This Tour
                 </button>
                 <p>
                   Free cancellation Up to 24 hours in advance.{" "}

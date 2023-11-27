@@ -75,7 +75,6 @@ const Cart = () => {
   return (
     <div className="CartPageContent">
       <div className="container">
-        {isLoggedIn ? ( // If user is logged in
           <div className="CartPageContentWrapper">
             <div className="CartPageContenLHS">
               {cart && Array.isArray(cart) && cart.length === 0 ? (
@@ -242,18 +241,7 @@ const Cart = () => {
               )}
             </div>
           </div>
-        ) : (
-          <div className="CenteredLoginButton">
-            <button
-              className="cta"
-              onClick={() => {
-                navigate.push("/login"); // Navigate to the login page
-              }}
-            >
-              Log In
-            </button>
-          </div>
-        )}
+      
       </div>
     </div>
   );
