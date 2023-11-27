@@ -397,6 +397,28 @@ function ContentSection() {
                                   <option value="12:00 AM">12:00 AM</option>
                                   <option value="12:30 AM">12:30 AM</option>
                                   <option value="01:00 AM">01:00 AM</option>
+                                  <option value="02:00 AM">02:00 AM</option>
+                                  <option value="03:00 AM">03:00 AM</option>
+                                  <option value="04:00 AM">04:00 AM</option>
+                                  <option value="05:00 AM">05:00 AM</option>
+                                  <option value="06:00 AM">06:00 AM</option>
+                                  <option value="07:00 AM">07:00 AM</option>
+                                  <option value="08:00 AM">08:00 AM</option>
+                                  <option value="09:00 AM">09:00 AM</option>
+                                  <option value="10:00 AM">10:00 AM</option>
+                                  <option value="11:00 AM">11:00 AM</option>
+                                  <option value="12:00 PM">12:00 PM</option>
+                                  <option value="01:00 PM">01:00 PM</option>
+                                  <option value="02:00 PM">02:00 PM</option>
+                                  <option value="03:00 PM">03:00 PM</option>
+                                  <option value="04:00 PM">04:00 PM</option>
+                                  <option value="05:00 PM">05:00 PM</option>
+                                  <option value="06:00 PM">06:00 PM</option>
+                                  <option value="07:00 PM">07:00 PM</option>
+                                  <option value="08:00 PM">08:00 PM</option>
+                                  <option value="09:00 PM">09:00 PM</option>
+                                  <option value="10:00 PM">10:00 PM</option>
+                                  <option value="11:00 PM">11:00 PM</option>
                                   {/* ... (other options) */}
                                 </select>
 
@@ -429,6 +451,7 @@ function ContentSection() {
                                   <option value="0">Select Pickup Location</option>
                                   <option value="Hotel/Apartment">Hotel/Apartment</option>
                                   <option value="DXB Airport Terminal 1">DXB Airport Terminal 1</option>
+                                  <option value="Abu Dhabi Hotel">Abu Dhabi Hotel</option>
                                   {/* ... (other options) */}
                                 </select>
                               </div> {/* formGroup */}
@@ -444,6 +467,7 @@ function ContentSection() {
                                   <option value="0">Select Hotel</option>
                                   <option value="Hotel Royal Park">Hotel Royal Park</option>
                                   <option value="Flora Inn Hotel Dubai">Flora Inn Hotel Dubai</option>
+                                  <option value="Abu Dhabi Hotel">Abu Dhabi Hotel</option>
                                   {/* ... (other options) */}
                                 </select>
                               </div>{/* formGroup */}
@@ -456,6 +480,7 @@ function ContentSection() {
                                   value={formData.preferredGuideLanguage} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredGuidedLanguage')} // Pass the name to handleInputChange
                                 >
+                                <option value="">Select Preferred Language</option>
                                   <option value="English">English</option>
                                   <option value="Arabic">Arabic</option>
                                   <option value="Spanish">Spanish</option>
@@ -473,6 +498,7 @@ function ContentSection() {
                                   value={formData.preferredCurrency} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredCurrency')} // Pass the name to handleInputChange
                                 >
+                                <option value="">Select Currency</option>
                                   <option value="USD">USD</option>
                                   <option value="AED">AED</option>
                                   {/* ... (other options) */}
@@ -489,6 +515,7 @@ function ContentSection() {
                                   value={formData.preferredPay} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredPay')} // Pass the name to handleInputChange
                                 >
+                                <option value="">Select Pay Option</option>
                                   <option value="Pay Now">Pay Now</option>
                                   <option value="Pay Later">Pay Later</option>
                                   {/* ... (other options) */}
@@ -528,8 +555,17 @@ function ContentSection() {
                                   value={formData.preferredDriver} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredDriver')} // Pass the name to handleInputChange
                                 >
+                                <option value="">Select Addition Driver</option>
                                   <option value="1">1</option>
                                   <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
                                   {/* ... (other options) */}
                                 </select>
                               </div> {/* formGroup */}
@@ -542,8 +578,17 @@ function ContentSection() {
                                   value={formData.preferredLunch} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredLunc')} // Pass the name to handleInputChange
                                 >
+                                <option value="">Select Addition Lunch</option>
                                   <option value="1">1</option>
                                   <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
                                   {/* ... (other options) */}
                                 </select>
 
@@ -557,8 +602,17 @@ function ContentSection() {
                                   value={formData.preferredTickets} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredTicketes')} // Pass the name to handleInputChange
                                 >
+                                <option value="">Select Addition Tickets</option>
                                   <option value="1">1</option>
                                   <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
                                   {/* ... (other options) */}
                                 </select>
 
