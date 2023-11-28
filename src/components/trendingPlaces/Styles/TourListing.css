@@ -86,16 +86,16 @@ input {
 }
 
 @media screen and (max-width: 991.32px) {
-  body.sidebarMenuOpen .closeIcon {
+  .body.sidebarMenuOpen .closeIcon {
     display: block;
   }
-  body.sidebarMenuOpen {
+  .body.sidebarMenuOpen {
     overflow: hidden;
   }
-  body.sidebarMenuOpen .listingPageWrapper .listingLhs {
+  .body.sidebarMenuOpen .listingPageWrapper .listingLhs {
     left: 0;
   }
-  body.sidebarMenuOpen .menuOverlay {
+  .body.sidebarMenuOpen .menuOverlay {
     display: block;
   }
 }
@@ -418,7 +418,6 @@ input {
 @media screen and (max-width: 1199px) {
   .TopSection .TopSectionWrapper h1 {
     font-size: 24px;
-    width:100%;
   }
   .TopSection .TopSectionWrapper .TopSectionRHS .telrow a {
     font-size: 14px;
@@ -1927,6 +1926,8 @@ input {
 /*=====image hover====*/
 .SliderBoxImg img, .TabBox .img {
   overflow: hidden;
+  height: 230px;
+  object-fit: cover;
 }
 
 .SliderBoxImg img, .TabBox .img img {
@@ -1961,6 +1962,9 @@ input {
   }
 }
 @media screen and (max-width: 991px) {
+  .TopSection .TopSectionWrapper h1 {
+    width:100%;
+  }
   .SliderBoxContent h3 {
     font-size: 21px;
   }
@@ -2168,8 +2172,11 @@ input {
 
 .aedLHS {
   border-right: 1px solid #F1F1F1;
-  padding: 5px 15px 10px 0px;
-}
+  padding: 5px 5px 10px 0px;
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;}
 
 .Title h2 {
   font-size: 30px;
@@ -2180,10 +2187,17 @@ input {
   color: #000;
 }
 
+@media screen and (max-width:1199px) {
+  .container {
+    max-width: 1100px;}
+  }
+
 @media screen and (max-width: 1199px) {
   .aedtext {
     font-size: 12px;
   }
+
+  
 }
 @media screen and (max-width: 1024px) {
   .TabBox {
@@ -2211,7 +2225,9 @@ input {
   width: 100% !important;
   margin: 0px 0px 30px;
 }
-
+.BookThisTourSec .FormInnerDiv .submitcta .captcha {
+  display: none;
+}
 
 @media screen and (max-width:991px) {
   .container{

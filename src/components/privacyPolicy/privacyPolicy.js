@@ -2,6 +2,7 @@ import React from 'react'
 import InnerHeader from '../common/InnerHeader'
 import Memories from '../common/memories'
 import Footer from '../common/Footer'
+import './style/privacyPolicy.css'
 
 const privacyPolicy = () => {
     return (

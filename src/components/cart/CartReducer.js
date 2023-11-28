@@ -10,7 +10,6 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: [...state.cart, action.payload],
-        totalPrice: state.totalPrice + action.payload.price,
       };
     case "REMOVE_FROM_CART":
       const removedItem = state.cart.find((item) => item.id === action.payload);

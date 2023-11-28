@@ -1195,9 +1195,13 @@ input {
   transform: rotate(180deg);
 }
 
+
 @media screen and (max-width: 1199px) {
   .listingBox .listingBoxContent .listingBoxFooter .listboxlhs span {
-    font-size: 13px;
+    font-size: 12px;}
+    .listingBox .listingBoxContent .listingBoxFooter .listboxrhs .price strong {
+      font-size: 16px;
+      margin: 0px 2px;
   }
 }
 @media screen and (max-width: 1024px) {
@@ -1503,10 +1507,15 @@ input {
   gap: 10px;
 }
 
+
 .GridRowWrapper .aedLHS {
   border-right: 1px solid #F1F1F1;
   padding: 5px 5px 10px 0px;
-}
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;}
+
 
 @media screen and (max-width: 1199px) {
   .GridRowWrapper .TabBox .img .imgBottomRow .lhstext span {
@@ -2156,6 +2165,10 @@ a img.aligncenter {
   display: none;
 }
 
+@media screen and (max-width:1199px) {
+  .container {
+    max-width: 1100px;}
+  }
 @media screen and (max-width: 991.33px) {
   .CategorySectionWrapper {
     flex-direction: column;

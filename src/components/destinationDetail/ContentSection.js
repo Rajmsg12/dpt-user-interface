@@ -368,7 +368,7 @@ function ContentSection() {
                       <form id={formId} onSubmit={handleFormSubmit}>
                           <div className="row">
                             <div className="col-md-6">
-                              <div className="mb-3 ">
+                            <div className="mb-3 formGroup">
                                 <label>Tour Date*</label>
                                 <div className="input-group date" id="datepicker">
                                   <DatePicker
@@ -380,7 +380,7 @@ function ContentSection() {
                                     customInput={
                                       <input
                                         style={{
-                                          width: '176%', // Set the width to 100%
+                                          width: '100%', // Set the width to 100%
                                           paddingLeft: "10px"
                                         }}
                                       />

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './style/billing.css';
 import { getUserPrice } from '../cart/PriceUtlis';
+import { useNavigate } from 'react-router-dom';
 
 const PersonDetail = () => {
     let cartdata = localStorage.getItem("cartdata");
     let MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
     const totalPrice = MyCartDetail.map(item => item.tourPriceAed).reduce((acc, price) => acc + price, 0);
-
+    const navigate = useNavigate()
 const calculateTotal = () => {
     const taxPercentage = 0.18; // 18% tax
     const total = totalPrice * taxPercentage;
@@ -32,48 +33,52 @@ const calculateTotal = () => {
         country: '',
         cell_no: '',
         special_equest: '',
-        currency: JSON.stringify(MyCartDetail.map(item => item.preferredCurrency)),
-        sub_total: '',
-        tour_date: JSON.stringify(MyCartDetail.map(item => item.tourDate)),
-        pickup_time: JSON.stringify(MyCartDetail.map(item => item.preferredPickupTime)),
-        pickup_location: JSON.stringify(MyCartDetail.map(item => item.preferredPickupLocation)),
-        end_location: JSON.stringify(MyCartDetail.map(item => item.preferredEndLocation)),
-        hotel_name: JSON.stringify(MyCartDetail.map(item => item.hotelName)),
-        language: JSON.stringify(MyCartDetail.map(item => item.preferredGuidedLanguage)),
-        payment_mode: JSON.stringify(MyCartDetail.map(item => item.preferredPay)),
-        adults: JSON.stringify(MyCartDetail.map(item => item.adults)),
-        children: JSON.stringify(MyCartDetail.map(item => item.children)),
-        infants: JSON.stringify(MyCartDetail.map(item => item.infants)),
-        addition_driver: JSON.stringify(MyCartDetail.map(item => item.additionalDriver)),
-        additional_lunch: JSON.stringify(MyCartDetail.map(item => item.additionalLunch)),
-        additional_tickets: JSON.stringify(MyCartDetail.map(item => item.additionalTickets)),
+        cart_data:cartdata,
+        // currency: MyCartDetail.map(item => item.preferredCurrency),
+    //    tour_date: MyCartDetail.map(item => item.tourDate),
+    //     pickup_time: MyCartDetail.map(item => item.preferredPickupTime),
+    //     pickup_location: MyCartDetail.map(item => item.preferredPickupLocation),
+    //     end_location: MyCartDetail.map(item => item.preferredEndLocation),
+    //     hotel_name: MyCartDetail.map(item => item.hotelName),
+    //     language: MyCartDetail.map(item => item.preferredGuidedLanguage),
+    //     payment_mode: MyCartDetail.map(item => item.preferredPay),
+    //     adults: MyCartDetail.map(item => item.adults),
+    //     children: MyCartDetail.map(item => item.children),
+    //     infants: MyCartDetail.map(item => item.infants),
+    //     addition_driver: MyCartDetail.map(item => item.additionalDriver),
+    //     additional_lunch: MyCartDetail.map(item => item.additionalLunch),
+    //     additional_tickets: MyCartDetail.map(item => item.additionalTickets), 
         sub_total:calculateTotal().fullTotal,
         total:totalPrice,
 
     });
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(formData)
 
-        try {
-            const response = await fetch('http://127.0.0.1:9900/cart/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+        // try {
+        //     // const response = await fetch('http://127.0.0.1:9900/cart/add', {
+        //     //     method: 'POST',
+        //     //     headers: {
+        //     //         'Content-Type': 'application/json',
+        //     //     },
+        //     //     body: JSON.stringify(formData),
+        //     // });
 
-            if (response.ok) {
-                // Handle success, e.g., show a success message or redirect
-                console.log('Booking successful');
-            } else {
-                // Handle error, e.g., show an error message
-                console.error('Booking failed');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        //     if (response.ok) {
+        //         // Handle success, e.g., show a success message or redirect
+        //         console.log('Booking successful');
+        //         console.log(formData)
+        //         // navigate('/thankyou')
+        //     } else {
+        //         // Handle error, e.g., show an error message
+        //         console.error('Booking failed');
+        //     }
+        // } catch (error) {
+        //     console.error('Error:', error);
+        // }
     };
 
     const handleChange = (e) => {

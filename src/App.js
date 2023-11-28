@@ -25,6 +25,7 @@ import CancellationPolicy from "./components/pages/cancellationPolicy";
 import PrivacyPolicy from './components/privacyPolicy/privacyPolicy'
 import ContactUs from './components/conatctUs/contactUs'
 import AboutUs from "./components/aboutUs/about";
+import ThankyouPage from "./components/thankyouPage/thankyouPage";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
        <Route exact path='/privacy-policy' element={<PrivacyPolicy/>} />
        <Route exact path='/contact-us' element={<ContactUs/>} />
        <Route exact path='/about-us' element={<AboutUs/>} />
+       <Route exact path='/thankyou' element={<ThankyouPage/>} />
        
        <Route exact path='/cart' element={<Cart/>} />
 

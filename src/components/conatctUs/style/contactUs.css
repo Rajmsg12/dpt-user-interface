@@ -97,3 +97,18 @@
   .ContactUsPageForm .aa-contact-form .form-part button:hover {
     background-color: #3DAAD5;
   }
+
+  @media screen and (max-width:1199px) {
+    .container {
+      max-width: 1100px;}
+    }
+
+  @media screen and (max-width:991px) {
+    .ContactUsPageTop {
+      margin: 0px 0px 20px;
+  }
+  .container{
+    max-width:100% !important;
+    min-width:100% !important;
+}
+  }

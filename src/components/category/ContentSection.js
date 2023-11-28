@@ -154,7 +154,7 @@ const ContentSection = ({selectedCurrency}) => {
             />
             <div>
               <Overview />
-              <div className="listingRhs">
+              <div className="listingRhs CategoryTopSectionRHS">
                 <div className="listingGridTab">
                   <div className="listingToplayer">
                     <div className="Title"><h2>{formattedCategory}</h2></div>
