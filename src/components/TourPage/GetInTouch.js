@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import config from '../../config';
+import { useParams } from 'react-router-dom';
 
 const GetInTouch = () => {
   const [destinationInfo, setDestinationInfo] = useState({});
+  const { title } = useParams();
+  const formattedTitle = title
+  .split('-') // Split by hyphens
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+  .join(' ');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +34,7 @@ const GetInTouch = () => {
       <div className="GetinTouch">
         <div className="GetinTouchWrapper">
           <div className="time">5 Hours</div>
-          <div className="location">{destinationInfo.name}</div>
+          <div className="location">{formattedTitle}</div>
           <div className="review">
             <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />4.5 | 500 Reviews
           </div>

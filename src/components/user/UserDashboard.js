@@ -1,56 +1,134 @@
-import React, { useState, useEffect } from 'react'
-import UserHeader from '../common/dashboardHeader'
-import Footer from '../common/Footer'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import UserHeader from '../common/dashboardHeader';
+import Footer from '../common/Footer';
+import { Link } from 'react-router-dom';
 import './Style/dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import config from '../../config';
 
-
 const UserProfile = () => {
+  const [formData, setFormData] = useState({
+    first_name: '',
+    lastName: '',
+    email: '',
+    country: '',
+    phoneno:'',
+    address:'',
+  });
+  const [passwordData, setPasswordData] = useState({
+    old_password: '',
+    new_password: '',
+  });
+
+
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
   const [user_name, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       fetch(`${config.baseUrl}/welcome`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-
+          Authorization: `Bearer ${token}`,
+        },
       })
-
-        .then(response => response.json())
-
-        .then(data => {
-
+        .then((response) => response.json())
+        .then((data) => {
           setUserName(data.data.user_name);
           setEmail(data.data.email);
           setIsLoggedIn(true);
         })
-
-        .catch(error => {
-          console.error("Error fetching user data:", error);
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
         });
     }
   }, []);
+  const handleChangePassword = (e) => {
+    e.preventDefault();
+  
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch(`${config.baseUrl}/profile/change-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(passwordData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Change password response:', data);
+  
+          if (data.success) {
+            // Optionally, handle success
+            console.log('Password changed successfully!');
+          } else {
+            // Optionally, handle failure
+            console.log('Failed to change password. Please try again.');
+          }
+        })
+        .catch((error) => {
+          console.error('Error changing password:', error);
+        });
+    }
+  };
+  
+
   const handleLogout = () => {
     fetch(`${config.baseUrl}/logout`, {
-        method: 'POST',
+      method: 'POST',
     })
-        .then(() => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user_name');
-            setIsLoggedIn(false);
-            navigate('/')
+      .then(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_name');
+        setIsLoggedIn(false);
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error('Logout failed', error);
+      });
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch('http://127.0.0.1:9900/profile/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Profile update response:', data);
+
+          if (data.success) {
+            setSuccessMessage('Profile updated successfully!');
+            // Optionally, reset form fields or perform additional actions
+          } else {
+            setSuccessMessage('Failed to update profile. Please try again.');
+          }
+
+          setLoading(false);
         })
-        .catch(error => {
-            console.error('Logout failed', error);
+        .catch((error) => {
+          console.error('Error updating profile:', error);
+          setLoading(false);
         });
-};
+    }
+  };
   return (
     <>
       <UserHeader />
@@ -71,24 +149,16 @@ const UserProfile = () => {
 
               <div className="nav-link active DashboardIcon" id="v-pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true"><img src="images/homepage/dashboardicon.png" alt="" /> Dashboard</div>
               <div className="nav-link MyBookingIcon" id="v-pills-mybookings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-mybookings" role="tab" aria-controls="v-pills-mybookings" aria-selected="false"><img src="images/homepage/mybookingicon.png" alt="" /> My Bookings</div>
-              {/*  <!-- <div className="dropdown">
-        <a className="dropdown-toggle SettingIcon" to="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-         <img src="images/settingicon.png" alt=""> Settings
-        </a>
-        <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><a className="nav-link" id="v-pills-settings1-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings1" role="tab" aria-controls="v-pills-settings1" aria-selected="false">Profile</a></li>
-          <li><a className="nav-link" id="v-pills-settings2-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings2"  role="tab" aria-controls="v-pills-settings2" aria-selected="false">Change Password</a></li>
-        </ul>
-      </div> -->*/}
+
               <div className="nav-link" id="v-pills-editprofile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-editprofile" role="tab" aria-controls="v-pills-editprofile" aria-selected="false"><img src="images/homepage/pen.png" alt="" /> Edit Profile</div>
-              <div className="nav-link HelpIcon" id="v-pills-help-tab" data-bs-toggle="pill" data-bs-target="#v-pills-help" role="tab" aria-controls="v-pills-help" aria-selected="false"><img src="images/homepage/customer-supporticon.png" alt="" /> Help</div>
+       {/*      <div className="nav-link HelpIcon" id="v-pills-help-tab" data-bs-toggle="pill" data-bs-target="#v-pills-help" role="tab" aria-controls="v-pills-help" aria-selected="false"><img src="images/homepage/customer-supporticon.png" alt="" /> Help</div>*/}  
             </div>
             <div className="logoutDiv">
-              <Link  onClick = {handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
+              <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
             </div>
 
 
-          </div>=
+          </div>
 
           <div className="tab-content userboardRHS" id="v-pills-tabContent">
             <div className="tab-pane fade show active" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
@@ -397,32 +467,85 @@ const UserProfile = () => {
                   <div className="tab-pane fade show active" id="pills-editform" role="tabpanel" aria-labelledby="pills-editform-tab">
 
                     <div className="edirprofileForm">
-                      <form>
+                      <form onSubmit={handleFormSubmit}>
                         <div className="mb-3">
                           <label className="form-label">First Name</label>
-                          <input type="text" className="form-control" placeholder="First Name" required />
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="First Name"
+                            value={formData.first_name}
+                            onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                            required
+                          />
                         </div>
+
                         <div className="mb-3">
-                          <label className="form-label">Last Name</label>
-                          <input type="text" className="form-control" placeholder="Last Name" required />
-                        </div>
+                        <label className="form-label">Phone Number</label>
+                        <input
+                          type=" phoneno"
+                          className="form-control"
+                          placeholder="Phone Number"
+                          value={formData.phoneno}
+                          onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
+                          required
+                        />
+                      </div>
+                       
                         <div className="mb-3">
-                          <label className="form-label">Email Address</label>
-                          <input type="email" className="form-control" placeholder="Email Address" required />
+                          <label className="form-label">Address</label>
+                          <input
+                            type="address"
+                            className="form-control"
+                            placeholder="Address"
+                            value={formData.address}
+                            onChange={(e) => setFormData({ ...formData,address: e.target.value })}
+                            required
+                          />
                         </div>
+                       
+                        <div className="mb-3">
+                        <label className="form-label">Email Address</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          placeholder="Email Address"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          required
+                        />
+                      </div>
+                      <div className="mb-3">
+                      <label className="form-label">Country</label>
+                      <input
+                        type="country"
+                        className="form-control"
+                        placeholder="Country"
+                        value={formData.country}
+                        onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                        required
+                      />
+                    </div>
 
                         <div className="mb-3">
                           <label className="form-label">Country Code</label>
-                          <select className="form-select" required>
+                          <select
+                            className="form-select"
+                            value={formData.country}
+                            onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                            required
+                          >
                             <option value="">Select Code</option>
-                            <option value="+93"> Afghanistan (+93) </option>
-                            <option value="+355"> Albania (+355) </option>
-
-                            <option value="+263"> Zimbabwe (+263) </option>
+                            <option value="Afghanistan"> Afghanistan (+93) </option>
+                            <option value="Albania"> Albania (+355) </option>
+                            <option value="India"> India (+91) </option>
+                            <option value="Zimbabwe"> Zimbabwe (+263) </option>
                           </select>
                         </div>
 
-                        <button type="submit" className="cta">Submit</button>
+                        <button type="submit" className="cta">
+                          Submit
+                        </button>
                       </form>
                     </div>
 
@@ -431,17 +554,34 @@ const UserProfile = () => {
                   <div className="tab-pane fade" id="pills-changepassword" role="tabpanel" aria-labelledby="pills-changepassword-tab">
 
                     <div className="edirprofileForm">
-                      <form>
+                      <form onSubmit={handleChangePassword}>
                         <div className="mb-3">
-                          <label className="form-label">Change Password</label>
-                          <input type="password" className="form-control" placeholder="Change Password" />
+                          <label className="form-label">Current Password</label>
+                          <input
+                            type="password"
+                            className="form-control"
+                            placeholder="Current Password"
+                            value={passwordData.old_password}
+                            onChange={(e) => setPasswordData({ ...passwordData, old_password: e.target.value })}
+                            required
+                          />
                         </div>
                         <div className="mb-3">
                           <label className="form-label">New Password</label>
-                          <input type="password" className="form-control" placeholder="New Password" />
+                          <input
+                            type="password"
+                            className="form-control"
+                            placeholder="New Password"
+                            value={passwordData.new_password}
+                            onChange={(e) => setPasswordData({ ...passwordData, new_password: e.target.value })}
+                            required
+                          />
                         </div>
-                        <button type="submit" className="cta">Submit</button>
+                        <button type="submit" className="cta">
+                          Submit
+                        </button>
                       </form>
+
                     </div>
 
                   </div>

@@ -8,6 +8,7 @@ const PersonDetail = () => {
     let MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
     const totalPrice = MyCartDetail.map(item => item.tourPriceAed).reduce((acc, price) => acc + price, 0);
     const navigate = useNavigate()
+    console.log(cartdata)
 const calculateTotal = () => {
     const taxPercentage = 0.18; // 18% tax
     const total = totalPrice * taxPercentage;
@@ -33,7 +34,7 @@ const calculateTotal = () => {
         country: '',
         cell_no: '',
         special_equest: '',
-        cart_data:cartdata,
+        cart_data: MyCartDetail,
         // currency: MyCartDetail.map(item => item.preferredCurrency),
     //    tour_date: MyCartDetail.map(item => item.tourDate),
     //     pickup_time: MyCartDetail.map(item => item.preferredPickupTime),
@@ -56,29 +57,31 @@ const calculateTotal = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
 
-        // try {
-        //     // const response = await fetch('http://127.0.0.1:9900/cart/add', {
-        //     //     method: 'POST',
-        //     //     headers: {
-        //     //         'Content-Type': 'application/json',
-        //     //     },
-        //     //     body: JSON.stringify(formData),
-        //     // });
+        try {
+            const response = await fetch('http://127.0.0.1:9900/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: formData,
+                
+            });
 
-        //     if (response.ok) {
-        //         // Handle success, e.g., show a success message or redirect
-        //         console.log('Booking successful');
-        //         console.log(formData)
-        //         // navigate('/thankyou')
-        //     } else {
-        //         // Handle error, e.g., show an error message
-        //         console.error('Booking failed');
-        //     }
-        // } catch (error) {
-        //     console.error('Error:', error);
-        // }
+            if (response.ok) {
+                // Handle success, e.g., show a success message or redirect
+                console.log('Booking successful');
+                console.log(formData)
+                
+                navigate('/thankyou')
+            } else {
+                // Handle error, e.g., show an error message
+                console.error('Booking failed');
+                console.log(formData)
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     const handleChange = (e) => {

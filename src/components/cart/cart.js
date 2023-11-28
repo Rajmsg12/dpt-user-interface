@@ -101,23 +101,22 @@ const Cart = ({ selectedCurrency }) => {
                       <div className="Price">
                       {isLoggedIn ? (
                         <div className="aedtext">
-                            {item.preferredCurrency === "AED" ? (
-                                <span>AED</span>
-                            ) : (
-                                <span>USD</span>
-                            )}
-                            <strong>{getUserPrice(item)}</strong> 
+                          {item.selectedCurrency === "AED" ? (
+                            <strong>AED {item.tourPriceAed}</strong>
+                          ) : (
+                            <strong>USD {item.tourPriceUsd}</strong>
+                          )}
                         </div>
-                    ) : (
+                      ) : (
                         <div className="aedtext">
-                            {item.preferredCurrency === "AED" ? (
-                                <span>AED</span>
-                            ) : (
-                                <span>USD</span>
-                            )}
-                            <strong>{getUserPrice(item)}</strong>
+                          {item.selectedCurrency === "AED" ? (
+                            <strong>AED {item.tourPriceAed}</strong>
+                          ) : (
+                            <strong>USD {item.tourPriceUsd}</strong>
+                          )}
                         </div>
-                    )}
+                      )}
+                      
                       </div>
                       <div className="BtnGroup">
                         <Link
@@ -199,7 +198,7 @@ const Cart = ({ selectedCurrency }) => {
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Pref.currency</span>
-                              <span>{item.preferredCurrency}</span>
+                              <span>{item.selectedCurrency}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
@@ -230,11 +229,12 @@ const Cart = ({ selectedCurrency }) => {
               <div className="OrderSummaryDiv">
                 <div className="heading">Order Summary</div>
                 <div className="OrderSummaryTable">
+                
                   <div className="OrderSummaryTablebody">
                     <div className="OrderSummaryTablerow">
                       <span>Subtotal</span>
                       <span>
-                        AED <strong>{calculateTotal().subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                      {selectedCurrency} <strong>{calculateTotal().subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
                       </span>
                     </div>
                     <div className="OrderSummaryTablerow">
@@ -247,7 +247,7 @@ const Cart = ({ selectedCurrency }) => {
                       <span>Order total</span>
                     
                       <span>
-                      AED <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                      {selectedCurrency}  <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
 
                       </span>
                     </div>

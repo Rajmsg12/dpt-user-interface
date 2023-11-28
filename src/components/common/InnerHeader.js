@@ -6,6 +6,7 @@ import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { ReactComponent as IconDoorClosedFill } from "bootstrap-icons/icons/door-closed.svg";
 import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import config from '../../config';
+import { connect } from 'react-redux';
 
 const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -63,7 +64,7 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
 };
 
 
-const InnerHeader = () => {
+const InnerHeader = ({ selectedCurrency }) => {
   const search = () => {
 
   }
@@ -79,7 +80,7 @@ const InnerHeader = () => {
   const [destinations, setDestinations] = useState([]);
   let cartdata = localStorage.getItem("cartdata");
   let cartData = cartdata ? JSON.parse(cartdata) : [];
-  console.log(cartData.length)
+ console.log(selectedCurrency)
 
   const handleCountrySearch = (country) => {
     setSearchCountry(country);
@@ -120,32 +121,8 @@ const InnerHeader = () => {
 
     fetchDestinations();
   }, []);
+  console.log(selectedCurrency)
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const tabSection = document.querySelector(".tabSection");
-  //     const formobile = document.querySelector(".formobile");
-  //     const homepageContent = document.querySelector(".homepageContent");
-
-  //     if (window.scrollY > 568) {
-  //       homepageContent.classList.add("ondesSticky");
-  //     } else {
-  //       homepageContent.classList.remove("ondesSticky");
-  //     }
-
-  //     if (window.scrollY > 300) {
-  //       homepageContent.classList.add("searchSticky");
-  //     } else {
-  //       homepageContent.classList.remove("searchSticky");
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -212,7 +189,7 @@ const InnerHeader = () => {
               {/* HeaderLHS */}
               <div className="HeaderRHS"> {/* Use className instead of class */}
                 <div className="Headerdropdownmenu"> {/* Use className instead of class */}
-                  {/*     <div className="dropdown">Use className instead of class
+                  {/*}  <div className="dropdown">
                     <Link to="" className="btn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> ENG </Link>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                       <li>
@@ -225,21 +202,26 @@ const InnerHeader = () => {
                         <Link to="" className="dropdown-item" href="#">German</Link>
                       </li>
                     </ul>
+  </div>*/}
+              
+
+                      <div className="dropdown">
+                        <Link
+                          to=""
+                          className="btn dropdown-toggle"
+                          role="button"
+                          id="dropdownMenuLink"
+                          aria-expanded="false">{selectedCurrency}</Link>
+                      
+                      </div>
+                    
                   </div>
-                <div className="dropdown"> {/* Use className instead of class 
-                    <Link to="" className="btn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> AED </Link>
-                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <li>
-                        <Link to="" className="dropdown-item" href="#">USD $</Link>
-                      </li>
-                    </ul>
-  </div> */}
-                </div>
+              
                 {/* Headerdropdownmenu */}
                 <div className="addtocart"> {/* Use className instead of class */}
                   <Link to="/cart" className="cart Cartparenticon">
                     {/* Cart Icon */}
-                    <span className="badgeCart"  style={{ 'color':'black' }}>{cartData.length}</span>
+                    <span className="badgeCart" style={{ 'color': 'black' }}>{cartData.length}</span>
                   </Link>
                   <Link to="/wishlist" className="wishlist"></Link>
 
@@ -293,6 +275,30 @@ const InnerHeader = () => {
       </header>
     </div>
   );
-};
+  function getUserPrice(tour) {
+    let price = 0;
 
-export default InnerHeader;
+    if (userType === 2) {
+      // Agent user type
+      price =
+        selectedCurrency === "AED"
+          ? tour.tour_price_aed - (tour.tour_price_aed * userDiscount) / 100
+          : tour.tour_price_usd - (tour.tour_price_usd * userDiscount) / 100;
+    } else if (userType === 3) {
+      // Normal user type
+      price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
+    } else {
+      // Default case (handle other user types if needed)
+      price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
+    }
+
+    // Remove decimal part
+    return Math.floor(price);
+  }
+};
+const mapStateToProps = (state) => ({
+  selectedCurrency: state.currency.selectedCurrency,
+  // ... (other state mappings)
+});
+
+export default connect(mapStateToProps)(InnerHeader);

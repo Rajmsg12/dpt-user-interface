@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Style/TourPage.css";
 import Carousel from "react-multi-carousel";
+import { connect } from 'react-redux';
 import Faq from "./Faq";
 import "react-multi-carousel/lib/styles.css";
 import CancellationPolicy from "./CancellationPolicy";
@@ -20,10 +21,11 @@ import AskQuestion from './AskQuestion'
 import Detail from './Detail'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import {useNavigate}  from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './Style/TourPage.css'
 
-function ContentSection() {
+function ContentSection({ selectedCurrency }) {
+  console.log(selectedCurrency)
   const { title } = useParams();
   const [backendData, setBackendData] = useState(null);
   const dispatch = useDispatch();
@@ -68,7 +70,7 @@ function ContentSection() {
     endLocation: '0',
     hotelName: '0',
     preferredGuideLanguage: '0',
-    preferredCurrency: '0',
+    preferredCurrency: '',
     paymentMode: '0',
     adults: '',
     children: '',
@@ -77,9 +79,9 @@ function ContentSection() {
     additionalLunch: '0',
     additionalTickets: '0',
     specialRequest: '',
-    otherPlaceName:'',
-    otherPlaceAddress:'',
-    otherPlaceTelephone:'',
+    otherPlaceName: '',
+    otherPlaceAddress: '',
+    otherPlaceTelephone: '',
     //  tourPrice:"",
     //   tourName:"",
     //  tourImage:""
@@ -101,9 +103,11 @@ function ContentSection() {
     formData.tourPriceAed = tourPriceAed;
     formData.tourPriceUsd = tourPriceUsd;
 
+    // Set the selectedCurrency in formData
+    formData.selectedCurrency = selectedCurrency;
+
     // Get all form elements
     const formElements = event.target.elements;
-
 
     // Iterate through form elements to get input data
     for (let i = 0; i < formElements.length; i++) {
@@ -138,13 +142,14 @@ function ContentSection() {
     let MyCartData = cartdata ? JSON.parse(cartdata) : [];
     MyCartData.push(formData);
     localStorage.setItem('cartdata', JSON.stringify(MyCartData));
-    console.log(localStorage.getItem("cartdata"))
+    console.log(localStorage.getItem("cartdata"));
 
     // If all checks pass, proceed with adding to cart or other actions
     setIsFormValid(true);
     AddToCart(/* pass your item here */);
-   navigate('/cart')
+    navigate('/cart');
   };
+
 
 
   const url = window.location.href;
@@ -341,6 +346,7 @@ function ContentSection() {
                   </Carousel>
                 </div>
               </div>
+
               {/*BANNER TABS */}
               <div className="DetailTab">
                 <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -365,10 +371,10 @@ function ContentSection() {
                     <div className="BookThisTourSec">
                       <div className="BookingDetailsHd"><span>Booking Details</span></div>
                       <div className="FormInnerDiv">
-                      <form id={formId} onSubmit={handleFormSubmit}>
+                        <form id={formId} onSubmit={handleFormSubmit}>
                           <div className="row">
                             <div className="col-md-6">
-                            <div className="mb-3 formGroup">
+                              <div className="mb-3 formGroup">
                                 <label>Tour Date*</label>
                                 <div className="input-group date" id="datepicker">
                                   <DatePicker
@@ -452,32 +458,32 @@ function ContentSection() {
                               <div className="mb-3 formGroup">
                                 <label>End Location*</label>
                                 <select
-                                className="form-select"
-                                value={selectedEndLocation}
-                                onChange={(e) => {
-                                  handleInputChange(e, 'preferredEndLocation');
-                                  setSelectedEndLocation(e.target.value);
-                                }}
-                              >
-                                <option value="0">Select Pickup Location</option>
-                                <option value="Hotel/Apartment">Hotel/Apartment</option>
-                                <option value="DXB Airport Terminal 1">DXB Airport Terminal 1</option>
-                                <option value="Abu Dhabi Hotel">Abu Dhabi Hotel</option>
-                                <option value="Any Other Places in Dubai">Any Other Places in Dubai</option>
-                              </select>
-                              {selectedEndLocation === "Any Other Places in Dubai" && (
-                                <div className="col-md-12">
-                                
+                                  className="form-select"
+                                  value={selectedEndLocation}
+                                  onChange={(e) => {
+                                    handleInputChange(e, 'preferredEndLocation');
+                                    setSelectedEndLocation(e.target.value);
+                                  }}
+                                >
+                                  <option value="0">Select Pickup Location</option>
+                                  <option value="Hotel/Apartment">Hotel/Apartment</option>
+                                  <option value="DXB Airport Terminal 1">DXB Airport Terminal 1</option>
+                                  <option value="Abu Dhabi Hotel">Abu Dhabi Hotel</option>
+                                  <option value="Any Other Places in Dubai">Any Other Places in Dubai</option>
+                                </select>
+                                {selectedEndLocation === "Any Other Places in Dubai" && (
+                                  <div className="col-md-12">
+
                                     <label>Place Name</label>
                                     <input className="form-control" placeholder="Place Name" rows="3" name="otherPlaceName"></input>
-                                  <label>Place Address</label>
-                                  <input className="form-control" placeholder="Residence Address" rows="3" name="otherPlaceAddress"></input>
-                                  <label>Place Telephone</label>
-                                  <input className="form-control" placeholder="Residence Telephone" rows="3" name="otherPlaceTelephone"></input>
-                              
-                                </div>
-                              )}
-                              
+                                    <label>Place Address</label>
+                                    <input className="form-control" placeholder="Residence Address" rows="3" name="otherPlaceAddress"></input>
+                                    <label>Place Telephone</label>
+                                    <input className="form-control" placeholder="Residence Telephone" rows="3" name="otherPlaceTelephone"></input>
+
+                                  </div>
+                                )}
+
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-12">
@@ -504,7 +510,7 @@ function ContentSection() {
                                   value={formData.preferredGuideLanguage} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredGuidedLanguage')} // Pass the name to handleInputChange
                                 >
-                                <option value="">Select Preferred Language</option>
+                                  <option value="">Select Preferred Language</option>
                                   <option value="English">English</option>
                                   <option value="Arabic">Arabic</option>
                                   <option value="Spanish">Spanish</option>
@@ -517,17 +523,11 @@ function ContentSection() {
                             <div className="col-md-3">
                               <div className="mb-3 formGroup">
                                 <label>Pref.currency</label>
-                                <select
-                                  className="form-select"
-                                  value={formData.preferredCurrency} // Set the value dynamically based on the state
-                                  onChange={(e) => handleInputChange(e, 'preferredCurrency')} // Pass the name to handleInputChange
-                                >
-                                <option value="">Select Currency</option>
-                                  <option value="USD">USD</option>
-                                  <option value="AED">AED</option>
-                                  {/* ... (other options) */}
-                                </select>
-
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  value={selectedCurrency}
+                                />
                               </div>{/* formGroup */}
                             </div>
                             <div className="col-md-3">
@@ -539,7 +539,7 @@ function ContentSection() {
                                   value={formData.preferredPay} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredPay')} // Pass the name to handleInputChange
                                 >
-                                <option value="">Select Pay Option</option>
+                                  <option value="">Select Pay Option</option>
                                   <option value="Pay Now">Pay Now</option>
                                   <option value="Pay Later">Pay Later</option>
                                   {/* ... (other options) */}
@@ -579,7 +579,7 @@ function ContentSection() {
                                   value={formData.preferredDriver} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredDriver')} // Pass the name to handleInputChange
                                 >
-                                <option value="">Select Addition Driver</option>
+                                  <option value="">Select Addition Driver</option>
                                   <option value="1">1</option>
                                   <option value="2">2</option>
                                   <option value="3">3</option>
@@ -602,7 +602,7 @@ function ContentSection() {
                                   value={formData.preferredLunch} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredLunc')} // Pass the name to handleInputChange
                                 >
-                                <option value="">Select Addition Lunch</option>
+                                  <option value="">Select Addition Lunch</option>
                                   <option value="1">1</option>
                                   <option value="2">2</option>
                                   <option value="3">3</option>
@@ -626,7 +626,7 @@ function ContentSection() {
                                   value={formData.preferredTickets} // Set the value dynamically based on the state
                                   onChange={(e) => handleInputChange(e, 'preferredTicketes')} // Pass the name to handleInputChange
                                 >
-                                <option value="">Select Addition Tickets</option>
+                                  <option value="">Select Addition Tickets</option>
                                   <option value="1">1</option>
                                   <option value="2">2</option>
                                   <option value="3">3</option>
@@ -712,7 +712,7 @@ function ContentSection() {
                   per {tour.person} person <strong>({tour.tour_duration})</strong>
                 </div>
                 <div className="right">
-                  <Link to="#">View Offers</Link>
+                <Link to="#">View Offers</Link>
                 </div>
                 <button type="submit" form="tourForm" className="cta">
                   Book This Tour
@@ -940,4 +940,9 @@ function ContentSection() {
 
 }
 
-export default ContentSection;
+const mapStateToProps = (state) => ({
+  selectedCurrency: state.currency.selectedCurrency,
+  // ... (other state mappings)
+});
+
+export default connect(mapStateToProps)(ContentSection);

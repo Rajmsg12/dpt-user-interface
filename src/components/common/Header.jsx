@@ -32,7 +32,12 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
     console.log(cartData.length)
 
     const handleCurrencyChange = (currency) => {
+        // Clear localStorage when changing currency
+        localStorage.clear();
+    
+        // Update the selected currency
         setCurrency(currency);
+    
         // Additional logic to update prices in the UI or fetch new data if needed
     };
 

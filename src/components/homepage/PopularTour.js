@@ -13,6 +13,7 @@ const PopularTour = ({ selectedCurrency }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
+    console.log(selectedCurrency)
 
     const responsive = {
         superLargeDesktop: {

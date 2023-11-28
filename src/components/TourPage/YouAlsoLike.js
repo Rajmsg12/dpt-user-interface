@@ -5,12 +5,14 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { data } from '../../data/index'
 import config from '../../config';
+import { connect } from 'react-redux';
 
 const YouAlsoLike = ({selectedCurrency}) => {
     const [tourData, setTourData] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
+    console.log(selectedCurrency)
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -143,23 +145,23 @@ const YouAlsoLike = ({selectedCurrency}) => {
                                             <span>Starting from</span>
                                             {isLoggedIn ? (
                                                 <div className="aedtext">
-                                                    {selectedCurrency === "AED" ? (
-                                                        <span>AED</span>
-                                                    ) : (
-                                                        <span>USD</span>
-                                                    )}
-                                                    <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                  {selectedCurrency === "AED" ? (
+                                                    <span>AED</span>
+                                                  ) : (
+                                                    <span>USD</span>
+                                                  )}
+                                                  <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
                                                 </div>
-                                            ) : (
+                                              ) : (
                                                 <div className="aedtext">
-                                                    {selectedCurrency === "AED" ? (
-                                                        <span>AED</span>
-                                                    ) : (
-                                                        <span>USD</span>
-                                                    )}
-                                                    <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                  {selectedCurrency === "AED" ? (
+                                                    <span>AED</span>
+                                                  ) : (
+                                                    <span>USD</span>
+                                                  )}
+                                                  <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
                                                 </div>
-                                            )}
+                                              )}
                                         </div>
 
                                         <div className="aedRHS">
@@ -199,5 +201,10 @@ const YouAlsoLike = ({selectedCurrency}) => {
     }
 
 }
+const mapStateToProps = (state) => ({
+    selectedCurrency: state.currency.selectedCurrency,
+    // ... (other state mappings)
+});
 
-export default YouAlsoLike;
+export default connect(mapStateToProps)(YouAlsoLike);
+
