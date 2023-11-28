@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PersonDetail = () => {
     let cartdata = localStorage.getItem("cartdata");
-    let MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
+    const MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
     const totalPrice = MyCartDetail.map(item => item.tourPriceAed).reduce((acc, price) => acc + price, 0);
     const navigate = useNavigate()
     console.log(cartdata)
@@ -57,32 +57,29 @@ const calculateTotal = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             const response = await fetch('http://127.0.0.1:9900/cart/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: formData,
-                
+                body: JSON.stringify(formData),
             });
-
+    
             if (response.ok) {
                 // Handle success, e.g., show a success message or redirect
                 console.log('Booking successful');
-                console.log(formData)
-                
-                navigate('/thankyou')
+                navigate('/thankyou');
             } else {
                 // Handle error, e.g., show an error message
                 console.error('Booking failed');
-                console.log(formData)
             }
         } catch (error) {
             console.error('Error:', error);
         }
     };
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
