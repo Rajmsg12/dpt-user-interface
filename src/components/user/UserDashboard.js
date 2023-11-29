@@ -102,7 +102,7 @@ const UserProfile = () => {
 
     const token = localStorage.getItem('token');
     if (token) {
-      fetch('http://127.0.0.1:9900/profile/update', {
+      fetch('https://phpstack-1167113-4078182.cloudwaysapps.com/frontendapi/profile/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

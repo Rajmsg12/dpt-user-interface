@@ -35,7 +35,7 @@ const calculateTotal = () => {
         cell_no: '',
         special_equest: '',
         cart_data: MyCartDetail,
-        
+
         sub_total:calculateTotal().fullTotal,
         total:totalPrice,
 
@@ -47,7 +47,7 @@ const calculateTotal = () => {
         const token = localStorage.getItem("token");
     
         try {
-            const response = await fetch('http://127.0.0.1:9900/cart/add', {
+            const response = await fetch('https://phpstack-1167113-4078182.cloudwaysapps.com/frontendapi/cart/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

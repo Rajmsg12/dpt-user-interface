@@ -154,7 +154,7 @@ function ContentSection({ selectedCurrency }) {
     // If all checks pass, proceed with adding to cart or other actions
     setIsFormValid(true);
     AddToCart(/* pass your item here */);
-    navigate('/cart');
+    // navigate('/cart');
   };
 
 
