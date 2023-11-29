@@ -126,15 +126,14 @@ const ListingSection = ({ selectedCurrency }) => {
         tourRating >= selectedRatingFilter
       );
     }
-    return false; // Exclude items that don't match the duration filter
+    return false; 
   });
-  // const itemsToShow = filteredData.slice(startIndex, endIndex);
-  console.log(filteredData)
 
   if (!apiData) {
     return <p>Loading...</p>;
   }
   const itemsToShow = apiData.tour_info;
+  console.log(itemsToShow)
 
   return (
     <div>

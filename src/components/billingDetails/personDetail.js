@@ -35,20 +35,7 @@ const calculateTotal = () => {
         cell_no: '',
         special_equest: '',
         cart_data: MyCartDetail,
-        // currency: MyCartDetail.map(item => item.preferredCurrency),
-    //    tour_date: MyCartDetail.map(item => item.tourDate),
-    //     pickup_time: MyCartDetail.map(item => item.preferredPickupTime),
-    //     pickup_location: MyCartDetail.map(item => item.preferredPickupLocation),
-    //     end_location: MyCartDetail.map(item => item.preferredEndLocation),
-    //     hotel_name: MyCartDetail.map(item => item.hotelName),
-    //     language: MyCartDetail.map(item => item.preferredGuidedLanguage),
-    //     payment_mode: MyCartDetail.map(item => item.preferredPay),
-    //     adults: MyCartDetail.map(item => item.adults),
-    //     children: MyCartDetail.map(item => item.children),
-    //     infants: MyCartDetail.map(item => item.infants),
-    //     addition_driver: MyCartDetail.map(item => item.additionalDriver),
-    //     additional_lunch: MyCartDetail.map(item => item.additionalLunch),
-    //     additional_tickets: MyCartDetail.map(item => item.additionalTickets), 
+        
         sub_total:calculateTotal().fullTotal,
         total:totalPrice,
 
@@ -57,12 +44,14 @@ const calculateTotal = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token = localStorage.getItem("token");
     
         try {
             const response = await fetch('http://127.0.0.1:9900/cart/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Include the token in the headers
                 },
                 body: JSON.stringify(formData),
             });
@@ -71,6 +60,7 @@ const calculateTotal = () => {
                 // Handle success, e.g., show a success message or redirect
                 console.log('Booking successful');
                 navigate('/thankyou');
+                localStorage.clear();
             } else {
                 // Handle error, e.g., show an error message
                 console.error('Booking failed');

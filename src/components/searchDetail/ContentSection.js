@@ -34,6 +34,8 @@ function ContentSection({ selectedCurrency }) {
   const [tourName, setTourName] = useState("");
   const [tourPriceAed, setTourPriceAed] = useState("");
   const [tourPriceUsd, setTourPriceUsd] = useState("");
+  const [tour_id, setTourId] = useState("");
+  const [tour_slug, setTour_Slug] = useState("");
   const [selectedEndLocation, setSelectedEndLocation] = useState("0");
 
   const [tourImage, setTourImage] = useState("");
@@ -51,8 +53,11 @@ function ContentSection({ selectedCurrency }) {
         setBackendData(data);
         setTourName(data.data[0].tour_name)
         setTourPriceAed(data.data[0].tour_price_aed)
+        setTour_Slug(data.data[0].slug)
         setTourPriceUsd(data.data[0].tour_price_usd)
         setTourImage(data.data[0].image)
+        setTourId(data.data[0].id)
+      
       } catch (error) {
         console.error("Error fetching data from the backend:", error.message);
       }
@@ -61,7 +66,6 @@ function ContentSection({ selectedCurrency }) {
     fetchData();
   }, []);
 
-
   const [formData, setFormData] = useState({
     tourDate: null,
     preferredPickupTime: '0',
@@ -69,8 +73,7 @@ function ContentSection({ selectedCurrency }) {
     pickupLocation: '0',
     endLocation: '0',
     hotelName: '0',
-    preferredGuideLanguage: '0',
-    preferredCurrency: '',
+    preferredGuideLanguage: '',
     paymentMode: '0',
     adults: '',
     children: '',
@@ -98,9 +101,13 @@ function ContentSection({ selectedCurrency }) {
     event.preventDefault();
 
     // Set the tour details in formData
+    formData.tour_id = tour_id;
+    formData.tour_slug = tour_slug;
     formData.tourName = tourName;
     formData.tourImage = tourImage;
     formData.tourPriceAed = tourPriceAed;
+    formData.tourPriceUsd = tourPriceUsd;
+    
     formData.tourPriceUsd = tourPriceUsd;
 
     // Set the selectedCurrency in formData

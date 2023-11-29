@@ -1,3 +1,4 @@
+
 import React, { useState , useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'rc-slider'; // Import the Slider component
@@ -17,7 +18,6 @@ const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange , priceRa
         const data = await response.json();
         
         if (data && data.data && Array.isArray(data.data)) {
-          console.log('Fetched categories:', data.data);
           setCategories(data.data);
         } else {
           console.error('No categories found in the response:', data);
