@@ -385,6 +385,7 @@ const ListingSection = () => {
       </div>
     </div>
   </div>
+  <div className="menuOverlay"></div>
 </div>
 </div>
 );

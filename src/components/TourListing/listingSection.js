@@ -166,6 +166,7 @@ const ListingSection = ({ selectedCurrency }) => {
     <div>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
         <div className="container">
+          
           <div className="listingPageWrapper">
             <LeftSideFilter
               handlePriceFilter={handlePriceFilter}
@@ -444,6 +445,8 @@ const ListingSection = ({ selectedCurrency }) => {
             </div>
           </div>
         </div>
+        <div className="menuOverlay"></div>
+
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ const ListingSection = ({ selectedCurrency }) => {
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
   const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
   const [apiData, setApiData] = useState(null);
+  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const [activeTab, setActiveTab] = useState("pills-grid");
 
@@ -21,6 +22,16 @@ const ListingSection = ({ selectedCurrency }) => {
   const [userDiscount, setUserDiscount] = useState(null);
 
   const itemsPerPage = 9;
+  
+  const handleToggleSidebarMenu = () => {
+    setIsSidebarMenuOpen((prevIsSidebarMenuOpen) => !prevIsSidebarMenuOpen);
+  };
+
+  const handleCloseSidebar = () => {
+    console.log('Closing sidebar');
+    setIsSidebarMenuOpen(false);
+  };
+
 
 
   const totalItems = data.length;
@@ -137,15 +148,16 @@ const ListingSection = ({ selectedCurrency }) => {
 
   return (
     <div>
-      <div className="listingPage">
+       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
         <div className="container">
           <div className="listingPageWrapper">
-            <LeftSideFilter
+          <LeftSideFilter
               handlePriceFilter={handlePriceFilter}
               priceRange={selectedPriceRange}
               handleRatingFilterChange={handleRatingFilterChange}
               selectedRatingFilter={selectedRatingFilter}
               handleDurationFilterChange={handleDurationFilterChange}
+              handleCloseSidebar={handleCloseSidebar}
             />
 
             <div className="listingRhs">
@@ -155,7 +167,7 @@ const ListingSection = ({ selectedCurrency }) => {
 
                   <div>
                     <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                      <div className="filterDiv"></div>
+                    <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>
                       <li className="nav-item" role="presentation">
                         <button
                           className="nav-link active"
@@ -411,6 +423,7 @@ const ListingSection = ({ selectedCurrency }) => {
             </div>
           </div>
         </div>
+        <div className="menuOverlay"></div>
       </div>
     </div>
   );

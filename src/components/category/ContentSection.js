@@ -139,7 +139,7 @@ const ContentSection = ({selectedCurrency}) => {
   const itemsToShow = apiData.tour_info;
   return (
     <>
-    <div className={`CategoryTopSection ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''}`}>
+    <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
     
         <div className="container">
           <div className="CategorySectionWrapper">
@@ -399,6 +399,7 @@ const ContentSection = ({selectedCurrency}) => {
             </>
           </div>
         </div>
+        <div className="menuOverlay"></div>
       </div>
 
     </>
