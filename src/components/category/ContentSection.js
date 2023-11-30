@@ -152,7 +152,7 @@ const ContentSection = ({selectedCurrency}) => {
               handleDurationFilterChange={handleDurationFilterChange}
               handleCloseSidebar={handleCloseSidebar}
             />
-            <div>
+            <>
               <Overview />
               <div className="listingRhs CategoryTopSectionRHS">
                 <div className="listingGridTab">
@@ -396,7 +396,7 @@ const ContentSection = ({selectedCurrency}) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </>
           </div>
         </div>
       </div>

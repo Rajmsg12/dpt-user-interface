@@ -7,6 +7,7 @@ import { ReactComponent as IconDoorClosedFill } from "bootstrap-icons/icons/door
 import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import config from '../../config';
 import { connect } from 'react-redux';
+import { setCurrency } from './CurrencyRedux/currencyAction';
 
 const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -64,7 +65,7 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
 };
 
 
-const InnerHeader = ({ selectedCurrency }) => {
+const InnerHeader = ({ selectedCurrency, setCurrency}) => {
   const search = () => {
 
   }
@@ -80,11 +81,15 @@ const InnerHeader = ({ selectedCurrency }) => {
   const [destinations, setDestinations] = useState([]);
   let cartdata = localStorage.getItem("cartdata");
   let cartData = cartdata ? JSON.parse(cartdata) : [];
- console.log(selectedCurrency)
+  console.log(selectedCurrency)
 
   const handleCountrySearch = (country) => {
     setSearchCountry(country);
   };
+  const handleCurrencyChange = (currency) => {
+    setCurrency(currency);
+
+};
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
@@ -203,20 +208,41 @@ const InnerHeader = ({ selectedCurrency }) => {
                       </li>
                     </ul>
   </div>*/}
-              
 
-                      <div className="dropdown">
-                        <Link
-                          to=""
-                          className="btn dropdown-toggle"
-                          role="button"
-                          id="dropdownMenuLink"
-                          aria-expanded="false">{selectedCurrency}</Link>
-                      
-                      </div>
-                    
+
+                  <div className="dropdown">
+                    <Link
+                      className="btn dropdown-toggle"
+                      to="/"
+                      role="button"
+                      id="dropdownMenuLink"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      {selectedCurrency}
+                    </Link>
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => handleCurrencyChange('AED')}
+                        >
+                          AED
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => handleCurrencyChange('USD')}
+                        >
+                          USD
+                        </button>
+                      </li>
+                    </ul>
                   </div>
-              
+
+                </div>
+
                 {/* Headerdropdownmenu */}
                 <div className="addtocart"> {/* Use className instead of class */}
                   <Link to="/cart" className="cart Cartparenticon">
@@ -298,7 +324,10 @@ const InnerHeader = ({ selectedCurrency }) => {
 };
 const mapStateToProps = (state) => ({
   selectedCurrency: state.currency.selectedCurrency,
-  // ... (other state mappings)
 });
 
-export default connect(mapStateToProps)(InnerHeader);
+const mapDispatchToProps = (dispatch) => ({
+  setCurrency: (currency) => dispatch(setCurrency(currency)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(InnerHeader);

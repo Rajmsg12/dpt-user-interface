@@ -11,7 +11,7 @@ const CategoryLHS = ({ handlePriceFilter, priceRange, handleCloseSidebar, handle
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('tour-list');
+        const response = await fetch(`${config.baseUrl}/tour-list`);
         const data = await response.json();
         console.log('API Response:', data.data.map(item=>item.tour_name)); // Log the response
         setTourList(data.data);
