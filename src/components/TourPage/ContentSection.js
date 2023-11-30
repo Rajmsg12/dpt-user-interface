@@ -510,18 +510,18 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Preferred Guide Language*</label>
-                                <select
-                                  className="form-select"
-                                  value={formData.preferredGuideLanguage} // Set the value dynamically based on the state
-                                  onChange={(e) => handleInputChange(e, 'preferredGuidedLanguage')} // Pass the name to handleInputChange
-                                >
-                                  <option value="">Select Preferred Language</option>
-                                  <option value="English">English</option>
-                                  <option value="Arabic">Arabic</option>
-                                  <option value="Spanish">Spanish</option>
-                                  {/* ... (other options) */}
-                                </select>
+                              <label>Preferred Language*</label>
+                              <select
+                                className="form-select"
+                                value={formData.preferredGuideLanguage} // Set the value dynamically based on the state
+                                onChange={(e) => handleInputChange(e, 'preferredGuideLanguage')} // Pass the name to handleInputChange
+                              >
+                                <option value="0">Select Language</option>
+                                <option value="English">English</option>
+                                <option value="Arabic">Arabic</option>
+                                <option value="Spanich">Spanich</option>
+                                {/* ... (other options) */}
+                              </select>
 
                               </div>{/* formGroup */}
                             </div>

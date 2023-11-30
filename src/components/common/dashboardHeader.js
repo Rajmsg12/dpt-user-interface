@@ -58,7 +58,7 @@ const DashboardHeader = () => {
                     <div className="userHeaderIn">
                         <div className="userHeaderLhs">
 
-                            <div className="logo"><Link to="/"><img src="images/homepage/logoblack.png" alt="" /></Link></div>
+                            <div className="logo"><Link to="/"><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701321722/innerlogo_yezfc1.svg"} alt="" /></Link></div>
                             <div className="userboardTitle"><span className="ToggleBtn"></span> <span className="closeIcon"></span> Dashboard</div>
                         </div>
                         <div className="userHeaderRhs">

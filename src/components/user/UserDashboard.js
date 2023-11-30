@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserHeader from '../common/dashboardHeader';
+import moment from 'moment'
 import Footer from '../common/Footer';
 import { Link } from 'react-router-dom';
 import './Style/dashboard.css';
@@ -27,6 +28,8 @@ const UserProfile = () => {
   const [user_name, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+const [bookingDetails, setBookingDetails] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -78,8 +81,32 @@ const UserProfile = () => {
         });
     }
   };
-  
 
+  const fetchBookingDetails = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch('http://127.0.0.1:9900/booking/list', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Assuming the response data is an array of booking details
+          setBookingDetails(data.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching booking details:', error);
+        });
+    }
+  };
+  
+  // Use useEffect to fetch booking details on component mount
+  useEffect(() => {
+    fetchBookingDetails();
+  }, []);
+  
+console.log(bookingDetails)
   const handleLogout = () => {
     fetch(`${config.baseUrl}/logout`, {
       method: 'POST',
@@ -171,7 +198,7 @@ const UserProfile = () => {
                     <div className="DashboardBox">
                       <div className="Icon"><img src="images/homepage/graphicon.png" alt="" /></div>
                       <div className="Text">
-                        <div className="Heading">20</div>
+                        <div className="Heading">{bookingDetails.length}</div>
                         <div className="SubHeading">Total Bookings</div>
                       </div>
                     </div>
@@ -195,9 +222,11 @@ const UserProfile = () => {
 
                 <div className="BookingDetail">
                   <h4>Booking Details</h4>
-
+                  
                   <div className="BookingDetailWrapper">
+                
                     <div className="BookingDetailData">
+                   
                       <div className="BookingDetailRow">
                         <div className="srno">SN</div>
                         <div className="OrderID">Order ID</div>
@@ -207,73 +236,14 @@ const UserProfile = () => {
                         <div className="Status">Status</div>
                         <div className="Action">Action</div>
                       </div>
-
+                  
+                      {bookingDetails.map((booking, index) => (
                       <div className="BookingDetailRow">
-                        <div className="srno">01</div>
-                        <div className="OrderID">#JH2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">22/06/2023</div>
-                        <div className="TotalPayment">AED 500</div>
-                        <div className="Status"><Link to="" className="cta success">Success</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="BookingDetailRow">
-                        <div className="srno">02</div>
-                        <div className="OrderID">#AB2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">19/06/2022</div>
-                        <div className="TotalPayment">AED 350</div>
-                        <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="BookingDetailRow">
-                        <div className="srno">03</div>
-                        <div className="OrderID">#CD2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">15/06/2022</div>
-                        <div className="TotalPayment">AED 250</div>
-                        <div className="Status"><Link to="" className="cta canceled">Canceled</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="BookingDetailRow">
-                        <div className="srno">04</div>
-                        <div className="OrderID">#BK2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">02/06/2022</div>
-                        <div className="TotalPayment">AED 150</div>
-                        <div className="Status"><Link to="" className="cta success">Success</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="BookingDetailRow">
-                        <div className="srno">05</div>
+                        <div className="srno">{index+1}</div>
                         <div className="OrderID">#DK2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">22/06/2020</div>
-                        <div className="TotalPayment">AED 300</div>
+                        <div className="BillingName">{booking.first_name}</div>
+                        <div className="Date">{moment(booking.booking_date).format("DD-MM-YYYY")}</div>
+                        <div className="TotalPayment">{booking.total}</div>
                         <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
                         <div className="Action">
                           <div className="IconsAll">
@@ -283,6 +253,8 @@ const UserProfile = () => {
                           </div>
                         </div>
                       </div>
+                       ))}
+                        
 
 
                       <div className="paginationDiv">
@@ -306,6 +278,7 @@ const UserProfile = () => {
                         </nav>
                       </div>
                     </div>
+                   
                   </div>
                 </div>
 
@@ -334,72 +307,13 @@ const UserProfile = () => {
                         <div className="Action">Action</div>
                       </div>
 
+                      {bookingDetails.map((booking, index) => (
                       <div className="BookingDetailRow">
-                        <div className="srno">01</div>
-                        <div className="OrderID">#JH2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">22/06/2023</div>
-                        <div className="TotalPayment">AED 500</div>
-                        <div className="Status"><Link to="" className="cta success">Success</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="BookingDetailRow">
-                        <div className="srno">02</div>
-                        <div className="OrderID">#AB2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">19/06/2022</div>
-                        <div className="TotalPayment">AED 350</div>
-                        <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="BookingDetailRow">
-                        <div className="srno">03</div>
-                        <div className="OrderID">#CD2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">15/06/2022</div>
-                        <div className="TotalPayment">AED 250</div>
-                        <div className="Status"><Link to="" className="cta canceled">Canceled</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="BookingDetailRow">
-                        <div className="srno">04</div>
-                        <div className="OrderID">#BK2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">02/06/2022</div>
-                        <div className="TotalPayment">AED 150</div>
-                        <div className="Status"><Link to="" className="cta success">Success</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="BookingDetailRow">
-                        <div className="srno">05</div>
+                        <div className="srno">{index+1}</div>
                         <div className="OrderID">#DK2033</div>
-                        <div className="BillingName">Emily Arnold</div>
-                        <div className="Date">22/06/2020</div>
-                        <div className="TotalPayment">AED 300</div>
+                        <div className="BillingName">{booking.first_name}</div>
+                        <div className="Date">{moment(booking.booking_date).format("DD-MM-YYYY")}</div>
+                        <div className="TotalPayment">{booking.total}</div>
                         <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
                         <div className="Action">
                           <div className="IconsAll">
@@ -409,6 +323,7 @@ const UserProfile = () => {
                           </div>
                         </div>
                       </div>
+                       ))}
 
 
                       <div className="paginationDiv">

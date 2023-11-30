@@ -517,7 +517,7 @@ function ContentSection({ selectedCurrency }) {
                                 value={formData.preferredGuideLanguage} // Set the value dynamically based on the state
                                 onChange={(e) => handleInputChange(e, 'preferredGuideLanguage')} // Pass the name to handleInputChange
                               >
-                                <option value="0">Select Hotel</option>
+                                <option value="0">Select Language</option>
                                 <option value="English">English</option>
                                 <option value="Arabic">Arabic</option>
                                 <option value="Spanich">Spanich</option>

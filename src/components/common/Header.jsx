@@ -84,7 +84,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
             <div className="HeaderWrapper">
                 <div className="container">
                     <div className="HeaderLayer">
-                        <div className="HeaderLhs"><div className="Logo"><Link to="/"><img src="images/homepage/logo.png" alt="logo" /></Link>
+                        <div className="HeaderLhs"><div className="Logo"><Link to="/"><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701321572/logo_ivx2ol.svg"} alt="logo" /></Link>
                             <div className="desktopNone">
                                 <div className="HeaderRHS">
                                     <div className="Headerdropdownmenu">
