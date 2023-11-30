@@ -37,9 +37,30 @@ function ContentSection({ selectedCurrency }) {
   const [tour_id, setTourId] = useState("");
   const [tour_slug, setTour_Slug] = useState("");
   const [selectedEndLocation, setSelectedEndLocation] = useState("0");
-
+  const [childrenNumber, setChildrenNumber] = useState(0);
+  const [infantsNumber, setInfantsNumber] = useState(0);
+  const [driverNumber, setDriverNumber] = useState(0);
+  const [adultsNumber, setAdultsNumber] = useState(0);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [hotels, setHotels] = useState([]);
   const [tourImage, setTourImage] = useState("");
   const navigate = useNavigate()
+
+
+  useEffect(() => {
+    // Fetch hotel data from the backend API
+    const fetchHotels = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:9900/hotal/list');
+        setHotels(response.data.data); // Assuming the response.data is an array of hotel objects
+      } catch (error) {
+        console.error('Error fetching hotels:', error);
+        // Handle error if the request fails
+      }
+    };
+
+    fetchHotels(); // Call the function to fetch hotels when the component mounts
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -154,7 +175,7 @@ function ContentSection({ selectedCurrency }) {
     // If all checks pass, proceed with adding to cart or other actions
     setIsFormValid(true);
     AddToCart(/* pass your item here */);
-    navigate('/cart');
+    // navigate('/cart');
   };
 
 
@@ -493,19 +514,25 @@ function ContentSection({ selectedCurrency }) {
 
                               </div> {/* formGroup */}
                             </div>
-                            <div className="col-md-12">
+                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
                                 <label>Hotel Name*</label>
                                 <select
                                   className="form-select"
-                                  value={formData.preferredHotelName} // Set the value dynamically based on the state
-                                  onChange={(e) => handleInputChange(e, 'preferredHotelName')} // Pass the name to handleInputChange
+                                  value={formData.preferredHotelName}
+                                  onChange={(e) => {
+                                    handleInputChange(e, 'preferredHotelName');
+                                    // Find the selected hotel data based on the name
+                                    const hotel = hotels.find((hotel) => hotel.hotel_name === e.target.value);
+                                    setSelectedHotel(hotel); // Set the selected hotel data
+                                  }}
                                 >
                                   <option value="0">Select Hotel</option>
-                                  <option value="Hotel Royal Park">Hotel Royal Park</option>
-                                  <option value="Flora Inn Hotel Dubai">Flora Inn Hotel Dubai</option>
-                                  <option value="Abu Dhabi Hotel">Abu Dhabi Hotel</option>
-                                  {/* ... (other options) */}
+                                  {hotels.map((hotel) => (
+                                    <option key={hotel.id} value={hotel.hotel_name}>
+                                      {hotel.hotel_name}
+                                    </option>
+                                  ))}
                                 </select>
                               </div>{/* formGroup */}
                             </div>
@@ -556,49 +583,202 @@ function ContentSection({ selectedCurrency }) {
 
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Adults*</label>
+                                <label>Adults</label>
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control"
                                   placeholder="No of Adults"
-                                  name="adults"  // Add the name attribute
+                                  name="adults"
+                                  onChange={(e) => {
+                                    const adultsValue = parseInt(e.target.value);
+                                    setAdultsNumber(adultsValue >= 0 ? adultsValue : 0);
+                                  }}
+                                  
                                 />
+                                
+                                {selectedHotel && (
+                                  <div>
+                                    <label>Adults Price</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Adults Price"
+                                      value={selectedCurrency === 'AED' ? selectedHotel.adults_price_aed : selectedHotel.adults_price_usd}
+                                    // Show children's price based on selectedCurrency
+                                    />
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+                                {selectedHotel && (
+                                  <div>
+                                    <label>Adults Total Price</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Adults Price"
+                                      value={
+                                        selectedCurrency === 'AED'
+                                          ? selectedHotel.adults_price_aed * adultsNumber || 0
+                                          : selectedHotel.adults_price_usd * adultsNumber || 0
+                                      }
+                                      readOnly // To prevent direct user input
+                                    />
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+
+
 
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
                                 <label>Children</label>
-                                <input type="text" className="form-control" placeholder="Age 5-12" name="children" />
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="Age 5-12"
+                                  name="children"
+                                  onChange={(e) => {
+                                    const childrenValue = parseInt(e.target.value);
+                                    setChildrenNumber(childrenValue >= 0 ? childrenValue : 0);
+                                  }}
+                                  
+                                />
+                                
+                                {selectedHotel && (
+                                  <div>
+                                    <label>Children Price</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Children Price"
+                                      value={selectedCurrency === 'AED' ? selectedHotel.children_price_aed : selectedHotel.children_price_usd}
+                                    // Show children's price based on selectedCurrency
+                                    />
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+                                {selectedHotel && (
+                                  <div>
+                                    <label>Children Total Price</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Children Price"
+                                      value={
+                                        selectedCurrency === 'AED'
+                                          ? selectedHotel.children_price_aed * childrenNumber || 0
+                                          : selectedHotel.children_price_usd * childrenNumber || 0
+                                      }
+                                      readOnly // To prevent direct user input
+                                    />
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+
+
+
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
                                 <label>Infants</label>
-                                <input type="text" className="form-control" placeholder="Age < 5" name="infants" />
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="No of Infants"
+                                  name="infants"
+                                  onChange={(e) => {
+                                    const infantsValue = parseInt(e.target.value);
+                                    setInfantsNumber(infantsValue >= 0 ? infantsValue : 0);
+                                  }}
+                                  
+                                />
+                                
+                                {selectedHotel && (
+                                  <div>
+                                    <label>Infants Price</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Infants Price"
+                                      value={selectedCurrency === 'AED' ? selectedHotel.infants_price_aed : selectedHotel.infants_price_usd}
+                                    // Show children's price based on selectedCurrency
+                                    />
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+                                {selectedHotel && (
+                                  <div>
+                                    <label>Infants Total Price</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Infants Price"
+                                      value={
+                                        selectedCurrency === 'AED'
+                                          ? selectedHotel.infants_price_aed * infantsNumber || 0
+                                          : selectedHotel.infants_price_usd * infantsNumber || 0
+                                      }
+                                      readOnly // To prevent direct user input
+                                    />
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+
+
+
                               </div> {/* formGroup */}
                             </div>
-                            <div className="col-md-6">
-                              <div className="mb-3 formGroup">
-                                <label>Addition driver</label>
-                                <select
-                                  className="form-select"
-                                  value={formData.preferredDriver} // Set the value dynamically based on the state
-                                  onChange={(e) => handleInputChange(e, 'preferredDriver')} // Pass the name to handleInputChange
-                                >
-                                  <option value="">Select Addition Driver</option>
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                  <option value="5">5</option>
-                                  <option value="6">6</option>
-                                  <option value="7">7</option>
-                                  <option value="8">8</option>
-                                  <option value="9">9</option>
-                                  <option value="10">10</option>
-                                  {/* ... (other options) */}
-                                </select>
+                            <div className="col-md-4">
+                              <div className="mb-3 formGroup infoDetail">
+                                <label>Additional Driver</label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="No of Infants"
+                                  name="driver"
+                                  onChange={(e) => {
+                                    const driverValue = parseInt(e.target.value);
+                                    setDriverNumber(driverValue >= 0 ? driverValue : 0);
+                                  }}
+                                  
+                                />
+                                
+                                {selectedHotel && (
+                                  <div>
+                                    <label>Additional Driver Price</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Additional Driver Price"
+                                      value={selectedCurrency === 'AED' ? selectedHotel.driver_price_aed : selectedHotel.driver_price_usd}
+                                    // Show children's price based on selectedCurrency
+                                    />
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+                                {selectedHotel && (
+                                  <div>
+                                    <label>Additional Total Price</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Additional Total Price"
+                                      value={
+                                        selectedCurrency === 'AED'
+                                          ? selectedHotel.driver_price_aed * driverNumber || 0
+                                          : selectedHotel.driver_price_usd * driverNumber || 0
+                                      }
+                                      readOnly // To prevent direct user input
+                                    />
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+
+
+
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-6">
@@ -919,31 +1099,84 @@ function ContentSection({ selectedCurrency }) {
     </div>
   );
   function getUserPrice(tour) {
+    let totalPrice = tour.tour_price_aed;
+  
     if (userType === 2) {
       // Agent user type
-      return (tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100)).toFixed(2);
-    } else if (userType === 3) {
-      // Normal user type
-      return tour.tour_price_aed;
-    } else {
-      // Default case (handle other user types if needed)
-      return tour.tour_price_aed;
+      totalPrice -= totalPrice * (userDiscount / 100);
     }
-
-    // ... (remaining code)
+  
+    // Add children's price based on selectedCurrency
+    if (childrenNumber && selectedHotel) {
+      totalPrice += selectedCurrency === 'AED'
+        ? selectedHotel.children_price_aed * childrenNumber
+        : selectedHotel.children_price_usd * childrenNumber;
+    }
+  
+    // Add adults' price based on selectedCurrency
+    if (adultsNumber && selectedHotel) {
+      totalPrice += selectedCurrency === 'AED'
+        ? selectedHotel.adults_price_aed * adultsNumber
+        : selectedHotel.adults_price_usd * adultsNumber;
+    }
+  
+    // Add infants' price based on selectedCurrency
+    if (infantsNumber && selectedHotel) {
+      totalPrice += selectedCurrency === 'AED'
+        ? selectedHotel.infants_price_aed * infantsNumber
+        : selectedHotel.infants_price_usd * infantsNumber;
+    }
+  
+    // Add additional driver's price based on selectedCurrency
+    if (driverNumber && selectedHotel) {
+      totalPrice += selectedCurrency === 'AED'
+        ? selectedHotel.driver_price_aed * driverNumber
+        : selectedHotel.driver_price_usd * driverNumber;
+    }
+  
+    return totalPrice.toFixed(2);
   }
+  
   function getUserPriceUsd(tour) {
+    let totalPrice = tour.tour_price_usd;
+  
     if (userType === 2) {
       // Agent user type
-      return (tour.tour_price_usd - (tour.tour_price_usd * userDiscount / 100)).toFixed(2);
-    } else if (userType === 3) {
-      // Normal user type
-      return tour.tour_price_usd;
-    } else {
-      // Default case (handle other user types if needed)
-      return tour.tour_price_usd;
+      totalPrice -= totalPrice * (userDiscount / 100);
     }
+  
+    // Add children's price based on selectedCurrency
+    if (childrenNumber && selectedHotel) {
+      totalPrice += selectedCurrency === 'AED'
+        ? selectedHotel.children_price_aed * childrenNumber
+        : selectedHotel.children_price_usd * childrenNumber;
+    }
+  
+    // Add adults' price based on selectedCurrency
+    if (adultsNumber && selectedHotel) {
+      totalPrice += selectedCurrency === 'AED'
+        ? selectedHotel.adults_price_aed * adultsNumber
+        : selectedHotel.adults_price_usd * adultsNumber;
+    }
+  
+    // Add infants' price based on selectedCurrency
+    if (infantsNumber && selectedHotel) {
+      totalPrice += selectedCurrency === 'AED'
+        ? selectedHotel.infants_price_aed * infantsNumber
+        : selectedHotel.infants_price_usd * infantsNumber;
+    }
+  
+    // Add additional driver's price based on selectedCurrency
+    if (driverNumber && selectedHotel) {
+      totalPrice += selectedCurrency === 'AED'
+        ? selectedHotel.driver_price_aed * driverNumber
+        : selectedHotel.driver_price_usd * driverNumber;
+    }
+  
+    return totalPrice.toFixed(2);
   }
+  
+  
 
 }
 
