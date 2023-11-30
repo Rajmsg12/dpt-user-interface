@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './style/billing.css';
 import { getUserPrice } from '../cart/PriceUtlis';
 import { useNavigate } from 'react-router-dom';
+import config from '../../config'
 
 const PersonDetail = () => {
     let cartdata = localStorage.getItem("cartdata");
@@ -44,15 +45,22 @@ const calculateTotal = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
         const token = localStorage.getItem("token");
     
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+    
+        // Include the token in the headers if it exists
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+    
         try {
-            const response = await fetch('https://phpstack-1167113-4078182.cloudwaysapps.com/frontendapi/cart/add', {
+            const response = await fetch(`${config.baseUrl}/cart/add`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`, // Include the token in the headers
-                },
+                headers: headers,
                 body: JSON.stringify(formData),
             });
     
@@ -69,6 +77,7 @@ const calculateTotal = () => {
             console.error('Error:', error);
         }
     };
+    
     
 
     const handleChange = (e) => {
