@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route , useNavigate} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import TopMenu from "./components/TopMenu";
@@ -27,7 +27,18 @@ import ContactUs from './components/conatctUs/contactUs'
 import AboutUs from "./components/aboutUs/about";
 import ThankyouPage from "./components/thankyouPage/thankyouPage";
 
+function NotFound() {
+  const navigate = useNavigate();
 
+  // You can customize the content of the 404 page here
+  return (
+    <div>
+      <h1>404 - Not Found</h1>
+      <p>The page you are looking for does not exist.</p>
+      <button onClick={() => navigate('/')}>Go to Home</button>
+    </div>
+  );
+}
 function App() {
 
   return (
@@ -65,6 +76,7 @@ function App() {
        <Route exact path='/thankyou' element={<ThankyouPage/>} />
        
        <Route exact path='/cart' element={<Cart/>} />
+       <Route path="*" element={<NotFound />} />
 
         </Routes>
       </React.Fragment>

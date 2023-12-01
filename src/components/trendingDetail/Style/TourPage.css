@@ -1216,6 +1216,7 @@ input {
   padding: 0px 15px 15px 25px;
   position: relative;
   width:100%;
+  list-style: none;
 }
 .DetailTab .SecondPartTab .datainnerUl .UlWrapper ul li::after {
   content: "";

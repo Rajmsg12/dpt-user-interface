@@ -64,6 +64,8 @@ input {
   display: block;
 }
 
+
+
 @media only screen and (min-width: 992px) {
   .mobileNone {
     display: block;
@@ -278,7 +280,7 @@ header.userHeader {
   min-width: 315px;
   background-color: #fff;
   position: fixed;
-  top: 99px;
+  top: 90px;
   transition: all 0.3s;
   left: 0px;
   z-index: 2;
@@ -306,22 +308,22 @@ header.userHeader {
   .userboardRHS {
     margin-left: 315px;
   }
-  body.dashboardMenuOpen .userboardLHS {
+  .body.dashboardMenuOpen .userboardLHS {
     left: -315px;
   }
-  body.dashboardMenuOpen .userboardRHS {
+  .body.dashboardMenuOpen .userboardRHS {
     margin-left: 0px;
   }
-  body.dashboardMenuOpen .UserBoardinner {
+  .body.dashboardMenuOpen .UserBoardinner {
     padding: 30px 40px;
   }
-  body.dashboardMenuOpen .userHeaderIn .userHeaderLhs .userboardTitle span.ToggleBtn {
+  .body.dashboardMenuOpen .userHeaderIn .userHeaderLhs .userboardTitle span.ToggleBtn {
     display: none;
   }
-  body.dashboardMenuOpen .userHeaderIn .userHeaderLhs .userboardTitle span.closeIcon {
+  .body.dashboardMenuOpen .userHeaderIn .userHeaderLhs .userboardTitle span.closeIcon {
     display: block;
   }
-  body.dashboardMenuOpen .userboardFooter {
+  .body.dashboardMenuOpen .userboardFooter {
     padding: 20px 40px;
   }
 }
@@ -558,6 +560,7 @@ header.userHeader {
   justify-content: space-between;
   align-items: center;
   display: none;
+  position: relative;
 }
 
 .sidebarLogo a img {
@@ -574,6 +577,7 @@ header.userHeader {
   background-position: center center;
   background-size: 30px;
   cursor: pointer;
+  display: block;
 }
 
 .BookingDetail .BookingDetailRow:nth-of-type(even) {
@@ -632,9 +636,16 @@ header.userHeader {
   margin: 0px 15px;
 }
 
+.userHeaderIn .userHeaderLhs .logo img {
+  max-width: 200px;
+}
+
 @media screen and (max-width: 1199px) {
   .BookingDetail .BookingDetailRow div {
     font-size: 13px;
+  }
+  .userHeaderIn .userHeaderLhs .logo img {
+    max-width: 190px;
   }
 }
 @media screen and (max-width: 1024px) {
@@ -645,14 +656,14 @@ header.userHeader {
     top: 0px;
     height: 100vh;
   }
-  body.dashboardMenuOpen .userboardLHS {
+  .body.dashboardMenuOpen .userboardLHS {
     left: 0px;
     z-index: 5;
   }
   .sidebarLogo {
     display: flex;
   }
-  body.dashboardMenuOpen .menuOverlay {
+  .body.dashboardMenuOpen .menuOverlay {
     display: block;
   }
   .userboardRHS {

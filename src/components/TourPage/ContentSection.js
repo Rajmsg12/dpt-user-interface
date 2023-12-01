@@ -78,7 +78,7 @@ function ContentSection({ selectedCurrency }) {
         setTourPriceUsd(data.data[0].tour_price_usd)
         setTourImage(data.data[0].image)
         setTourId(data.data[0].id)
-      
+
       } catch (error) {
         console.error("Error fetching data from the backend:", error.message);
       }
@@ -128,7 +128,7 @@ function ContentSection({ selectedCurrency }) {
     formData.tourImage = tourImage;
     formData.tourPriceAed = tourPriceAed;
     formData.tourPriceUsd = tourPriceUsd;
-    
+
     formData.tourPriceUsd = tourPriceUsd;
 
     // Set the selectedCurrency in formData
@@ -514,7 +514,7 @@ function ContentSection({ selectedCurrency }) {
 
                               </div> {/* formGroup */}
                             </div>
-                             <div className="col-md-12">
+                            <div className="col-md-12">
                               <div className="mb-3 formGroup">
                                 <label>Hotel Name*</label>
                                 <select
@@ -538,18 +538,18 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                              <label>Preferred Language*</label>
-                              <select
-                                className="form-select"
-                                value={formData.preferredGuideLanguage} // Set the value dynamically based on the state
-                                onChange={(e) => handleInputChange(e, 'preferredGuideLanguage')} // Pass the name to handleInputChange
-                              >
-                                <option value="0">Select Language</option>
-                                <option value="English">English</option>
-                                <option value="Arabic">Arabic</option>
-                                <option value="Spanich">Spanich</option>
-                                {/* ... (other options) */}
-                              </select>
+                                <label>Preferred Language*</label>
+                                <select
+                                  className="form-select"
+                                  value={formData.preferredGuideLanguage} // Set the value dynamically based on the state
+                                  onChange={(e) => handleInputChange(e, 'preferredGuideLanguage')} // Pass the name to handleInputChange
+                                >
+                                  <option value="0">Select Language</option>
+                                  <option value="English">English</option>
+                                  <option value="Arabic">Arabic</option>
+                                  <option value="Spanich">Spanich</option>
+                                  {/* ... (other options) */}
+                                </select>
 
                               </div>{/* formGroup */}
                             </div>
@@ -589,46 +589,26 @@ function ContentSection({ selectedCurrency }) {
                                   className="form-control"
                                   placeholder="No of Adults"
                                   name="adults"
+                                  min="1"
+                                  max="20"
                                   onChange={(e) => {
                                     const adultsValue = parseInt(e.target.value);
                                     setAdultsNumber(adultsValue >= 0 ? adultsValue : 0);
                                   }}
-                                  
+
                                 />
-                                
+
                                 {selectedHotel && (
                                   <div>
-                                    <label>Adults Price</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Adults Price"
-                                      value={selectedCurrency === 'AED' ? selectedHotel.adults_price_aed : selectedHotel.adults_price_usd}
-                                    // Show children's price based on selectedCurrency
-                                    />
+                                    <label>{adultsNumber} ✖ {selectedCurrency === 'AED' ? selectedHotel.adults_price_aed : selectedHotel.adults_price_usd} = {
+                                      selectedCurrency === 'AED'
+                                        ? selectedHotel.adults_price_aed * adultsNumber || 0
+                                        : selectedHotel.adults_price_usd * adultsNumber || 0
+                                    }</label>
+
                                     {/* You can similarly display other prices */}
                                   </div>
                                 )}
-                                {selectedHotel && (
-                                  <div>
-                                    <label>Adults Total Price</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Adults Price"
-                                      value={
-                                        selectedCurrency === 'AED'
-                                          ? selectedHotel.adults_price_aed * adultsNumber || 0
-                                          : selectedHotel.adults_price_usd * adultsNumber || 0
-                                      }
-                                      readOnly // To prevent direct user input
-                                    />
-                                    {/* You can similarly display other prices */}
-                                  </div>
-                                )}
-
-
-
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-4">
@@ -639,46 +619,25 @@ function ContentSection({ selectedCurrency }) {
                                   className="form-control"
                                   placeholder="Age 5-12"
                                   name="children"
+                                  min="1"
+                                  max="10"
                                   onChange={(e) => {
                                     const childrenValue = parseInt(e.target.value);
                                     setChildrenNumber(childrenValue >= 0 ? childrenValue : 0);
                                   }}
-                                  
+
                                 />
-                                
+
                                 {selectedHotel && (
                                   <div>
-                                    <label>Children Price</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Children Price"
-                                      value={selectedCurrency === 'AED' ? selectedHotel.children_price_aed : selectedHotel.children_price_usd}
-                                    // Show children's price based on selectedCurrency
-                                    />
-                                    {/* You can similarly display other prices */}
+                                    <label>{childrenNumber} ✖ {selectedCurrency === 'AED' ? selectedHotel.children_price_aed : selectedHotel.children_price_usd} = {
+                                      selectedCurrency === 'AED'
+                                        ? selectedHotel.children_price_aed * childrenNumber || 0
+                                        : selectedHotel.children_price_usd * childrenNumber || 0
+                                    } </label>
+
                                   </div>
                                 )}
-                                {selectedHotel && (
-                                  <div>
-                                    <label>Children Total Price</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Children Price"
-                                      value={
-                                        selectedCurrency === 'AED'
-                                          ? selectedHotel.children_price_aed * childrenNumber || 0
-                                          : selectedHotel.children_price_usd * childrenNumber || 0
-                                      }
-                                      readOnly // To prevent direct user input
-                                    />
-                                    {/* You can similarly display other prices */}
-                                  </div>
-                                )}
-
-
-
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-4">
@@ -689,45 +648,26 @@ function ContentSection({ selectedCurrency }) {
                                   className="form-control"
                                   placeholder="No of Infants"
                                   name="infants"
+                                  min="1"
+                                  max="10"
                                   onChange={(e) => {
                                     const infantsValue = parseInt(e.target.value);
                                     setInfantsNumber(infantsValue >= 0 ? infantsValue : 0);
                                   }}
-                                  
+
                                 />
-                                
+
                                 {selectedHotel && (
                                   <div>
-                                    <label>Infants Price</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Infants Price"
-                                      value={selectedCurrency === 'AED' ? selectedHotel.infants_price_aed : selectedHotel.infants_price_usd}
-                                    // Show children's price based on selectedCurrency
-                                    />
-                                    {/* You can similarly display other prices */}
-                                  </div>
-                                )}
-                                {selectedHotel && (
-                                  <div>
-                                    <label>Infants Total Price</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Infants Price"
-                                      value={
+                                    <label>{infantsNumber} ✖ {selectedCurrency === 'AED' ? selectedHotel.infants_price_aed : selectedHotel.infants_price_usd} = {
                                         selectedCurrency === 'AED'
                                           ? selectedHotel.infants_price_aed * infantsNumber || 0
                                           : selectedHotel.infants_price_usd * infantsNumber || 0
-                                      }
-                                      readOnly // To prevent direct user input
-                                    />
+                                      }</label>
+                                    
                                     {/* You can similarly display other prices */}
                                   </div>
                                 )}
-
-
 
                               </div> {/* formGroup */}
                             </div>
@@ -739,40 +679,23 @@ function ContentSection({ selectedCurrency }) {
                                   className="form-control"
                                   placeholder="No of Infants"
                                   name="driver"
+                                  min="1"
+                                  max="10"
                                   onChange={(e) => {
                                     const driverValue = parseInt(e.target.value);
                                     setDriverNumber(driverValue >= 0 ? driverValue : 0);
                                   }}
-                                  
+
                                 />
-                                
+
                                 {selectedHotel && (
                                   <div>
-                                    <label>Additional Driver Price</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Additional Driver Price"
-                                      value={selectedCurrency === 'AED' ? selectedHotel.driver_price_aed : selectedHotel.driver_price_usd}
-                                    // Show children's price based on selectedCurrency
-                                    />
-                                    {/* You can similarly display other prices */}
-                                  </div>
-                                )}
-                                {selectedHotel && (
-                                  <div>
-                                    <label>Additional Total Price</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Additional Total Price"
-                                      value={
+                                    <label>{driverNumber} ✖ {selectedCurrency === 'AED' ? selectedHotel.driver_price_aed : selectedHotel.driver_price_usd} = {
                                         selectedCurrency === 'AED'
                                           ? selectedHotel.driver_price_aed * driverNumber || 0
                                           : selectedHotel.driver_price_usd * driverNumber || 0
-                                      }
-                                      readOnly // To prevent direct user input
-                                    />
+                                      }</label>
+                                   
                                     {/* You can similarly display other prices */}
                                   </div>
                                 )}
@@ -899,7 +822,7 @@ function ContentSection({ selectedCurrency }) {
                   per {tour.person} person <strong>({tour.tour_duration})</strong>
                 </div>
                 <div className="right">
-                <Link to="#">View Offers</Link>
+                  <Link to="#">View Offers</Link>
                 </div>
                 <button type="submit" form="tourForm" className="cta">
                   Book This Tour
@@ -928,142 +851,142 @@ function ContentSection({ selectedCurrency }) {
                 </ul>
               </div>
               <div className="DubaiPrivateTour">
-              <div
-              className="TA_selfserveprop"
-              id="TA_selfserveprop642"
-              style={{ width: "100%" }}
-            >
-              <div id="CDSWIDSSP" className="widSSP widSSPnarrow" style={{ width: 240 }}>
-                <div className="widSSPData" style={{ border: "1px solid #589442" }}>
-                  <div className="widSSPBranding">
-                    <dl>
-                      <dt>
-                        <Link target="_blank" to="https://www.tripadvisor.com/">
-                          <img
-                            src="https://www.tripadvisor.com/img/cdsi/img2/branding/150_logo-11900-2.png"
-                            alt="TripAdvisor"
-                          />
-                        </Link>
-                      </dt>
-                      <dt className="widSSPTagline">
-                        Know better. Book better. Go better.
-                      </dt>
-                    </dl>
-                  </div>
-                  {/*/ cdsBranding*/}
-                  <div className="widSSPComponent">
-                    <div className="widSSPSummary">
-                      <dl>
-                        <Link
-                          target="_blank"
-                          to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
-                          onclick="ta.cds.handleTALink(11900,this);return true;"
-                          rel="nofollow"
-                        >
-                          <dt className="widSSPH18">Dubai Private Tour</dt>
-                        </Link>
-                      </dl>
-                    </div>
-                    {/*/ cdsSummary*/}{" "}
-                  </div>
-                  {/*/ cdsComponent*/}
-                  <div className="widSSPComponent widSSPOptional">
-                    <div className="widSSPTrvlRtng">
-                      <dl>
-                        <dt className="widSSPH11">TripAdvisor Traveler Rating</dt>
-                        <dd>
-                          <div className="widSSPOverall">
-                            <img
-                              src="https://static.tacdn.com/img2/ratings/traveler/s5.0.gif"
-                              alt="5.0 of 5 bubbles"
-                              className="rsImg"
-                            />
-                            <div>
-                              Based on <b>1,420</b> traveler reviews
-                            </div>
-                          </div>
-                          {/*/ overall */}{" "}
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                  {/*/ cdsComponent */}
-                  <div className="widSSPWrap widSSPOptional">
-                    <div className="widSSPInformation">
-                      <div className="widSSPWrap">
-                        <div className="widSSPPopIdx widSSPSingle">
-                          <b>TripAdvisor Ranking</b>
-                          <span className="widSSPPopIdxData">
-                            {" "}
-                            <span className="widSSPPopIdxData widSSPPopIdxNumbers">
-                              {" "}
-                              <sup>#</sup>5 of 341{" "}
-                            </span>{" "}
-                            Outdoor Activities in Dubai{" "}
-                          </span>
-                        </div>
-                        {/*/ popIdx*/}{" "}
+                <div
+                  className="TA_selfserveprop"
+                  id="TA_selfserveprop642"
+                  style={{ width: "100%" }}
+                >
+                  <div id="CDSWIDSSP" className="widSSP widSSPnarrow" style={{ width: 240 }}>
+                    <div className="widSSPData" style={{ border: "1px solid #589442" }}>
+                      <div className="widSSPBranding">
+                        <dl>
+                          <dt>
+                            <Link target="_blank" to="https://www.tripadvisor.com/">
+                              <img
+                                src="https://www.tripadvisor.com/img/cdsi/img2/branding/150_logo-11900-2.png"
+                                alt="TripAdvisor"
+                              />
+                            </Link>
+                          </dt>
+                          <dt className="widSSPTagline">
+                            Know better. Book better. Go better.
+                          </dt>
+                        </dl>
                       </div>
-                      {/*/ cdsWrap*/}{" "}
-                    </div>
-                    {/*/ cdsInformation*/}{" "}
-                  </div>
-                  {/*/ cdsWrap*/}
-                  <div className="widSSPComponent widSSPOptional">
-                    <dl className="widSSPReviews">
-                      <dt className="widSSPH11">Most Recent Traveler Reviews</dt>
-                      <dd className="widSSPOneReview">
-                        <ul className="widSSPBullet">
+                      {/*/ cdsBranding*/}
+                      <div className="widSSPComponent">
+                        <div className="widSSPSummary">
+                          <dl>
+                            <Link
+                              target="_blank"
+                              to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                              onclick="ta.cds.handleTALink(11900,this);return true;"
+                              rel="nofollow"
+                            >
+                              <dt className="widSSPH18">Dubai Private Tour</dt>
+                            </Link>
+                          </dl>
+                        </div>
+                        {/*/ cdsSummary*/}{" "}
+                      </div>
+                      {/*/ cdsComponent*/}
+                      <div className="widSSPComponent widSSPOptional">
+                        <div className="widSSPTrvlRtng">
+                          <dl>
+                            <dt className="widSSPH11">TripAdvisor Traveler Rating</dt>
+                            <dd>
+                              <div className="widSSPOverall">
+                                <img
+                                  src="https://static.tacdn.com/img2/ratings/traveler/s5.0.gif"
+                                  alt="5.0 of 5 bubbles"
+                                  className="rsImg"
+                                />
+                                <div>
+                                  Based on <b>1,420</b> traveler reviews
+                                </div>
+                              </div>
+                              {/*/ overall */}{" "}
+                            </dd>
+                          </dl>
+                        </div>
+                      </div>
+                      {/*/ cdsComponent */}
+                      <div className="widSSPWrap widSSPOptional">
+                        <div className="widSSPInformation">
+                          <div className="widSSPWrap">
+                            <div className="widSSPPopIdx widSSPSingle">
+                              <b>TripAdvisor Ranking</b>
+                              <span className="widSSPPopIdxData">
+                                {" "}
+                                <span className="widSSPPopIdxData widSSPPopIdxNumbers">
+                                  {" "}
+                                  <sup>#</sup>5 of 341{" "}
+                                </span>{" "}
+                                Outdoor Activities in Dubai{" "}
+                              </span>
+                            </div>
+                            {/*/ popIdx*/}{" "}
+                          </div>
+                          {/*/ cdsWrap*/}{" "}
+                        </div>
+                        {/*/ cdsInformation*/}{" "}
+                      </div>
+                      {/*/ cdsWrap*/}
+                      <div className="widSSPComponent widSSPOptional">
+                        <dl className="widSSPReviews">
+                          <dt className="widSSPH11">Most Recent Traveler Reviews</dt>
+                          <dd className="widSSPOneReview">
+                            <ul className="widSSPBullet">
+                              <li>
+                                <span className="widSSPDate">Dec 21, 2016:</span>{" "}
+                                <span className="widSSPQuote">“Excellent your group”</span>
+                              </li>
+                              <li>
+                                <span className="widSSPDate">Dec 20, 2016:</span>{" "}
+                                <span className="widSSPQuote">
+                                  “Quick way to explore Dubai if you...”
+                                </span>
+                              </li>
+                            </ul>
+                            {/*/ bullet*/}{" "}
+                          </dd>
+                          {/*/ hReview*/}
+                        </dl>
+                      </div>
+                      <div className="widSSPAll">
+                        <ul className="widSSPReadReview">
                           <li>
-                            <span className="widSSPDate">Dec 21, 2016:</span>{" "}
-                            <span className="widSSPQuote">“Excellent your group”</span>
-                          </li>
-                          <li>
-                            <span className="widSSPDate">Dec 20, 2016:</span>{" "}
-                            <span className="widSSPQuote">
-                              “Quick way to explore Dubai if you...”
-                            </span>
+                            <a
+                              href="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                              id="allreviews"
+                              onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
+                              rel="nofollow"
+                            >
+                              Read reviews
+                            </a>
                           </li>
                         </ul>
-                        {/*/ bullet*/}{" "}
-                      </dd>
-                      {/*/ hReview*/}
-                    </dl>
+                        <ul className="widSSPWriteReview">
+                          <li>
+                            <a
+                              href="https://www.tripadvisor.com/UserReview-g295424-d2510773-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                              id="writereview"
+                              onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
+                              rel="nofollow"
+                            >
+                              Write a review
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      {/*/ cdsAll*/}
+                      <div className="widSSPLegal">© 2016 TripAdvisor LLC</div>
+                      {/*/ cdsLegal*/}{" "}
+                    </div>
+                    {/*/ cdsData*/}
                   </div>
-                  <div className="widSSPAll">
-                    <ul className="widSSPReadReview">
-                      <li>
-                        <a
-                          href="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
-                          id="allreviews"
-                          onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
-                          rel="nofollow"
-                        >
-                          Read reviews
-                        </a>
-                      </li>
-                    </ul>
-                    <ul className="widSSPWriteReview">
-                      <li>
-                        <a
-                          href="https://www.tripadvisor.com/UserReview-g295424-d2510773-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
-                          id="writereview"
-                          onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
-                          rel="nofollow"
-                        >
-                          Write a review
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  {/*/ cdsAll*/}
-                  <div className="widSSPLegal">© 2016 TripAdvisor LLC</div>
-                  {/*/ cdsLegal*/}{" "}
+                  {/*/ CDSPOP.cdsBx*/}
                 </div>
-                {/*/ cdsData*/}
-              </div>
-              {/*/ CDSPOP.cdsBx*/}
-            </div>
               </div>
               <div className="offerDiv">
                 <div className="offer">10% OFF</div>
@@ -1100,83 +1023,83 @@ function ContentSection({ selectedCurrency }) {
   );
   function getUserPrice(tour) {
     let totalPrice = tour.tour_price_aed;
-  
+
     if (userType === 2) {
       // Agent user type
       totalPrice -= totalPrice * (userDiscount / 100);
     }
-  
+
     // Add children's price based on selectedCurrency
     if (childrenNumber && selectedHotel) {
       totalPrice += selectedCurrency === 'AED'
         ? selectedHotel.children_price_aed * childrenNumber
         : selectedHotel.children_price_usd * childrenNumber;
     }
-  
+
     // Add adults' price based on selectedCurrency
     if (adultsNumber && selectedHotel) {
       totalPrice += selectedCurrency === 'AED'
         ? selectedHotel.adults_price_aed * adultsNumber
         : selectedHotel.adults_price_usd * adultsNumber;
     }
-  
+
     // Add infants' price based on selectedCurrency
     if (infantsNumber && selectedHotel) {
       totalPrice += selectedCurrency === 'AED'
         ? selectedHotel.infants_price_aed * infantsNumber
         : selectedHotel.infants_price_usd * infantsNumber;
     }
-  
+
     // Add additional driver's price based on selectedCurrency
     if (driverNumber && selectedHotel) {
       totalPrice += selectedCurrency === 'AED'
         ? selectedHotel.driver_price_aed * driverNumber
         : selectedHotel.driver_price_usd * driverNumber;
     }
-  
+
     return totalPrice.toFixed(2);
   }
-  
+
   function getUserPriceUsd(tour) {
     let totalPrice = tour.tour_price_usd;
-  
+
     if (userType === 2) {
       // Agent user type
       totalPrice -= totalPrice * (userDiscount / 100);
     }
-  
+
     // Add children's price based on selectedCurrency
     if (childrenNumber && selectedHotel) {
       totalPrice += selectedCurrency === 'AED'
         ? selectedHotel.children_price_aed * childrenNumber
         : selectedHotel.children_price_usd * childrenNumber;
     }
-  
+
     // Add adults' price based on selectedCurrency
     if (adultsNumber && selectedHotel) {
       totalPrice += selectedCurrency === 'AED'
         ? selectedHotel.adults_price_aed * adultsNumber
         : selectedHotel.adults_price_usd * adultsNumber;
     }
-  
+
     // Add infants' price based on selectedCurrency
     if (infantsNumber && selectedHotel) {
       totalPrice += selectedCurrency === 'AED'
         ? selectedHotel.infants_price_aed * infantsNumber
         : selectedHotel.infants_price_usd * infantsNumber;
     }
-  
+
     // Add additional driver's price based on selectedCurrency
     if (driverNumber && selectedHotel) {
       totalPrice += selectedCurrency === 'AED'
         ? selectedHotel.driver_price_aed * driverNumber
         : selectedHotel.driver_price_usd * driverNumber;
     }
-  
+
     return totalPrice.toFixed(2);
   }
-  
-  
+
+
 
 }
 

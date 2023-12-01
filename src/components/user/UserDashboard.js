@@ -3,6 +3,9 @@ import UserHeader from '../common/dashboardHeader';
 import moment from 'moment'
 import Footer from '../common/Footer';
 import { Link } from 'react-router-dom';
+import { ReactComponent as IconDoorClosedFill } from "bootstrap-icons/icons/door-closed.svg";
+import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
+import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import './Style/dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import config from '../../config';
@@ -13,8 +16,8 @@ const UserProfile = () => {
     lastName: '',
     email: '',
     country: '',
-    phoneno:'',
-    address:'',
+    phoneno: '',
+    address: '',
   });
   const [passwordData, setPasswordData] = useState({
     old_password: '',
@@ -25,12 +28,47 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const [user_name, setUserName] = useState('');
+  const [first_name, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
-const [bookingDetails, setBookingDetails] = useState([]);
+
+  const [bookingDetails, setBookingDetails] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuClose, setMenuClose] = useState(true);
   const navigate = useNavigate();
+  const toggleMenu = () => {
+    setMenuOpen(prevState => !prevState);
+  };
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch(`${config.baseUrl}/welcome`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+
+      })
+
+        .then(response => response.json())
+
+        .then(data => {
+
+          setUserName(data.data.first_name);
+          setEmail(data.data.email);
+          setIsLoggedIn(true);
+        })
+
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, []);
+
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -42,7 +80,7 @@ const [bookingDetails, setBookingDetails] = useState([]);
       })
         .then((response) => response.json())
         .then((data) => {
-          setUserName(data.data.user_name);
+          setUserName(data.data.first_name);
           setEmail(data.data.email);
           setIsLoggedIn(true);
         })
@@ -53,7 +91,7 @@ const [bookingDetails, setBookingDetails] = useState([]);
   }, []);
   const handleChangePassword = (e) => {
     e.preventDefault();
-  
+
     const token = localStorage.getItem('token');
     if (token) {
       fetch(`${config.baseUrl}/profile/change-password`, {
@@ -67,7 +105,7 @@ const [bookingDetails, setBookingDetails] = useState([]);
         .then((response) => response.json())
         .then((data) => {
           console.log('Change password response:', data);
-  
+
           if (data.success) {
             // Optionally, handle success
             console.log('Password changed successfully!');
@@ -100,20 +138,20 @@ const [bookingDetails, setBookingDetails] = useState([]);
         });
     }
   };
-  
+
   // Use useEffect to fetch booking details on component mount
   useEffect(() => {
     fetchBookingDetails();
   }, []);
-  
-console.log(bookingDetails)
+
+  console.log(bookingDetails)
   const handleLogout = () => {
     fetch(`${config.baseUrl}/logout`, {
       method: 'POST',
     })
       .then(() => {
         localStorage.removeItem('token');
-        localStorage.removeItem('user_name');
+        localStorage.removeItem('first_name');
         setIsLoggedIn(false);
         navigate('/');
       })
@@ -158,27 +196,87 @@ console.log(bookingDetails)
   };
   return (
     <>
-      <UserHeader />
-      {/*<div style={{ textAlign: 'center', margin: '35px' }}>
-        <h4>Name : <span>{user_name}</span></h4>
-        <h4>Email : <span>{email}</span></h4>
-  </div>*/}
+      <header className="userHeader">
+        <div className="customcontainer ">
+          <div className="userHeaderIn">
+            <div className="userHeaderLhs">
+
+              <div className="logo"><Link to="/"><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701321722/innerlogo_yezfc1.svg"} alt="" /></Link></div>
+              <div className="userboardTitle"><span
+                className="ToggleBtn"
+                onClick={() => setMenuOpen(prevState => !prevState)}
+              ></span>
+                 <span className="closeIcon" onClick={closeMenu}></span> Dashboard</div>
+            </div>
+            <div className="userHeaderRhs">
+              <div className="dropdown notificationIcon">
+                <Link className="btn notificationIconTag dropdown-toggle" to="#" role="button" id="notificationIcon" data-bs-toggle="dropdown" aria-expanded="false">
+                  <small>2</small>
+                </Link>
+
+                <ul className="dropdown-menu" aria-labelledby="notificationIcon">
+                  <li><Link className="dropdown-item" to="#"> You have 4 new notifications</Link></li>
+                </ul>
+              </div>
+              <div className="dropdown userIcon">
+                <Link className="btn userIconTag dropdown-toggle" to="#" role="button" id="userIcon" data-bs-toggle="dropdown" aria-expanded="false">
+
+                </Link>
+
+                <ul className="dropdown-menu" aria-labelledby="userIcon">
+                  <li>
+                    {isLoggedIn ? (
+                      <div>
+                        <Link to="/user-dashboard" className="dropdown-item">
+                          <div >
+                            <Person className="text-danger" />
+                            <span className="userName" style={{ color: "black" }}>{first_name}</span>
+                          </div>
+                        </Link>
+                        <li>
+                          <hr className="dropdown-divider" />
+                        </li>
+                        <li>
+                          <Link to="/bookings" className="dropdown-item">
+                            <House className="text-danger" /> Bookings
+                          </Link>
+                        </li>
+                        <li>
+                          <hr className="dropdown-divider" />
+                        </li>
+                        <li>
+                          <Link className="dropdown-item" onClick={handleLogout}>
+                            <IconDoorClosedFill className="text-danger" /> Logout
+                          </Link>
+                        </li>
+                      </div>
+
+                    ) : (
+                      <Link to="/login" className="dropdown-item">Login/SignUp</Link>
+                    )}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
 
-      <div className="userboardContent">
+      <div className={`body ${menuOpen ? 'dashboardMenuOpen' : ''} userboardContent`}>
         <div className="d-flex align-items-start">
           <div className="nav flex-column nav-pills userboardLHS" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <div className="topSidebar">
               <div className="sidebarLogo">
                 <Link to="index.html"> <img src="images/homepage/logoblack.png" alt="" /></Link>
-                <span className="closeIcon"></span>
+                <span className="closeIcon" onClick={closeMenu}></span>
               </div>
 
               <div className="nav-link active DashboardIcon" id="v-pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true"><img src="images/homepage/dashboardicon.png" alt="" /> Dashboard</div>
               <div className="nav-link MyBookingIcon" id="v-pills-mybookings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-mybookings" role="tab" aria-controls="v-pills-mybookings" aria-selected="false"><img src="images/homepage/mybookingicon.png" alt="" /> My Bookings</div>
 
               <div className="nav-link" id="v-pills-editprofile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-editprofile" role="tab" aria-controls="v-pills-editprofile" aria-selected="false"><img src="images/homepage/pen.png" alt="" /> Edit Profile</div>
-       {/*      <div className="nav-link HelpIcon" id="v-pills-help-tab" data-bs-toggle="pill" data-bs-target="#v-pills-help" role="tab" aria-controls="v-pills-help" aria-selected="false"><img src="images/homepage/customer-supporticon.png" alt="" /> Help</div>*/}  
+              {/*      <div className="nav-link HelpIcon" id="v-pills-help-tab" data-bs-toggle="pill" data-bs-target="#v-pills-help" role="tab" aria-controls="v-pills-help" aria-selected="false"><img src="images/homepage/customer-supporticon.png" alt="" /> Help</div>*/}
             </div>
             <div className="logoutDiv">
               <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
@@ -222,11 +320,11 @@ console.log(bookingDetails)
 
                 <div className="BookingDetail">
                   <h4>Booking Details</h4>
-                  
+
                   <div className="BookingDetailWrapper">
-                
+
                     <div className="BookingDetailData">
-                   
+
                       <div className="BookingDetailRow">
                         <div className="srno">SN</div>
                         <div className="OrderID">Order ID</div>
@@ -236,25 +334,25 @@ console.log(bookingDetails)
                         <div className="Status">Status</div>
                         <div className="Action">Action</div>
                       </div>
-                  
+
                       {bookingDetails.map((booking, index) => (
-                      <div className="BookingDetailRow">
-                        <div className="srno">{index+1}</div>
-                        <div className="OrderID">#DK2033</div>
-                        <div className="BillingName">{booking.first_name}</div>
-                        <div className="Date">{moment(booking.booking_date).format("DD-MM-YYYY")}</div>
-                        <div className="TotalPayment">{booking.total}</div>
-                        <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
+                        <div className="BookingDetailRow">
+                          <div className="srno">{index + 1}</div>
+                          <div className="OrderID">#DK2033</div>
+                          <div className="BillingName">{booking.first_name}</div>
+                          <div className="Date">{moment(booking.booking_date).format("DD-MM-YYYY")}</div>
+                          <div className="TotalPayment">{booking.total}</div>
+                          <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
+                          <div className="Action">
+                            <div className="IconsAll">
+                              <Link to="#" className="edit"></Link>
+                              <Link to="#" className="view"></Link>
+                              <Link to="#" className="trash"></Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                       ))}
-                        
+                      ))}
+
 
 
                       <div className="paginationDiv">
@@ -278,7 +376,7 @@ console.log(bookingDetails)
                         </nav>
                       </div>
                     </div>
-                   
+
                   </div>
                 </div>
 
@@ -308,22 +406,22 @@ console.log(bookingDetails)
                       </div>
 
                       {bookingDetails.map((booking, index) => (
-                      <div className="BookingDetailRow">
-                        <div className="srno">{index+1}</div>
-                        <div className="OrderID">#DK2033</div>
-                        <div className="BillingName">{booking.first_name}</div>
-                        <div className="Date">{moment(booking.booking_date).format("DD-MM-YYYY")}</div>
-                        <div className="TotalPayment">{booking.total}</div>
-                        <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
-                        <div className="Action">
-                          <div className="IconsAll">
-                            <Link to="#" className="edit"></Link>
-                            <Link to="#" className="view"></Link>
-                            <Link to="#" className="trash"></Link>
+                        <div className="BookingDetailRow">
+                          <div className="srno">{index + 1}</div>
+                          <div className="OrderID">#DK2033</div>
+                          <div className="BillingName">{booking.first_name}</div>
+                          <div className="Date">{moment(booking.booking_date).format("DD-MM-YYYY")}</div>
+                          <div className="TotalPayment">{booking.total}</div>
+                          <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
+                          <div className="Action">
+                            <div className="IconsAll">
+                              <Link to="#" className="edit"></Link>
+                              <Link to="#" className="view"></Link>
+                              <Link to="#" className="trash"></Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                       ))}
+                      ))}
 
 
                       <div className="paginationDiv">
@@ -396,17 +494,17 @@ console.log(bookingDetails)
                         </div>
 
                         <div className="mb-3">
-                        <label className="form-label">Phone Number</label>
-                        <input
-                          type=" phoneno"
-                          className="form-control"
-                          placeholder="Phone Number"
-                          value={formData.phoneno}
-                          onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
-                          required
-                        />
-                      </div>
-                       
+                          <label className="form-label">Phone Number</label>
+                          <input
+                            type=" phoneno"
+                            className="form-control"
+                            placeholder="Phone Number"
+                            value={formData.phoneno}
+                            onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
+                            required
+                          />
+                        </div>
+
                         <div className="mb-3">
                           <label className="form-label">Address</label>
                           <input
@@ -414,33 +512,33 @@ console.log(bookingDetails)
                             className="form-control"
                             placeholder="Address"
                             value={formData.address}
-                            onChange={(e) => setFormData({ ...formData,address: e.target.value })}
+                            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                             required
                           />
                         </div>
-                       
+
                         <div className="mb-3">
-                        <label className="form-label">Email Address</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          placeholder="Email Address"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                      <label className="form-label">Country</label>
-                      <input
-                        type="country"
-                        className="form-control"
-                        placeholder="Country"
-                        value={formData.country}
-                        onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                        required
-                      />
-                    </div>
+                          <label className="form-label">Email Address</label>
+                          <input
+                            type="email"
+                            className="form-control"
+                            placeholder="Email Address"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            required
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label">Country</label>
+                          <input
+                            type="country"
+                            className="form-control"
+                            placeholder="Country"
+                            value={formData.country}
+                            onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                            required
+                          />
+                        </div>
 
                         <div className="mb-3">
                           <label className="form-label">Country Code</label>

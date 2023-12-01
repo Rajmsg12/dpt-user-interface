@@ -28,6 +28,34 @@ const GetInTouch = () => {
 
     fetchData();
   }, []); // Empty dependency array ensures that the effect runs only once on component mount
+  const url = window.location.href;
+
+  const shareOnFacebook = () => {
+    // Replace with the appropriate Facebook sharing URL
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
+  };
+
+  const shareOnMail = () => {
+    // Replace with the appropriate Mail sharing URL
+    window.location.href = `mailto:?body=${encodeURIComponent(url)}`;
+  };
+
+  const shareOnTwitter = () => {
+    // Replace with the appropriate Twitter sharing URL
+    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`);
+  };
+  const shareOnGooglePlus = () => {
+    // Replace with the appropriate Google+ sharing URL (Google+ has been deprecated)
+    window.open(`https://plus.google.com/share?url=${encodeURIComponent(url)}`);
+  };
+
+  const shareOnLinkedIn = () => {
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`);
+  };
+
+  const shareOnWhatsApp = () => {
+    window.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`;
+  };
 
   return (
     <div>
@@ -42,22 +70,22 @@ const GetInTouch = () => {
             <div className="shareTag">Share with your friends</div>
             <ul>
               <li>
-                <Link to="#" className="fb"></Link>
+                <Link to="#" className="fb" onClick={shareOnFacebook}></Link>
               </li>
               <li>
-                <Link to="#" className="mail"></Link>
+                <Link to="#" className="mail" onClick={shareOnMail}></Link>
               </li>
               <li>
-                <Link to="#" className="tw"></Link>
+                <Link to="#" className="tw" onClick={shareOnTwitter}></Link>
               </li>
               <li>
-                <Link to="#" className="gp"></Link>
+                <Link to="#" className="gp" onClick={shareOnGooglePlus}></Link>
               </li>
               <li>
-                <Link to="#" className="lin"></Link>
+                <Link to="#" className="lin" onClick={shareOnLinkedIn}></Link>
               </li>
               <li>
-                <Link to="#" className="wp"></Link>
+                <Link to="#" className="wp" onClick={shareOnWhatsApp}></Link>
               </li>
             </ul>
           </div>
