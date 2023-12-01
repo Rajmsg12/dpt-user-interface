@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
 import config from '../../config';
+import { useNavigate } from 'react-router-dom';
 
 
 const ListingSection = () => {
@@ -13,6 +14,46 @@ const ListingSection = () => {
   const [apiData, setApiData] = useState(null);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
+
+  const navigate = useNavigate()
+  const [clickedTourId, setClickedTourId] = useState(null);
+  const addToWishlist = async (tourId) => {
+    console.log('Adding to wishlist:', tourId); // Check if function is triggered
+
+    try {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const requestBody = {
+                tour_id: tourId // Setting tour.id as tour_id in the request body
+            };
+
+            const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (response.ok) {
+                // Wishlist addition successful
+                console.log('Tour added to wishlist!');
+                setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
+                navigate("/wishlist");
+            } else {
+                // Handle errors if the addition fails
+                console.error('Failed to add tour to wishlist');
+            }
+        } else {
+            console.error('User not logged in.'); // Log if the user is not logged in
+            // You might want to handle this scenario by redirecting the user to the login page or showing a message
+        }
+    } catch (error) {
+        console.error('Error adding tour to wishlist:', error);
+    }
+};
+ 
 
   const itemsPerPage = 9;
   const handleToggleSidebarMenu = () => {
@@ -139,6 +180,7 @@ const ListingSection = () => {
     return <p>No Data Found</p>;
   }
   
+  
   return (
     <div>
     <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
@@ -205,7 +247,7 @@ const ListingSection = () => {
                         <div className="discount">
                           <span>{tour.discount} %</span>
                         </div>
-                        <div className="wishlistIcon"></div>
+                        <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
                       </div>
                       <div className="imgBottomRow">
                         <div className="lhstext">

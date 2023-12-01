@@ -49,7 +49,7 @@ function ContentSection({ selectedCurrency }) {
     // Fetch hotel data from the backend API
     const fetchHotels = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:9900/hotal/list');
+        const response = await axios.get(`${config.imageUrl}/hotal/list`);
         setHotels(response.data.data); // Assuming the response.data is an array of hotel objects
       } catch (error) {
         console.error('Error fetching hotels:', error);

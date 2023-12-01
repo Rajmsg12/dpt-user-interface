@@ -143,7 +143,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                 <img src="images/homepage/shopping-cart.png" alt="" />
                                                 {cartData.length > 0 && <span className="cart-count">{cartData.length}</span>}
                                             </Link>
-                                            <Link to="/whishlist"><img src="images/homepage/like.png" alt="" /></Link>
+                                            <Link to="/wishlist"><img src="images/homepage/like.png" alt="" /></Link>
 
                                         </div>
 
@@ -280,7 +280,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                             <img src="images/homepage/shopping-cart.png" alt="" />
                                             {cartData.length > 0 && <span className="cart-count">{cartData.length}</span>}
                                         </Link>
-                                        <Link to="/whishlist"><img src="images/homepage/like.png" alt="" /></Link>
+                                        <Link to="/wishlist"><img src="images/homepage/like.png" alt="" /></Link>
 
                                     </div>
 

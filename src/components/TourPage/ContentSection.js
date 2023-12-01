@@ -44,14 +44,52 @@ function ContentSection({ selectedCurrency }) {
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [hotels, setHotels] = useState([]);
   const [tourImage, setTourImage] = useState("");
+
   const navigate = useNavigate()
+  const [clickedTourId, setClickedTourId] = useState(null);
+  const addToWishlist = async (tourId) => {
+    console.log('Adding to wishlist:', tourId); // Check if function is triggered
+
+    try {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const requestBody = {
+                tour_id: tourId // Setting tour.id as tour_id in the request body
+            };
+
+            const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (response.ok) {
+                // Wishlist addition successful
+                console.log('Tour added to wishlist!');
+                setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
+                navigate("/wishlist");
+            } else {
+                // Handle errors if the addition fails
+                console.error('Failed to add tour to wishlist');
+            }
+        } else {
+            console.error('User not logged in.'); // Log if the user is not logged in
+            // You might want to handle this scenario by redirecting the user to the login page or showing a message
+        }
+    } catch (error) {
+        console.error('Error adding tour to wishlist:', error);
+    }
+};
 
 
   useEffect(() => {
     // Fetch hotel data from the backend API
     const fetchHotels = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:9900/hotal/list');
+        const response = await axios.get(`${config.baseUrl}/hotal/list`);
         setHotels(response.data.data); // Assuming the response.data is an array of hotel objects
       } catch (error) {
         console.error('Error fetching hotels:', error);
@@ -118,7 +156,7 @@ function ContentSection({ selectedCurrency }) {
   const id = spliturl1[1];
 
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = (event, tour) => {
     event.preventDefault();
 
     // Set the tour details in formData
@@ -128,7 +166,28 @@ function ContentSection({ selectedCurrency }) {
     formData.tourImage = tourImage;
     formData.tourPriceAed = tourPriceAed;
     formData.tourPriceUsd = tourPriceUsd;
+    const driverTotalPrice =
+    (selectedHotel?.driver_price_aed || 0) * driverNumber || 0;
+  
+  // Similarly for other price calculations
+  const childrenPrice =
+    (selectedHotel?.children_price_aed || 0) * childrenNumber || 0;
+  
+  const adultPrice =
+    (selectedHotel?.adults_price_aed || 0) * adultsNumber || 0;
+  
+  const infantsPrice =
+    (selectedHotel?.infants_price_aed || 0) * infantsNumber || 0;
+  
 
+    // Set the driver's price in formData
+    formData.driverTotalPrice = driverTotalPrice.toFixed(2);
+
+
+    // Set the prices in formData
+    formData.childrenPrice = childrenPrice.toFixed(2);
+    formData.adultPrice = adultPrice.toFixed(2);
+    formData.infantsPrice = infantsPrice.toFixed(2);
     formData.tourPriceUsd = tourPriceUsd;
 
     // Set the selectedCurrency in formData
@@ -175,8 +234,9 @@ function ContentSection({ selectedCurrency }) {
     // If all checks pass, proceed with adding to cart or other actions
     setIsFormValid(true);
     AddToCart(/* pass your item here */);
-    // navigate('/cart');
+    navigate('/cart');
   };
+
 
 
 
@@ -336,7 +396,7 @@ function ContentSection({ selectedCurrency }) {
                             <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
-                        <div className="wishlistTag">
+                        <div className="wishlistTag" onClick={() => addToWishlist(tour.id)}>
                           <span>Wishlist</span>
                         </div>
                       </div>
@@ -366,7 +426,7 @@ function ContentSection({ selectedCurrency }) {
                             <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
-                        <div className="wishlistTag">
+                        <div className="wishlistTag" onClick={() => addToWishlist(tour.id)}>
                           <span>Wishlist</span>
                         </div>
                       </div>
@@ -1022,85 +1082,31 @@ function ContentSection({ selectedCurrency }) {
     </div>
   );
   function getUserPrice(tour) {
-    let totalPrice = tour.tour_price_aed;
-
     if (userType === 2) {
       // Agent user type
-      totalPrice -= totalPrice * (userDiscount / 100);
+      return (tour.tour_price_aed - (tour.tour_price_aed * userDiscount / 100)).toFixed(2);
+    } else if (userType === 3) {
+      // Normal user type
+      return tour.tour_price_aed;
+    } else {
+      // Default case (handle other user types if needed)
+      return tour.tour_price_aed;
     }
 
-    // Add children's price based on selectedCurrency
-    if (childrenNumber && selectedHotel) {
-      totalPrice += selectedCurrency === 'AED'
-        ? selectedHotel.children_price_aed * childrenNumber
-        : selectedHotel.children_price_usd * childrenNumber;
-    }
-
-    // Add adults' price based on selectedCurrency
-    if (adultsNumber && selectedHotel) {
-      totalPrice += selectedCurrency === 'AED'
-        ? selectedHotel.adults_price_aed * adultsNumber
-        : selectedHotel.adults_price_usd * adultsNumber;
-    }
-
-    // Add infants' price based on selectedCurrency
-    if (infantsNumber && selectedHotel) {
-      totalPrice += selectedCurrency === 'AED'
-        ? selectedHotel.infants_price_aed * infantsNumber
-        : selectedHotel.infants_price_usd * infantsNumber;
-    }
-
-    // Add additional driver's price based on selectedCurrency
-    if (driverNumber && selectedHotel) {
-      totalPrice += selectedCurrency === 'AED'
-        ? selectedHotel.driver_price_aed * driverNumber
-        : selectedHotel.driver_price_usd * driverNumber;
-    }
-
-    return totalPrice.toFixed(2);
+    // ... (remaining code)
   }
-
   function getUserPriceUsd(tour) {
-    let totalPrice = tour.tour_price_usd;
-
     if (userType === 2) {
       // Agent user type
-      totalPrice -= totalPrice * (userDiscount / 100);
+      return (tour.tour_price_usd - (tour.tour_price_usd * userDiscount / 100)).toFixed(2);
+    } else if (userType === 3) {
+      // Normal user type
+      return tour.tour_price_usd;
+    } else {
+      // Default case (handle other user types if needed)
+      return tour.tour_price_usd;
     }
-
-    // Add children's price based on selectedCurrency
-    if (childrenNumber && selectedHotel) {
-      totalPrice += selectedCurrency === 'AED'
-        ? selectedHotel.children_price_aed * childrenNumber
-        : selectedHotel.children_price_usd * childrenNumber;
-    }
-
-    // Add adults' price based on selectedCurrency
-    if (adultsNumber && selectedHotel) {
-      totalPrice += selectedCurrency === 'AED'
-        ? selectedHotel.adults_price_aed * adultsNumber
-        : selectedHotel.adults_price_usd * adultsNumber;
-    }
-
-    // Add infants' price based on selectedCurrency
-    if (infantsNumber && selectedHotel) {
-      totalPrice += selectedCurrency === 'AED'
-        ? selectedHotel.infants_price_aed * infantsNumber
-        : selectedHotel.infants_price_usd * infantsNumber;
-    }
-
-    // Add additional driver's price based on selectedCurrency
-    if (driverNumber && selectedHotel) {
-      totalPrice += selectedCurrency === 'AED'
-        ? selectedHotel.driver_price_aed * driverNumber
-        : selectedHotel.driver_price_usd * driverNumber;
-    }
-
-    return totalPrice.toFixed(2);
   }
-
-
-
 }
 
 const mapStateToProps = (state) => ({

@@ -15,11 +15,40 @@ const Cart = ({ selectedCurrency }) => {
   console.log(cart)
 
   const navigate = useNavigate()
+ 
+  const particularItemPriceAed = (item) => {
+    if (!item) return 0; // Check if item is undefined or null
+  
+    const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
+    const totalAdultPrice = parseFloat(item.adultPrice || 0);
+    const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
+    const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
+    const itemPriceAED = parseFloat(item.tourPriceAed) || 0;
+    const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
+    return totalPriceForItem.toFixed(2); // Format the price to two decimal places
+  };
+  
+  const particularItemPriceUsd = (item) => {
+    if (!item) return 0; // Check if item is undefined or null
+  
+    const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
+    const totalAdultPrice = parseFloat(item.adultPrice || 0);
+    const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
+    const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
+    const itemPriceUSD = parseFloat(item.tourPriceUsd) || 0;
+    const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
+    return totalPriceForItem.toFixed(2); // Format the price to two decimal places
+  };
+  
   const calculateTotal = () => {
-    const subtotal = Number(cart.reduce((total, item) => total + (getUserPrice(item)), 0));
+    const subtotal = cart.reduce((total, item) => {
+      return total + parseFloat(particularItemPriceAed(item)); // Calculate subtotal for AED prices
+    }, 0);
+  
     const taxPercentage = 0.18; // 18% tax
     const total = subtotal * taxPercentage;
-    const fullTotal = subtotal - total
+    const fullTotal = subtotal - total;
+  
     return {
       subtotal,
       taxPercentage,
@@ -27,7 +56,7 @@ const Cart = ({ selectedCurrency }) => {
       total
     };
   };
-
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartCount, setCartCount] = useState("");
   const [expandedItemIndex, setExpandedItemIndex] = useState(null);
@@ -99,24 +128,24 @@ const Cart = ({ selectedCurrency }) => {
                     <div className="CartContentWrapper">
                       <h4>{item.tourName}</h4>
                       <div className="Price">
-                      {isLoggedIn ? (
-                        <div className="aedtext">
-                          {item.selectedCurrency === "AED" ? (
-                            <strong>AED {item.tourPriceAed}</strong>
-                          ) : (
-                            <strong>USD {item.tourPriceUsd}</strong>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="aedtext">
-                          {item.selectedCurrency === "AED" ? (
-                            <strong>AED {item.tourPriceAed}</strong>
-                          ) : (
-                            <strong>USD {item.tourPriceUsd}</strong>
-                          )}
-                        </div>
-                      )}
-                      
+                        {isLoggedIn ? (
+                          <div className="aedtext">
+                            {item.selectedCurrency === "AED" ? (
+                               <strong>AED {particularItemPriceAed(item)}</strong>
+                            ) : (
+                              <strong>USD {particularItemPriceUsd(item)}</strong>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="aedtext">
+                            {item.selectedCurrency === "AED" ? (
+                              <strong>AED {particularItemPriceAed(item)}</strong>
+                            ) : (
+                              <strong>USD {particularItemPriceUsd(item)}</strong>
+                            )}
+                          </div>
+                        )}
+
                       </div>
                       <div className="BtnGroup">
                         <Link
@@ -229,12 +258,12 @@ const Cart = ({ selectedCurrency }) => {
               <div className="OrderSummaryDiv">
                 <div className="heading">Order Summary</div>
                 <div className="OrderSummaryTable">
-                
+
                   <div className="OrderSummaryTablebody">
                     <div className="OrderSummaryTablerow">
                       <span>Subtotal</span>
                       <span>
-                      {selectedCurrency} <strong>{calculateTotal().subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                        {selectedCurrency} <strong>{calculateTotal().subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
                       </span>
                     </div>
                     <div className="OrderSummaryTablerow">
@@ -245,9 +274,9 @@ const Cart = ({ selectedCurrency }) => {
                     </div>
                     <div className="OrderSummaryTablerow">
                       <span>Order total</span>
-                    
+
                       <span>
-                      {selectedCurrency}  <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                        {selectedCurrency}  <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
 
                       </span>
                     </div>

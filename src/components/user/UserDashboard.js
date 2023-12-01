@@ -123,7 +123,7 @@ const UserProfile = () => {
   const fetchBookingDetails = () => {
     const token = localStorage.getItem('token');
     if (token) {
-      fetch('http://127.0.0.1:9900/booking/list', {
+      fetch(`${config.baseUrl}/booking/list`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

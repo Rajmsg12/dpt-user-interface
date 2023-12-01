@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route , useNavigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import TopMenu from "./components/TopMenu";
@@ -7,7 +7,7 @@ import DetailSection from "./components/pages/TourSection";
 import Homepage from "./components/pages/Homepage";
 import DetailPage from './components/pages/TourSection'
 import DestinationPage from './components/pages/DestinationDetail'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate here
 import TourListing from './components/pages/TourListingMain'
 import Login from './components/user/Login';
 import Register from "./components/user/Register";
@@ -26,21 +26,10 @@ import PrivacyPolicy from './components/privacyPolicy/privacyPolicy'
 import ContactUs from './components/conatctUs/contactUs'
 import AboutUs from "./components/aboutUs/about";
 import ThankyouPage from "./components/thankyouPage/thankyouPage";
+import NotFound from './components/404/notFound'
+import Wishlist from "./components/pages/wishlist";
 
-function NotFound() {
-  const navigate = useNavigate();
-
-  // You can customize the content of the 404 page here
-  return (
-    <div>
-      <h1>404 - Not Found</h1>
-      <p>The page you are looking for does not exist.</p>
-      <button onClick={() => navigate('/')}>Go to Home</button>
-    </div>
-  );
-}
-function App() {
-
+const App = () => {
   return (
     <Router basename={'/'}>
       <React.Fragment>
@@ -74,9 +63,9 @@ function App() {
        <Route exact path='/contact-us' element={<ContactUs/>} />
        <Route exact path='/about-us' element={<AboutUs/>} />
        <Route exact path='/thankyou' element={<ThankyouPage/>} />
-       
+       <Route exact path='/wishlist' element={<Wishlist/>} />
        <Route exact path='/cart' element={<Cart/>} />
-       <Route path="*" element={<NotFound />} />
+       <Route path="*" element={<NotFound/>} />
 
         </Routes>
       </React.Fragment>

@@ -21,6 +21,59 @@ const calculateTotal = () => {
       total
     };
   };
+  const [errors, setErrors] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    confirm_email: '',
+    nationality: '',
+    discover_us: '',
+    country: '',
+    cell_no: '',
+});
+const validateForm = () => {
+    let valid = true;
+    const newErrors = {
+        first_name: '',
+        last_name: '',
+        email: '',
+        confirm_email: '',
+        nationality: '',
+        discover_us: '',
+        country: '',
+        cell_no: '',
+    };
+
+    // Validate first name
+    if (!formData.first_name.trim()) {
+        newErrors.first_name = 'First name is required';
+        valid = false;
+    }
+
+    // Validate last name
+    if (!formData.last_name.trim()) {
+        newErrors.last_name = 'Last name is required';
+        valid = false;
+    }
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+        newErrors.email = 'Valid email is required';
+        valid = false;
+    }
+
+    // Validate confirm email
+    if (formData.confirm_email.trim() !== formData.email.trim()) {
+        newErrors.confirm_email = 'Emails do not match';
+        valid = false;
+    }
+
+    // Validate other fields similarly...
+
+    setErrors(newErrors);
+    return valid;
+};
 
 
 
@@ -46,37 +99,41 @@ const calculateTotal = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        const token = localStorage.getItem("token");
+        const isFormValid = validateForm();
     
-        const headers = {
-            'Content-Type': 'application/json',
-        };
+        if (isFormValid) {
+            const token = localStorage.getItem("token");
     
-        // Include the token in the headers if it exists
-        if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
-        }
+            const headers = {
+                'Content-Type': 'application/json',
+            };
     
-        try {
-            const response = await fetch(`${config.baseUrl}/cart/add`, {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(formData),
-            });
-    
-            if (response.ok) {
-                // Handle success, e.g., show a success message or redirect
-                console.log('Booking successful');
-                navigate('/thankyou');
-                localStorage.clear();
-            } else {
-                // Handle error, e.g., show an error message
-                console.error('Booking failed');
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
             }
-        } catch (error) {
-            console.error('Error:', error);
+    
+            try {
+                const response = await fetch(`${config.baseUrl}/cart/add`, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(formData),
+                });
+    
+                if (response.ok) {
+                    console.log('Booking successful');
+                    navigate('/thankyou');
+                    localStorage.clear();
+                } else {
+                    console.error('Booking failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        } else {
+            console.log('Form has validation errors');
         }
     };
+    
     
     
 
@@ -114,7 +171,7 @@ const calculateTotal = () => {
                                                             value={formData.first_name} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
-
+                                                        {errors.first_name && <div className="error">{errors.first_name}</div>}
                                                     </div>
                                                     {/*formGroup*/}
                                                 </div>
@@ -130,6 +187,7 @@ const calculateTotal = () => {
                                                             value={formData.last_name} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
+                                                        {errors.last_name && <div className="error">{errors.localStorage_name}</div>}
 
                                                     </div>
                                                     {/*formGroup*/}
@@ -138,7 +196,7 @@ const calculateTotal = () => {
                                                     <div className="mb-3 formGroup">
                                                         <label>Email*</label>
                                                         <input
-                                                            type="text"
+                                                            type="mail"
                                                             className="form-control"
                                                             placeholder="Enter Email"
                                                             required=""
@@ -146,6 +204,7 @@ const calculateTotal = () => {
                                                             value={formData.email} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
+                                                        {errors.email && <div className="error">{errors.email}</div>}
 
                                                     </div>
                                                     {/*formGroup*/}
@@ -154,7 +213,7 @@ const calculateTotal = () => {
                                                     <div className="mb-3 formGroup">
                                                         <label>Confirm Email*</label>
                                                         <input
-                                                            type="text"
+                                                            type="mail"
                                                             className="form-control"
                                                             placeholder="Confirm Email"
                                                             required=""
@@ -162,6 +221,7 @@ const calculateTotal = () => {
                                                             value={formData.confirm_email} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
+                                                         {errors.confirm_email && <div className="error">{errors.confirm_email}</div>}
 
                                                     </div>
                                                     {/*formGroup*/}
@@ -206,12 +266,13 @@ const calculateTotal = () => {
                                                             <option value="Botswana">Botswana</option>
                                                             <option value="Brazil">Brazil</option>
                                                             <option value="Benin">Benin</option>
-                                                            <option value="Bermuda">India</option>
+                                                            <option value="India">India</option>
                                                             <option value="Yemen">Yemen</option>
                                                             <option value="Yugoslavia ">Yugoslavia </option>
                                                             <option value="Zambia">Zambia</option>
                                                             <option value="Zimbabwe">Zimbabwe</option>
                                                         </select>
+                                                        {errors.nationality && <div className="error">{errors.nationality}</div>}
                                                     </div>
                                                     {/*formGroup*/}
                                                 </div>

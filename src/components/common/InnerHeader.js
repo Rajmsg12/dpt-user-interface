@@ -87,6 +87,7 @@ const InnerHeader = ({ selectedCurrency, setCurrency}) => {
     setSearchCountry(country);
   };
   const handleCurrencyChange = (currency) => {
+    localStorage.clear();
     setCurrency(currency);
 
 };
