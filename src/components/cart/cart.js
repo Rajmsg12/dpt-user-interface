@@ -2,17 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "./CartActions";
 import { useNavigate } from "react-router-dom";
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import './style/cart.css'
 import { getUserPrice } from './PriceUtlis';
 import config from "../../config";
 
-const Cart = ({ selectedCurrency }) => {
+const Cart = () => {
   const dispatch = useDispatch();
   let cartdata = localStorage.getItem("cartdata");
   const [cart, setCart] = useState([]);
   // const cart = useSelector((state) => state.cart.cart);
-  console.log(cart)
+  const ourSelectedCurrency = cart.length > 0 ? cart[0].selectedCurrency : 'AED';
+  console.log(ourSelectedCurrency);
+  
 
   const navigate = useNavigate()
  
@@ -263,7 +266,7 @@ const Cart = ({ selectedCurrency }) => {
                     <div className="OrderSummaryTablerow">
                       <span>Subtotal</span>
                       <span>
-                        {selectedCurrency} <strong>{calculateTotal().subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                        {ourSelectedCurrency} <strong>{calculateTotal().subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
                       </span>
                     </div>
                     <div className="OrderSummaryTablerow">
@@ -276,7 +279,7 @@ const Cart = ({ selectedCurrency }) => {
                       <span>Order total</span>
 
                       <span>
-                        {selectedCurrency}  <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                        {ourSelectedCurrency}  <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
 
                       </span>
                     </div>
@@ -295,4 +298,6 @@ const Cart = ({ selectedCurrency }) => {
   );
 };
 
+
 export default Cart;
+

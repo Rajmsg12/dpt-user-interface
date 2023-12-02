@@ -4,23 +4,60 @@ import { getUserPrice } from '../cart/PriceUtlis';
 import { useNavigate } from 'react-router-dom';
 import config from '../../config'
 
-const PersonDetail = () => {
+const PersonDetail = ({ selectedCurrency }) => {
     let cartdata = localStorage.getItem("cartdata");
     const MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
     const totalPrice = MyCartDetail.map(item => item.tourPriceAed).reduce((acc, price) => acc + price, 0);
     const navigate = useNavigate()
-    console.log(cartdata)
-const calculateTotal = () => {
-    const taxPercentage = 0.18; // 18% tax
-    const total = totalPrice * taxPercentage;
-    const fullTotal = totalPrice - total
-    return {
-    totalPrice,
-      taxPercentage,
-      fullTotal,
-      total
-    };
-  };
+    const ourSelectedCurrency = MyCartDetail.length > 0 ? MyCartDetail[0].selectedCurrency : 'AED';
+
+    const particularItemPriceAed = (item) => {
+        if (!item) return 0; // Check if item is undefined or null
+      
+        const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
+        const totalAdultPrice = parseFloat(item.adultPrice || 0);
+        const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
+        const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
+        const itemPriceAED = parseFloat(item.tourPriceAed) || 0;
+        const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
+        return totalPriceForItem.toFixed(2); // Format the price to two decimal places
+      };
+      
+      const particularItemPriceUsd = (item) => {
+        if (!item) return 0; // Check if item is undefined or null
+      
+        const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
+        const totalAdultPrice = parseFloat(item.adultPrice || 0);
+        const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
+        const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
+        const itemPriceUSD = parseFloat(item.tourPriceUsd) || 0;
+        const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
+        return totalPriceForItem.toFixed(2); // Format the price to two decimal places
+      };
+      const subtotal = Array.isArray(MyCartDetail)
+  ? MyCartDetail.reduce((total, item) => {
+      return total + parseFloat(particularItemPriceAed(item)); // Calculate subtotal for AED prices
+    }, 0)
+  : 0;
+      
+      const calculateTotal = () => {
+        const taxPercentage = 0.18; // 18% tax
+        const total = subtotal * taxPercentage;
+        const fullTotal = subtotal - total;
+      
+        return {
+          subtotal,
+          taxPercentage,
+          fullTotal,
+          total
+        };
+      };
+
+    //   const storedCurrency = localStorage.getItem('selectedCurrency');
+    //   const parsedCurrency = storedCurrency ? JSON.parse(storedCurrency) : 'AED';
+      // Default value 'AED' if not found in local storage
+
+      
   const [errors, setErrors] = useState({
     first_name: '',
     last_name: '',
@@ -122,7 +159,6 @@ const validateForm = () => {
                 if (response.ok) {
                     console.log('Booking successful');
                     navigate('/thankyou');
-                    localStorage.clear();
                 } else {
                     console.error('Booking failed');
                 }
@@ -375,7 +411,7 @@ const validateForm = () => {
                                                 <div className="OrderSummaryTablerow">
                                                     <span>Subtotal</span>
                                                     <span>
-                                                        AED <strong>{totalPrice}</strong>
+                                                         {ourSelectedCurrency} <strong>{calculateTotal().subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
                                                     </span>
                                                 </div>
                                                 {/*OrderSummaryTablerow*/}
@@ -386,7 +422,7 @@ const validateForm = () => {
                                                 {/*OrderSummaryTablerow*/}
                                                 <div className="OrderSummaryTablerow">
                                                     <span>Order total</span>
-                                                    AED <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                                                    {ourSelectedCurrency} <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
                                                 </div>
                                                 {/*OrderSummaryTablerow*/}
                                                 <div className="ProceedCheckoutCta">
