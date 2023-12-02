@@ -660,7 +660,7 @@ function ContentSection({ selectedCurrency }) {
 
                                 {selectedHotel && (
                                   <div>
-                                    <label>{adultsNumber} ✖ {selectedCurrency === 'AED' ? selectedHotel.adults_price_aed : selectedHotel.adults_price_usd} = {
+                                    <label>{adultsNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.adults_price_aed : selectedHotel.adults_price_usd} = {selectedCurrency} {
                                       selectedCurrency === 'AED'
                                         ? selectedHotel.adults_price_aed * adultsNumber || 0
                                         : selectedHotel.adults_price_usd * adultsNumber || 0
@@ -690,7 +690,7 @@ function ContentSection({ selectedCurrency }) {
 
                                 {selectedHotel && (
                                   <div>
-                                    <label>{childrenNumber} ✖ {selectedCurrency === 'AED' ? selectedHotel.children_price_aed : selectedHotel.children_price_usd} = {
+                                    <label>{childrenNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.children_price_aed : selectedHotel.children_price_usd} = {selectedCurrency} {
                                       selectedCurrency === 'AED'
                                         ? selectedHotel.children_price_aed * childrenNumber || 0
                                         : selectedHotel.children_price_usd * childrenNumber || 0
@@ -719,7 +719,7 @@ function ContentSection({ selectedCurrency }) {
 
                                 {selectedHotel && (
                                   <div>
-                                    <label>{infantsNumber} ✖ {selectedCurrency === 'AED' ? selectedHotel.infants_price_aed : selectedHotel.infants_price_usd} = {
+                                    <label>{infantsNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.infants_price_aed : selectedHotel.infants_price_usd} = {selectedCurrency} {
                                         selectedCurrency === 'AED'
                                           ? selectedHotel.infants_price_aed * infantsNumber || 0
                                           : selectedHotel.infants_price_usd * infantsNumber || 0
@@ -750,7 +750,7 @@ function ContentSection({ selectedCurrency }) {
 
                                 {selectedHotel && (
                                   <div>
-                                    <label>{driverNumber} ✖ {selectedCurrency === 'AED' ? selectedHotel.driver_price_aed : selectedHotel.driver_price_usd} = {
+                                    <label>{driverNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.driver_price_aed : selectedHotel.driver_price_usd} = {selectedCurrency} {
                                         selectedCurrency === 'AED'
                                           ? selectedHotel.driver_price_aed * driverNumber || 0
                                           : selectedHotel.driver_price_usd * driverNumber || 0
@@ -881,16 +881,16 @@ function ContentSection({ selectedCurrency }) {
                 <div className="Person">
                   per {tour.person} person <strong>({tour.tour_duration})</strong>
                 </div>
-                <div className="right">
+               {/*     <div className="right">
                   <Link to="#">View Offers</Link>
-                </div>
-                <button type="submit" form="tourForm" className="cta">
+                </div>*/}  
+              {/*   <button type="submit" form="tourForm" className="cta">
                   Book This Tour
-                </button>
-                <p>
+                </button>*/}
+               {/*  <p>
                   Free cancellation Up to 24 hours in advance.{" "}
                   <Link to="#">Read More</Link>
-                </p>
+                </p>*/}
               </div>
               <div className="Attractions">
                 <div className="titleRow">
@@ -1054,9 +1054,9 @@ function ContentSection({ selectedCurrency }) {
                   we offer the best tour packages for Dubai & Abu Dhabi at
                   affordable prices.
                 </p>
-                <Link to="#" className="cta">
+            {/*    <Link to="#" className="cta">
                   Check Out
-                </Link>
+                </Link>*/} 
               </div>
               <div className="TouristDiv">
                 <div className="img">
@@ -1070,9 +1070,9 @@ function ContentSection({ selectedCurrency }) {
                 <span>Dubai</span>
                 <span>Tourist Visa</span>
                 <div className="TouristFooter">
-                  <Link to="#" className="cta">
+              {/*     <Link to="#" className="cta">
                     Apply Now
-                  </Link>
+                  </Link>*/}
                 </div>
               </div>
             </div>

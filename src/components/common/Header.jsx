@@ -34,10 +34,10 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
     const handleCurrencyChange = (currency) => {
         // Clear localStorage when changing currency
         localStorage.clear();
-    
+
         // Update the selected currency
         setCurrency(currency);
-    
+
         // Additional logic to update prices in the UI or fetch new data if needed
     };
 
@@ -143,7 +143,18 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                 <img src="images/homepage/shopping-cart.png" alt="" />
                                                 {cartData.length > 0 && <span className="cart-count">{cartData.length}</span>}
                                             </Link>
-                                            <Link to="/wishlist"><img src="images/homepage/like.png" alt="" /></Link>
+                                            {
+                                                isLoggedIn ? (
+                                                    <Link to="/wishlist">
+                                                        <img src="images/homepage/like.png" alt="" />
+                                                    </Link>
+                                                ) : (
+                                                    <Link to="/login">
+                                                        <img src="images/homepage/like.png" alt="" />
+                                                    </Link>
+                                                )
+                                            }
+
 
                                         </div>
 
@@ -280,7 +291,18 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                             <img src="images/homepage/shopping-cart.png" alt="" />
                                             {cartData.length > 0 && <span className="cart-count">{cartData.length}</span>}
                                         </Link>
-                                        <Link to="/wishlist"><img src="images/homepage/like.png" alt="" /></Link>
+                                        {
+                                            isLoggedIn ? (
+                                                <Link to="/wishlist">
+                                                    <img src="images/homepage/like.png" alt="" />
+                                                </Link>
+                                            ) : (
+                                                <Link to="/login">
+                                                    <img src="images/homepage/like.png" alt="" />
+                                                </Link>
+                                            )
+                                        }
+
 
                                     </div>
 

@@ -8,6 +8,27 @@ import config from '../../config'
 const Footer = () => {
     const [categories, setCategories] = useState([]);
     const currentYear = new Date().getFullYear();
+    const [showChat, setShowChat] = useState(false);
+
+    useEffect(() => {
+        const loadJivosite = () => {
+            const widgetId = 'Ajwd8F0W7H';
+            const script = document.createElement('script');
+            script.src = `//code.jivosite.com/script/widget/${widgetId}`;
+            script.async = true;
+
+            document.body.appendChild(script);
+        };
+
+        // Fetch categories useEffect code...
+
+        setShowChat(true);
+
+        if (showChat) {
+            loadJivosite();
+        }
+    }, [showChat]);
+
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -36,16 +57,16 @@ const Footer = () => {
                     <div className="followtext">Follow us on</div>
                     <ul>
                         <li>
-                            <Link to="" className="fb"></Link>
+                            <Link to="https://www.facebook.com/DubaiPrivateTour" className="fb"></Link>
                         </li>
                         <li>
-                            <Link to="" className="tw"></Link>
+                            <Link to="https://twitter.com/i/flow/login?redirect_after_login=%2Fdubaipvttour" className="tw"></Link>
                         </li>
                         <li>
-                            <Link to="" className="yt"></Link>
+                            <Link to="https://www.youtube.com/channel/UC1b7fJBbKWpHYMUnNQ5XTCA" className="yt"></Link>
                         </li>
                         <li>
-                            <Link to="" className="ig"></Link>
+                            <Link to="https://www.instagram.com/dubaiprivatetour/" className="ig"></Link>
                         </li>
                     </ul>
                 </div>
@@ -106,7 +127,7 @@ const Footer = () => {
                         <Link to="#">
                             <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738421/footerimg1_zar3zu.png"} alt="" />
                         </Link>
-                        <Link to="#">
+                        <Link to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html">
                             <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738422/footerimg2_ywzywb.png"} alt="" />
                         </Link>
                         <Link to="#">
@@ -160,6 +181,28 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
+            {showChat && (
+                <div
+                    style={{
+                        position: "fixed",
+                        bottom: "20px", // Adjust this value to set the distance from the bottom
+                        right: "20px", // Adjust this value to set the distance from the right
+                        zIndex: "1000" // Adjust this value to ensure it appears above other elements
+                    }}
+                >
+                    {/* Add Jivosite chat script directly */}
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                                (function(){ var widget_id = 'Ajwd8F0W7H';
+                                var d=document;var w=window;function l(){
+                                var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);}if(d.readyState=='complete'){l();}else{if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+                            `
+                        }}
+                    />
+                </div>
+            )}
+            
         </footer>
     );
 };

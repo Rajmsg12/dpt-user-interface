@@ -65,7 +65,7 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
 };
 
 
-const InnerHeader = ({ selectedCurrency, setCurrency}) => {
+const InnerHeader = ({ selectedCurrency, setCurrency }) => {
   const search = () => {
 
   }
@@ -90,7 +90,7 @@ const InnerHeader = ({ selectedCurrency, setCurrency}) => {
     localStorage.clear();
     setCurrency(currency);
 
-};
+  };
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
@@ -250,7 +250,14 @@ const InnerHeader = ({ selectedCurrency, setCurrency}) => {
                     {/* Cart Icon */}
                     <span className="badgeCart" style={{ 'color': 'black' }}>{cartData.length}</span>
                   </Link>
-                  <Link to="/wishlist" className="wishlist"></Link>
+                  {
+                    isLoggedIn ? (
+                      <Link to="/wishlist" className="wishlist"></Link>
+                    ) : (
+                      <Link to="/login" className="wishlist"></Link>
+                    )
+                  }
+
 
                   <div className="dropdown userIcon">
                     <Link className="btn userIconTag dropdown-toggle" to="/" role="button" id="userIcon" data-bs-toggle="dropdown" aria-expanded="false"></Link>

@@ -209,10 +209,10 @@ const UserProfile = () => {
                  <span className="closeIcon" onClick={closeMenu}></span> Dashboard</div>
             </div>
             <div className="userHeaderRhs">
-              <div className="dropdown notificationIcon">
-                <Link className="btn notificationIconTag dropdown-toggle" to="#" role="button" id="notificationIcon" data-bs-toggle="dropdown" aria-expanded="false">
+           <div className="dropdown notificationIcon">
+               {/*     <Link className="btn notificationIconTag dropdown-toggle" to="#" role="button" id="notificationIcon" data-bs-toggle="dropdown" aria-expanded="false">
                   <small>2</small>
-                </Link>
+                </Link>*/}
 
                 <ul className="dropdown-menu" aria-labelledby="notificationIcon">
                   <li><Link className="dropdown-item" to="#"> You have 4 new notifications</Link></li>
@@ -355,7 +355,7 @@ const UserProfile = () => {
 
 
 
-                      <div className="paginationDiv">
+                    {/*  <div className="paginationDiv">
                         <nav aria-label="Page navigation example">
                           <ul className="pagination">
                             <li className="page-item">
@@ -374,7 +374,7 @@ const UserProfile = () => {
                             </li>
                           </ul>
                         </nav>
-                      </div>
+                      </div>*/} 
                     </div>
 
                   </div>
@@ -424,7 +424,7 @@ const UserProfile = () => {
                       ))}
 
 
-                      <div className="paginationDiv">
+                    {/*  <div className="paginationDiv">
                         <nav aria-label="Page navigation example">
                           <ul className="pagination">
                             <li className="page-item">
@@ -443,7 +443,7 @@ const UserProfile = () => {
                             </li>
                           </ul>
                         </nav>
-                      </div>
+                      </div>*/} 
                     </div>
                   </div>
                 </div>
