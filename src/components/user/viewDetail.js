@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import UserHeader from '../common/dashboardHeader';
+import moment from 'moment'
+import Footer from '../common/Footer';
+import { Link } from 'react-router-dom';
 import { ReactComponent as IconDoorClosedFill } from "bootstrap-icons/icons/door-closed.svg";
 import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
-import { Link } from 'react-router-dom';
-import config from '../../config';
+import './Style/dashboard.css';
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
-const EditProfile = () => {
+const ViewDetail = () => {
     const [formData, setFormData] = useState({
         first_name: '',
         lastName: '',
@@ -257,7 +261,7 @@ const EditProfile = () => {
                     </div>
                 </div>
             </header>
-            <div className={`body ${menuOpen ? 'dashboardMenuOpen' : ''} userboardContent`}>
+            <div className="userboardContent">
                 <div className="d-flex align-items-start">
                     <div
                         className="nav flex-column nav-pills userboardLHS"
@@ -265,126 +269,136 @@ const EditProfile = () => {
                         role="tablist"
                         aria-orientation="vertical"
                     >
-                        <div className="topSidebar">
-                            <div className="sidebarLogo">
-                                <Link to="/">
-                                    {" "}
-                                    <img src="images/innerlogo.svg" alt="" />
-                                </Link>
-                                <span className="closeIcon" />
-                            </div>
-                            <Link to="/user-dashboard" className="nav-link active DashboardIcon">
-                                <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
-                            </Link>
-                            <Link to="/booking" className="nav-link MyBookingIcon">
-                                <img src="images/homepage/mybookingicon.png" alt="" /> My Bookings
-                            </Link>
-                            <Link to="/wishlist" className="nav-link WishlistIcon">
-                                <img src="images/homepage/wislisticonnew.png" alt="" />
-                                Wishlist
-                            </Link>
-                            <Link to="/editprofile" className="nav-link EditrofileIcon">
-                                <img src="images/homepage/pen.png" alt="" /> Edit Profile
-                            </Link>
-                            <Link to="/changepassword" className="nav-link ChangePassWordIcon">
-                                <img src="images/homepage/changepasswordicon.png" alt="" />
-                                Change Password
-                            </Link>
-                  {/*        <Link href="/help" className="nav-link HelpIcon">
-                                <img src="images/customer-supporticon.png" alt="" /> Help
-                            </Link> */}  
-                        </div>
+                           <div className="topSidebar">
+                <div className="sidebarLogo">
+                  <Link to="/">
+                    {" "}
+                    <img src="images/innerlogo.svg" alt="" />
+                  </Link>
+                  <span className="closeIcon" />
+                </div>
+                <Link to="/user-dashboard" className="nav-link active DashboardIcon">
+                  <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
+                </Link>
+                <Link to="/booking" className="nav-link MyBookingIcon">
+                  <img src="images/homepage/mybookingicon.png" alt="" /> My Bookings
+                </Link>
+                <Link to="/wishlist" className="nav-link WishlistIcon">
+                  <img src="images/homepage/wislisticonnew.png" alt="" />
+                  Wishlist
+                </Link>
+                <Link to="/editprofile" className="nav-link EditrofileIcon">
+                  <img src="images/homepage/pen.png" alt="" /> Edit Profile
+                </Link>
+                <Link to="/changepassword" className="nav-link ChangePassWordIcon">
+                  <img src="images/homepage/changepasswordicon.png" alt="" />
+                  Change Password
+                </Link>
+             
+              </div>
                         {/*topSidebar*/}
                         <div className="logoutDiv">
-                            <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
+                            <a href="#">
+                                <img src="images/homepage/logouticon.png" alt="" />
+                                Logout
+                            </a>
                         </div>
                     </div>
                     {/*userboardLHS*/}
                     <div className="tab-content userboardRHS">
                         <div className="userboardArea">
                             <div className="UserBoardinner">
-                                <div className="edirprofileForm">
-                                    <form onSubmit={handleFormSubmit}>
-                                        <div className="mb-3">
-                                            <label className="form-label">First Name</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="First Name"
-                                                value={formData.first_name}
-                                                onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-                                                required
-                                            />
+                                <div className="detailviewArea">
+                                    <div className="CartBoxXArea">
+                                        <div className="CartBoxWrapper">
+                                            <div className="CartTopBox">
+                                                <div className="CartimgWrapper">
+                                                    <img src="images/banner.png" alt="" />
+                                                </div>
+                                                {/*CartimgWrapper*/}
+                                                <div className="CartContentWrapper">
+                                                    <h4>Abu Dhabi Amazing Family Private Tour</h4>
+                                                    <div className="Price">
+                                                        AED <strong>500</strong>
+                                                    </div>
+                                                </div>
+                                                {/*CartContentWrapper*/}
+                                            </div>
+                                            {/*CartTopBox*/}
+                                            <div className="CartBottomBox">
+                                                <div className="collapseview">
+                                                    <div className="BookingInfoData">
+                                                        <div className="heading">Booking Info</div>
+                                                        <div className="BookingInfotableData">
+                                                            <div className="BookingInfotableDiv">
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Tour Date*</span>
+                                                                    <span>20/Dec/2023</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Pickup Location*</span>
+                                                                    <span>Dubai</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Preferred Guide Language*</span>
+                                                                    <span>English</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Adults*</span>
+                                                                    <span>2</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Children</span>
+                                                                    <span>1</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                            </div>
+                                                            {/*BookingInfotableDiv*/}
+                                                            <div className="BookingInfotableDiv">
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Preferred Pickup Time* </span>
+                                                                    <span>2:00PM</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>End Location*</span>
+                                                                    <span>Burj Khalifa</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Pref.currency</span>
+                                                                    <span>AED</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Infants</span>
+                                                                    <span>0</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Payment Mode*</span>
+                                                                    <span>Pay Later</span>
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                            </div>
+                                                            {/*BookingInfotableDiv*/}
+                                                        </div>
+                                                        {/*BookingInfotableData*/}
+                                                    </div>
+                                                    {/*BookingInfoData*/}
+                                                </div>
+                                            </div>
+                                            {/*CartBottomBox*/}
                                         </div>
-
-                                        <div className="mb-3">
-                                            <label className="form-label">Phone Number</label>
-                                            <input
-                                                type=" phoneno"
-                                                className="form-control"
-                                                placeholder="Phone Number"
-                                                value={formData.phoneno}
-                                                onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
-                                                required
-                                            />
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label className="form-label">Address</label>
-                                            <input
-                                                type="address"
-                                                className="form-control"
-                                                placeholder="Address"
-                                                value={formData.address}
-                                                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                                                required
-                                            />
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label className="form-label">Email Address</label>
-                                            <input
-                                                type="email"
-                                                className="form-control"
-                                                placeholder="Email Address"
-                                                value={formData.email}
-                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                required
-                                            />
-                                        </div>
-                                        <div className="mb-3">
-                                            <label className="form-label">Country</label>
-                                            <input
-                                                type="country"
-                                                className="form-control"
-                                                placeholder="Country"
-                                                value={formData.country}
-                                                onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                                                required
-                                            />
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label className="form-label">Country Code</label>
-                                            <select
-                                                className="form-select"
-                                                value={formData.country}
-                                                onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                                                required
-                                            >
-                                                <option value="">Select Code</option>
-                                                <option value="Afghanistan"> Afghanistan (+93) </option>
-                                                <option value="Albania"> Albania (+355) </option>
-                                                <option value="India"> India (+91) </option>
-                                                <option value="Zimbabwe"> Zimbabwe (+263) </option>
-                                            </select>
-                                        </div>
-
-                                        <button type="submit" className="cta">
-                                            Submit
-                                        </button>
-                                    </form>
+                                        {/*CartBoxWrapper Loop*/}
+                                    </div>
+                                    {/*CartBoxXArea*/}
                                 </div>
+                                {/*detailviewArea*/}
                             </div>
                             {/*UserBoardinner*/}
                         </div>
@@ -401,8 +415,10 @@ const EditProfile = () => {
                 {/*d-flex align-items-start*/}
             </div>
 
+
+
         </div>
     )
 }
 
-export default EditProfile
+export default ViewDetail

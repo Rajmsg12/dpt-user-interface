@@ -13,7 +13,7 @@ const GetInTouch = () => {
   .join(' ');
   const url = window.location.href;
   const spliturl = url.split("/");
-  const slug = spliturl[5];
+  const slug = spliturl[4];
 
   useEffect(() => {
     const fetchData = async () => {

@@ -258,7 +258,7 @@ const Booking = () => {
                     </div>
                 </div>
             </header>
-            <div className="userboardContent">
+            <div className={`body ${menuOpen ? 'dashboardMenuOpen' : ''} userboardContent`}>
                 <div className="d-flex align-items-start">
                     <div
                         className="nav flex-column nav-pills userboardLHS"
@@ -275,20 +275,20 @@ const Booking = () => {
                                 <span className="closeIcon" />
                             </div>
                             <Link to="/user-dashboard" className="nav-link active DashboardIcon">
-                                <img src="images/dashboardicon.png" alt="" /> Dashboard
+                                <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
                             </Link>
                             <Link to="/booking" className="nav-link MyBookingIcon">
-                                <img src="images/mybookingicon.png" alt="" /> My Bookings
+                                <img src="images/homepage/mybookingicon.png" alt="" /> My Bookings
                             </Link>
                             <Link to="/wishlist" className="nav-link WishlistIcon">
-                                <img src="images/wislisticonnew.png" alt="" />
+                                <img src="images/homepage/wislisticonnew.png" alt="" />
                                 Wishlist
                             </Link>
                             <Link to="/editprofile" className="nav-link EditrofileIcon">
-                                <img src="images/pen.png" alt="" /> Edit Profile
+                                <img src="images/homepage/pen.png" alt="" /> Edit Profile
                             </Link>
                             <Link to="/changepassword" className="nav-link ChangePassWordIcon">
-                                <img src="images/changepasswordicon.png" alt="" />
+                                <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>
                          {/*    <Link href="/help" className="nav-link HelpIcon">
@@ -321,7 +321,7 @@ const Booking = () => {
                                             {bookingDetails.map((booking, index) => (
                                                 <div className="BookingDetailRow">
                                                     <div className="srno">{index + 1}</div>
-                                                    <div className="OrderID">#DK2033</div>
+                                                    <div className="OrderID">{booking.order_id}</div>
                                                     <div className="BillingName">{booking.first_name}</div>
                                                     <div className="Date">{moment(booking.booking_date).format("DD-MM-YYYY")}</div>
                                                     <div className="TotalPayment">{booking.total}</div>
@@ -329,7 +329,7 @@ const Booking = () => {
                                                     <div className="Action">
                                                         <div className="IconsAll">
                                                             <Link to="/review" className="reviewstarIcon"></Link>
-                                                            <Link to="/view" className="view"></Link>
+                                                            <Link to="/view-detail" className="view"></Link>
                                                         </div>
                                                     </div>
                                                 </div>

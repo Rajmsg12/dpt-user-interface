@@ -234,20 +234,20 @@ const Wishlist = ({ selectedCurrency }) => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            .then(response => response.json())
-            .then(data => {
-                // If deletion is successful, update the wishlistData state by filtering out the deleted item
-                if (data.status === "success") {
-                    const updatedWishlist = wishlistData.filter(item => item.id !== id);
-                    setWishlistData(updatedWishlist);
-                    console.log(`Item with ID ${id} deleted successfully`);
-                } else {
-                    console.error("Failed to delete item:", data.error);
-                }
-            })
-            .catch(error => {
-                console.error("Error deleting item:", error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    // If deletion is successful, update the wishlistData state by filtering out the deleted item
+                    if (data.status === "success") {
+                        const updatedWishlist = wishlistData.filter(item => item.id !== id);
+                        setWishlistData(updatedWishlist);
+                        console.log(`Item with ID ${id} deleted successfully`);
+                    } else {
+                        console.error("Failed to delete item:", data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error deleting item:", error);
+                });
         } else {
             console.error("Token not available. User not authenticated.");
         }
@@ -319,7 +319,7 @@ const Wishlist = ({ selectedCurrency }) => {
                     </div>
                 </div>
             </header>
-            <div className="userboardContent">
+            <div className={`body ${menuOpen ? 'dashboardMenuOpen' : ''} userboardContent`}>
                 <div className="d-flex align-items-start">
                     <div
                         className="nav flex-column nav-pills userboardLHS"
@@ -331,28 +331,28 @@ const Wishlist = ({ selectedCurrency }) => {
                             <div className="sidebarLogo">
                                 <Link to="/">
                                     {" "}
-                                    <img src="images/innerlogo.svg" alt="" />
+                                    <img src="images/homepage/innerlogo.svg" alt="" />
                                 </Link>
                                 <span className="closeIcon" />
                             </div>
                             <Link to="/user-dashboard" className="nav-link active DashboardIcon">
-                                <img src="images/dashboardicon.png" alt="" /> Dashboard
+                                <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
                             </Link>
                             <Link to="/booking" className="nav-link MyBookingIcon">
-                                <img src="images/mybookingicon.png" alt="" /> My Bookings
+                                <img src="images/homepage/mybookingicon.png" alt="" /> My Bookings
                             </Link>
                             <Link to="/wishlist" className="nav-link WishlistIcon">
-                                <img src="images/wislisticonnew.png" alt="" />
+                                <img src="images/homepage/wislisticonnew.png" alt="" />
                                 Wishlist
                             </Link>
                             <Link to="/editprofile" className="nav-link EditrofileIcon">
-                                <img src="images/pen.png" alt="" /> Edit Profile
+                                <img src="images/homepage/pen.png" alt="" /> Edit Profile
                             </Link>
                             <Link to="/changepassword" className="nav-link ChangePassWordIcon">
-                                <img src="images/changepasswordicon.png" alt="" />
+                                <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>
-                        {/*     <Link href="/help" className="nav-link HelpIcon">
+                            {/*     <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
                             </Link>*/}
                         </div>
@@ -365,11 +365,13 @@ const Wishlist = ({ selectedCurrency }) => {
                     <div className="tab-content userboardRHS">
                         <div className="userboardArea">
                             <div className="UserBoardinner">
-                                {
+                                {wishlistData.length === 0 ? (
+                                    <p>Wishlist is Empty</p>
+                                ) : (
                                     wishlistData.map((item, index) => (
                                         <div key={index} className="CartBoxXArea">
-                                            <Link to={`/tour/${item.tour_info[0].tour_slug}/${item.tour_info[0].tour_slug}`} className="CartBoxWrapper">
-                                                <div className="CartTopBox">
+                                            <div  className="CartBoxWrapper">
+                                                <Link to={`/tour/${item.tour_info[0].tour_slug}/${item.tour_info[0].tour_slug}`} className="CartTopBox">
                                                     <div className="CartimgWrapper">
                                                         <img src={`${config.imageUrl}/${item.tour_info[0].tour_image}`} alt={item.tour_info[0].Tour_name} />
                                                     </div>
@@ -399,21 +401,22 @@ const Wishlist = ({ selectedCurrency }) => {
                                                         </div>
 
                                                         <div className="EditTrashGroup">
-                                                        <div onClick={() => deleteItem(item.id)} className="Trash" />
+                                                            <div onClick={() => deleteItem(item.id)} className="Trash" />
                                                         </div>
                                                         {/*EditTrashGroup*/}
                                                     </div>
                                                     {/*CartContentWrapper*/}
-                                                </div>
+                                                </Link>
                                                 {/*CartTopBox*/}
 
                                                 {/*CartBottomBox*/}
-                                            </Link>
+                                            </div>
                                             {/*CartBoxWrapper Loop*/}
 
                                             {/*CartBoxWrapper Loop*/}
                                         </div>
-                                    ))}
+                                    ))
+                                )}
                             </div>
                             {/*UserBoardinner*/}
                         </div>

@@ -443,23 +443,22 @@ const Banner = ({selectedCurrency}) => {
               <div className="nav nav-tabs" id="nav-tab" role="tablist">
                 <button className="nav-link active" id="nav-privatejet-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-privatejet" type="button" role="tab" aria-controls="nav-privatejet"
-                  //src="images/homepage/jet.png"
-                  aria-selected="true"><img  alt="" />Desert Safari</button>
+                  aria-selected="true"><img  src="images/homepage/jet.png" alt="" />Desert Safari</button>
                 <button className="nav-link" id="nav-weddingonyatch-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-weddingonyatch" type="button" role="tab" aria-controls="nav-weddingonyatch"
                   aria-selected="false"><img src="images/homepage/yatch.png" alt="" />Wedding on yatch</button>
                 <button className="nav-link" id="nav-luxurytour-tab" data-bs-toggle="tab" data-bs-target="#nav-luxurytour"
                   type="button" role="tab" aria-controls="nav-luxurytour" aria-selected="false"><img
-                    src="images/diamond.png" alt="" />Luxury Tours</button>
+                    src="images/homepage/diamond.png" alt="" />Luxury Tours</button>
                 <button className="nav-link" id="nav-privatetour-tab" data-bs-toggle="tab" data-bs-target="#nav-privatetour"
                   type="button" role="tab" aria-controls="nav-privatetour" aria-selected="false"><img
-                    src="images/tour-guide.png" alt="" />Private Tour</button>
+                    src="images/homepage/tour-guide.png" alt="" />Private Tour</button>
                 <button className="nav-link" id="nav-attractiontickets-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-attractiontickets" type="button" role="tab" aria-controls="nav-attractiontickets"
                   aria-selected="false"><img src="images/homepage/ticket.png" alt="" />Attraction Tickets</button>
                 <button className="nav-link" id="nav-chauffeur-tab" data-bs-toggle="tab" data-bs-target="#nav-chauffeur"
                   type="button" role="tab" aria-controls="nav-chauffeur" aria-selected="false"><img
-                    src="images/taxi-driver.png" alt="" />Chauffeur</button>
+                    src="images/homepage/taxi-driver.png" alt="" />Chauffeur</button>
               </div>
             </nav>
           </div>

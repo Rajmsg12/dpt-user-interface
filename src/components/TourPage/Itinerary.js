@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import config from '../../config';
+import { Editor, EditorState, convertFromRaw } from 'draft-js';
 
+const convertDescriptionFromJSON = (descriptionJSON) => {
+    try {
+        const contentState = convertFromRaw(JSON.parse(descriptionJSON));
+        const editorState = EditorState.createWithContent(contentState);
+        return editorState.getCurrentContent().getPlainText();
+    } catch (error) {
+        console.error('Error converting description:', error);
+        return ''; // Return an empty string in case of an error
+    }
+};
 const Itinerary = () => {
     const [itineraryData, setItineraryData] = useState([]);
     const url = window.location.href;
@@ -13,6 +24,7 @@ const Itinerary = () => {
                 const data = await response.json();
                 if (data.status === 'success' && data.data.length > 0) {
                     setItineraryData(data.data[0].itinerary_info);
+                    console.log(data.data[0])
                 } else {
                     console.error('Failed to fetch itinerary data');
                 }
@@ -23,6 +35,7 @@ const Itinerary = () => {
 
         fetchData();
     }, []); // Empty dependency array to fetch data only once when the component mounts
+
 
     return (
         <div>
@@ -49,7 +62,7 @@ const Itinerary = () => {
                                         </div>
                                         <div className="Text">
                                             <div className="title">{item.name}</div>
-                                            <span className="description">{item.description}</span>
+                                            <span className="description">{convertDescriptionFromJSON(item.description)}</span>
                                         </div>
                                     </div>
                                 </button>

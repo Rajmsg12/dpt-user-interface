@@ -50,7 +50,7 @@ const Cart = () => {
   
     const taxPercentage = 0.18; // 18% tax
     const total = subtotal * taxPercentage;
-    const fullTotal = subtotal - total;
+    const fullTotal = subtotal + total;
   
     return {
       subtotal,

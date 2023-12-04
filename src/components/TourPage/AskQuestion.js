@@ -8,8 +8,8 @@ const customStyles = {
         ...base,
         height: 45,
         minHeight: 35
-      })
-  };
+    })
+};
 
 const CountrySelect = () => {
     const [countries, setCountries] = useState([]);
@@ -32,7 +32,7 @@ const CountrySelect = () => {
             value={selectedCountry}
             onChange={(selectedOption) => setSelectedCountry(selectedOption)}
         // styles={customStyles}
-       
+
         />
     );
 };
@@ -40,6 +40,57 @@ const CountrySelect = () => {
 
 
 const AskQuestion = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        nationality: '',
+        discover_us: '',
+        country_code: '',
+        call_no: '',
+        address: '',
+        subject: '',
+        message: ''
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSelectChange = (selectedOption, fieldName) => {
+        setFormData({
+            ...formData,
+            [fieldName]: selectedOption.value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://127.0.0.1:9900/ask/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                console.log('Form data sent:', responseData);
+                // Optionally, handle success or redirect here
+            } else {
+                console.error('Error submitting form:', response.statusText);
+                // Optionally, handle error state here
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            // Handle fetch error
+        }
+    };
     const countries = [
         { label: "United States (+1)", value: "US" },
         { label: "Afghanistan (+93)", value: "AF" },
@@ -246,33 +297,45 @@ const AskQuestion = () => {
             <div className="tab-pane fade" id="pills-askquestions" role="tabpanel" aria-labelledby="pills-askquestions-tab">
                 <div className="BookThisTourSec AskQuestionsSection">
                     <div className="FormInnerDiv">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>First Name*</label>
-                                        <input type="text" className="form-control" placeholder="Enter First Name" required="" />
+                                        <input type="text"
+                                            className="form-control"
+                                            placeholder="Enter First Name"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
+                                            required />
                                     </div>
                                     {/* formGroup */}
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Last Name*</label>
-                                        <input type="text" className="form-control" placeholder="Enter Last Name" required="" />
+                                        <input type="text" className="form-control" placeholder="Enter Last Name" required />
                                     </div>
                                     {/* formGroup */}
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Email*</label>
-                                        <input type="text" className="form-control" placeholder="Enter Email Address" required="" />
+                                        <input type="email"
+                                            className="form-control"
+                                            placeholder="Enter Email Address"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                            required />
                                     </div>
                                     {/* formGroup */}
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Confirm Email*</label>
-                                        <input type="text" className="form-control" placeholder="Confirm Email Address" required="" />
+                                        <input type="email" className="form-control" placeholder="Confirm Email Address" required />
                                     </div>
                                     {/* formGroup */}
                                 </div>
@@ -286,7 +349,9 @@ const AskQuestion = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>How Did You Discover Us* </label>
-                                        <select className="form-select">
+                                        <select className="form-select"   value={formData.discover_us}
+                                         onChange={handleInputChange}
+                                         required>
                                             <option value="">Select How Did You Discovered Us</option>
                                             <option value="Google Search">Google Search</option>
                                             <option value="Trip adviser">Trip adviser</option>
@@ -302,6 +367,9 @@ const AskQuestion = () => {
                                         <Select
                                             options={countries}
                                             placeholder="Select Country code"
+                                            value={countries.find(country => country.value === formData.country_code)}
+                                            onChange={(selectedOption) => handleSelectChange(selectedOption, 'country_code')}
+                                            required
                                         />
                                     </div>
                                     {/* formGroup */}
@@ -309,21 +377,37 @@ const AskQuestion = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Cell No*</label>
-                                        <input type="text" className="form-control" placeholder="Cell No 1" required="" />
+                                        <input type="text"
+                                        className="form-control" 
+                                        placeholder="Cell No" 
+                                        name="call_no"
+                                        value={formData.call_no}
+                                        onChange={handleInputChange}
+                                        required />
                                     </div>
                                     {/* formGroup */}
                                 </div>
                                 <div className="col-md-12">
                                     <div className="mb-3 formGroup">
                                         <label>Address</label>
-                                        <textarea className="form-control" placeholder="Type Your Special Requests" rows="3"></textarea>
+                                        <textarea className="form-control" 
+                                        placeholder="Type Your Special Requests" 
+                                        rows="3"
+                                        name="address"
+                                        value={formData.address}
+                                        onChange={handleInputChange}
+                                        required></textarea>
                                     </div>{/* formGroup */}
                                 </div>
 
                                 <div className="col-md-12">
                                     <div className="mb-3 formGroup">
                                         <label>Subject</label>
-                                        <select className="form-select">
+                                        <select className="form-select"
+                                            name="subject"
+                                            value={formData.subject}
+                                            onChange={handleInputChange}
+                                            required>
                                             <option selected="">Select Your Subject</option>
                                             <option value="Enquiry">Enquiry</option>
                                             <option value="Feedback">Feedback</option>
@@ -335,7 +419,13 @@ const AskQuestion = () => {
                                 <div className="col-md-12">
                                     <div className="mb-3 formGroup">
                                         <label>Message</label>
-                                        <textarea className="form-control" placeholder="Type Your Special Requests" rows="3"></textarea>
+                                        <textarea className="form-control"
+                                        placeholder="Type Your Special Requests" 
+                                        rows="3"
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleInputChange}
+                                        required></textarea>
                                     </div>{/* formGroup */}
                                 </div>
 

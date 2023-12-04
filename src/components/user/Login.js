@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import InnerHeader from '../common/InnerHeader';
 import Footer from '../common/Footer';
 import './Style/login.css';
@@ -11,6 +11,10 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
+    const handleRememberMe = (e) => {
+        setRememberMe(e.target.checked); // 2. Handle Checkbox Change
+    };
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -28,7 +32,18 @@ const Login = () => {
                 const data = await response.json();
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('name', data.name);
-                navigate('/');
+
+                // Save login details if Remember Me is checked
+                if (rememberMe) {
+                    localStorage.setItem('rememberedEmail', email);
+                    localStorage.setItem('rememberedPassword', password);
+                } else {
+                    // If not checked, clear remembered details
+                    localStorage.removeItem('rememberedEmail');
+                    localStorage.removeItem('rememberedPassword');
+                }
+
+                navigate('/user-dashboard');
             } else {
                 setError('Invalid email or password. Please try again.');
             }
@@ -37,6 +52,17 @@ const Login = () => {
         }
     };
 
+    // Fetch remembered login details if present
+    useEffect(() => {
+        const rememberedEmail = localStorage.getItem('rememberedEmail');
+        const rememberedPassword = localStorage.getItem('rememberedPassword');
+
+        if (rememberedEmail && rememberedPassword) {
+            setEmail(rememberedEmail);
+            setPassword(rememberedPassword);
+            setRememberMe(true);
+        }
+    }, []);
 
     return (
         <div>
@@ -72,15 +98,17 @@ const Login = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
-                            {error && <div className="error-message" style={{color:"green"}}>{error}</div>}
+                            {error && <div className="error-message" style={{ color: "green" }}>{error}</div>}
                             <div className="CheckBoxrow">
                                 <div className="form-check">
                                     <input
                                         className="form-check-input"
                                         type="checkbox"
-                                        value=""
+                                        value={rememberMe}
                                         id="flexCheckChecked"
-                                        defaultChecked
+                                        onChange={handleRememberMe}
+                                        // Check the checkbox if rememberMe state is true
+                                        checked={rememberMe}
                                     />
                                     <label className="form-check-label" htmlFor="flexCheckChecked">
                                         Remember Me
@@ -95,7 +123,7 @@ const Login = () => {
                                     Login
                                 </button>
                             </div>
-                         
+
                             <div className="formGroup">
                                 <div className="CreateAccountLabel">
                                     New User? <Link to="/register">Create an account</Link>

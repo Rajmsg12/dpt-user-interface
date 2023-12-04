@@ -33,6 +33,7 @@ import Wishlist from "./components/user/wishlist";
 import EditProfile from "./components/user/editProfile";
 import ChangePassword from "./components/user/changePassword";
 import Review from "./components/user/review";
+import ViewDetail from "./components/user/viewDetail";
 
 const App = () => {
   return (
@@ -74,6 +75,7 @@ const App = () => {
        <Route exact path='/editProfile' element={<EditProfile/>} />
        <Route exact path='/changepassword' element={<ChangePassword/>} />
        <Route exact path='/review' element={<Review/>} />
+       <Route exact path='/view-detail' element={<ViewDetail/>} />
        <Route path="*" element={<NotFound/>} />
 
         </Routes>

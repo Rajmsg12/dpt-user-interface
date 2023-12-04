@@ -257,7 +257,7 @@ const ChangePassword = () => {
                     </div>
                 </div>
             </header>
-            <div className="userboardContent">
+            <div className={`body ${menuOpen ? 'dashboardMenuOpen' : ''} userboardContent`}>
                 <div className="d-flex align-items-start">
                     <div
                         className="nav flex-column nav-pills userboardLHS"
@@ -274,20 +274,20 @@ const ChangePassword = () => {
                                 <span className="closeIcon" />
                             </div>
                             <Link to="/user-dashboard" className="nav-link active DashboardIcon">
-                                <img src="images/dashboardicon.png" alt="" /> Dashboard
+                                <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
                             </Link>
                             <Link to="/booking" className="nav-link MyBookingIcon">
-                                <img src="images/mybookingicon.png" alt="" /> My Bookings
+                                <img src="images/homepage/mybookingicon.png" alt="" /> My Bookings
                             </Link>
                             <Link to="/wishlist" className="nav-link WishlistIcon">
-                                <img src="images/wislisticonnew.png" alt="" />
+                                <img src="images/homepage/wislisticonnew.png" alt="" />
                                 Wishlist
                             </Link>
                             <Link to="/editprofile" className="nav-link EditrofileIcon">
-                                <img src="images/pen.png" alt="" /> Edit Profile
+                                <img src="images/homepage/pen.png" alt="" /> Edit Profile
                             </Link>
                             <Link to="/changepassword" className="nav-link ChangePassWordIcon">
-                                <img src="images/changepasswordicon.png" alt="" />
+                                <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>
                        {/*     <Link href="/help" className="nav-link HelpIcon">

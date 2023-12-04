@@ -43,7 +43,7 @@ const PersonDetail = ({ selectedCurrency }) => {
       const calculateTotal = () => {
         const taxPercentage = 0.18; // 18% tax
         const total = subtotal * taxPercentage;
-        const fullTotal = subtotal - total;
+        const fullTotal = subtotal + total;
       
         return {
           subtotal,
@@ -158,6 +158,7 @@ const validateForm = () => {
     
                 if (response.ok) {
                     console.log('Booking successful');
+                    localStorage.removeItem("cartdata");
                     navigate('/thankyou');
                 } else {
                     console.error('Booking failed');
