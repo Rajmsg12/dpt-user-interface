@@ -1,6 +1,5 @@
 {
   "name": "Dubai Private Tour",
-  "homepage": "https://phpstack-1167113-4078182.cloudwaysapps.com/",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

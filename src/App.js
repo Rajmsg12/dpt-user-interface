@@ -27,7 +27,12 @@ import ContactUs from './components/conatctUs/contactUs'
 import AboutUs from "./components/aboutUs/about";
 import ThankyouPage from "./components/thankyouPage/thankyouPage";
 import NotFound from './components/404/notFound'
-import Wishlist from "./components/pages/wishlist";
+// import Wishlist from "./components/pages/wishlist";
+import Booking from "./components/user/myBooking";
+import Wishlist from "./components/user/wishlist";
+import EditProfile from "./components/user/editProfile";
+import ChangePassword from "./components/user/changePassword";
+import Review from "./components/user/review";
 
 const App = () => {
   return (
@@ -65,6 +70,10 @@ const App = () => {
        <Route exact path='/thankyou' element={<ThankyouPage/>} />
        <Route exact path='/wishlist' element={<Wishlist/>} />
        <Route exact path='/cart' element={<Cart/>} />
+       <Route exact path='/booking' element={<Booking/>} />
+       <Route exact path='/editProfile' element={<EditProfile/>} />
+       <Route exact path='/changepassword' element={<ChangePassword/>} />
+       <Route exact path='/review' element={<Review/>} />
        <Route path="*" element={<NotFound/>} />
 
         </Routes>

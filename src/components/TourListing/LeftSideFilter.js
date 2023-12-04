@@ -64,12 +64,12 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
                 {showAllCategories
                   ? categories.map((item, index) => (
                     <li key={index}>
-                      <Link to={`/plan/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
+                      <Link to={`/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
                     </li>
                   ))
                   : categories.slice(0, 8).map((item, index) => (
                     <li key={index}>
-                      <Link to={`/plan/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
+                      <Link to={`/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
                     </li>
                   ))}
               </ul>
