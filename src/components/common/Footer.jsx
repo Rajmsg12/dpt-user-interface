@@ -54,7 +54,7 @@ const Footer = () => {
         <footer>
             <div className="followUs">
                 <div className="container">
-                    <div className="followtext">Follow us on</div>
+                    <div className="followtext">follow us on</div>
                     <ul>
                         <li>
                             <Link to="https://www.facebook.com/DubaiPrivateTour" className="fb"></Link>

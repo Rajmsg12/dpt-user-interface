@@ -156,40 +156,6 @@ const Review = () => {
             });
     };
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-
-        setLoading(true);
-
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetch(`${config.baseUrl}/profile/update`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(formData),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log('Profile update response:', data);
-
-                    if (data.success) {
-                        setSuccessMessage('Profile updated successfully!');
-                        // Optionally, reset form fields or perform additional actions
-                    } else {
-                        setSuccessMessage('Failed to update profile. Please try again.');
-                    }
-
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error('Error updating profile:', error);
-                    setLoading(false);
-                });
-        }
-    };
     return (
         <>
             <header className="userHeader">
@@ -307,7 +273,7 @@ const Review = () => {
                                     <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                         <li className="nav-item" role="presentation">
                                             <button
-                                                className="nav-link active"
+                                                className="nav-link"
                                                 id="pills-readreviews-tab"
                                                 data-bs-toggle="pill"
                                                 data-bs-target="#pills-readreviews"
@@ -321,7 +287,7 @@ const Review = () => {
                                         </li>
                                         <li className="nav-item" role="presentation">
                                             <button
-                                                className="nav-link"
+                                                className="nav-link active"
                                                 id="pills-writeareview-tab"
                                                 data-bs-toggle="pill"
                                                 data-bs-target="#pills-writeareview"
@@ -336,7 +302,7 @@ const Review = () => {
                                     </ul>
                                     <div className="tab-content" id="pills-tabContent">
                                         <div
-                                            className="tab-pane fade show active"
+                                            className="tab-pane fade"
                                             id="pills-readreviews"
                                             role="tabpanel"
                                             aria-labelledby="pills-readreviews-tab"
@@ -410,69 +376,13 @@ const Review = () => {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                {/*readReviewBox*/}
-                                                <div className="readReviewBox">
-                                                    <div className="titlewithsubtitle">
-                                                        <h2>
-                                                            Mariëlle Rockland <small>Netherlands</small>
-                                                        </h2>
-                                                    </div>
-                                                    {/*titlewithsubtitle*/}
-                                                    <div className="posteddiv">
-                                                        <span>Posted:</span> September 27, 2019
-                                                    </div>
-                                                    <div className="RatingDivNew">
-                                                        <img src="images/ratingstar.png" alt="" />
-                                                    </div>
-                                                    <div className="descnew">
-                                                        <p>
-                                                            Two days ago, we had a layover in Dubai for a few hours
-                                                            and we booked a 4 hours private trip to explorer Dubai.
-                                                            Our guide gave us a lot of information and showed us a
-                                                            lot! It was very interessting. It was an Incredible
-                                                            experience and it make our layover one to never forget.
-                                                            Thank you very much!!
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                {/*readReviewBox*/}
-                                                <div className="readReviewBox">
-                                                    <div className="titlewithsubtitle">
-                                                        <h2>
-                                                            Roshnee Chudoory <small>United Kingdom</small>
-                                                        </h2>
-                                                    </div>
-                                                    {/*titlewithsubtitle*/}
-                                                    <div className="posteddiv">
-                                                        <span>Posted:</span> August 18, 2019
-                                                    </div>
-                                                    <div className="RatingDivNew">
-                                                        <img src="images/ratingstar.png" alt="" />
-                                                    </div>
-                                                    <div className="descnew">
-                                                        <p>
-                                                            What a wonderful afternoon it would have been had we
-                                                            fully completed the tour. (My elderly father became a
-                                                            little overwhelmed with the heat in particular, and so
-                                                            we made the decision to cut the experience short). We
-                                                            cannot fault our guide Zeeba, and our driver Suhas. They
-                                                            were quick thinking and accommodated our needs. Zeeba
-                                                            was very informative during the tour, and she was
-                                                            especially kind when she physically assisted my father.
-                                                            Suhas drove closer where possible, to minimise my father
-                                                            having to walk on sometimes uneven ground in the heat,
-                                                            when it became clear that my father was struggling. My
-                                                            mother and I are very appreciative of their support. A
-                                                            big thank you to Zeeba and Suhas.
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                                
                                                 {/*readReviewBox*/}
                                             </div>
                                             {/*readReviewDiv*/}
                                         </div>
                                         <div
-                                            className="tab-pane fade"
+                                            className="tab-pane fade show active"
                                             id="pills-writeareview"
                                             role="tabpanel"
                                             aria-labelledby="pills-writeareview-tab"
@@ -520,149 +430,7 @@ const Review = () => {
                                                                 <label className="form-label">Select Country</label>
                                                                 <select className="form-select" required="">
                                                                     <option value="">Select</option>{" "}
-                                                                    <option value="Afghanistan">Afghanistan</option>{" "}
-                                                                    <option value="Albania">Albania</option>{" "}
-                                                                    <option value="Algeria">Algeria</option>{" "}
-                                                                    <option value="American Samoa">
-                                                                        American Samoa
-                                                                    </option>{" "}
-                                                                    <option value="Andorra">Andorra</option>{" "}
-                                                                    <option value="Angola">Angola</option>{" "}
-                                                                    <option value="Anguilla">Anguilla</option>{" "}
-                                                                    <option value="Antigua and Barbuda">
-                                                                        Antigua and Barbuda
-                                                                    </option>{" "}
-                                                                    <option value="Argentina">Argentina</option>{" "}
-                                                                    <option value="Armenia">Armenia</option>{" "}
-                                                                    <option value="Aruba">Aruba</option>{" "}
-                                                                    <option value="Australia">Australia</option>{" "}
-                                                                    <option value="Austria">Austria</option>{" "}
-                                                                    <option value="Azerbaijan">Azerbaijan</option>{" "}
-                                                                    <option value="Bahamas">Bahamas</option>{" "}
-                                                                    <option value="Bahrain">Bahrain</option>{" "}
-                                                                    <option value="Bangladesh">Bangladesh</option>{" "}
-                                                                    <option value="Barbados">Barbados</option>{" "}
-                                                                    <option value="Belgium">Belgium</option>{" "}
-                                                                    <option value="Belize">Belize</option>{" "}
-                                                                    <option value="Benin">Benin</option>{" "}
-                                                                    <option value="Bermuda">Bermuda</option>{" "}
-                                                                    <option value="Bhutan">Bhutan</option>{" "}
-                                                                    <option value="Bolivia">Bolivia</option>{" "}
-                                                                    <option value="Bosnia">Bosnia</option>{" "}
-                                                                    <option value="Botswana">Botswana</option>{" "}
-                                                                    <option value="Brazil">Brazil</option>{" "}
-                                                                    <option value="British Virgin Islands">
-                                                                        British Virgin Islands
-                                                                    </option>{" "}
-                                                                    <option value="Brunei">Brunei</option>{" "}
-                                                                    <option value="Bulgaria">Bulgaria</option>{" "}
-                                                                    <option value="Burkina Faso">Burkina Faso</option>{" "}
-                                                                    <option value="Burundi">Burundi</option>{" "}
-                                                                    <option value="Cambodia">Cambodia</option>{" "}
-                                                                    <option value="Cameroon">Cameroon</option>{" "}
-                                                                    <option value="Canada">Canada</option>{" "}
-                                                                    <option value="Cape Verde">Cape Verde</option>{" "}
-                                                                    <option value="Cayman Islands">
-                                                                        Cayman Islands
-                                                                    </option>{" "}
-                                                                    <option value="Central African Republic">
-                                                                        Central African Republic
-                                                                    </option>{" "}
-                                                                    <option value="Chad">Chad</option>{" "}
-                                                                    <option value="Chile">Chile</option>{" "}
-                                                                    <option value="China">China</option>{" "}
-                                                                    <option value="Christmas Island">
-                                                                        Christmas Island
-                                                                    </option>{" "}
-                                                                    <option value="Colombia">Colombia</option>{" "}
-                                                                    <option value="Comoros">Comoros</option>{" "}
-                                                                    <option value="Cook Islands">Cook Islands</option>{" "}
-                                                                    <option value="Costa Rica">Costa Rica</option>{" "}
-                                                                    <option value="Cote_d'Ivoire">Cote_d'Ivoire</option>{" "}
-                                                                    <option value="Croatia">Croatia</option>{" "}
-                                                                    <option value="Cuba">Cuba</option>{" "}
-                                                                    <option value="Cyprus">Cyprus</option>{" "}
-                                                                    <option value="Czech Republic">
-                                                                        Czech Republic
-                                                                    </option>{" "}
-                                                                    <option value="Democratic Republic of the Congo">
-                                                                        Democratic Republic of the Congo
-                                                                    </option>{" "}
-                                                                    <option value="Denmark">Denmark</option>{" "}
-                                                                    <option value="Djibouti">Djibouti</option>{" "}
-                                                                    <option value="Dominica">Dominica</option>{" "}
-                                                                    <option value="Dominican Republic">
-                                                                        Dominican Republic
-                                                                    </option>{" "}
-                                                                    <option value="Ecuador">Ecuador</option>{" "}
-                                                                    <option value="Egypt">Egypt</option>{" "}
-                                                                    <option value="El Salvador">El Salvador</option>{" "}
-                                                                    <option value="Equatorial_Guinea">
-                                                                        Equatorial_Guinea
-                                                                    </option>{" "}
-                                                                    <option value="Eritrea">Eritrea</option>{" "}
-                                                                    <option value="Estonia">Estonia</option>{" "}
-                                                                    <option value="Ethiopia">Ethiopia</option>{" "}
-                                                                    <option value="Falkland Islands">
-                                                                        Falkland Islands
-                                                                    </option>{" "}
-                                                           
-                                                                    <option value="Iceland">Iceland</option>{" "}
-                                                                    <option value="India">India</option>{" "}
-                                                                    <option value="Indonesia">Indonesia</option>{" "}
-                                                                    <option value="Iran">Iran</option>{" "}
-                                                                    <option value="Iraq">Iraq</option>{" "}
-                                                                    <option value="Ireland">Ireland</option>{" "}
-                                                                    <option value="Israel">Israel</option>{" "}
-                                                                    <option value="Italy">Italy</option>{" "}
-                                                                    <option value="Jamaica">Jamaica</option>{" "}
-                                                                    <option value="Japan">Japan</option>{" "}
-                                                                    <option value="Jordan">Jordan</option>{" "}
-                                                                    <option value="Kazakhstan">Kazakhstan</option>{" "}
-                                                                    <option value="Kenya">Kenya</option>{" "}
-                                                                    <option value="Kiribati">Kiribati</option>{" "}
-                                                                    <option value="Kuwait">Kuwait</option>{" "}
-                                                                    <option value="Kyrgyzstan">Kyrgyzstan</option>{" "}
-                                                                    <option value="Laos">Laos</option>{" "}
-                                                                    <option value="Latvia">Latvia</option>{" "}
-                                                                    <option value="Lebanon">Lebanon</option>{" "}
-                                                                    <option value="Lesotho">Lesotho</option>{" "}
-                                                                    <option value="Liberia">Liberia</option>{" "}
-                                                                 
-                                                                    <option value="Tunisia">Tunisia</option>{" "}
-                                                                    <option value="Turkey">Turkey</option>{" "}
-                                                                    <option value="Turkmenistan">Turkmenistan</option>{" "}
-                                                                    <option value="Turks and Caicos Islands">
-                                                                        Turks and Caicos Islands
-                                                                    </option>{" "}
-                                                                    <option value="Tuvalu">Tuvalu</option>{" "}
-                                                                    <option value="Uganda">Uganda</option>{" "}
-                                                                    <option value="Ukraine">Ukraine</option>{" "}
-                                                                    <option value="United Arab Emirates">
-                                                                        United Arab Emirates
-                                                                    </option>{" "}
-                                                                    <option value="United Kingdom">
-                                                                        United Kingdom
-                                                                    </option>{" "}
-                                                                    <option value="United States Of America">
-                                                                        United States Of America
-                                                                    </option>{" "}
-                                                                    <option value="Uruguay">Uruguay</option>{" "}
-                                                                    <option value="US Virgin Islands">
-                                                                        US Virgin Islands
-                                                                    </option>{" "}
-                                                                    <option value="Uzbekistan">Uzbekistan</option>{" "}
-                                                                    <option value="Vanuatu">Vanuatu</option>{" "}
-                                                                    <option value="Vatican City">Vatican City</option>{" "}
-                                                                    <option value="Venezuela">Venezuela</option>{" "}
-                                                                    <option value="Vietnam">Vietnam</option>{" "}
-                                                                    <option value="Wallis And Futuna">
-                                                                        Wallis And Futuna
-                                                                    </option>{" "}
-                                                                    <option value="Yemen">Yemen</option>{" "}
-                                                                    <option value="Yugoslavia ">Yugoslavia </option>{" "}
-                                                                    <option value="Zambia">Zambia</option>{" "}
-                                                                    <option value="Zimbabwe">Zimbabwe</option>
+                                                                   
                                                                 </select>
                                                             </div>
                                                         </div>

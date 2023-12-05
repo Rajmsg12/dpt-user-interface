@@ -328,8 +328,8 @@ const Booking = () => {
                                                     <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
                                                     <div className="Action">
                                                         <div className="IconsAll">
-                                                            <Link to="/review" className="reviewstarIcon"></Link>
-                                                            <Link to="/view-detail" className="view"></Link>
+                                                            <Link to={`/review/${booking.id}`} className="reviewstarIcon"></Link>
+                                                            <Link to={`/view-detail/${booking.id}`} className="view"></Link>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -89,36 +89,7 @@ const UserProfile = () => {
         });
     }
   }, []);
-  const handleChangePassword = (e) => {
-    e.preventDefault();
 
-    const token = localStorage.getItem('token');
-    if (token) {
-      fetch(`${config.baseUrl}/profile/change-password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(passwordData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Change password response:', data);
-
-          if (data.success) {
-            // Optionally, handle success
-            console.log('Password changed successfully!');
-          } else {
-            // Optionally, handle failure
-            console.log('Failed to change password. Please try again.');
-          }
-        })
-        .catch((error) => {
-          console.error('Error changing password:', error);
-        });
-    }
-  };
 
   const fetchBookingDetails = () => {
     const token = localStorage.getItem('token');
@@ -364,8 +335,8 @@ const UserProfile = () => {
                           <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
                           <div className="Action">
                             <div className="IconsAll">
-                              <Link to="/review" className="reviewstarIcon"></Link>
-                              <Link to="/view-detail" className="view"></Link>
+                              <Link to={`/review/${booking.id}`} className="reviewstarIcon"></Link>
+                              <Link to={`/view-detail/${booking.id}`} className="view"></Link>
                             </div>
                           </div>
                         </div>

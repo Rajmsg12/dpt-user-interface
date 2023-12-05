@@ -15,13 +15,13 @@ const Cart = () => {
   // const cart = useSelector((state) => state.cart.cart);
   const ourSelectedCurrency = cart.length > 0 ? cart[0].selectedCurrency : 'AED';
   console.log(ourSelectedCurrency);
-  
+
 
   const navigate = useNavigate()
- 
+
   const particularItemPriceAed = (item) => {
     if (!item) return 0; // Check if item is undefined or null
-  
+
     const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
     const totalAdultPrice = parseFloat(item.adultPrice || 0);
     const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
@@ -30,10 +30,10 @@ const Cart = () => {
     const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
     return totalPriceForItem.toFixed(2); // Format the price to two decimal places
   };
-  
+
   const particularItemPriceUsd = (item) => {
     if (!item) return 0; // Check if item is undefined or null
-  
+
     const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
     const totalAdultPrice = parseFloat(item.adultPrice || 0);
     const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
@@ -42,16 +42,16 @@ const Cart = () => {
     const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
     return totalPriceForItem.toFixed(2); // Format the price to two decimal places
   };
-  
+
   const calculateTotal = () => {
     const subtotal = cart.reduce((total, item) => {
       return total + parseFloat(particularItemPriceAed(item)); // Calculate subtotal for AED prices
     }, 0);
-  
+
     const taxPercentage = 0.18; // 18% tax
     const total = subtotal * taxPercentage;
     const fullTotal = subtotal + total;
-  
+
     return {
       subtotal,
       taxPercentage,
@@ -59,7 +59,7 @@ const Cart = () => {
       total
     };
   };
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartCount, setCartCount] = useState("");
   const [expandedItemIndex, setExpandedItemIndex] = useState(null);
@@ -134,7 +134,7 @@ const Cart = () => {
                         {isLoggedIn ? (
                           <div className="aedtext">
                             {item.selectedCurrency === "AED" ? (
-                               <strong>AED {particularItemPriceAed(item)}</strong>
+                              <strong>AED {particularItemPriceAed(item)}</strong>
                             ) : (
                               <strong>USD {particularItemPriceUsd(item)}</strong>
                             )}
@@ -285,6 +285,11 @@ const Cart = () => {
                     </div>
                     <div className="ProceedCheckoutCta">
                       <Link to="/billing-detail" className="cta">Proceed to Checkout</Link>
+                    </div>
+                    <div className="PaymentMethodGroup">
+                      <a href="#"><img src="images/homepage/mastercard.png" alt="" /></a>
+                      <a href="#"><img src="images/homepage/visacard.png" alt="" /></a>
+                      <a href="#"><img src="images/homepage/rupaycard.png" alt="" /></a>
                     </div>
                   </div>
                 </div>

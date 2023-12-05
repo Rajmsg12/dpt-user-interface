@@ -119,32 +119,40 @@ const ViewDetail = () => {
                 });
         }
     };
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[4]; 
+    console.log(slug)
 
-    const fetchBookingDetails = () => {
+    const fetchBookingDetailById = () => {
         const token = localStorage.getItem('token');
         if (token) {
-            fetch(`${config.baseUrl}/booking/list`, {
+            fetch(`${config.baseUrl}/booking/${slug}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    // Assuming the response data is an array of booking details
-                    setBookingDetails(data.data);
+                    // Update the bookingDetails state with the fetched data
+                    setBookingDetails(data.data); // Assuming the data structure is an array or an object received from the API
                 })
                 .catch((error) => {
-                    console.error('Error fetching booking details:', error);
+                    console.error('Error fetching booking detail:', error);
                 });
         }
     };
 
-    // Use useEffect to fetch booking details on component mount
+    // Call the function to fetch booking details on component mount
     useEffect(() => {
-        fetchBookingDetails();
+        fetchBookingDetailById();
     }, []);
 
-    console.log(bookingDetails)
+    const getBookingDetail = (index, property) => {
+        return bookingDetails.length > 0 && bookingDetails[index] ? bookingDetails[index][property] : '';
+    };
+
+
     const handleLogout = () => {
         fetch(`${config.baseUrl}/logout`, {
             method: 'POST',
@@ -160,40 +168,7 @@ const ViewDetail = () => {
             });
     };
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
 
-        setLoading(true);
-
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetch(`${config.baseUrl}/profile/update`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(formData),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log('Profile update response:', data);
-
-                    if (data.success) {
-                        setSuccessMessage('Profile updated successfully!');
-                        // Optionally, reset form fields or perform additional actions
-                    } else {
-                        setSuccessMessage('Failed to update profile. Please try again.');
-                    }
-
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error('Error updating profile:', error);
-                    setLoading(false);
-                });
-        }
-    };
     return (
         <div>
             <header className="userHeader">
@@ -261,7 +236,7 @@ const ViewDetail = () => {
                     </div>
                 </div>
             </header>
-            <div className="userboardContent">
+            <div className={`body ${menuOpen ? 'dashboardMenuOpen' : ''} userboardContent`}>
                 <div className="d-flex align-items-start">
                     <div
                         className="nav flex-column nav-pills userboardLHS"
@@ -269,37 +244,39 @@ const ViewDetail = () => {
                         role="tablist"
                         aria-orientation="vertical"
                     >
-                           <div className="topSidebar">
-                <div className="sidebarLogo">
-                  <Link to="/">
-                    {" "}
-                    <img src="images/innerlogo.svg" alt="" />
-                  </Link>
-                  <span className="closeIcon" />
-                </div>
-                <Link to="/user-dashboard" className="nav-link active DashboardIcon">
-                  <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
-                </Link>
-                <Link to="/booking" className="nav-link MyBookingIcon">
-                  <img src="images/homepage/mybookingicon.png" alt="" /> My Bookings
-                </Link>
-                <Link to="/wishlist" className="nav-link WishlistIcon">
-                  <img src="images/homepage/wislisticonnew.png" alt="" />
-                  Wishlist
-                </Link>
-                <Link to="/editprofile" className="nav-link EditrofileIcon">
-                  <img src="images/homepage/pen.png" alt="" /> Edit Profile
-                </Link>
-                <Link to="/changepassword" className="nav-link ChangePassWordIcon">
-                  <img src="images/homepage/changepasswordicon.png" alt="" />
-                  Change Password
-                </Link>
-             
-              </div>
+                          <div className="topSidebar">
+                            <div className="sidebarLogo">
+                                <Link to="/">
+                                    {" "}
+                                    <img src="images/innerlogo.svg" alt="" />
+                                </Link>
+                                <span className="closeIcon" />
+                            </div>
+                            <Link to="/user-dashboard" className="nav-link active DashboardIcon">
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/dashboardicon_n9cufo.png"} alt="" /> Dashboard
+                            </Link>
+                            <Link to="/booking" className="nav-link MyBookingIcon">
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772237/mybookingicon_aume73.png"} alt="" /> My Bookings
+                            </Link>
+                            <Link to="/wishlist" className="nav-link WishlistIcon">
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772538/wislisticonnew_t8tvl3.png"} alt="" />
+                                Wishlist
+                            </Link>
+                            <Link to="/editprofile" className="nav-link EditrofileIcon">
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/pen_tfhsvm.png"} alt="" /> Edit Profile
+                            </Link>
+                            <Link to="/changepassword" className="nav-link ChangePassWordIcon">
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772237/changepasswordicon_lgsgic.png"} alt="" />
+                                Change Password
+                            </Link>
+                         {/*    <Link href="/help" className="nav-link HelpIcon">
+                                <img src="images/customer-supporticon.png" alt="" /> Help
+                            </Link>*/}
+                        </div>
                         {/*topSidebar*/}
                         <div className="logoutDiv">
                             <a href="#">
-                                <img src="images/homepage/logouticon.png" alt="" />
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/logouticon_swvo87.png"} alt="" />
                                 Logout
                             </a>
                         </div>
@@ -312,12 +289,21 @@ const ViewDetail = () => {
                                     <div className="CartBoxXArea">
                                         <div className="CartBoxWrapper">
                                             <div className="CartTopBox">
-                                                <div className="CartimgWrapper">
-                                                    <img src="images/banner.png" alt="" />
-                                                </div>
+                                                {bookingDetails.length > 0 && (
+                                                    <div className="CartimgWrapper">
+                                                        <img src={`${config.imageUrl}/${bookingDetails[0].tour_image}`} alt="" />
+                                                    </div>
+                                                )}
+
                                                 {/*CartimgWrapper*/}
                                                 <div className="CartContentWrapper">
-                                                    <h4>Abu Dhabi Amazing Family Private Tour</h4>
+                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                        <div className="CartContentWrapper">
+                                                            <h4>{bookingDetails[0].tour_name}</h4>
+                                                            {/* Other content related to bookingDetails[0] */}
+                                                        </div>
+                                                    )}
+
                                                     <div className="Price">
                                                         AED <strong>500</strong>
                                                     </div>
@@ -332,61 +318,143 @@ const ViewDetail = () => {
                                                         <div className="BookingInfotableData">
                                                             <div className="BookingInfotableDiv">
                                                                 <div className="BookingInfotablerow">
-                                                                    <span>Tour Date*</span>
-                                                                    <span>20/Dec/2023</span>
+                                                                    <span>Full Name*</span>
+                                                                     {bookingDetails.length > 0 && bookingDetails[0] && (
+
+                                                                        <span>{bookingDetails[0].first_name} {bookingDetails[0].last_name}</span>
+
+                                                                    )}
                                                                 </div>
                                                                 {/*BookingInfotablerow*/}
                                                                 <div className="BookingInfotablerow">
-                                                                    <span>Pickup Location*</span>
-                                                                    <span>Dubai</span>
+                                                                    <span>Email*</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+
+                                                                        <span>{bookingDetails[0].email}</span>
+
+                                                                    )}
                                                                 </div>
                                                                 {/*BookingInfotablerow*/}
                                                                 <div className="BookingInfotablerow">
-                                                                    <span>Preferred Guide Language*</span>
-                                                                    <span>English</span>
+                                                                    <span>Addition Driver*</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+
+                                                                        <span>{bookingDetails[0].addition_driver}</span>
+
+                                                                    )}
+
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Additional Lunch*</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+
+                                                                        <span>{bookingDetails[0].additional_lunch}</span>
+
+                                                                    )}
+
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Additional Tickets*</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].additional_lunch}</span>
+                                                                    )}
                                                                 </div>
                                                                 {/*BookingInfotablerow*/}
                                                                 <div className="BookingInfotablerow">
                                                                     <span>Adults*</span>
-                                                                    <span>2</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].adults}</span>
+                                                                    )}
                                                                 </div>
                                                                 {/*BookingInfotablerow*/}
                                                                 <div className="BookingInfotablerow">
-                                                                    <span>Children</span>
-                                                                    <span>1</span>
+                                                                    <span>Booking Date*</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].adults}</span>
+                                                                    )}
                                                                 </div>
                                                                 {/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Country* </span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].tour_date}</span>
+                                                                    )}
+                                                                </div>{/*BookingInfotablerow*/}
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Cell No* </span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].cell_no}</span>
+                                                                    )}
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+                                                               
+
                                                             </div>
                                                             {/*BookingInfotableDiv*/}
+
                                                             <div className="BookingInfotableDiv">
+
                                                                 <div className="BookingInfotablerow">
-                                                                    <span>Preferred Pickup Time* </span>
-                                                                    <span>2:00PM</span>
+                                                                    <span>Nationality*</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].nationality}</span>
+                                                                    )}
                                                                 </div>
                                                                 {/*BookingInfotablerow*/}
                                                                 <div className="BookingInfotablerow">
+                                                                    <span>How Did You Discover Us*</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].discover_us}</span>
+                                                                    )}
+                                                                </div>
+                                                                {/*BookingInfotablerow*/}
+
+
+
+                                                                <div className="BookingInfotablerow">
                                                                     <span>End Location*</span>
-                                                                    <span>Burj Khalifa</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].end_location}</span>
+                                                                    )}
                                                                 </div>
                                                                 {/*BookingInfotablerow*/}
                                                                 <div className="BookingInfotablerow">
                                                                     <span>Pref.currency</span>
-                                                                    <span>AED</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].adults}</span>
+                                                                    )}
                                                                 </div>
                                                                 {/*BookingInfotablerow*/}
                                                                 <div className="BookingInfotablerow">
                                                                     <span>Infants</span>
-                                                                    <span>0</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].adults}</span>
+                                                                    )}
                                                                 </div>
                                                                 {/*BookingInfotablerow*/}
                                                                 <div className="BookingInfotablerow">
                                                                     <span>Payment Mode*</span>
-                                                                    <span>Pay Later</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].payment_mode}</span>
+                                                                    )}
                                                                 </div>
+                                                                {/*BookingInfotablerow*/}
+
+                                                                <div className="BookingInfotablerow">
+                                                                    <span>Special Request</span>
+                                                                    {bookingDetails.length > 0 && bookingDetails[0] && (
+                                                                        <span>{bookingDetails[0].special_equest}</span>
+                                                                    )}
+                                                                </div>
+
+
                                                                 {/*BookingInfotablerow*/}
                                                             </div>
                                                             {/*BookingInfotableDiv*/}
                                                         </div>
+
                                                         {/*BookingInfotableData*/}
                                                     </div>
                                                     {/*BookingInfoData*/}

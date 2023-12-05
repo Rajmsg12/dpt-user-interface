@@ -211,6 +211,7 @@ function ContentSection({ selectedCurrency }) {
   const spliturl = url.split("/");
   const slug = spliturl[5];
 
+
   const ourData = data.CategoryList.filter((item) => item.slug === slug);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);

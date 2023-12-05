@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Select from "react-select";
+import Swal from 'sweetalert2';
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
+import config from '../../config';
+
 
 const customStyles = {
     control: base => ({
@@ -59,6 +62,20 @@ const AskQuestion = () => {
             [name]: value
         });
     };
+    const handleCountryChange = (selectedOption) => {
+        setFormData({
+            ...formData,
+            nationality: selectedOption.value
+        });
+    };
+    const handleDiscoverChange = (e) => {
+        setFormData({
+            ...formData,
+            discover_us: e.target.value
+        });
+    };
+
+
 
     const handleSelectChange = (selectedOption, fieldName) => {
         setFormData({
@@ -70,7 +87,7 @@ const AskQuestion = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://127.0.0.1:9900/ask/add', {
+            const response = await fetch(`${config.baseUrl}/ask/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,7 +98,24 @@ const AskQuestion = () => {
             if (response.ok) {
                 const responseData = await response.json();
                 console.log('Form data sent:', responseData);
-                // Optionally, handle success or redirect here
+                // Clear form fields and show success message
+                setFormData({
+                    name: '',
+                    email: '',
+                    nationality: '',
+                    discover_us: '',
+                    country_code: '',
+                    call_no: '',
+                    address: '',
+                    subject: '',
+                    message: ''
+                });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Form submitted successfully!',
+                    showConfirmButton: false,
+                    timer: 2500 // You can adjust the timer to control how long the message is displayed
+                });
             } else {
                 console.error('Error submitting form:', response.statusText);
                 // Optionally, handle error state here
@@ -91,6 +125,7 @@ const AskQuestion = () => {
             // Handle fetch error
         }
     };
+
     const countries = [
         { label: "United States (+1)", value: "US" },
         { label: "Afghanistan (+93)", value: "AF" },
@@ -110,184 +145,7 @@ const AskQuestion = () => {
         { label: "Bahamas (+1)", value: "BS" },
         { label: "Bahrain (+973)", value: "BH" },
         { label: "Bangladesh (+880)", value: "BD" },
-        { label: "Barbados (+1)", value: "BB" },
-        { label: "Belgium (+32)", value: "BE" },
-        { label: "Belize (+501)", value: "BZ" },
-        { label: "Benin (+229)", value: "BJ" },
-        { label: "Bermuda (+1)", value: "BM" },
-        { label: "Bhutan (+975)", value: "BT" },
-        { label: "Bolivia (+591)", value: "BO" },
-        { label: "Bosnia (+387)", value: "BA" },
-        { label: "Botswana (+267)", value: "BW" },
-        { label: "Brazil (+55)", value: "BR" },
-        { label: "British Virgin Islands (+55)", value: "VG" },
-        { label: "Brunei (+673)", value: "BN" },
-        { label: "Bulgaria (+359)", value: "BG" },
-        { label: "Burkina Faso (+)", value: "BF" },
-        { label: "Burundi (+226)", value: "BI" },
-        { label: "Cambodia (+855)", value: "KH" },
-        { label: "Cameroon (+237)", value: "CM" },
-        { label: "Canada (+1)", value: "CA" },
-        { label: "Cape Verde (+238)", value: "CV" },
-        { label: "Cayman Islands (+1)", value: "KY" },
-        { label: "Central African Republic (+236)", value: "CF" },
-        { label: "Chad (+235)", value: "TD" },
-        { label: "Chile (+56)", value: "CL" },
-        { label: "China (+86)", value: "CN" },
-        { label: "Christmas Island (+61)", value: "CX" },
-        { label: "Colombia (+57)", value: "CO" },
-        { label: "Comoros (+269)", value: "KM" },
-        { label: "Cook Islands (+682)", value: "CK" },
-        { label: "Costa Rica (+506)", value: "CR" },
-        { label: "Cote_d'Ivoire (+225)", value: "CI" },
-        { label: "Croatia (+385)", value: "HR" },
-        { label: "Cuba (+53)", value: "CU" },
-        { label: "Cyprus (+357)", value: "CY" },
-        { label: "Czech Republic (+420)", value: "CZ" },
-        { label: "Democratic Republic of the Congo (+243)", value: "CD" },
-        { label: "Denmark (+45)", value: "DK" },
-        { label: "Djibouti (+253)", value: "DJ" },
-        { label: "Dominica (+1)", value: "DM" },
-        { label: "Dominican Republic (+1)", value: "DO" },
-        { label: "Ecuador (+593)", value: "EC" },
-        { label: "Egypt (+20)", value: "EG" },
-        { label: "El Salvador (+503)", value: "SV" },
-        { label: "Equatorial Guinea (+240)", value: "GQ" },
-        { label: "Eritrea (+291)", value: "ER" },
-        { label: "Estonia (+372)", value: "EE" },
-        { label: "Ethiopia (+251)", value: "ET" },
-        { label: "Falkland Islands (+500)", value: "FK" },
-        { label: "Faroe Islands (+298)", value: "FO" },
-        { label: "Fiji (+679)", value: "FJ" },
-        { label: "Finland (+358)", value: "FI" },
-        { label: "France (+33)", value: "FR" },
-        { label: "French Polynesia (+689)", value: "PF" },
-        { label: "Gabon (+241)", value: "GA" },
-        { label: "Gambia (+220)", value: "GM" },
-        { label: "Georgia (+995)", value: "GE" },
-        { label: "Germany (+49)", value: "DE" },
-        { label: "Ghana (+233)", value: "GH" },
-        { label: "Gibraltar (+350)", value: "GI" },
-        { label: "Greece (+30)", value: "GR" },
-        { label: "Greenland (+299)", value: "GL" },
-        { label: "Grenada (+1)", value: "GD" },
-        { label: "Guam (+1)", value: "GU" },
-        { label: "Guatemala (+502)", value: "GT" },
-        { label: "Guinea (+224)", value: "GN" },
-        { label: "Guinea Bissau (+245)", value: "GW" },
-        { label: "Guyana (+592)", value: "GY" },
-        { label: "Haiti (+509)", value: "HT" },
-        { label: "Honduras (+504)", value: "HN" },
-        { label: "Hong Kong (+852)", value: "HK" },
-        { label: "Hungary (+36)", value: "HU" },
-        { label: "Iceland (+354)", value: "IS" },
-        { label: "India (+91)", value: "IN" },
-        { label: "Indonesia (+62)", value: "ID" },
-        { label: "Iran (+98)", value: "IR" },
-        { label: "Iraq (+964)", value: "IQ" },
-        { label: "Ireland (+353)", value: "IE" },
-        { label: "Israel (+972)", value: "IL" },
-        { label: "Italy (+39)", value: "IT" },
-        { label: "Jamaica (+1)", value: "JM" },
-        { label: "Japan (+81)", value: "JP" },
-        { label: "Jordan (+962)", value: "JO" },
-        { label: "Kazakhstan (+7)", value: "KZ" },
-        { label: "Kenya (+254)", value: "KE" },
-        { label: "Kiribati (+686)", value: "KI" },
-        { label: "Kuwait (+965)", value: "KW" },
-        { label: "Kyrgyzstan (+996)", value: "KG" },
-        { label: "Laos (+856)", value: "LA" },
-        { label: "Latvia (+371)", value: "LV" },
-        { label: "Lebanon (+961)", value: "LB" },
-        { label: "Lesotho (+266)", value: "LS" },
-        { label: "Liberia (+231)", value: "LR" },
-        { label: "Libya (+218)", value: "LY" },
-        { label: "Liechtenstein (+423)", value: "LI" },
-        { label: "Lithuania (+370)", value: "LT" },
-        { label: "Luxembourg (+352)", value: "LU" },
-        { label: "Macao (+853)", value: "MO" },
-        { label: "Macedonia (+389)", value: "MK" },
-        { label: "Madagascar (+261)", value: "MG" },
-        { label: "Malawi (+265)", value: "MW" },
-        { label: "Malaysia (+60)", value: "MY" },
-        { label: "Maldives (+960)", value: "MV" },
-        { label: "Mali (+223)", value: "ML" },
-        { label: "Malta (+356)", value: "MT" },
-        { label: "Marshall Islands (+692)", value: "MH" },
-        { label: "Martinique (+596)", value: "MQ" },
-        { label: "Mauritania (+222)", value: "MR" },
-        { label: "Mauritius (+230)", value: "MU" },
-        { label: "Mexico (+52)", value: "MX" },
-        { label: "Micronesia (+691)", value: "FM" },
-        { label: "Moldova (+373)", value: "MD" },
-        { label: "Monaco (+377)", value: "MC" },
-        { label: "Mongolia (+976)", value: "MN" },
-        { label: "Montserrat (+1)", value: "MS" },
-        { label: "Morocco (+212)", value: "MA" },
-        { label: "Mozambique (+258)", value: "MZ" },
-        { label: "Myanmar (+95)", value: "MM" },
-        { label: "Namibia (+264)", value: "NA" },
-        { label: "Nauru (+674)", value: "NR" },
-        { label: "Nepal (+977)", value: "NP" },
-        { label: "Netherlands (+31)", value: "NL" },
-        { label: "Netherlands Antilles (+599)", value: "AN" },
-        { label: "New Zealand (+64)", value: "NZ" },
-        { label: "Nicaragua (+505)", value: "NI" },
-        { label: "Niger (+227)", value: "NE" },
-        { label: "Nigeria (+234)", value: "NG" },
-        { label: "Niue (+683)", value: "NU" },
-        { label: "Norfolk Island (+672)", value: "NF" },
-        { label: "North Korea (+850)", value: "KP" },
-        { label: "Norway (+47)", value: "NO" },
-        { label: "Oman (+968)", value: "OM" },
-        { label: "Pakistan (+92)", value: "PK" },
-        { label: "Palau (+680)", value: "PW" },
-        { label: "Panama (+507)", value: "PA" },
-        { label: "Papua New Guinea (+675)", value: "PG" },
-        { label: "Paraguay (+595)", value: "PY" },
-        { label: "Peru (+51)", value: "PE" },
-        { label: "Philippines (+63)", value: "PH" },
-        { label: "Pitcairn Islands (+649)", value: "PN" },
-        { label: "Poland (+48)", value: "PL" },
-        { label: "Portugal (+351)", value: "PT" },
-        { label: "Puerto Rico (+1)", value: "PR" },
-        { label: "Qatar (+974)", value: "QA" },
-        { label: "Republic of the Congo (+243)", value: "CG" },
-        { label: "Romania (+40)", value: "RO" },
-        { label: "Russian Federation (+7)", value: "RU" },
-        { label: "Rwanda (+250)", value: "RW" },
-        { label: "Saint Kitts and Nevis (+1)", value: "KN" },
-        { label: "Saint Lucia (+1)", value: "LC" },
-        { label: "Saint Pierre (+508)", value: "PM" },
-        { label: "Saint Vincent and the Grenadines (+1-784)", value: "VC" },
-        { label: "Samoa (+685)", value: "WS" },
-        { label: "San Marino (+378)", value: "SM" },
-        { label: "Sao Tome and Principe (+239)", value: "ST" },
-        { label: "Saudi Arabia (+966)", value: "SA" },
-        { label: "Senegal (+221)", value: "SN" },
-        { label: "Serbia and Montenegro (+381)", value: "RS" },
-        { label: "Seychelles (+248)", value: "SC" },
-        { label: "Sierra Leone (+232)", value: "SL" },
-        { label: "Singapore (+65)", value: "SG" },
-        { label: "Slovakia (+421)", value: "SK" },
-        { label: "Slovenia (+386)", value: "SI" },
-        { label: "Solomon Islands (+677)", value: "SB" },
-        { label: "Somalia (+252)", value: "SO" },
-        { label: "South Africa (+27)", value: "ZA" },
-        { label: "South Georgia (+44)", value: "GS" },
-        { label: "South Korea (+82)", value: "KR" },
-        { label: "Soviet Union (+7)", value: "SU" },
-        { label: "Spain (+34)", value: "ES" },
-        { label: "Sri Lanka (+94)", value: "LK" },
-        { label: "Sudan (+249)", value: "SD" },
-        { label: "Suriname (+597)", value: "SR" },
-        { label: "Swaziland (+268)", value: "SZ" },
-        { label: "Sweden (+46)", value: "SE" },
-        { label: "Switzerland (+41)", value: "CH" },
-        { label: "Syria (+963)", value: "SY" },
-        { label: "Taiwan (+886)", value: "TW" },
-        { label: "Tajikistan (+992)", value: "TJ" },
-        { label: "Tanzania (+255)", value: "TZ" },
+   
         // Add more countries here
     ];
 
@@ -342,16 +200,28 @@ const AskQuestion = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup ">
                                         <label>Nationality*</label>
-                                        <CountrySelect />
+                                        <Select
+                                            options={countries}
+                                            placeholder="Select Nationality"
+                                            value={countries.find(country => country.value === formData.nationality)}
+                                            onChange={(selectedOption) => handleCountryChange(selectedOption)}
+                                            required
+                                        />
+
                                     </div>
                                     {/* formGroup */}
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>How Did You Discover Us* </label>
-                                        <select className="form-select"   value={formData.discover_us}
-                                         onChange={handleInputChange}
-                                         required>
+                                        <select
+                                            className="form-select"
+                                            name="discover_us"
+                                            value={formData.discover_us}
+                                            onChange={handleDiscoverChange}
+                                            required
+                                        >
+
                                             <option value="">Select How Did You Discovered Us</option>
                                             <option value="Google Search">Google Search</option>
                                             <option value="Trip adviser">Trip adviser</option>
@@ -378,25 +248,25 @@ const AskQuestion = () => {
                                     <div className="mb-3 formGroup">
                                         <label>Cell No*</label>
                                         <input type="text"
-                                        className="form-control" 
-                                        placeholder="Cell No" 
-                                        name="call_no"
-                                        value={formData.call_no}
-                                        onChange={handleInputChange}
-                                        required />
+                                            className="form-control"
+                                            placeholder="Cell No"
+                                            name="call_no"
+                                            value={formData.call_no}
+                                            onChange={handleInputChange}
+                                            required />
                                     </div>
                                     {/* formGroup */}
                                 </div>
                                 <div className="col-md-12">
                                     <div className="mb-3 formGroup">
                                         <label>Address</label>
-                                        <textarea className="form-control" 
-                                        placeholder="Type Your Special Requests" 
-                                        rows="3"
-                                        name="address"
-                                        value={formData.address}
-                                        onChange={handleInputChange}
-                                        required></textarea>
+                                        <textarea className="form-control"
+                                            placeholder="Type Your Special Requests"
+                                            rows="3"
+                                            name="address"
+                                            value={formData.address}
+                                            onChange={handleInputChange}
+                                            required></textarea>
                                     </div>{/* formGroup */}
                                 </div>
 
@@ -420,12 +290,12 @@ const AskQuestion = () => {
                                     <div className="mb-3 formGroup">
                                         <label>Message</label>
                                         <textarea className="form-control"
-                                        placeholder="Type Your Special Requests" 
-                                        rows="3"
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleInputChange}
-                                        required></textarea>
+                                            placeholder="Type Your Special Requests"
+                                            rows="3"
+                                            name="message"
+                                            value={formData.message}
+                                            onChange={handleInputChange}
+                                            required></textarea>
                                     </div>{/* formGroup */}
                                 </div>
 

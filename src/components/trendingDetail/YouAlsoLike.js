@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { data } from '../../data/index'
 import config from '../../config';
+import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const YouAlsoLike = ({selectedCurrency}) => {
@@ -12,7 +13,14 @@ const YouAlsoLike = ({selectedCurrency}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
-    console.log(selectedCurrency)
+
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[5];
+    const location = spliturl[4];
+    console.log(slug)
+    console.log(location)
+
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -80,7 +88,7 @@ const YouAlsoLike = ({selectedCurrency}) => {
                         {tourData.map((tour, index) => (
                             <div className="carouselItem" key={tour.id}>
                             <div className="item">
-                                <Link to={`/plan/${tour.slug}`} className="TabBox">
+                                <Link to={`/trending-tour/${location}/${tour.slug}`} className="TabBox">
                                     <div className="img">
                                         <img src={`${config.imageUrl}/${tour.image}`} alt="" />
                                         {tour.discount && (
