@@ -122,7 +122,6 @@ const ViewDetail = () => {
     const url = window.location.href;
     const spliturl = url.split("/");
     const slug = spliturl[4]; 
-    console.log(slug)
 
     const fetchBookingDetailById = () => {
         const token = localStorage.getItem('token');

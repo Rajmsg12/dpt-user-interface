@@ -7,17 +7,9 @@ import config from '../../config';
 import { useNavigate } from 'react-router-dom';
 
 const Review = () => {
-    const [formData, setFormData] = useState({
-        first_name: '',
-        lastName: '',
-        email: '',
-        country: '',
-        phoneno: '',
-        address: '',
-    });
-    const [passwordData, setPasswordData] = useState({
-        old_password: '',
-        new_password: '',
+    const [reviewData, setReviewData] = useState({
+        rating: '',
+        comments: ''
     });
 
 
@@ -38,6 +30,10 @@ const Review = () => {
     const closeMenu = () => {
         setMenuOpen(false);
     };
+    const url = window.location.href;
+    const spliturl = url.split("/");
+    const slug = spliturl[4];
+    console.log(slug)
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -85,62 +81,67 @@ const Review = () => {
                 });
         }
     }, []);
-    const handleChangePassword = (e) => {
-        e.preventDefault();
 
+    const fetchBookingDetailById = () => {
         const token = localStorage.getItem('token');
         if (token) {
-            fetch(`${config.baseUrl}/profile/change-password`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(passwordData),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log('Change password response:', data);
-
-                    if (data.success) {
-                        // Optionally, handle success
-                        console.log('Password changed successfully!');
-                    } else {
-                        // Optionally, handle failure
-                        console.log('Failed to change password. Please try again.');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error changing password:', error);
-                });
-        }
-    };
-
-    const fetchBookingDetails = () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetch(`${config.baseUrl}/booking/list`, {
+            fetch(`${config.baseUrl}/booking/${slug}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    // Assuming the response data is an array of booking details
-                    setBookingDetails(data.data);
+                    // Update the bookingDetails state with the fetched data
+                    setBookingDetails(data.data); // Assuming the data structure is an array or an object received from the API
                 })
                 .catch((error) => {
-                    console.error('Error fetching booking details:', error);
+                    console.error('Error fetching booking detail:', error);
                 });
         }
     };
 
-    // Use useEffect to fetch booking details on component mount
+    // Call the function to fetch booking details on component mount
     useEffect(() => {
-        fetchBookingDetails();
+        fetchBookingDetailById();
     }, []);
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+    
+        // Prepare the data to be sent to the backend
+        const dataToSend = {
+            rating: reviewData.rating,
+            comments: reviewData.comments
+        };
+    
+        // Make a POST request to the backend API
+        fetch(`http://127.0.0.1:9900/review/add/4`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(dataToSend)
+        })
+        .then(response => {
+            if (response.ok) {
+                // Handle success, maybe show a success message
+                console.log('Review submitted successfully');
+                setReviewData({
+                    rating: '',
+                    comments: ''
+                });
+            } else {
+                // Handle errors, maybe show an error message
+                console.error('Failed to submit review');
+            }
+        })
+        .catch(error => {
+            // Handle network errors
+            console.error('Error submitting review:', error);
+        });
+    };
 
-    console.log(bookingDetails)
     const handleLogout = () => {
         fetch(`${config.baseUrl}/logout`, {
             method: 'POST',
@@ -256,13 +257,13 @@ const Review = () => {
                                 <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>
-                         {/*  <Link href="/help" className="nav-link HelpIcon">
+                            {/*  <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
-                            </Link>*/}  
+                            </Link>*/}
                         </div>
                         {/*topSidebar*/}
                         <div className="logoutDiv">
-                        <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
+                            <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
                         </div>
                     </div>
                     {/*userboardLHS*/}
@@ -376,7 +377,7 @@ const Review = () => {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                
+
                                                 {/*readReviewBox*/}
                                             </div>
                                             {/*readReviewDiv*/}
@@ -388,7 +389,7 @@ const Review = () => {
                                             aria-labelledby="pills-writeareview-tab"
                                         >
                                             <div className="INreviewFieldForm">
-                                                <form>
+                                                <form onSubmit={handleFormSubmit}>
                                                     <div className="row">
                                                         <div className="col-md-6">
                                                             <div className="mb-3">
@@ -398,6 +399,8 @@ const Review = () => {
                                                                     className="form-control"
                                                                     placeholder="Your Name"
                                                                     required
+                                                                    value={bookingDetails.length > 0 ? (bookingDetails[0].first_name || '') : ''}
+                                                                    onChange={(e) => setUserName(e.target.value)}
                                                                 />
                                                             </div>
                                                         </div>
@@ -405,33 +408,44 @@ const Review = () => {
                                                             <div className="mb-3">
                                                                 <label className="form-label">Email</label>
                                                                 <input
-                                                                    type="email"
+                                                                    type="gmail"
                                                                     className="form-control"
-                                                                    placeholder="Your Email"
+                                                                    placeholder="Email"
                                                                     required
+                                                                    value={bookingDetails[0]?.email || ''} // Use optional chaining and provide a fallback value
+                                                                    onChange={(e) => setEmail(e.target.value)}
                                                                 />
                                                             </div>
                                                         </div>
                                                         <div className="col-md-6">
                                                             <div className="mb-3">
                                                                 <label className="form-label">Your Rating</label>
-                                                                <select className="form-select" required>
-                                                                    <option value="">Select </option>{" "}
-                                                                    <option value={5}>Excellent</option>{" "}
-                                                                    <option value={4}>Very Good</option>{" "}
-                                                                    <option value={3}>Average</option>{" "}
-                                                                    <option value={2}>Poor</option>{" "}
-                                                                    <option value={1}>Terrible</option>
+                                                                <select
+                                                                    className="form-select"
+                                                                    required
+                                                                    value={reviewData.rating}
+                                                                    onChange={(e) => setReviewData({ ...reviewData, rating: e.target.value })}
+                                                                >
+                                                                    <option value="">Select</option>
+                                                                    <option value="5">Excellent</option>
+                                                                    <option value="4">Very Good</option>
+                                                                    <option value="3">Average</option>
+                                                                    <option value="2">Poor</option>
+                                                                    <option value="1">Terrible</option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div className="col-md-6">
                                                             <div className="mb-3">
                                                                 <label className="form-label">Select Country</label>
-                                                                <select className="form-select" required="">
-                                                                    <option value="">Select</option>{" "}
-                                                                   
-                                                                </select>
+                                                                <input
+                                                                    type="gmail"
+                                                                    className="form-control"
+                                                                    placeholder="Country"
+                                                                    required
+                                                                    value={bookingDetails[0]?.country || ''} // Use optional chaining and provide a fallback value
+                                                                    onChange={(e) => setEmail(e.target.value)}
+                                                                />
                                                             </div>
                                                         </div>
                                                         <div className="col-md-12">
@@ -442,7 +456,8 @@ const Review = () => {
                                                                     placeholder=""
                                                                     rows={3}
                                                                     required
-                                                                    defaultValue={""}
+                                                                    value={reviewData.comments}
+                                                                    onChange={(e) => setReviewData({ ...reviewData, comments: e.target.value })}
                                                                 />
                                                             </div>
                                                             {/*formGroup*/}

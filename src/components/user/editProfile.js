@@ -4,17 +4,11 @@ import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { Link } from 'react-router-dom';
 import config from '../../config';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
-    const [formData, setFormData] = useState({
-        first_name: '',
-        lastName: '',
-        email: '',
-        country: '',
-        phoneno: '',
-        address: '',
-    });
+
     const [passwordData, setPasswordData] = useState({
         old_password: '',
         new_password: '',
@@ -26,6 +20,10 @@ const EditProfile = () => {
 
     const [first_name, setUserName] = useState('');
     const [email, setEmail] = useState('');
+    const [myphone, setMyPhone] = useState('');
+    const [address, setAddress] = useState('');
+    const [country, setCountry] = useState('');
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const [bookingDetails, setBookingDetails] = useState([]);
@@ -38,33 +36,25 @@ const EditProfile = () => {
     const closeMenu = () => {
         setMenuOpen(false);
     };
-
+    
+    const [formData, setFormData] = useState({
+        first_name: first_name,
+        lastName: '',
+        email: email,
+        country: country,
+        phoneno: myphone,
+        address: address,
+    });
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            fetch(`${config.baseUrl}/welcome`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-
-            })
-
-                .then(response => response.json())
-
-                .then(data => {
-
-                    setUserName(data.data.first_name);
-                    setEmail(data.data.email);
-                    setIsLoggedIn(true);
-                })
-
-                .catch(error => {
-                    console.error("Error fetching user data:", error);
-                });
-        }
-    }, []);
-
-
+        setFormData({
+            ...formData,
+            first_name: first_name,
+            email: email,
+            country: country,
+            phoneno: myphone,
+            address: address,
+        });
+    }, [first_name, email, country, myphone, address]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -78,6 +68,18 @@ const EditProfile = () => {
                 .then((data) => {
                     setUserName(data.data.first_name);
                     setEmail(data.data.email);
+                    setMyPhone(data.data.phoneno);
+                    setAddress(data.data.address);
+                    setCountry(data.data.country);
+                    // Set initial form data on API fetch
+                    setFormData({
+                        ...formData,
+                        first_name: data.data.first_name,
+                        email: data.data.email,
+                        country: data.data.country,
+                        phoneno: data.data.phoneno,
+                        address: data.data.address,
+                    });
                     setIsLoggedIn(true);
                 })
                 .catch((error) => {
@@ -85,36 +87,7 @@ const EditProfile = () => {
                 });
         }
     }, []);
-    const handleChangePassword = (e) => {
-        e.preventDefault();
 
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetch(`${config.baseUrl}/profile/change-password`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(passwordData),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log('Change password response:', data);
-
-                    if (data.success) {
-                        // Optionally, handle success
-                        console.log('Password changed successfully!');
-                    } else {
-                        // Optionally, handle failure
-                        console.log('Failed to change password. Please try again.');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error changing password:', error);
-                });
-        }
-    };
 
     const fetchBookingDetails = () => {
         const token = localStorage.getItem('token');
@@ -140,14 +113,14 @@ const EditProfile = () => {
         fetchBookingDetails();
     }, []);
 
-    console.log(bookingDetails)
+
     const handleLogout = () => {
         fetch(`${config.baseUrl}/logout`, {
             method: 'POST',
         })
             .then(() => {
                 localStorage.removeItem('token');
-                localStorage.removeItem('first_name');
+                // localStorage.removeItem('first_name');
                 setIsLoggedIn(false);
                 navigate('/');
             })
@@ -158,9 +131,8 @@ const EditProfile = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
         setLoading(true);
-
+    
         const token = localStorage.getItem('token');
         if (token) {
             fetch(`${config.baseUrl}/profile/update`, {
@@ -174,14 +146,21 @@ const EditProfile = () => {
                 .then((response) => response.json())
                 .then((data) => {
                     console.log('Profile update response:', data);
-
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Profile Update Successfully',
+                        showConfirmButton: false,
+                        timer: 2500, // You can adjust the timer to control how long the message is displayed
+                    });
+    
                     if (data.success) {
                         setSuccessMessage('Profile updated successfully!');
-                        // Optionally, reset form fields or perform additional actions
+                        // Display success message with Swal
+                       
                     } else {
                         setSuccessMessage('Failed to update profile. Please try again.');
                     }
-
+    
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -190,6 +169,7 @@ const EditProfile = () => {
                 });
         }
     };
+    
     return (
         <div>
             <header className="userHeader">
@@ -290,9 +270,9 @@ const EditProfile = () => {
                                 <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>
-                  {/*        <Link href="/help" className="nav-link HelpIcon">
+                            {/*        <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
-                            </Link> */}  
+                            </Link> */}
                         </div>
                         {/*topSidebar*/}
                         <div className="logoutDiv">
@@ -311,16 +291,17 @@ const EditProfile = () => {
                                                 type="text"
                                                 className="form-control"
                                                 placeholder="First Name"
-                                                value={formData.first_name}
+                                                value={formData.first_name} // Use formData.first_name here
                                                 onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
                                                 required
                                             />
+
                                         </div>
 
                                         <div className="mb-3">
                                             <label className="form-label">Phone Number</label>
                                             <input
-                                                type=" phoneno"
+                                                type="phoneno"
                                                 className="form-control"
                                                 placeholder="Phone Number"
                                                 value={formData.phoneno}
@@ -364,7 +345,7 @@ const EditProfile = () => {
                                             />
                                         </div>
 
-                                        <div className="mb-3">
+                                        {/*    <div className="mb-3">
                                             <label className="form-label">Country Code</label>
                                             <select
                                                 className="form-select"
@@ -378,7 +359,7 @@ const EditProfile = () => {
                                                 <option value="India"> India (+91) </option>
                                                 <option value="Zimbabwe"> Zimbabwe (+263) </option>
                                             </select>
-                                        </div>
+                                        </div>*/}
 
                                         <button type="submit" className="cta">
                                             Submit

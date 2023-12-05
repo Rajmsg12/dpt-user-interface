@@ -50,6 +50,7 @@
   
   .BillingDetailRHS .OrderSummaryTable .OrderSummaryTablebody .ProceedCheckoutCta .cta {
     margin-bottom: 0px;
+    border:0px;
   }
   
   @media screen and (max-width: 991.33px) {

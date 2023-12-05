@@ -2010,6 +2010,8 @@
       color: #ff0000;
       }
       
+
+
     /*add new css*/
     .customersaysrow .widSSPnarrow {
         width: 100% !important;
@@ -2017,6 +2019,83 @@
 
     .Logo a img {
         max-width: 200px;
+    }
+
+    .widSSPBranding dl>dt a {
+        text-align: center;
+        width: 100%;
+        display: block;
+        margin: 0px 0px 10px;
+    }
+    dt.widSSPH18 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #000;
+        text-decoration: underline;
+        margin: 5px 0px 10px;
+    }
+    .widSSPData {
+        padding: 20px;
+        border-radius: 10px;
+    }
+    dt.widSSPTagline, dt.widSSPH11 {
+        font-size: 13px;
+        font-weight: 600;
+        color: #000;
+    }
+    .widSSPOverall {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 13px;
+        font-weight: 600;
+        color: #000;
+        column-gap: 10px;
+        margin: 10px 0px 0px;
+    }
+    span.widSSPPopIdxData {
+        font-size: 17px;
+        font-weight: 500;
+        color: #000;
+        display: inline-block;
+        line-height: 20px;
+        margin-top: 4px;
+    }
+    .widSSPPopIdx.widSSPSingle b {
+        font-size: 13px;
+        font-weight: 600;
+        color: #000;
+    }
+    dl.widSSPReviews {
+        margin: 10px 0px 0px;
+    }
+    ul.widSSPBullet li {
+        font-size: 12px;
+        font-weight: 400;
+        color: #000;
+        margin-bottom: 10px;
+    }
+    ul.widSSPBullet {
+        margin-top: 8px;
+    }
+    .widSSPAll {
+        display: flex;
+        gap: 30px;
+        margin: 10px 0px 0px;
+    }
+    .widSSPAll ul li a {
+        text-decoration: none;
+        font-size: 12px;
+        color: #000;
+        font-weight: 300;
+        border-bottom: 1px solid;
+        padding: 0px 0px 8px;
+    }
+    .widSSPLegal {
+        margin: 15px 0px 0px;
+        color: #000;
+        font-weight: 500;
+        font-size: 15px;
     }
 
     @media screen and (max-width:1199px) {

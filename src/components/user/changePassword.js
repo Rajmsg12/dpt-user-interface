@@ -27,7 +27,7 @@ const ChangePassword = () => {
     const [first_name, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const [passwordMatchError, setPasswordMatchError] = useState(false); // New state variable
     const [bookingDetails, setBookingDetails] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
     const [menuClose, setMenuClose] = useState(true);
@@ -88,6 +88,11 @@ const ChangePassword = () => {
     const handleChangePassword = (e) => {
         e.preventDefault();
 
+        if (passwordData.new_password !== passwordData.confirm_password) {
+            setPasswordMatchError(true); // Set the error state to true if passwords don't match
+            return; // Prevent further execution
+        }
+
         const token = localStorage.getItem('token');
         if (token) {
             fetch(`${config.baseUrl}/profile/change-password`, {
@@ -115,6 +120,7 @@ const ChangePassword = () => {
                 });
         }
     };
+
 
     const fetchBookingDetails = () => {
         const token = localStorage.getItem('token');
@@ -290,9 +296,9 @@ const ChangePassword = () => {
                                 <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>
-                       {/*     <Link href="/help" className="nav-link HelpIcon">
+                            {/*     <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
-                            </Link>*/} 
+                            </Link>*/}
                         </div>
                         {/*topSidebar*/}
                         <div className="logoutDiv">
@@ -316,6 +322,7 @@ const ChangePassword = () => {
                                                 required
                                             />
                                         </div>
+
                                         <div className="mb-3">
                                             <label className="form-label">New Password</label>
                                             <input
@@ -326,6 +333,20 @@ const ChangePassword = () => {
                                                 onChange={(e) => setPasswordData({ ...passwordData, new_password: e.target.value })}
                                                 required
                                             />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label className="form-label">Confirm Password</label>
+                                            <input
+                                                type="password"
+                                                className="form-control"
+                                                placeholder="Confirm Password"
+                                                value={passwordData.confirm_password}
+                                                onChange={(e) => setPasswordData({ ...passwordData, confirm_password: e.target.value })}
+                                                required
+                                            />
+                                            {passwordMatchError && (
+                                                <p className="text-danger">Password and confirm password do not match.</p>
+                                            )}
                                         </div>
                                         <button type="submit" className="cta">
                                             Submit

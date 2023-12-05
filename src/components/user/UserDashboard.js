@@ -115,7 +115,6 @@ const UserProfile = () => {
     fetchBookingDetails();
   }, []);
 
-  console.log(bookingDetails)
   const handleLogout = () => {
     fetch(`${config.baseUrl}/logout`, {
       method: 'POST',

@@ -2950,14 +2950,14 @@ footer {
   color: #000;
   font-weight: 500;
   font-size: 14px;
-  width: 70%;
-  white-space: nowrap;
+  width:50%;
+  /* white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 }
 
 .CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow span:last-child {
-  width: 30%;
+  width:50%;
   font-weight: 700;
 }
 
