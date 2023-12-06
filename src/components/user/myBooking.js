@@ -148,7 +148,7 @@ const Booking = () => {
         })
             .then(() => {
                 localStorage.removeItem('token');
-                localStorage.removeItem('first_name');
+                // localStorage.removeItem('first_name');
                 setIsLoggedIn(false);
                 navigate('/');
             })
@@ -291,14 +291,15 @@ const Booking = () => {
                                 <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>
+                            <div className="logoutDiv">
+                            <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
+                        </div>
                          {/*    <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
                             </Link>*/}
                         </div>
                         {/*topSidebar*/}
-                        <div className="logoutDiv">
-                            <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
-                        </div>
+                       
                     </div>
                     {/*userboardLHS*/}
                     <div className="tab-content userboardRHS">
@@ -328,7 +329,7 @@ const Booking = () => {
                                                     <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
                                                     <div className="Action">
                                                         <div className="IconsAll">
-                                                            <Link to={`/review/${booking.id}`} className="reviewstarIcon"></Link>
+                                                            <Link to= {`/review/${booking.id}`} className="reviewstarIcon"></Link>
                                                             <Link to={`/view-detail/${booking.id}`} className="view"></Link>
                                                         </div>
                                                     </div>

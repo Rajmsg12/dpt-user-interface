@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Style/TourPage.css'
 import Carousel from 'react-multi-carousel';
@@ -7,19 +7,36 @@ import { data } from '../../data/index'
 import config from '../../config';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const YouAlsoLike = ({selectedCurrency}) => {
+const YouAlsoLike = ({ selectedCurrency }) => {
     const [tourData, setTourData] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
+    const location = useLocation();
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        fetchData();
+      }, []);
+    
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`${config.baseUrl}/tour-list`);
+          const data = await response.json();
+          setTourData(data.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
 
     const url = window.location.href;
     const spliturl = url.split("/");
     const slug = spliturl[5];
-    const location = spliturl[4];
+    const location1 = spliturl[4];
     console.log(slug)
-    console.log(location)
+    console.log(location1)
 
     const responsive = {
         superLargeDesktop: {
@@ -74,6 +91,11 @@ const YouAlsoLike = ({selectedCurrency}) => {
                 });
         }
     }, []);
+  
+    const handleLinkClick = (location, slug) => {
+        navigate(`/trending-tour/${location}/${slug}`);
+        fetchData(); // Fetch data when the link is clicked
+    };
 
 
     return (
@@ -85,107 +107,110 @@ const YouAlsoLike = ({selectedCurrency}) => {
                     </div>
                     <div className="PopularToursSlider">
                         <Carousel responsive={responsive} infinite={true} itemclassName="carousel-item-padding-60-px" arrows={false}>
-                        {tourData.map((tour, index) => (
-                            <div className="carouselItem" key={tour.id}>
-                            <div className="item">
-                                <Link to={`/trending-tour/${location}/${tour.slug}`} className="TabBox">
-                                    <div className="img">
-                                        <img src={`${config.imageUrl}/${tour.image}`} alt="" />
-                                        {tour.discount && (
-                                            <div className="discountrow">
-                                                <div className="discount">
-                                                    <span>{`${tour.discount}%`}</span>
-                                                </div>
-                                                <div className="wishlistIcon"></div>
-                                            </div>
-                                        )}
-                                        <div className="imgBottomRow">
-                                            <div className="lhs-text">
-                                                {tour.imgBottomRow && (
-                                                    <span>{tour.imgBottomRow.lhsText}</span>
+                            {tourData.map((tour, index) => (
+                                <div className="carouselItem" key={tour.id}>
+                                    <div className="item">
+                                        <Link
+                                            onClick={() => handleLinkClick(location, tour.slug)}
+                                            className="TabBox"
+                                        >
+                                            <div className="img">
+                                                <img src={`${config.imageUrl}/${tour.image}`} alt="" />
+                                                {tour.discount && (
+                                                    <div className="discountrow">
+                                                        <div className="discount">
+                                                            <span>{`${tour.discount}%`}</span>
+                                                        </div>
+                                                        <div className="wishlistIcon"></div>
+                                                    </div>
                                                 )}
-                                                <div className="lhstext">
-                                                    <span>{tour.hastag}</span>
-                                                    <span>{tour.hastagHeading}</span>
-                                                </div>
-                                            </div>
-                                            <div className="rhsimg">
+                                                <div className="imgBottomRow">
+                                                    <div className="lhs-text">
+                                                        {tour.imgBottomRow && (
+                                                            <span>{tour.imgBottomRow.lhsText}</span>
+                                                        )}
+                                                        <div className="lhstext">
+                                                            <span>{tour.hastag}</span>
+                                                            <span>{tour.hastagHeading}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="rhsimg">
 
-                                                {tour.sticker_info[0].id === '1' && (
-                                                    <img
-                                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                                        alt=""
-                                                    />
-                                                )}
-                                                {tour.sticker_info[0].id === '2' && (
-                                                    <img
-                                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                                        alt=""
-                                                    />
-                                                )}
-                                                {tour.sticker_info[0].id === '3' && (
-                                                    <img
-                                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                                        alt=""
-                                                    />
-                                                )}
-                                                {tour.sticker_info.length > 1 && (
-                                                    <img
-                                                        src={tour.sticker_info[1].id}
-                                                        alt=""
-                                                    />
-                                                )}
+                                                        {tour.sticker_info[0].id === '1' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                        {tour.sticker_info[0].id === '2' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                        {tour.sticker_info[0].id === '3' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                        {tour.sticker_info.length > 1 && (
+                                                            <img
+                                                                src={tour.sticker_info[1].id}
+                                                                alt=""
+                                                            />
+                                                        )}
 
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="TabBoxBody">
-                                        <h4>{tour.tour_name}</h4>
-                                        <p>{tour.intro}</p>
-                                        <div className="ReviewRow">
-                                            {tour.destination_info && tour.destination_info.length > 0 && (
-                                                <span className="location">{tour.destination_info[0].name}</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="TabBoxFooter">
-                                        <div className="aedLHS">
-                                            <span>Starting from</span>
-                                            {isLoggedIn ? (
-                                                <div className="aedtext">
-                                                  {selectedCurrency === "AED" ? (
-                                                    <span>AED</span>
-                                                  ) : (
-                                                    <span>USD</span>
-                                                  )}
-                                                  <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                            <div className="TabBoxBody">
+                                                <h4>{tour.tour_name}</h4>
+                                                <p>{tour.intro}</p>
+                                                <div className="ReviewRow">
+                                                    {tour.destination_info && tour.destination_info.length > 0 && (
+                                                        <span className="location">{tour.destination_info[0].name}</span>
+                                                    )}
                                                 </div>
-                                              ) : (
-                                                <div className="aedtext">
-                                                  {selectedCurrency === "AED" ? (
-                                                    <span>AED</span>
-                                                  ) : (
-                                                    <span>USD</span>
-                                                  )}
-                                                  <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                            </div>
+                                            <div className="TabBoxFooter">
+                                                <div className="aedLHS">
+                                                    <span>Starting from</span>
+                                                    {isLoggedIn ? (
+                                                        <div className="aedtext">
+                                                            {selectedCurrency === "AED" ? (
+                                                                <span>AED</span>
+                                                            ) : (
+                                                                <span>USD</span>
+                                                            )}
+                                                            <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                        </div>
+                                                    ) : (
+                                                        <div className="aedtext">
+                                                            {selectedCurrency === "AED" ? (
+                                                                <span>AED</span>
+                                                            ) : (
+                                                                <span>USD</span>
+                                                            )}
+                                                            <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                        </div>
+                                                    )}
                                                 </div>
-                                              )}
-                                        </div>
 
-                                        <div className="aedRHS">
-                                            {tour.tour_duration}
-                                        </div>
+                                                <div className="aedRHS">
+                                                    {tour.tour_duration}
+                                                </div>
+                                            </div>
+                                        </Link>
                                     </div>
-                                </Link>
-                            </div>
-                        </div>
+                                </div>
                             ))}
                         </Carousel>
                     </div>
                 </div>
             </div>
         </>
-        
+
     )
     function getUserPrice(tour) {
         let price = 0;

@@ -55,8 +55,8 @@ const App = () => {
         <Route exact path='/destination/:country' element={<TourListing/>} /> 
         <Route exact path='/destination/:country/:title' element={<DestinationPage/>} /> 
         <Route exact path='trending-tour/:title' element={<TrendingPlaces/>} /> 
-        <Route exact path='/trending-tour/:country/:title' element={<TrendingDetails/>} /> 
-        <Route exact path='/trending-tour/:location/:slug' element={<TrendingDetails/>} /> 
+        <Route exact path='/trending-tour/:location/:slug' element={<TrendingDetails/>} />
+
         <Route exact path='tour/:title' element={<SearchListing/>} /> 
         <Route exact path='/tour/:country/:title' element={<TrendingDetails/>} /> 
          {/*    <Route exact path='/plan' element={<Category/>} /> */}

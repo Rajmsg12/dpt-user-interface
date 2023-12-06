@@ -270,14 +270,15 @@ const EditProfile = () => {
                                 <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>
+                            <div className="logoutDiv">
+                            <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
+                        </div>
                             {/*        <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
                             </Link> */}
                         </div>
                         {/*topSidebar*/}
-                        <div className="logoutDiv">
-                            <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
-                        </div>
+                       
                     </div>
                     {/*userboardLHS*/}
                     <div className="tab-content userboardRHS">

@@ -151,7 +151,7 @@ const UserProfile = () => {
     })
       .then(() => {
         localStorage.removeItem('token');
-        localStorage.removeItem('first_name');
+        // localStorage.removeItem('first_name');
         setIsLoggedIn(false);
         navigate('/');
       })

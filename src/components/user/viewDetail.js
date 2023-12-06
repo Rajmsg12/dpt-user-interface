@@ -158,7 +158,7 @@ const ViewDetail = () => {
         })
             .then(() => {
                 localStorage.removeItem('token');
-                localStorage.removeItem('first_name');
+                // localStorage.removeItem('first_name');
                 setIsLoggedIn(false);
                 navigate('/');
             })
@@ -268,17 +268,18 @@ const ViewDetail = () => {
                                 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772237/changepasswordicon_lgsgic.png"} alt="" />
                                 Change Password
                             </Link>
+                            <div className="logoutDiv">
+                            <Link  onClick={handleLogout} to="/">
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/logouticon_swvo87.png"} alt="" />
+                                Logout
+                            </Link>
+                        </div>
                          {/*    <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
                             </Link>*/}
                         </div>
                         {/*topSidebar*/}
-                        <div className="logoutDiv">
-                            <a href="#">
-                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/logouticon_swvo87.png"} alt="" />
-                                Logout
-                            </a>
-                        </div>
+                      
                     </div>
                     {/*userboardLHS*/}
                     <div className="tab-content userboardRHS">

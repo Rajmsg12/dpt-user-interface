@@ -148,7 +148,7 @@ const Wishlist = ({ selectedCurrency }) => {
         })
             .then(() => {
                 localStorage.removeItem('token');
-                localStorage.removeItem('first_name');
+                // localStorage.removeItem('first_name');
                 setIsLoggedIn(false);
                 navigate('/');
             })
@@ -352,14 +352,15 @@ const Wishlist = ({ selectedCurrency }) => {
                                 <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>
+                            <div className="logoutDiv">
+                                <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
+                            </div>
                             {/*     <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
                             </Link>*/}
                         </div>
                         {/*topSidebar*/}
-                        <div className="logoutDiv">
-                            <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
-                        </div>
+
                     </div>
                     {/*userboardLHS*/}
                     <div className="tab-content userboardRHS">
@@ -370,7 +371,7 @@ const Wishlist = ({ selectedCurrency }) => {
                                 ) : (
                                     wishlistData.map((item, index) => (
                                         <div key={index} className="CartBoxXArea">
-                                            <div  className="CartBoxWrapper">
+                                            <div className="CartBoxWrapper">
                                                 <Link to={`/tour/${item.tour_info[0].tour_slug}/${item.tour_info[0].tour_slug}`} className="CartTopBox">
                                                     <div className="CartimgWrapper">
                                                         <img src={`${config.imageUrl}/${item.tour_info[0].tour_image}`} alt={item.tour_info[0].Tour_name} />

@@ -148,7 +148,7 @@ const Review = () => {
         })
             .then(() => {
                 localStorage.removeItem('token');
-                localStorage.removeItem('first_name');
+                // localStorage.removeItem('first_name');
                 setIsLoggedIn(false);
                 navigate('/');
             })
@@ -241,30 +241,31 @@ const Review = () => {
                                 <span className="closeIcon" />
                             </div>
                             <Link to="/user-dashboard" className="nav-link active DashboardIcon">
-                                <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/dashboardicon_n9cufo.png"} alt="" /> Dashboard
                             </Link>
                             <Link to="/booking" className="nav-link MyBookingIcon">
-                                <img src="images/homepage/mybookingicon.png" alt="" /> My Bookings
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772237/mybookingicon_aume73.png"} alt="" /> My Bookings
                             </Link>
                             <Link to="/wishlist" className="nav-link WishlistIcon">
-                                <img src="images/homepage/wislisticonnew.png" alt="" />
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772538/wislisticonnew_t8tvl3.png"}  alt="" />
                                 Wishlist
                             </Link>
                             <Link to="/editprofile" className="nav-link EditrofileIcon">
-                                <img src="images/homepage/pen.png" alt="" /> Edit Profile
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/pen_tfhsvm.png"} alt="" /> Edit Profile
                             </Link>
                             <Link to="/changepassword" className="nav-link ChangePassWordIcon">
-                                <img src="images/homepage/changepasswordicon.png" alt="" />
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772237/changepasswordicon_lgsgic.png"} alt="" />
                                 Change Password
                             </Link>
+                            <div className="logoutDiv">
+                            <Link onClick={handleLogout}><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/logouticon_swvo87.png"} alt="" />Logout</Link>
+                        </div>
                             {/*  <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
                             </Link>*/}
                         </div>
                         {/*topSidebar*/}
-                        <div className="logoutDiv">
-                            <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
-                        </div>
+                      
                     </div>
                     {/*userboardLHS*/}
                     <div className="tab-content userboardRHS">

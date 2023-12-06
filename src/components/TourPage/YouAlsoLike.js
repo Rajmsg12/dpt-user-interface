@@ -7,6 +7,7 @@ import { data } from '../../data/index'
 import config from '../../config';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const YouAlsoLike = ({selectedCurrency}) => {
     const [tourData, setTourData] = useState([]);
@@ -15,6 +16,20 @@ const YouAlsoLike = ({selectedCurrency}) => {
     const [userDiscount, setUserDiscount] = useState(null);
     const navigate = useNavigate()
     const [clickedTourId, setClickedTourId] = useState(null);
+    const location = useLocation();
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${config.baseUrl}/tour-list`);
+                const data = await response.json();
+                setTourData(data.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+    
+        fetchData();
+    }, [location]);
     const addToWishlist = async (tourId) => {
       console.log('Adding to wishlist:', tourId); // Check if function is triggered
   

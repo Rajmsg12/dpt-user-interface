@@ -265,15 +265,16 @@ const UserProfile = () => {
                   <img src="images/homepage/changepasswordicon.png" alt="" />
                   Change Password
                 </Link>
-             
-              </div>
-              {/*topSidebar*/}
-              <div className="logoutDiv">
+                <div className="logoutDiv">
                 <Link to="/">
                   <img src="images/homepage/logouticon.png" alt="" />
                   Logout
                 </Link>
               </div>
+             
+              </div>
+              {/*topSidebar*/}
+              
             </div>
             {/*userboardLHS*/}
             <div className="tab-content userboardRHS">
