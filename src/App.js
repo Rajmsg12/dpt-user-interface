@@ -33,6 +33,7 @@ import Wishlist from "./components/user/wishlist";
 import EditProfile from "./components/user/editProfile";
 import ChangePassword from "./components/user/changePassword";
 import Review from "./components/user/review";
+import ViewDetail from "./components/user/viewDetail";
 
 const App = () => {
   return (
@@ -54,7 +55,8 @@ const App = () => {
         <Route exact path='/destination/:country' element={<TourListing/>} /> 
         <Route exact path='/destination/:country/:title' element={<DestinationPage/>} /> 
         <Route exact path='trending-tour/:title' element={<TrendingPlaces/>} /> 
-        <Route exact path='/trending-tour/:country/:title' element={<TrendingDetails/>} /> 
+        <Route exact path='/trending-tour/:location/:slug' element={<TrendingDetails/>} />
+
         <Route exact path='tour/:title' element={<SearchListing/>} /> 
         <Route exact path='/tour/:country/:title' element={<TrendingDetails/>} /> 
          {/*    <Route exact path='/plan' element={<Category/>} /> */}
@@ -73,7 +75,8 @@ const App = () => {
        <Route exact path='/booking' element={<Booking/>} />
        <Route exact path='/editProfile' element={<EditProfile/>} />
        <Route exact path='/changepassword' element={<ChangePassword/>} />
-       <Route exact path='/review' element={<Review/>} />
+       <Route exact path='/review/:id' element={<Review/>} />
+       <Route exact path='/view-detail/:id' element={<ViewDetail/>} />
        <Route path="*" element={<NotFound/>} />
 
         </Routes>

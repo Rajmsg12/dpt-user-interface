@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Style/TourPage.css";
@@ -39,10 +39,13 @@ function ContentSection({ selectedCurrency }) {
   const [childrenNumber, setChildrenNumber] = useState(0);
   const [infantsNumber, setInfantsNumber] = useState(0);
   const [driverNumber, setDriverNumber] = useState(0);
+  const [lunchNumber, setLunchNumber] = useState(0);
+  const [ticketNumber, setTicketNumber] = useState(0);
   const [adultsNumber, setAdultsNumber] = useState(0);
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [hotels, setHotels] = useState([]);
   const [tourImage, setTourImage] = useState("");
+  const formRef = useRef(null);
 
   const navigate = useNavigate()
   const [clickedTourId, setClickedTourId] = useState(null);
@@ -50,38 +53,38 @@ function ContentSection({ selectedCurrency }) {
     console.log('Adding to wishlist:', tourId); // Check if function is triggered
 
     try {
-        const token = localStorage.getItem("token");
-        if (token) {
-            const requestBody = {
-                tour_id: tourId // Setting tour.id as tour_id in the request body
-            };
+      const token = localStorage.getItem("token");
+      if (token) {
+        const requestBody = {
+          tour_id: tourId // Setting tour.id as tour_id in the request body
+        };
 
-            const response = await fetch(`${config.baseUrl}/wishlist/add`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(requestBody),
-            });
+        const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(requestBody),
+        });
 
-            if (response.ok) {
-                // Wishlist addition successful
-                console.log('Tour added to wishlist!');
-                setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
-                navigate("/wishlist");
-            } else {
-                // Handle errors if the addition fails
-                console.error('Failed to add tour to wishlist');
-            }
+        if (response.ok) {
+          // Wishlist addition successful
+          console.log('Tour added to wishlist!');
+          setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
+          navigate("/wishlist");
         } else {
-            console.error('User not logged in.'); // Log if the user is not logged in
-            // You might want to handle this scenario by redirecting the user to the login page or showing a message
+          // Handle errors if the addition fails
+          console.error('Failed to add tour to wishlist');
         }
+      } else {
+        console.error('User not logged in.'); // Log if the user is not logged in
+        // You might want to handle this scenario by redirecting the user to the login page or showing a message
+      }
     } catch (error) {
-        console.error('Error adding tour to wishlist:', error);
+      console.error('Error adding tour to wishlist:', error);
     }
-};
+  };
 
 
   useEffect(() => {
@@ -153,7 +156,15 @@ function ContentSection({ selectedCurrency }) {
   const url1 = window.location.href;
   const spliturl1 = url1.split("=");
   const id = spliturl1[1];
+  const handleClearForm = () => {
+    // Access the form using the ref
+    const form = formRef.current;
 
+    // Reset the form fields
+    if (form) {
+      form.reset();
+    }
+  };
 
   const handleFormSubmit = (event, tour) => {
     event.preventDefault();
@@ -166,18 +177,18 @@ function ContentSection({ selectedCurrency }) {
     formData.tourPriceAed = tourPriceAed;
     formData.tourPriceUsd = tourPriceUsd;
     const driverTotalPrice =
-    (selectedHotel?.driver_price_aed || 0) * driverNumber || 0;
-  
-  // Similarly for other price calculations
-  const childrenPrice =
-    (selectedHotel?.children_price_aed || 0) * childrenNumber || 0;
-  
-  const adultPrice =
-    (selectedHotel?.adults_price_aed || 0) * adultsNumber || 0;
-  
-  const infantsPrice =
-    (selectedHotel?.infants_price_aed || 0) * infantsNumber || 0;
-  
+      (selectedHotel?.driver_price_aed || 0) * driverNumber || 0;
+
+    // Similarly for other price calculations
+    const childrenPrice =
+      (selectedHotel?.children_price_aed || 0) * childrenNumber || 0;
+
+    const adultPrice =
+      (selectedHotel?.adults_price_aed || 0) * adultsNumber || 0;
+
+    const infantsPrice =
+      (selectedHotel?.infants_price_aed || 0) * infantsNumber || 0;
+
 
     // Set the driver's price in formData
     formData.driverTotalPrice = driverTotalPrice.toFixed(2);
@@ -208,12 +219,12 @@ function ContentSection({ selectedCurrency }) {
     if (!formData.preferredPay || formData.preferredPay === '0') {
       setIsFormValid(false);
       setShowPopup(true);
-  
+
       // Automatically hide the popup after 5 seconds
       setTimeout(() => {
         setShowPopup(false);
       }, 5000);
-  
+
       return;
     }
 
@@ -221,7 +232,7 @@ function ContentSection({ selectedCurrency }) {
     for (let i = 0; i < formElements.length; i++) {
       const element = formElements[i];
 
-      if ((element.tagName === 'INPUT' || element.tagName === 'SELECT') && element.value === '0' ) {
+      if ((element.tagName === 'INPUT' || element.tagName === 'SELECT') && element.value === '0') {
         setIsFormValid(false);
         setShowPopup(true);
 
@@ -466,7 +477,7 @@ function ContentSection({ selectedCurrency }) {
                     <div className="BookThisTourSec">
                       <div className="BookingDetailsHd"><span>Booking Details</span></div>
                       <div className="FormInnerDiv">
-                        <form id={formId} onSubmit={handleFormSubmit}>
+                        <form id={formId} ref={formRef} onSubmit={handleFormSubmit}>
                           <div className="row">
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
@@ -541,6 +552,17 @@ function ContentSection({ selectedCurrency }) {
                                   <option value="0">Select Pickup Location</option>
                                   <option value="Hotel/Apartment">Hotel/Apartment</option>
                                   <option value="DXB Airport Terminal 1">DXB Airport Terminal 1</option>
+                                  <option value="DXB Airport Terminal 2">DXB Airport Terminal 2</option>
+                                  <option value="DXB Airport Terminal 3">DXB Airport Terminal 3</option>
+                                  <option value="DWC Airport">DWC Airport</option>
+                                  <option value="Abu Dhabi Airport">Abu Dhabi Airport</option>
+                                  <option value="Dubai Cruise Ship Terminal">Dubai Cruise Ship Terminal</option>
+                                  <option value="Abu Dhabi Cruise Ship Terminal">Abu Dhabi Cruise Ship Terminal</option>
+                                  <option value="Dubai Mall- Next To Souk Al Bahar Information Desk">Dubai Mall- Next To Souk Al Bahar Information Desk</option>
+                                  <option value="Burj Khalifa- Next To Souk Al Bahar Information Desk">Burj Khalifa- Next To Souk Al Bahar Information Desk</option>
+                                  <option value="Mall Of The Emirates - Ski Dubai Entrance">Mall Of The Emirates - Ski Dubai Entrance</option>
+                                  <option value="Local Residence">Local Residence</option>
+                                  <option value="Restaurant">Restaurant</option>
                                   {/* ... (other options) */}
                                 </select>
 
@@ -560,7 +582,17 @@ function ContentSection({ selectedCurrency }) {
                                   <option value="0">Select Pickup Location</option>
                                   <option value="Hotel/Apartment">Hotel/Apartment</option>
                                   <option value="DXB Airport Terminal 1">DXB Airport Terminal 1</option>
-                                  <option value="Abu Dhabi Hotel">Abu Dhabi Hotel</option>
+                                  <option value="DXB Airport Terminal 2">DXB Airport Terminal 2</option>
+                                  <option value="DXB Airport Terminal 3">DXB Airport Terminal 3</option>
+                                  <option value="DWC Airport">DWC Airport</option>
+                                  <option value="Abu Dhabi Airport">Abu Dhabi Airport</option>
+                                  <option value="Dubai Cruise Ship Terminal">Dubai Cruise Ship Terminal</option>
+                                  <option value="Abu Dhabi Cruise Ship Terminal">Abu Dhabi Cruise Ship Terminal</option>
+                                  <option value="Dubai Mall- Next To Souk Al Bahar Information Desk">Dubai Mall- Next To Souk Al Bahar Information Desk</option>
+                                  <option value="Burj Khalifa- Next To Souk Al Bahar Information Desk">Burj Khalifa- Next To Souk Al Bahar Information Desk</option>
+                                  <option value="Mall Of The Emirates - Ski Dubai Entrance">Mall Of The Emirates - Ski Dubai Entrance</option>
+                                  <option value="Local Residence">Local Residence</option>
+                                  <option value="Restaurant">Restaurant</option>
                                   <option value="Any Other Places in Dubai">Any Other Places in Dubai</option>
                                 </select>
                                 {selectedEndLocation === "Any Other Places in Dubai" && (
@@ -569,8 +601,18 @@ function ContentSection({ selectedCurrency }) {
                                     <label>Place Name</label>
                                     <input className="form-control" placeholder="Place Name" rows="3" name="otherPlaceName"></input>
                                     <label>Place Address</label>
-                                    <input className="form-control" placeholder="Residence Address" rows="3" name="otherPlaceAddress"></input>
+                                    <input className="form-control" placeholder="Residence Address" rows="3" ></input>
                                     <label>Place Telephone</label>
+                                    <input
+                                      type="tel"
+                                      className="form-control"
+                                      placeholder="Residence Telephone"
+                                      name="otherPlaceAddress"
+                                      onChange={handleInputChange}
+                                      pattern="[0-9]*" // Accepts only numerical values
+                                      maxLength={13} // Restricts input to a maximum length of 13 characters
+                                      required
+                                    />
                                     <input className="form-control" placeholder="Residence Telephone" rows="3" name="otherPlaceTelephone"></input>
 
                                   </div>
@@ -724,11 +766,11 @@ function ContentSection({ selectedCurrency }) {
                                 {selectedHotel && (
                                   <div>
                                     <label>{infantsNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.infants_price_aed : selectedHotel.infants_price_usd} = {selectedCurrency} {
-                                        selectedCurrency === 'AED'
-                                          ? selectedHotel.infants_price_aed * infantsNumber || 0
-                                          : selectedHotel.infants_price_usd * infantsNumber || 0
-                                      }</label>
-                                    
+                                      selectedCurrency === 'AED'
+                                        ? selectedHotel.infants_price_aed * infantsNumber || 0
+                                        : selectedHotel.infants_price_usd * infantsNumber || 0
+                                    }</label>
+
                                     {/* You can similarly display other prices */}
                                   </div>
                                 )}
@@ -755,11 +797,11 @@ function ContentSection({ selectedCurrency }) {
                                 {selectedHotel && (
                                   <div>
                                     <label>{driverNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.driver_price_aed : selectedHotel.driver_price_usd} = {selectedCurrency} {
-                                        selectedCurrency === 'AED'
-                                          ? selectedHotel.driver_price_aed * driverNumber || 0
-                                          : selectedHotel.driver_price_usd * driverNumber || 0
-                                      }</label>
-                                   
+                                      selectedCurrency === 'AED'
+                                        ? selectedHotel.driver_price_aed * driverNumber || 0
+                                        : selectedHotel.driver_price_usd * driverNumber || 0
+                                    }</label>
+
                                     {/* You can similarly display other prices */}
                                   </div>
                                 )}
@@ -769,52 +811,70 @@ function ContentSection({ selectedCurrency }) {
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-6">
-                              <div className="mb-3 formGroup">
-                                <label>Additional lunch </label>
-                                <select
-                                  className="form-select"
-                                  value={formData.preferredLunch} // Set the value dynamically based on the state
-                                  onChange={(e) => handleInputChange(e, 'preferredLunc')} // Pass the name to handleInputChange
-                                >
-                                  <option value="">Select Addition Lunch</option>
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                  <option value="5">5</option>
-                                  <option value="6">6</option>
-                                  <option value="7">7</option>
-                                  <option value="8">8</option>
-                                  <option value="9">9</option>
-                                  <option value="10">10</option>
-                                  {/* ... (other options) */}
-                                </select>
+                              <div className="mb-3 formGroup infoDetail">
+                                <label>Additional Lunch</label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="No of Lunch"
+                                  name="lunch"
+                                  min="1"
+                                  max="10"
+                                  onChange={(e) => {
+                                    const lunchValue = parseInt(e.target.value);
+                                    setLunchNumber(lunchValue >= 0 ? lunchValue : 0);
+                                  }}
+
+                                />
+
+                                {selectedHotel && (
+                                  <div>
+                                    <label>{lunchNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.lunch_price_aed : selectedHotel.lunch_price_usd} = {selectedCurrency} {
+                                      selectedCurrency === 'AED'
+                                        ? selectedHotel.lunch_price_aed * lunchNumber || 0
+                                        : selectedHotel.lunch_price_usd * lunchNumber || 0
+                                    }</label>
+
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+
+
 
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-12">
-                              <div className="mb-3 formGroup">
-                                <label>Additional tickets</label>
-                                <select
-                                  className="form-select"
-                                  value={formData.preferredTickets} // Set the value dynamically based on the state
-                                  onChange={(e) => handleInputChange(e, 'preferredTicketes')} // Pass the name to handleInputChange
-                                >
-                                  <option value="">Select Addition Tickets</option>
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                  <option value="5">5</option>
-                                  <option value="6">6</option>
-                                  <option value="7">7</option>
-                                  <option value="8">8</option>
-                                  <option value="9">9</option>
-                                  <option value="10">10</option>
-                                  {/* ... (other options) */}
-                                </select>
+                              <div className="mb-3 formGroup infoDetail">
+                                <label>Additional Tickets</label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="No of Ticket"
+                                  name="ticket"
+                                  min="1"
+                                  max="10"
+                                  onChange={(e) => {
+                                    const ticketValue = parseInt(e.target.value);
+                                    setTicketNumber(ticketValue >= 0 ? ticketValue : 0);
+                                  }}
 
-                              </div>{/* formGroup */}
+                                />
+
+                                {selectedHotel && (
+                                  <div>
+                                    <label>{ticketNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.ticket_price_aed : selectedHotel.ticket_price_usd} = {selectedCurrency} {
+                                      selectedCurrency === 'AED'
+                                        ? selectedHotel.ticket_price_aed * lunchNumber || 0
+                                        : selectedHotel.ticket_price_usd * lunchNumber || 0
+                                    }</label>
+
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
+
+
+
+                              </div> {/* formGroup */}
                             </div>
                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
@@ -827,7 +887,7 @@ function ContentSection({ selectedCurrency }) {
                                 <button type="submit" className="cta">
                                   Book Now
                                 </button>
-                                <button type="button" className="cta" onClick={() => setShowPopup(true)}>
+                                <button type="button" className="cta" onClick={handleClearForm}>
                                   Clear
                                 </button>
                               </div>
@@ -885,13 +945,13 @@ function ContentSection({ selectedCurrency }) {
                 <div className="Person">
                   per {tour.person} person <strong>({tour.tour_duration})</strong>
                 </div>
-               {/*     <div className="right">
+                {/*     <div className="right">
                   <Link to="#">View Offers</Link>
-                </div>*/}  
-              {/*   <button type="submit" form="tourForm" className="cta">
+                </div>*/}
+                {/*   <button type="submit" form="tourForm" className="cta">
                   Book This Tour
                 </button>*/}
-               {/*  <p>
+                {/*  <p>
                   Free cancellation Up to 24 hours in advance.{" "}
                   <Link to="#">Read More</Link>
                 </p>*/}
@@ -1058,9 +1118,9 @@ function ContentSection({ selectedCurrency }) {
                   we offer the best tour packages for Dubai & Abu Dhabi at
                   affordable prices.
                 </p>
-            {/*    <Link to="#" className="cta">
+                {/*    <Link to="#" className="cta">
                   Check Out
-                </Link>*/} 
+                </Link>*/}
               </div>
               <div className="TouristDiv">
                 <div className="img">
@@ -1074,7 +1134,7 @@ function ContentSection({ selectedCurrency }) {
                 <span>Dubai</span>
                 <span>Tourist Visa</span>
                 <div className="TouristFooter">
-              {/*     <Link to="#" className="cta">
+                  {/*     <Link to="#" className="cta">
                     Apply Now
                   </Link>*/}
                 </div>

@@ -247,13 +247,17 @@ const AskQuestion = () => {
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
                                         <label>Cell No*</label>
-                                        <input type="text"
+                                        <input
+                                            type="tel"
                                             className="form-control"
                                             placeholder="Cell No"
                                             name="call_no"
                                             value={formData.call_no}
                                             onChange={handleInputChange}
-                                            required />
+                                            pattern="[0-9]*" // Accepts only numerical values
+                                            maxLength={13} // Restricts input to a maximum length of 13 characters
+                                            required
+                                        />
                                     </div>
                                     {/* formGroup */}
                                 </div>
