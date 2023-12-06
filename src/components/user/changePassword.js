@@ -4,6 +4,7 @@ import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { Link } from 'react-router-dom';
 import config from '../../config';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 const ChangePassword = () => {
@@ -30,7 +31,10 @@ const ChangePassword = () => {
     const [passwordMatchError, setPasswordMatchError] = useState(false); // New state variable
     const [bookingDetails, setBookingDetails] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [newPasswordLengthError, setNewPasswordLengthError] = useState(false);
     const [menuClose, setMenuClose] = useState(true);
+    const [oldPasswordError, setOldPasswordError] = useState(false);
+
     const navigate = useNavigate();
     const toggleMenu = () => {
         setMenuOpen(prevState => !prevState);
@@ -87,11 +91,20 @@ const ChangePassword = () => {
     }, []);
     const handleChangePassword = (e) => {
         e.preventDefault();
-
+        // if (passwordData.old_password !== 'expected_old_password') {
+        //     setOldPasswordError(true);
+        //     return;
+        // }
+        
+        if (passwordData.new_password.length < 6) {
+            setNewPasswordLengthError(true);
+            return;
+        }
         if (passwordData.new_password !== passwordData.confirm_password) {
             setPasswordMatchError(true); // Set the error state to true if passwords don't match
             return; // Prevent further execution
         }
+
 
         const token = localStorage.getItem('token');
         if (token) {
@@ -106,10 +119,17 @@ const ChangePassword = () => {
                 .then((response) => response.json())
                 .then((data) => {
                     console.log('Change password response:', data);
-
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Password Update Successfully',
+                        showConfirmButton: false,
+                        timer: 2500, // You can adjust the timer to control how long the message is displayed
+                    });
+                
                     if (data.success) {
                         // Optionally, handle success
                         console.log('Password changed successfully!');
+                      
                     } else {
                         // Optionally, handle failure
                         console.log('Failed to change password. Please try again.');
@@ -146,7 +166,6 @@ const ChangePassword = () => {
         fetchBookingDetails();
     }, []);
 
-    console.log(bookingDetails)
     const handleLogout = () => {
         fetch(`${config.baseUrl}/logout`, {
             method: 'POST',
@@ -160,41 +179,6 @@ const ChangePassword = () => {
             .catch((error) => {
                 console.error('Logout failed', error);
             });
-    };
-
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-
-        setLoading(true);
-
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetch(`${config.baseUrl}/profile/update`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(formData),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log('Profile update response:', data);
-
-                    if (data.success) {
-                        setSuccessMessage('Profile updated successfully!');
-                        // Optionally, reset form fields or perform additional actions
-                    } else {
-                        setSuccessMessage('Failed to update profile. Please try again.');
-                    }
-
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error('Error updating profile:', error);
-                    setLoading(false);
-                });
-        }
     };
     return (
         <div>
@@ -345,6 +329,13 @@ const ChangePassword = () => {
                                                 onChange={(e) => setPasswordData({ ...passwordData, confirm_password: e.target.value })}
                                                 required
                                             />
+                                            {oldPasswordError && (
+                                                <p className="text-danger">Previous password didn't match.</p>
+                                            )}
+                                            {newPasswordLengthError && (
+                                                <p className="text-danger">New password should be at least 6 characters long.</p>
+                                            )}
+
                                             {passwordMatchError && (
                                                 <p className="text-danger">Password and confirm password do not match.</p>
                                             )}

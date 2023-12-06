@@ -25,7 +25,6 @@ import { useNavigate } from "react-router-dom";
 import './Style/TourPage.css'
 
 function ContentSection({ selectedCurrency }) {
-  console.log(selectedCurrency)
   const { title } = useParams();
   const [backendData, setBackendData] = useState(null);
   const dispatch = useDispatch();
@@ -132,11 +131,11 @@ function ContentSection({ selectedCurrency }) {
     pickupLocation: '0',
     endLocation: '0',
     hotelName: '0',
-    preferredGuideLanguage: '',
-    paymentMode: '0',
-    adults: '',
-    children: '',
-    infants: '',
+    preferredGuideLanguage: '0',
+    preferredPay: '0',
+    adults: '0',
+    children: '0',
+    infants: '0',
     additionalDriver: '0',
     additionalLunch: '0',
     additionalTickets: '0',
@@ -206,12 +205,23 @@ function ContentSection({ selectedCurrency }) {
         formData[element.name] = element.value;
       }
     }
+    if (!formData.preferredPay || formData.preferredPay === '0') {
+      setIsFormValid(false);
+      setShowPopup(true);
+  
+      // Automatically hide the popup after 5 seconds
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 5000);
+  
+      return;
+    }
 
     // Check if any select or input is empty
     for (let i = 0; i < formElements.length; i++) {
       const element = formElements[i];
 
-      if ((element.tagName === 'INPUT' || element.tagName === 'SELECT') && element.value === '0') {
+      if ((element.tagName === 'INPUT' || element.tagName === 'SELECT') && element.value === '0' ) {
         setIsFormValid(false);
         setShowPopup(true);
 
@@ -236,9 +246,6 @@ function ContentSection({ selectedCurrency }) {
     AddToCart(/* pass your item here */);
     navigate('/cart');
   };
-
-
-
 
   const url = window.location.href;
   const spliturl = url.split("/");
@@ -480,15 +487,12 @@ function ContentSection({ selectedCurrency }) {
                                       />
                                     }
                                   />
-
-
-
                                 </div>
                               </div>{/* formGroup */}
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Preferred Pickup Time</label>
+                                <label>Preferred Pickup Time*</label>
                                 {/* Example for one select element, repeat for others */}
                                 <select
                                   className="form-select"

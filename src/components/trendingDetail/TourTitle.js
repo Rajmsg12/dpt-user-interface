@@ -4,8 +4,8 @@ import './Style/TourPage.css'
 import { useParams } from 'react-router-dom';
 
 const TopSection = () => {
-  const {slug} = useParams()
-  const formattedTitle = slug
+  const {title} = useParams()
+  const formattedTitle = title
   .split('-') // Split by hyphens
   .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
   .join(' '); 

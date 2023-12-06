@@ -19,6 +19,7 @@ const ListingSection = ({ selectedCurrency }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
+  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
 
   const itemsPerPage = 9;
 
@@ -63,6 +64,15 @@ const ListingSection = ({ selectedCurrency }) => {
   const spliturl = url.split("/");
   const slug = spliturl[4];
 
+  const handleToggleSidebarMenu = () => {
+    setIsSidebarMenuOpen((prevIsSidebarMenuOpen) => !prevIsSidebarMenuOpen);
+  };
+
+  const handleCloseSidebar = () => {
+    console.log('Closing sidebar');
+    setIsSidebarMenuOpen(false);
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -137,7 +147,7 @@ const ListingSection = ({ selectedCurrency }) => {
   
   return (
     <>
-      <div className="listingPage">
+      <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
         <div className="container">
           <div className="listingPageWrapper">
             <LeftSideFilter
@@ -146,6 +156,7 @@ const ListingSection = ({ selectedCurrency }) => {
               handleRatingFilterChange={handleRatingFilterChange}
               selectedRatingFilter={selectedRatingFilter}
               handleDurationFilterChange={handleDurationFilterChange}
+              handleCloseSidebar={handleCloseSidebar}
             />
 
             <div className="listingRhs">
@@ -155,7 +166,7 @@ const ListingSection = ({ selectedCurrency }) => {
 
                   <div>
                     <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                      <div className="filterDiv"></div>
+                    <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>
                       <li className="nav-item" role="presentation">
                         <button
                           className="nav-link active"
@@ -367,6 +378,7 @@ const ListingSection = ({ selectedCurrency }) => {
             </div>
           </div>
         </div>
+        <div className="menuOverlay"></div>
       </div>
     </>
   );

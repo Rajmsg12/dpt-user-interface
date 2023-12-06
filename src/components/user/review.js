@@ -3,6 +3,7 @@ import { ReactComponent as IconDoorClosedFill } from "bootstrap-icons/icons/door
 import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { Link } from 'react-router-dom';
+import moment from 'moment'
 import config from '../../config';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,8 +19,9 @@ const Review = () => {
 
     const [first_name, setUserName] = useState('');
     const [email, setEmail] = useState('');
+    const [country, setCountry] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const [reviews, setReviews] = useState([]);
     const [bookingDetails, setBookingDetails] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
     const [menuClose, setMenuClose] = useState(true);
@@ -44,13 +46,13 @@ const Review = () => {
                 }
 
             })
-
                 .then(response => response.json())
 
                 .then(data => {
 
                     setUserName(data.data.first_name);
                     setEmail(data.data.email);
+                    setCountry(data.data.country);
                     setIsLoggedIn(true);
                 })
 
@@ -115,7 +117,7 @@ const Review = () => {
         };
     
         // Make a POST request to the backend API
-        fetch(`http://127.0.0.1:9900/review/add/4`, {
+        fetch(`${config.baseUrl}/review/add/4`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -156,7 +158,27 @@ const Review = () => {
                 console.error('Logout failed', error);
             });
     };
-
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            fetch('http://127.0.0.1:9900/review/edit/10', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Set the reviews state with the fetched data
+                setReviews(data.data); // Assuming your API returns an array of reviews
+                console.log(data.data);
+            })
+            .catch(error => {
+                console.error('Error fetching reviews:', error);
+            });
+        }
+    }, []);
+    
+console.log(reviews)
     return (
         <>
             <header className="userHeader">
@@ -310,74 +332,29 @@ const Review = () => {
                                             aria-labelledby="pills-readreviews-tab"
                                         >
                                             <div className="readReviewDiv">
-                                                <div className="readReviewBox">
+                                            {reviews.map((review, index) => (
+                                                <div className="readReviewBox" key={index}>
                                                     <div className="titlewithsubtitle">
                                                         <h2>
-                                                            Trish <small>United Kingdom</small>
+                                                            {review.name} <small>{review.country}</small>
                                                         </h2>
                                                     </div>
                                                     {/*titlewithsubtitle*/}
                                                     <div className="posteddiv">
-                                                        <span>Posted:</span> January 15, 2020
+                                                        <span>Posted:</span> {moment(review.created_at).format('YYYY-MM-DD')}
                                                     </div>
                                                     <div className="RatingDivNew">
                                                         <img src="images/ratingstar.png" alt="" />
                                                     </div>
                                                     <div className="descnew">
                                                         <p>
-                                                            Dubai 6hr City Tour We were met at the cruise terminal
-                                                            in Dubai by Shah our guide and driver Suhas. From the
-                                                            moment we got in the car which was spacious and very
-                                                            clean for 6 of us, we knew we were in good hands. Shah
-                                                            expanded on the draft itinerary and confirmed we were
-                                                            happy with that, he also advised we could change it any
-                                                            way we wanted. Our trip day was 31 December so certain
-                                                            parts of the city were shutting in advance of the New
-                                                            Year firework display. However this did not deter our
-                                                            sightseeing in any way down to Shah &amp; Suhas
-                                                            knowledge of the city and their way around. They went
-                                                            out of their way in particular to ensure we could still
-                                                            get a great view of the Burj Khalifa albeit from a
-                                                            different than normal viewing point. Shah had an
-                                                            excellent knowledge of the city, the country and its
-                                                            history and he happily and interestingly shared all his
-                                                            knowledge with us and answering our many questions. We
-                                                            were enthralled. We all felt we were well looked after
-                                                            by them both - the trip felt personal to us and they
-                                                            made sure they picked us up safely anytime we left the
-                                                            vehicle. I cannot recommend this company enough and I
-                                                            only found them by reading reviews prior to our trip -
-                                                            hence my review here which is something I am not
-                                                            normally in the habit of. Thank you to everyone involved
-                                                            but especially Shah &amp; Suhas who ensured our last day
-                                                            of 2019 ended on a high.
+                                                           {review.comments}
                                                         </p>
                                                     </div>
                                                 </div>
+                                            ))}
                                                 {/*readReviewBox*/}
-                                                <div className="readReviewBox">
-                                                    <div className="titlewithsubtitle">
-                                                        <h2>
-                                                            Luke <small>Malta</small>
-                                                        </h2>
-                                                    </div>
-                                                    {/*titlewithsubtitle*/}
-                                                    <div className="posteddiv">
-                                                        <span>Posted:</span> September 27, 2019
-                                                    </div>
-                                                    <div className="RatingDivNew">
-                                                        <img src="images/ratingstar.png" alt="" />
-                                                    </div>
-                                                    <div className="descnew">
-                                                        <p>
-                                                            Me and my girlfriend had an amazing 6 hour tour of
-                                                            Dubai’s main attractions. Our guide Basheer was so
-                                                            polite and knowledgeable on all aspects of Dubai and you
-                                                            can tell that he Learnt all about Dubai. Highly
-                                                            recommend the service
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                               
 
                                                 {/*readReviewBox*/}
                                             </div>
@@ -400,7 +377,7 @@ const Review = () => {
                                                                     className="form-control"
                                                                     placeholder="Your Name"
                                                                     required
-                                                                    value={bookingDetails.length > 0 ? (bookingDetails[0].first_name || '') : ''}
+                                                                    value={first_name}
                                                                     onChange={(e) => setUserName(e.target.value)}
                                                                 />
                                                             </div>
@@ -413,7 +390,7 @@ const Review = () => {
                                                                     className="form-control"
                                                                     placeholder="Email"
                                                                     required
-                                                                    value={bookingDetails[0]?.email || ''} // Use optional chaining and provide a fallback value
+                                                                    value={email} // Use optional chaining and provide a fallback value
                                                                     onChange={(e) => setEmail(e.target.value)}
                                                                 />
                                                             </div>
@@ -444,7 +421,7 @@ const Review = () => {
                                                                     className="form-control"
                                                                     placeholder="Country"
                                                                     required
-                                                                    value={bookingDetails[0]?.country || ''} // Use optional chaining and provide a fallback value
+                                                                    value={country} // Use optional chaining and provide a fallback value
                                                                     onChange={(e) => setEmail(e.target.value)}
                                                                 />
                                                             </div>

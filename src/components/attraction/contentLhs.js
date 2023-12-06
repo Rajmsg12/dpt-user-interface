@@ -4,7 +4,7 @@ import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
 import { data } from '../../data/TourListing'
 
-const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange , priceRange, handleRatingFilterChange, selectedRatingFilter }) => {
+const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange ,handleCloseSidebar, priceRange, handleRatingFilterChange, selectedRatingFilter }) => {
   const [showAllCategories, setShowAllCategories] = useState(false);
 
   const toggleCategories = () => {
@@ -25,7 +25,7 @@ const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange , priceRa
         <div className="listingTopSec">
           <div className="travellingSec">
             <div className="travellingSecTitle">When are you travelling?</div>
-            <div className="closeIcon"></div>
+            <div className="closeIcon" onClick={handleCloseSidebar}></div>
           </div>
           <div className="sidebarCategories">
             <div className="sidebarCategoriesSec">

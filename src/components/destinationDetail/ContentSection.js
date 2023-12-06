@@ -25,7 +25,6 @@ import { useNavigate } from "react-router-dom";
 import './Style/TourPage.css'
 
 function ContentSection({ selectedCurrency }) {
-  console.log(selectedCurrency)
   const { title } = useParams();
   const [backendData, setBackendData] = useState(null);
   const dispatch = useDispatch();
@@ -44,7 +43,45 @@ function ContentSection({ selectedCurrency }) {
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [hotels, setHotels] = useState([]);
   const [tourImage, setTourImage] = useState("");
+
   const navigate = useNavigate()
+  const [clickedTourId, setClickedTourId] = useState(null);
+  const addToWishlist = async (tourId) => {
+    console.log('Adding to wishlist:', tourId); // Check if function is triggered
+
+    try {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const requestBody = {
+                tour_id: tourId // Setting tour.id as tour_id in the request body
+            };
+
+            const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (response.ok) {
+                // Wishlist addition successful
+                console.log('Tour added to wishlist!');
+                setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
+                navigate("/wishlist");
+            } else {
+                // Handle errors if the addition fails
+                console.error('Failed to add tour to wishlist');
+            }
+        } else {
+            console.error('User not logged in.'); // Log if the user is not logged in
+            // You might want to handle this scenario by redirecting the user to the login page or showing a message
+        }
+    } catch (error) {
+        console.error('Error adding tour to wishlist:', error);
+    }
+};
 
 
   useEffect(() => {
@@ -94,11 +131,11 @@ function ContentSection({ selectedCurrency }) {
     pickupLocation: '0',
     endLocation: '0',
     hotelName: '0',
-    preferredGuideLanguage: '',
-    paymentMode: '0',
-    adults: '',
-    children: '',
-    infants: '',
+    preferredGuideLanguage: '0',
+    preferredPay: '0',
+    adults: '0',
+    children: '0',
+    infants: '0',
     additionalDriver: '0',
     additionalLunch: '0',
     additionalTickets: '0',
@@ -129,26 +166,22 @@ function ContentSection({ selectedCurrency }) {
     formData.tourPriceAed = tourPriceAed;
     formData.tourPriceUsd = tourPriceUsd;
     const driverTotalPrice =
-      selectedCurrency === 'AED'
-        ? selectedHotel.driver_price_aed * driverNumber || 0
-        : selectedHotel.driver_price_usd * driverNumber || 0;
+    (selectedHotel?.driver_price_aed || 0) * driverNumber || 0;
+  
+  // Similarly for other price calculations
+  const childrenPrice =
+    (selectedHotel?.children_price_aed || 0) * childrenNumber || 0;
+  
+  const adultPrice =
+    (selectedHotel?.adults_price_aed || 0) * adultsNumber || 0;
+  
+  const infantsPrice =
+    (selectedHotel?.infants_price_aed || 0) * infantsNumber || 0;
+  
 
     // Set the driver's price in formData
     formData.driverTotalPrice = driverTotalPrice.toFixed(2);
-    const childrenPrice =
-      selectedCurrency === 'AED'
-        ? selectedHotel.children_price_aed * childrenNumber || 0
-        : selectedHotel.children_price_usd * childrenNumber || 0;
 
-    const adultPrice =
-      selectedCurrency === 'AED'
-        ? selectedHotel.adults_price_aed * adultsNumber || 0
-        : selectedHotel.adults_price_usd * adultsNumber || 0;
-
-    const infantsPrice =
-      selectedCurrency === 'AED'
-        ? selectedHotel.infants_price_aed * infantsNumber || 0
-        : selectedHotel.infants_price_usd * infantsNumber || 0;
 
     // Set the prices in formData
     formData.childrenPrice = childrenPrice.toFixed(2);
@@ -172,12 +205,23 @@ function ContentSection({ selectedCurrency }) {
         formData[element.name] = element.value;
       }
     }
+    if (!formData.preferredPay || formData.preferredPay === '0') {
+      setIsFormValid(false);
+      setShowPopup(true);
+  
+      // Automatically hide the popup after 5 seconds
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 5000);
+  
+      return;
+    }
 
     // Check if any select or input is empty
     for (let i = 0; i < formElements.length; i++) {
       const element = formElements[i];
 
-      if ((element.tagName === 'INPUT' || element.tagName === 'SELECT') && element.value === '0') {
+      if ((element.tagName === 'INPUT' || element.tagName === 'SELECT') && element.value === '0' ) {
         setIsFormValid(false);
         setShowPopup(true);
 
@@ -202,9 +246,6 @@ function ContentSection({ selectedCurrency }) {
     AddToCart(/* pass your item here */);
     navigate('/cart');
   };
-
-
-
 
   const url = window.location.href;
   const spliturl = url.split("/");
@@ -302,43 +343,6 @@ function ContentSection({ selectedCurrency }) {
       [name]: value,
     }));
   };
-  const [clickedTourId, setClickedTourId] = useState(null);
-  const addToWishlist = async (tourId) => {
-    console.log('Adding to wishlist:', tourId); // Check if function is triggered
-
-    try {
-        const token = localStorage.getItem("token");
-        if (token) {
-            const requestBody = {
-                tour_id: tourId // Setting tour.id as tour_id in the request body
-            };
-
-            const response = await fetch(`${config.baseUrl}/wishlist/add`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(requestBody),
-            });
-
-            if (response.ok) {
-                // Wishlist addition successful
-                console.log('Tour added to wishlist!');
-                setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
-                navigate("/wishlist");
-            } else {
-                // Handle errors if the addition fails
-                console.error('Failed to add tour to wishlist');
-            }
-        } else {
-            console.error('User not logged in.'); // Log if the user is not logged in
-            // You might want to handle this scenario by redirecting the user to the login page or showing a message
-        }
-    } catch (error) {
-        console.error('Error adding tour to wishlist:', error);
-    }
-};
 
 
 
@@ -483,15 +487,12 @@ function ContentSection({ selectedCurrency }) {
                                       />
                                     }
                                   />
-
-
-
                                 </div>
                               </div>{/* formGroup */}
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Preferred Pickup Time</label>
+                                <label>Preferred Pickup Time*</label>
                                 {/* Example for one select element, repeat for others */}
                                 <select
                                   className="form-select"
@@ -884,7 +885,7 @@ function ContentSection({ selectedCurrency }) {
                 <div className="Person">
                   per {tour.person} person <strong>({tour.tour_duration})</strong>
                 </div>
-   {/*     <div className="right">
+               {/*     <div className="right">
                   <Link to="#">View Offers</Link>
                 </div>*/}  
               {/*   <button type="submit" form="tourForm" className="cta">
@@ -1057,9 +1058,9 @@ function ContentSection({ selectedCurrency }) {
                   we offer the best tour packages for Dubai & Abu Dhabi at
                   affordable prices.
                 </p>
-             {/*  <Link to="#" className="cta">
+            {/*    <Link to="#" className="cta">
                   Check Out
-                </Link> */} 
+                </Link>*/} 
               </div>
               <div className="TouristDiv">
                 <div className="img">
@@ -1073,9 +1074,9 @@ function ContentSection({ selectedCurrency }) {
                 <span>Dubai</span>
                 <span>Tourist Visa</span>
                 <div className="TouristFooter">
-              {/*    <Link to="#" className="cta">
+              {/*     <Link to="#" className="cta">
                     Apply Now
-                  </Link>*/} 
+                  </Link>*/}
                 </div>
               </div>
             </div>

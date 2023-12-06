@@ -191,8 +191,8 @@ const Cart = () => {
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
-                              <span>Preferred Guide Language*</span>
-                              <span>{item.preferredGuidedLanguage}</span>
+                              <span>Preferred Language*</span>
+                              <span>{item.preferredGuideLanguage}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
