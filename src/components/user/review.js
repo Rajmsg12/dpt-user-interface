@@ -161,7 +161,7 @@ const Review = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            fetch('http://127.0.0.1:9900/review/edit/10', {
+            fetch(`${config.baseUrl}/review/edit/10`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

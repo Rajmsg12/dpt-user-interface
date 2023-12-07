@@ -93,21 +93,27 @@ const validateForm = () => {
         valid = false;
     }
 
-    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+    const formattedEmail = formData.email.trim().toLowerCase(); // Convert email to lowercase
+    if (!formattedEmail || !emailRegex.test(formattedEmail)) {
         newErrors.email = 'Valid email is required';
         valid = false;
     }
-
-    // Validate confirm email
-    if (formData.confirm_email.trim() !== formData.email.trim()) {
+    
+    // Normalize and validate confirm email
+    const formattedConfirmEmail = formData.confirm_email.trim().toLowerCase(); // Convert confirm email to lowercase
+    const formattedOriginalEmail = formattedEmail; // Store the original formatted email
+    if (formattedConfirmEmail !== formattedOriginalEmail) {
         newErrors.confirm_email = 'Emails do not match';
         valid = false;
     }
 
-    // Validate other fields similarly...
-
+    // Validate confirm email
+    if (formattedConfirmEmail !== formattedOriginalEmail) {
+        newErrors.confirm_email = 'Emails do not match';
+        valid = false;
+    }
+    
     setErrors(newErrors);
     return valid;
 };

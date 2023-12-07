@@ -103,7 +103,7 @@ const Footer = () => {
                     </div>
                     <div className="footerWidget">
                         <ul>
-                            {categories.slice(0, 8).map((item, index) => (
+                            {categories.slice(1, 9).map((item, index) => (
                                 <li key={index}>
                                     <Link to={`/${item.slug}`}>{item.name}</Link>
                                     {  /* <Link to={`/plan`}>{item.category}</Link>*/}
@@ -113,7 +113,7 @@ const Footer = () => {
                     </div>
                     <div className="footerWidget">
                         <ul>
-                            {categories.slice(0, 8).map((item, index) => (
+                            {categories.slice(2, 10).map((item, index) => (
                                 <li key={index}>
                                     <Link to={`/${item.slug}`}>{item.name}</Link>
                                     {  /* <Link to={`/plan`}>{item.category}</Link>*/}
