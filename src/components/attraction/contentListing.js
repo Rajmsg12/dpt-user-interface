@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import './Style/attraction.css';
 import ContentRhs from './contentRhs';
 import { convertFromRaw, Editor, EditorState } from 'draft-js';
+import { Helmet } from "react-helmet";
 import 'draft-js/dist/Draft.css';
 import config from '../../config';
 
 const ContentListing = () => {
   const [tour, setTour] = useState({});
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDescription, setMetaDescription] = useState('');
+  const [metaKeywords, setMetaKeywords] = useState('');
   const url = window.location.href;
   const spliturl = url.split("/");
   const slug = spliturl[4];
@@ -21,6 +25,10 @@ const ContentListing = () => {
 
         if (data.status === 'success') {
           setTour(data.data[0]);
+          setMetaTitle(data.data[0].meta_title);
+          setMetaDescription(data.data[0].meta_description);
+          setMetaKeywords(data.data[0].meta_keyword);
+          
 
           // Parse the JSON string and convert it to Draft.js content state
           const rawContent = JSON.parse(data.data[0].description);
@@ -39,6 +47,12 @@ const ContentListing = () => {
   return (
     <div>
       <>
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta name="keywords" content={metaKeywords} />
+        {/* Add other meta tags if needed */}
+      </Helmet>
         <div className="attractiondetailPage">
           <div className="attraction-detailTopTab">
             <div className="container">

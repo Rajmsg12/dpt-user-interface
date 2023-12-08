@@ -263,7 +263,7 @@ const ChangePassword = () => {
                                 </Link>
                                 <span className="closeIcon" />
                             </div>
-                            <Link to="/user-dashboard" className="nav-link active DashboardIcon">
+                            <Link to="/user-dashboard" className="nav-link DashboardIcon">
                                 <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
                             </Link>
                             <Link to="/booking" className="nav-link MyBookingIcon">
@@ -276,7 +276,7 @@ const ChangePassword = () => {
                             <Link to="/editprofile" className="nav-link EditrofileIcon">
                                 <img src="images/homepage/pen.png" alt="" /> Edit Profile
                             </Link>
-                            <Link to="/changepassword" className="nav-link ChangePassWordIcon">
+                            <Link to="/changepassword" className="nav-link active ChangePassWordIcon">
                                 <img src="images/homepage/changepasswordicon.png" alt="" />
                                 Change Password
                             </Link>

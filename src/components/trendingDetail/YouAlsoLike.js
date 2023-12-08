@@ -14,12 +14,13 @@ const YouAlsoLike = ({ selectedCurrency }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
-    const location = useLocation();
     const navigate = useNavigate()
+    const { location } = useParams();
+    const formattedTitle = location
 
     useEffect(() => {
         fetchData();
-      }, []);
+    }, [location]);
     
       const fetchData = async () => {
         try {
@@ -91,11 +92,6 @@ const YouAlsoLike = ({ selectedCurrency }) => {
                 });
         }
     }, []);
-  
-    const handleLinkClick = (location, slug) => {
-        navigate(`/trending-tour/${location}/${slug}`);
-        fetchData(); // Fetch data when the link is clicked
-    };
 
 
     return (
@@ -110,8 +106,7 @@ const YouAlsoLike = ({ selectedCurrency }) => {
                             {tourData.map((tour, index) => (
                                 <div className="carouselItem" key={tour.id}>
                                     <div className="item">
-                                        <Link
-                                            onClick={() => handleLinkClick(location, tour.slug)}
+                                        <Link to={`/trending-tour/${formattedTitle}/${tour.slug}`}
                                             className="TabBox"
                                         >
                                             <div className="img">

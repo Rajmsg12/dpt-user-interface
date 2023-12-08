@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import "./Style/TourPage.css";
 import Carousel from "react-multi-carousel";
 import { connect } from 'react-redux';
@@ -44,6 +45,9 @@ function ContentSection({ selectedCurrency }) {
   const [adultsNumber, setAdultsNumber] = useState(0);
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [hotels, setHotels] = useState([]);
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDescription, setMetaDescription] = useState('');
+  const [metaKeywords, setMetaKeywords] = useState('');
   const [tourImage, setTourImage] = useState("");
   const formRef = useRef(null);
 
@@ -118,6 +122,10 @@ function ContentSection({ selectedCurrency }) {
         setTourPriceUsd(data.data[0].tour_price_usd)
         setTourImage(data.data[0].image)
         setTourId(data.data[0].id)
+        setMetaTitle(data.data[0].meta_title);
+        setMetaDescription(data.data[0].meta_description);
+        setMetaKeywords(data.data[0].meta_keywords);
+
 
       } catch (error) {
         console.error("Error fetching data from the backend:", error.message);
@@ -126,6 +134,9 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, []);
+  console.log("meta title", metaTitle)
+  console.log("meta description", metaDescription)
+  console.log("meta keywords", metaKeywords)
 
   const [formData, setFormData] = useState({
     tourDate: null,
@@ -360,8 +371,15 @@ function ContentSection({ selectedCurrency }) {
 
   return (
     <div className="ContentSection">
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta name="keywords" content={metaKeywords} />
+        {/* Add other meta tags if needed */}
+      </Helmet>
       {backendData && backendData.data && backendData.data.map((tour) => (
         <div className="container" key={tour.id}>
+
           <div className="ContentSectionWrapper">
             <div className="ContentLHS">
               <GetInTouch />

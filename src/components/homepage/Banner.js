@@ -478,7 +478,7 @@ const Banner = ({selectedCurrency}) => {
                     const titleWithHyphens = tour.slug; // Declare it here
 
                     return (
-                      <Link to={`/private-jet/${titleWithHyphens}`} className="TabBox" key={index}>
+                      <Link to={`/desert-safari/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
                           <img src={`${config.imageUrl}/${tour.image}`} alt="" />
                           <div className="discountrow">
@@ -858,7 +858,7 @@ const Banner = ({selectedCurrency}) => {
                   const titleWithHyphens = attraction.slug; // Declare it here
 
                   return (
-                    <Link to={`/attraction-tour/${titleWithHyphens}`} className="TabBox" key={index}>
+                    <Link to={`/attraction-tickets/${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
                         <img src={`${config.imageUrl}/${attraction.image}`} alt="" />
                         <div className="discountrow">

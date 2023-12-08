@@ -274,10 +274,10 @@ const Booking = () => {
                                 </Link>
                                 <span className="closeIcon" />
                             </div>
-                            <Link to="/user-dashboard" className="nav-link active DashboardIcon">
+                            <Link to="/user-dashboard" className="nav-link  DashboardIcon">
                                 <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
                             </Link>
-                            <Link to="/booking" className="nav-link MyBookingIcon">
+                            <Link to="/booking" className="nav-link active MyBookingIcon">
                                 <img src="images/homepage/mybookingicon.png" alt="" /> My Bookings
                             </Link>
                             <Link to="/wishlist" className="nav-link WishlistIcon">

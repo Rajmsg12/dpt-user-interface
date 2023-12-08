@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const BreadCrum = () => {
   const { title } = useParams();
@@ -10,6 +11,12 @@ const BreadCrum = () => {
   .join(' ');
   return (
     <div>
+      <Helmet>
+        <title>{formattedTitle}</title>
+        <meta name="description" content={formattedTitle} />
+        <meta name="keywords" content={formattedTitle} />
+        {/* Add other meta tags if needed */}
+      </Helmet>
     <div className="BreadcrumbSection">
     <div className="container">
       <nav aria-label="breadcrumb">

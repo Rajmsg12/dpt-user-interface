@@ -14,7 +14,7 @@ const Cart = () => {
   const [cart, setCart] = useState([]);
   // const cart = useSelector((state) => state.cart.cart);
   const ourSelectedCurrency = cart.length > 0 ? cart[0].selectedCurrency : 'AED';
-  console.log(ourSelectedCurrency);
+  console.log(cartdata);
 
 
   const navigate = useNavigate()
@@ -26,8 +26,10 @@ const Cart = () => {
     const totalAdultPrice = parseFloat(item.adultPrice || 0);
     const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
     const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
+    const totalLunchPrice = parseFloat(item.lunchTotalPrice || 0);
+    const totalTicketPrice = parseFloat(item.ticketTotalPrice || 0);
     const itemPriceAED = parseFloat(item.tourPriceAed) || 0;
-    const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
+    const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalLunchPrice + totalTicketPrice;
     return totalPriceForItem.toFixed(2); // Format the price to two decimal places
   };
 
@@ -38,8 +40,10 @@ const Cart = () => {
     const totalAdultPrice = parseFloat(item.adultPrice || 0);
     const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
     const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
+    const totalLunchPrice = parseFloat(item.lunchPrice || 0);
+    const totalTicketPrice = parseFloat(item.ticketTotalPrice || 0);
     const itemPriceUSD = parseFloat(item.tourPriceUsd) || 0;
-    const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
+    const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalTicketPrice + totalLunchPrice;
     return totalPriceForItem.toFixed(2); // Format the price to two decimal places
   };
 

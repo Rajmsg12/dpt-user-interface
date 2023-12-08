@@ -4,11 +4,18 @@ import Memories from '../common/memories'
 import Footer from '../common/Footer'
 import './style/about.css'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 const about = () => {
     return (
         <div>
             <InnerHeader />
+            <Helmet>
+                <title>About Us</title>
+                <meta name="description" content="About Us" />
+                <meta name="keywords" content="About Us" />
+                {/* Add other meta tags if needed */}
+            </Helmet>
             <>
                 <div
                     className="InnerBanner"

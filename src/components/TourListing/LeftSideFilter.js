@@ -21,7 +21,6 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
         const data = await response.json();
 
         if (data && data.data && Array.isArray(data.data)) {
-          console.log('Fetched categories:', data.data);
           setCategories(data.data);
         } else {
           console.error('No categories found in the response:', data);

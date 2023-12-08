@@ -161,7 +161,7 @@ const Review = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            fetch(`${config.baseUrl}/review/edit/10`, {
+            fetch(`${config.baseUrl}/review/get`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -422,7 +422,7 @@ console.log(reviews)
                                                                     placeholder="Country"
                                                                     required
                                                                     value={country} // Use optional chaining and provide a fallback value
-                                                                    onChange={(e) => setEmail(e.target.value)}
+                                                                    onChange={(e) => setCountry(e.target.value)}
                                                                 />
                                                             </div>
                                                         </div>

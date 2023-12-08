@@ -38,6 +38,7 @@ import ViewDetail from "./components/user/viewDetail";
 const App = () => {
   return (
     <Router basename={'/'}>
+      
       <React.Fragment>
         
         <Routes>
@@ -46,6 +47,7 @@ const App = () => {
         <Route exact path='/register' element={<Register/>} /> 
         <Route exact path='/forget-password' element={<Forget/>} /> 
         <Route exact path='/user-dashboard' element={<UserProfile/>} /> 
+        <Route exact path="/desert-safari/:title" element={<DetailPage/>} />
         <Route exact path="/private-jet/:title" element={<DetailPage/>} />
         <Route exact path="/wedding-on-yacht/:title" element={<DetailPage/>} />
         <Route exact path="/luxury-tours/:title" element={<DetailPage/>} />
@@ -55,7 +57,7 @@ const App = () => {
         <Route exact path='/destination/:country' element={<TourListing/>} /> 
         <Route exact path='/destination/:country/:title' element={<DestinationPage/>} /> 
         <Route exact path='trending-tour/:title' element={<TrendingPlaces/>} /> 
-        <Route exact path='/trending-tour/:location/:slug' element={<TrendingDetails/>} />
+        <Route exact path='/trending-tour/:location/:title' element={<TrendingDetails/>} />
 
         <Route exact path='tour/:title' element={<SearchListing/>} /> 
         <Route exact path='/tour/:country/:title' element={<TrendingDetails/>} /> 

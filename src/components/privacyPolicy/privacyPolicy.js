@@ -3,11 +3,18 @@ import InnerHeader from '../common/InnerHeader'
 import Memories from '../common/memories'
 import Footer from '../common/Footer'
 import './style/privacyPolicy.css'
+import { Helmet } from 'react-helmet'
 
 const privacyPolicy = () => {
     return (
         <div>
             <InnerHeader />
+            <Helmet>
+                <title>Privacy Policy</title>
+                <meta name="description" content="Privacy Policy" />
+                <meta name="keywords" content="Privacy Policy" />
+                {/* Add other meta tags if needed */}
+            </Helmet>
          <div className="privacypolicyPage">
                 <div className="container">
                     <h2>Privacy Policy</h2>

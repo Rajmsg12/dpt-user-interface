@@ -57,16 +57,16 @@ const Footer = () => {
                     <div className="followtext">follow us on</div>
                     <ul>
                         <li>
-                            <Link to="https://www.facebook.com/DubaiPrivateTour" className="fb"></Link>
+                            <Link to="https://www.facebook.com/DubaiPrivateTour" className="fb" target="_blank"></Link>
                         </li>
                         <li>
-                            <Link to="https://twitter.com/i/flow/login?redirect_after_login=%2Fdubaipvttour" className="tw"></Link>
+                            <Link to="https://twitter.com/i/flow/login?redirect_after_login=%2Fdubaipvttour" className="tw" target="_blank"></Link>
                         </li>
                         <li>
-                            <Link to="https://www.youtube.com/channel/UC1b7fJBbKWpHYMUnNQ5XTCA" className="yt"></Link>
+                            <Link to="https://www.youtube.com/channel/UC1b7fJBbKWpHYMUnNQ5XTCA" className="yt" target="_blank"></Link>
                         </li>
                         <li>
-                            <Link to="https://www.instagram.com/dubaiprivatetour/" className="ig"></Link>
+                            <Link to="https://www.instagram.com/dubaiprivatetour/" className="ig" target="_blank"></Link>
                         </li>
                     </ul>
                 </div>

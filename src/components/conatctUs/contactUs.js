@@ -5,6 +5,7 @@ import Memories from '../common/memories'
 import { Link } from 'react-router-dom'
 import './style/contactUs.css'
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet'
 import PhoneInput from "react-phone-input-2";
 import Select from 'react-select';
 import "react-phone-input-2/lib/bootstrap.css";
@@ -322,7 +323,12 @@ const ContactUs = () => {
     return (
         <div>
             <InnerHeader />
-            <>
+            <> <Helmet>
+                <title>Contact Us</title>
+                <meta name="description" content="Contact Us" />
+                <meta name="keywords" content="Contact Us" />
+                {/* Add other meta tags if needed */}
+            </Helmet>
                 <div
                     className="InnerBanner"
                     style={{ backgroundImage: "url(https://res.cloudinary.com/dqslvlm0d/image/upload/v1698737900/innerbanner_rnna6u.jpg)" }}

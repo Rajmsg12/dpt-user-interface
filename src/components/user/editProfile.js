@@ -253,7 +253,7 @@ const EditProfile = () => {
                                 </Link>
                                 <span className="closeIcon" />
                             </div>
-                            <Link to="/user-dashboard" className="nav-link active DashboardIcon">
+                            <Link to="/user-dashboard" className="nav-link  DashboardIcon">
                                 <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
                             </Link>
                             <Link to="/booking" className="nav-link MyBookingIcon">
@@ -263,7 +263,7 @@ const EditProfile = () => {
                                 <img src="images/homepage/wislisticonnew.png" alt="" />
                                 Wishlist
                             </Link>
-                            <Link to="/editprofile" className="nav-link EditrofileIcon">
+                            <Link to="/editprofile" className="nav-link active EditrofileIcon">
                                 <img src="images/homepage/pen.png" alt="" /> Edit Profile
                             </Link>
                             <Link to="/changepassword" className="nav-link ChangePassWordIcon">

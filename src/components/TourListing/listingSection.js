@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Styles/TourListing.css';
+import { Helmet } from "react-helmet";
 import LeftSideFilter from './LeftSideFilter';
 import config from '../../config';
 import { connect } from 'react-redux';
@@ -16,6 +17,9 @@ const ListingSection = ({ selectedCurrency }) => {
   const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDescription, setMetaDescription] = useState('');
+  const [metaKeywords, setMetaKeywords] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const itemsPerPage = 9;
 
@@ -134,6 +138,7 @@ const ListingSection = ({ selectedCurrency }) => {
         const result = await response.json();
         if (result.status === 'success' && result.length > 0) {
           setApiData(result.data);
+       
 
         } else {
           console.error('Failed to fetch data from the API');
@@ -145,6 +150,7 @@ const ListingSection = ({ selectedCurrency }) => {
 
     fetchData();
   }, []);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {

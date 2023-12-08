@@ -1,10 +1,17 @@
 import React from 'react'
 import './style/cancellationPolicy.css'
+import { Helmet } from 'react-helmet'
 
 const cancellationPolicy = () => {
     return (
         <div>
             <div className="CancellationPolicyPage">
+                <Helmet>
+                    <title>Cancellation Policy</title>
+                    <meta name="description" content="Cancellation Policy" />
+                    <meta name="keywords" content="Cancellation Policy" />
+                    {/* Add other meta tags if needed */}
+                </Helmet>
                 <div className="container">
                     <h2>Cancellation Policy</h2>
                     <p>
