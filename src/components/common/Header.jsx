@@ -29,7 +29,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
     const { t } = useTranslation();
     let cartdata = localStorage.getItem("cartdata");
     let cartData = cartdata ? JSON.parse(cartdata) : [];
-    console.log(cartData.length)
+  
 
     const handleCurrencyChange = (currency) => {
         // Clear localStorage when changing currency

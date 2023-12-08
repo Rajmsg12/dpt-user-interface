@@ -21,7 +21,6 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
         const data = await response.json();
 
         if (data && data.data && Array.isArray(data.data)) {
-          console.log('Fetched categories:', data.data);
           setCategories(data.data);
         } else {
           console.error('No categories found in the response:', data);
@@ -236,7 +235,7 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
             </div>
           </div>
 
-          <div className="RatingDiv">
+     {/*  <div className="RatingDiv">
             <div className="sidebarlabel">
               <h3>Rating</h3>
             </div>
@@ -326,7 +325,7 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
                 </label>
               </div>
             </div>
-          </div>
+          </div>*/} 
           {/*  <div className="SpecialsDiv">
             <div className="sidebarlabel">
               <h3>Specials</h3>

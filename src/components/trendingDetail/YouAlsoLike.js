@@ -36,8 +36,6 @@ const YouAlsoLike = ({ selectedCurrency }) => {
     const spliturl = url.split("/");
     const slug = spliturl[5];
     const location1 = spliturl[4];
-    console.log(slug)
-    console.log(location1)
 
     const responsive = {
         superLargeDesktop: {

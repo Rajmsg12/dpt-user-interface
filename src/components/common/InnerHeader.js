@@ -81,7 +81,6 @@ const InnerHeader = ({ selectedCurrency, setCurrency }) => {
   const [destinations, setDestinations] = useState([]);
   let cartdata = localStorage.getItem("cartdata");
   let cartData = cartdata ? JSON.parse(cartdata) : [];
-  console.log(selectedCurrency)
 
   const handleCountrySearch = (country) => {
     setSearchCountry(country);
@@ -127,7 +126,6 @@ const InnerHeader = ({ selectedCurrency, setCurrency }) => {
 
     fetchDestinations();
   }, []);
-  console.log(selectedCurrency)
 
 
   useEffect(() => {

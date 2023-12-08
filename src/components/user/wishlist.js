@@ -372,12 +372,15 @@ const Wishlist = ({ selectedCurrency }) => {
                                     wishlistData.map((item, index) => (
                                         <div key={index} className="CartBoxXArea">
                                             <div className="CartBoxWrapper">
-                                                <Link to={`/tour/${item.tour_info[0].tour_slug}/${item.tour_info[0].tour_slug}`} className="CartTopBox">
+                                                <div className="CartTopBox">
+                                                <Link to={`/tour/${item.tour_info[0].tour_slug}/${item.tour_info[0].tour_slug}`}>
                                                     <div className="CartimgWrapper">
                                                         <img src={`${config.imageUrl}/${item.tour_info[0].tour_image}`} alt={item.tour_info[0].Tour_name} />
                                                     </div>
+                                                    </Link>
                                                     {/*CartimgWrapper*/}
                                                     <div className="CartContentWrapper">
+                                                    <Link to={`/tour/${item.tour_info[0].tour_slug}/${item.tour_info[0].tour_slug}`}>
                                                         <h4>{item.tour_info[0].Tour_name}</h4>
                                                         <div className="Price">
                                                             {isLoggedIn ? (
@@ -400,17 +403,18 @@ const Wishlist = ({ selectedCurrency }) => {
                                                                 </div>
                                                             )}
                                                         </div>
-
+                                                        </Link>
                                                         <div className="EditTrashGroup">
-                                                            <div onClick={() => deleteItem(item.id)} className="Trash" />
+                                                            <div onClick={(e) => deleteItem(item.id, e)} className="Trash" />
                                                         </div>
                                                         {/*EditTrashGroup*/}
                                                     </div>
                                                     {/*CartContentWrapper*/}
-                                                </Link>
+                                                
                                                 {/*CartTopBox*/}
 
                                                 {/*CartBottomBox*/}
+                                            </div>
                                             </div>
                                             {/*CartBoxWrapper Loop*/}
 
