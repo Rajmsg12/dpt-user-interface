@@ -14,22 +14,23 @@ const Banner = () => {
       try {
         const response = await fetch(`${config.baseUrl}/plan/${slug}`);
         const data = await response.json();
-
-        if (data.status === 'success') {
-          setTour(data.data[0]);
+  
+        if (data.status === 'success' && data.data.length > 0) {
+          setTour(data.data[0].image);
+          console.log(data.data[0].image)
         } else {
-          // Handle error
+          // Handle error or set default values for tour
         }
       } catch (error) {
         // Handle error
       }
     };
-
+  
     fetchTourData();
   }, [slug]);
-  const backgroundImageUrl = tour.tour_info && tour.tour_info.length > 0
-  ? `url(${config.imageUrl}/${tour.image})`
-  : '';
+  console.log(tour)
+  const backgroundImageUrl = `url(${config.imageUrl}/${tour})`
+
 
   return (
     <div>

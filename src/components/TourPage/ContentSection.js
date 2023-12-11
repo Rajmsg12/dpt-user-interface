@@ -13,6 +13,7 @@ import Itinerary from "./Itinerary";
 import WhatToExpect from "./WhatToExpect";
 import DetailOverview from "./BannerTabs";
 import GetInTouch from "./GetInTouch";
+import AdditionalChargesInfo from "./AdditionalChargesInfo";
 import { useParams } from "react-router-dom";
 import { data } from "../../data/Category";
 import { addToCart } from "../cart/CartActions";
@@ -44,11 +45,14 @@ function ContentSection({ selectedCurrency }) {
   const [ticketNumber, setTicketNumber] = useState(0);
   const [adultsNumber, setAdultsNumber] = useState(0);
   const [selectedHotel, setSelectedHotel] = useState(null);
+  const [selectedItinerary, setSelectedItinerary] = useState(null);
   const [hotels, setHotels] = useState([]);
+  const [itinerarys , setItinerarys] = useState([])
   const [metaTitle, setMetaTitle] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
   const [metaKeywords, setMetaKeywords] = useState('');
   const [tourImage, setTourImage] = useState("");
+  const [itineraryData, setItineraryData] = useState([]);
   const formRef = useRef(null);
 
   const navigate = useNavigate()
@@ -280,6 +284,26 @@ function ContentSection({ selectedCurrency }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`${config.baseUrl}/${slug}`);
+            const data = await response.json();
+            if (data.status === 'success' && data.data.length > 0) {
+                setItineraryData(data.data[0].itinerary_info);
+                console.log(data.data[0].itinerary_info)
+            } else {
+                console.error('Failed to fetch itinerary data');
+            }
+        } catch (error) {
+            console.error('Error fetching itinerary data:', error);
+        }
+    };
+
+    fetchData();
+}, []); // Empty dependency array to fetch data only once when the component mounts
+
 
 
   useEffect(() => {
@@ -865,8 +889,30 @@ function ContentSection({ selectedCurrency }) {
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-12">
+                              <div className="mb-3 formGroup">
+                                <label>Select Itinerary</label>
+                                <select
+                                  className="form-select"
+                                  value={formData.preferredItineraryName}
+                                  onChange={(e) => {
+                                    handleInputChange(e, 'preferredHotelName');
+                                    // Find the selected hotel data based on the name
+                                    const itinerary = itinerary.find((itinerary) => itinerary.name === e.target.value);
+                                    setItineraryData(itinerary); // Set the selected hotel data
+                                  }}
+                                >
+                                  <option value="0">Select Itinerary</option>
+                                  {itineraryData.map((itinerary) => (
+                                    <option key={itinerary.id} value={itinerary.name}>
+                                      {itinerary.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>{/* formGroup */}
+                            </div>
+                            <div className="col-md-12">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Additional Tickets</label>
+                                <label>No. of Tickets</label>
                                 <input
                                   type="number"
                                   className="form-control"
@@ -881,12 +927,12 @@ function ContentSection({ selectedCurrency }) {
 
                                 />
 
-                                {selectedHotel && (
+                                {selectedItinerary && (
                                   <div>
-                                    <label>{ticketNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.ticket_price_aed : selectedHotel.ticket_price_usd} = {selectedCurrency} {
+                                    <label>{ticketNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedItinerary.ticket_price_aed : selectedItinerary.ticket_price_usd} = {selectedCurrency} {
                                       selectedCurrency === 'AED'
-                                        ? selectedHotel.ticket_price_aed * ticketNumber || 0
-                                        : selectedHotel.ticket_price_usd * ticketNumber || 0
+                                        ? selectedItinerary.ticket_price_aed * ticketNumber || 0
+                                        : selectedItinerary.ticket_price_usd * ticketNumber || 0
                                     }</label>
 
                                     {/* You can similarly display other prices */}
@@ -937,6 +983,7 @@ function ContentSection({ selectedCurrency }) {
                 </div>
               </div>
               <WhatToExpect />
+              <AdditionalChargesInfo/>
               <Itinerary />
               <CancellationPolicy />
               <UsefulToKnow />

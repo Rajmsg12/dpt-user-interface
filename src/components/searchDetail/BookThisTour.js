@@ -29,7 +29,7 @@ const BookThisTour = () => {
                                                 customInput={
                                                     <input
                                                         style={{
-                                                            width: '17\6%', // Set the width to 100%
+                                                            width: '176%', // Set the width to 100%
                                                             paddingLeft:"10px"
                                                         }}
                                                     />

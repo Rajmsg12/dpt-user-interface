@@ -116,10 +116,6 @@ const PopularTour = ({ selectedCurrency }) => {
         }
     };
     
-
-
-
-
     return (
         <div>
             <div className="PopularTours">

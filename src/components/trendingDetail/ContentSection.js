@@ -11,6 +11,7 @@ import CancellationPolicy from "./CancellationPolicy";
 import UsefulToKnow from "./UsefulToKnow";
 import Itinerary from "./Itinerary";
 import WhatToExpect from "./WhatToExpect";
+import AdditionalChargesInfo from "./AdditionalChargesInfo";
 import DetailOverview from "./BannerTabs";
 import GetInTouch from "./GetInTouch";
 import { useParams } from "react-router-dom";
@@ -934,6 +935,7 @@ function ContentSection({ selectedCurrency }) {
                 </div>
               </div>
               <WhatToExpect />
+              <AdditionalChargesInfo/>
               <Itinerary />
               <CancellationPolicy />
               <UsefulToKnow />

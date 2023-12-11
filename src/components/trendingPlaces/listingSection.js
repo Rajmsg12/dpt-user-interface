@@ -116,8 +116,6 @@ const ListingSection = ({ selectedCurrency }) => {
 
 
   const itemsToShow = filteredData.slice(startIndex, endIndex);
-  console.log("filteredData", filteredData)
-  console.log("item to show", itemsToShow)
   return (
     <div>
       <div className="listingPage">
@@ -147,7 +145,7 @@ const ListingSection = ({ selectedCurrency }) => {
                           type="button"
                           role="tab"
                           aria-controls="pills-grid"
-                          aria-selected="false"
+                          aria-selected="true"
                         >
                           Grid <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211736/grid_emrbiy.png"} alt="" />
                         </button>
@@ -161,7 +159,7 @@ const ListingSection = ({ selectedCurrency }) => {
                           type="button"
                           role="tab"
                           aria-controls="pills-listing"
-                          aria-selected="true"
+                          aria-selected="false"
                         >
                           <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211812/list_k2k6ct.png"} alt="" />
                           Listing
@@ -190,8 +188,30 @@ const ListingSection = ({ selectedCurrency }) => {
                                 </div>
                                 <div className="rhsimg">
                                   <div>
-                                    <img src={tour.logo1} alt="" />
-                                    <img src={tour.logo2} alt="" />
+                                    {tour.sticker_info[0].id === '1' && (
+                                      <img
+                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                        alt=""
+                                      />
+                                    )}
+                                    {tour.sticker_info[0].id === '2' && (
+                                      <img
+                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                        alt=""
+                                      />
+                                    )}
+                                    {tour.sticker_info[0].id === '3' && (
+                                      <img
+                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                        alt=""
+                                      />
+                                    )}
+                                    {tour.sticker_info.length > 1 && (
+                                      <img
+                                        src={tour.sticker_info[1].id}
+                                        alt=""
+                                      />
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -255,8 +275,30 @@ const ListingSection = ({ selectedCurrency }) => {
                               </div>
                               <div className="rhsimg">
                                 <div>
-                                  <img src={tour.logo1} alt="" />
-                                  <img src={tour.logo2} alt="" />
+                                  {tour.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info.length > 1 && (
+                                    <img
+                                      src={tour.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
                                 </div>
                               </div>
                             </div>
