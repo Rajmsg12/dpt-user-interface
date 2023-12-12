@@ -8,7 +8,7 @@ const convertDescriptionFromJSON = (descriptionJSON) => {
         const editorState = EditorState.createWithContent(contentState);
         return editorState.getCurrentContent().getPlainText();
     } catch (error) {
-        console.error('Error converting description:', error);
+  
         return ''; // Return an empty string in case of an error
     }
 };

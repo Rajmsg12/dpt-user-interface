@@ -326,6 +326,7 @@ function ContentSection({ selectedCurrency }) {
     fetchData();
   }, []);
   const [attractions, setAttractions] = useState([]);
+  const [language, setLanguage] = useState([]);
 
   useEffect(() => {
     const fetchAttractions = async () => {
@@ -342,6 +343,25 @@ function ContentSection({ selectedCurrency }) {
     };
 
     fetchAttractions();
+  }, []);
+
+  useEffect(() => {
+    const fetchLanguage = async () => {
+      try {
+        const response = await axios.get(`${config.baseUrl}/language/list`);
+        if (response.data.status === 'success') {
+          setLanguage(response.data.data);
+          console.log(response.data.data)
+        } else {
+          console.error('Error fetching attractions');
+        }
+      } catch (error) {
+        console.error('Error fetching attractions', error);
+      }
+    };
+
+
+    fetchLanguage();
   }, []);
 
   useEffect(() => {
@@ -401,16 +421,10 @@ function ContentSection({ selectedCurrency }) {
 
   };
   const handleInputChange1 = (selectedOptions, fieldName) => {
-    // Example: Log the selected options to see the structure
-    console.log(selectedOptions);
-  
-    // Example: Extracting names from selected options and updating state
-    const selectedItineraryNames = selectedOptions.map((option) => option.value); // Assuming 'value' contains the itinerary name
-  
-    // Update state with the selected itinerary names
+    const selectedItineraryNames = selectedOptions.map((option) => option.value);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [fieldName]: selectedItineraryNames, // Update the state field with selected itinerary names
+      [fieldName]: selectedItineraryNames,
     }));
   };
 
@@ -712,18 +726,19 @@ function ContentSection({ selectedCurrency }) {
                                 <label>Preferred Language*</label>
                                 <select
                                   className="form-select"
-                                  value={formData.preferredGuideLanguage} // Set the value dynamically based on the state
-                                  onChange={(e) => handleInputChange(e, 'preferredGuideLanguage')} // Pass the name to handleInputChange
+                                  value={formData.preferredGuideLanguage}
+                                  onChange={(e) => handleInputChange(e, 'preferredGuideLanguage')}
                                 >
                                   <option value="0">Select Language</option>
-                                  <option value="English">English</option>
-                                  <option value="Arabic">Arabic</option>
-                                  <option value="Spanich">Spanich</option>
-                                  {/* ... (other options) */}
+                                  {language.map((language) => (
+                                    <option key={language.language_id} value={language.language_name}>
+                                      {language.language_name}
+                                    </option>
+                                  ))}
                                 </select>
-
-                              </div>{/* formGroup */}
+                              </div>
                             </div>
+
 
                             <div className="col-md-3">
                               <div className="mb-3 formGroup">
