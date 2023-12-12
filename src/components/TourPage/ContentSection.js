@@ -183,6 +183,23 @@ function ContentSection({ selectedCurrency }) {
     event.preventDefault();
 
     // Set the tour details in formData
+    const selectedItineraryNames = selectedItinerary.map((option) => option.label);
+
+    // Update formData with selected itinerary names
+    formData.preferredItineraryName = selectedItineraryNames.join(', ');
+  
+    // Calculate and add additional ticket price to formData
+    const additionalTicketPrice = selectedItinerary.reduce((total, selectedOption) => {
+      const itineraryPrice = itineraryData.find(itinerary => itinerary.name === selectedOption.label);
+      return (
+        total +
+        ((selectedCurrency === 'AED'
+          ? parseInt(itineraryPrice?.itinerary_ticket_price_aed) || 0
+          : parseInt(itineraryPrice?.itinerary_ticket_price_usd) || 0) * ticketNumber)
+      );
+    }, 0);
+  
+    formData.additionalTickets = additionalTicketPrice.toFixed(2);
     formData.tour_id = tour_id;
     formData.tour_slug = tour_slug;
     formData.tourName = tourName;

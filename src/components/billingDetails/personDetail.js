@@ -13,64 +13,54 @@ const PersonDetail = ({ selectedCurrency }) => {
 
     const particularItemPriceAed = (item) => {
         if (!item) return 0; // Check if item is undefined or null
-      
+
         const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
         const totalAdultPrice = parseFloat(item.adultPrice || 0);
         const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
         const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
         const itemPriceAED = parseFloat(item.tourPriceAed) || 0;
-        const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
+        const totalTicketPrice = parseFloat(item.additionalTickets || 0);
+        const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalTicketPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
         return totalPriceForItem.toFixed(2); // Format the price to two decimal places
-      };
-      
-      const particularItemPriceUsd = (item) => {
+    };
+
+    const particularItemPriceUsd = (item) => {
         if (!item) return 0; // Check if item is undefined or null
-      
+
         const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
         const totalAdultPrice = parseFloat(item.adultPrice || 0);
         const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
         const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
+        const totalTicketPrice = parseFloat(item.additionalTickets || 0);
         const itemPriceUSD = parseFloat(item.tourPriceUsd) || 0;
-        const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
+        const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalTicketPrice + totalChildrenPrice + totalDriverPrice;
         return totalPriceForItem.toFixed(2); // Format the price to two decimal places
-      };
-      const subtotal = Array.isArray(MyCartDetail)
-  ? MyCartDetail.reduce((total, item) => {
-      return total + parseFloat(particularItemPriceAed(item)); // Calculate subtotal for AED prices
-    }, 0)
-  : 0;
-      
-      const calculateTotal = () => {
+    };
+    const subtotal = Array.isArray(MyCartDetail)
+        ? MyCartDetail.reduce((total, item) => {
+            return total + parseFloat(particularItemPriceAed(item)); // Calculate subtotal for AED prices
+        }, 0)
+        : 0;
+
+    const calculateTotal = () => {
         const taxPercentage = 0.18; // 18% tax
         const total = subtotal * taxPercentage;
         const fullTotal = subtotal + total;
-      
+
         return {
-          subtotal,
-          taxPercentage,
-          fullTotal,
-          total
+            subtotal,
+            taxPercentage,
+            fullTotal,
+            total
         };
-      };
+    };
 
     //   const storedCurrency = localStorage.getItem('selectedCurrency');
     //   const parsedCurrency = storedCurrency ? JSON.parse(storedCurrency) : 'AED';
-      // Default value 'AED' if not found in local storage
+    // Default value 'AED' if not found in local storage
 
-      
-  const [errors, setErrors] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    confirm_email: '',
-    nationality: '',
-    discover_us: '',
-    country: '',
-    cell_no: '',
-});
-const validateForm = () => {
-    let valid = true;
-    const newErrors = {
+
+    const [errors, setErrors] = useState({
         first_name: '',
         last_name: '',
         email: '',
@@ -79,44 +69,56 @@ const validateForm = () => {
         discover_us: '',
         country: '',
         cell_no: '',
+    });
+    const validateForm = () => {
+        let valid = true;
+        const newErrors = {
+            first_name: '',
+            last_name: '',
+            email: '',
+            confirm_email: '',
+            nationality: '',
+            discover_us: '',
+            country: '',
+            cell_no: '',
+        };
+
+        // Validate first name
+        if (!formData.first_name.trim()) {
+            newErrors.first_name = 'First name is required';
+            valid = false;
+        }
+
+        // Validate last name
+        if (!formData.last_name.trim()) {
+            newErrors.last_name = 'Last name is required';
+            valid = false;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const formattedEmail = formData.email.trim().toLowerCase(); // Convert email to lowercase
+        if (!formattedEmail || !emailRegex.test(formattedEmail)) {
+            newErrors.email = 'Valid email is required';
+            valid = false;
+        }
+
+        // Normalize and validate confirm email
+        const formattedConfirmEmail = formData.confirm_email.trim().toLowerCase(); // Convert confirm email to lowercase
+        const formattedOriginalEmail = formattedEmail; // Store the original formatted email
+        if (formattedConfirmEmail !== formattedOriginalEmail) {
+            newErrors.confirm_email = 'Emails do not match';
+            valid = false;
+        }
+
+        // Validate confirm email
+        if (formattedConfirmEmail !== formattedOriginalEmail) {
+            newErrors.confirm_email = 'Emails do not match';
+            valid = false;
+        }
+
+        setErrors(newErrors);
+        return valid;
     };
-
-    // Validate first name
-    if (!formData.first_name.trim()) {
-        newErrors.first_name = 'First name is required';
-        valid = false;
-    }
-
-    // Validate last name
-    if (!formData.last_name.trim()) {
-        newErrors.last_name = 'Last name is required';
-        valid = false;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const formattedEmail = formData.email.trim().toLowerCase(); // Convert email to lowercase
-    if (!formattedEmail || !emailRegex.test(formattedEmail)) {
-        newErrors.email = 'Valid email is required';
-        valid = false;
-    }
-    
-    // Normalize and validate confirm email
-    const formattedConfirmEmail = formData.confirm_email.trim().toLowerCase(); // Convert confirm email to lowercase
-    const formattedOriginalEmail = formattedEmail; // Store the original formatted email
-    if (formattedConfirmEmail !== formattedOriginalEmail) {
-        newErrors.confirm_email = 'Emails do not match';
-        valid = false;
-    }
-
-    // Validate confirm email
-    if (formattedConfirmEmail !== formattedOriginalEmail) {
-        newErrors.confirm_email = 'Emails do not match';
-        valid = false;
-    }
-    
-    setErrors(newErrors);
-    return valid;
-};
 
 
 
@@ -133,35 +135,35 @@ const validateForm = () => {
         special_equest: '',
         cart_data: MyCartDetail,
 
-        sub_total:calculateTotal().fullTotal,
-        total:totalPrice,
+        sub_total: calculateTotal().fullTotal,
+        total: totalPrice,
 
     });
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         const isFormValid = validateForm();
-    
+
         if (isFormValid) {
             const token = localStorage.getItem("token");
-    
+
             const headers = {
                 'Content-Type': 'application/json',
             };
-    
+
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
             }
-    
+
             try {
                 const response = await fetch(`${config.baseUrl}/cart/add`, {
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify(formData),
                 });
-    
+
                 if (response.ok) {
                     console.log('Booking successful');
                     localStorage.removeItem("cartdata");
@@ -176,9 +178,9 @@ const validateForm = () => {
             console.log('Form has validation errors');
         }
     };
-    
-    
-    
+
+
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -187,7 +189,7 @@ const validateForm = () => {
             [name]: value,
         }));
     };
- 
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -264,7 +266,7 @@ const validateForm = () => {
                                                             value={formData.confirm_email} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
-                                                         {errors.confirm_email && <div className="error">{errors.confirm_email}</div>}
+                                                        {errors.confirm_email && <div className="error">{errors.confirm_email}</div>}
 
                                                     </div>
                                                     {/*formGroup*/}
@@ -410,42 +412,42 @@ const validateForm = () => {
                                 {/*BillingDetailLHSInner*/}
                             </div>
                             {/*BillingDetailLHS*/}
-                                <div className="BillingDetailRHS">
-                                    <div className="OrderSummaryDiv">
-                                        <div className="heading">Order Summary</div>
-                                        <div className="OrderSummaryTable">
-                                            <div className="OrderSummaryTablebody">
-                                                <div className="OrderSummaryTablerow">
-                                                    <span>Subtotal</span>
-                                                    <span>
-                                                         {ourSelectedCurrency} <strong>{calculateTotal().subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
-                                                    </span>
-                                                </div>
-                                                {/*OrderSummaryTablerow*/}
-                                                <div className="OrderSummaryTablerow">
-                                                    <span>Tax</span>
-                                                    <strong>18 %</strong>
-                                                </div>
-                                                {/*OrderSummaryTablerow*/}
-                                                <div className="OrderSummaryTablerow">
-                                                    <span>Order total</span>
-                                                    {ourSelectedCurrency} <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
-                                                </div>
-                                                {/*OrderSummaryTablerow*/}
-                                                <div className="ProceedCheckoutCta">
-                                                    <button type="submit" className="cta">
-                                                        Book Now
-                                                    </button>
-                                                </div>
-                                                {/*ProceedCheckoutCta*/}
-                                                {/*PaymentMethodGroup*/}
+                            <div className="BillingDetailRHS">
+                                <div className="OrderSummaryDiv">
+                                    <div className="heading">Order Summary</div>
+                                    <div className="OrderSummaryTable">
+                                        <div className="OrderSummaryTablebody">
+                                            <div className="OrderSummaryTablerow">
+                                                <span>Subtotal</span>
+                                                <span>
+                                                    {ourSelectedCurrency} <strong>{calculateTotal().subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                                                </span>
                                             </div>
-                                            {/*OrderSummaryTablebody*/}
+                                            {/*OrderSummaryTablerow*/}
+                                            <div className="OrderSummaryTablerow">
+                                                <span>Tax</span>
+                                                <strong>18 %</strong>
+                                            </div>
+                                            {/*OrderSummaryTablerow*/}
+                                            <div className="OrderSummaryTablerow">
+                                                <span>Order total</span>
+                                                {ourSelectedCurrency} <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                                            </div>
+                                            {/*OrderSummaryTablerow*/}
+                                            <div className="ProceedCheckoutCta">
+                                                <button type="submit" className="cta">
+                                                    Book Now
+                                                </button>
+                                            </div>
+                                            {/*ProceedCheckoutCta*/}
+                                            {/*PaymentMethodGroup*/}
                                         </div>
-                                        {/*OrderSummaryTable*/}
+                                        {/*OrderSummaryTablebody*/}
                                     </div>
+                                    {/*OrderSummaryTable*/}
                                 </div>
-                      
+                            </div>
+
                             {/*BillingDetailRHS*/}
                         </div>
                         {/*BillingDetailWrapper*/}
