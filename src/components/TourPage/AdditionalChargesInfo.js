@@ -39,7 +39,7 @@ const AdditionalChargesInfo = () => {
                 <ul>
                 {backendData && backendData.data && backendData.data.map((tour) => (
                     <div  key={tour.id}>
-                      <Editor editorState={EditorState.createWithContent(convertToContentState(tour.included))} readOnly />
+                      <Editor editorState={EditorState.createWithContent(convertToContentState(tour.additional_charges_info))} readOnly />
                       </div>
                 
                   ))}

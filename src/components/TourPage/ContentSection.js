@@ -48,7 +48,6 @@ function ContentSection({ selectedCurrency }) {
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [selectedItinerary, setSelectedItinerary] = useState(null);
   const [itineraryData, setItineraryData] = useState([]);
-  const [itinerarys, setItinerarys] = useState([])
   const [hotels, setHotels] = useState([]);
   const [metaTitle, setMetaTitle] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
@@ -207,7 +206,7 @@ function ContentSection({ selectedCurrency }) {
       (selectedHotel?.lunch_price_aed || 0) * lunchNumber || 0;
 
     const ticketPrice =
-      (selectedHotel?.ticket_price_aed || 0) * ticketNumber || 0;
+      (selectedItinerary?.itinerary_ticket_price_aed || 0) * ticketNumber || 0;
     // Set the driver's price in formData
     formData.lunchPrice = lunchPrice.toFixed(2);
     formData.ticketPrice = ticketPrice.toFixed(2);
@@ -409,7 +408,7 @@ function ContentSection({ selectedCurrency }) {
   const cart = useSelector((state) => state.cart);
 
   const options = itineraryData.map((itinerary) => ({
-    value: itinerary.id, // Assuming 'id' is a unique identifier
+    value: itinerary.name, // Assuming 'id' is a unique identifier
     label: itinerary.name // Assuming 'name' is the property containing the name to display
   }));
   const handleInputChange = (event, name) => {
@@ -421,10 +420,10 @@ function ContentSection({ selectedCurrency }) {
 
   };
   const handleInputChange1 = (selectedOptions, fieldName) => {
-    const selectedItineraryNames = selectedOptions.map((option) => option.value);
+    const selectedItineraryNames = selectedOptions.map((option) => option.label); // Use 'label' instead of 'value'
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [fieldName]: selectedItineraryNames,
+      [fieldName]: selectedItineraryNames.join(', '), // Join selected options for display
     }));
   };
 
@@ -886,8 +885,6 @@ function ContentSection({ selectedCurrency }) {
                                   </div>
                                 )}
 
-
-
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-6">
@@ -930,7 +927,7 @@ function ContentSection({ selectedCurrency }) {
                                 <Select
                                   isMulti
                                   options={options}
-                                  value={formData.preferredItineraryName}
+                                  value={selectedItinerary} // Use 'selectedItinerary' state instead of 'formData.preferredItineraryName'
                                   onChange={(selectedOptions) => {
                                     handleInputChange1(selectedOptions, 'preferredItineraryName');
                                     setSelectedItinerary(selectedOptions); // Set the selected itinerary data
@@ -959,15 +956,53 @@ function ContentSection({ selectedCurrency }) {
 
                                   {selectedItinerary && (
                                     <div>
-                                      <label>{ticketNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedItinerary.ticket_price_aed : selectedItinerary.ticket_price_usd} = {selectedCurrency} {
-                                        selectedCurrency === 'AED'
-                                          ? selectedItinerary.ticket_price_aed * ticketNumber || 0
-                                          : selectedItinerary.ticket_price_usd * ticketNumber || 0
-                                      }</label>
+                                      {selectedItinerary.map((selectedOption, index) => {
+                                        // Find the selected itinerary's price from the itineraryData array
+                                        const itineraryPrice = itineraryData.find(
+                                          itinerary => itinerary.name === selectedOption.label
+                                        );
 
-                                      {/* You can similarly display other prices */}
+                                        if (itineraryPrice) {
+                                          return (
+                                            <div key={index}>
+                                              <label>
+                                                {ticketNumber} ✖ {selectedCurrency}{' '}
+                                                {selectedCurrency === 'AED'
+                                                  ? itineraryPrice.itinerary_ticket_price_aed
+                                                  : itineraryPrice.itinerary_ticket_price_usd}{' '}
+                                                = {selectedCurrency}{' '}
+                                                {selectedCurrency === 'AED'
+                                                  ? itineraryPrice.itinerary_ticket_price_aed * ticketNumber || 0
+                                                  : itineraryPrice.itinerary_ticket_price_usd * ticketNumber || 0}
+                                              </label>
+                                            </div>
+                                          );
+                                        }
+
+                                        return null; // Handle case where price for selected option isn't found
+                                      })}
+                                      {/* Calculate total price for all selected itineraries */}
+                                      <label>
+                                        Total Price for Selected Itineraries:{' '}
+                                        {selectedItinerary.reduce((total, selectedOption) => {
+                                          const itineraryPrice = itineraryData.find(
+                                            itinerary => itinerary.name === selectedOption.label
+                                          );
+
+                                          return (
+                                            total +
+                                            (selectedCurrency === 'AED'
+                                              ? parseInt(itineraryPrice?.itinerary_ticket_price_aed) || 0
+                                              : parseInt(itineraryPrice?.itinerary_ticket_price_usd) || 0) *
+                                            ticketNumber
+                                          );
+                                        }, 0)}
+                                      </label>
                                     </div>
                                   )}
+
+
+
                                 </div> {/* formGroup */}
                               </div>
                             )}
