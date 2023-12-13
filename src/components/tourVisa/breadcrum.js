@@ -7,7 +7,7 @@ const breadcrum = () => {
             <>
                 <div
                     className="InnerBanner"
-                    style={{ backgroundImage: "url(images/innerbanner.jpg)" }}
+                    style={{ backgroundImage: "url(https://res.cloudinary.com/dqslvlm0d/image/upload/v1698737900/innerbanner_rnna6u.jpg)" }}
                 >
                     <div className="container">
                         <h1>Tourist Visa</h1>
