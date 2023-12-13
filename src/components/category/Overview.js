@@ -5,7 +5,7 @@ const Overview = () => {
     const [tourData, setTourData] = useState(null);
     const url = window.location.href;
     const spliturl = url.split("/");
-    const slug = spliturl[4];
+    const slug = spliturl[3];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,18 +28,18 @@ const Overview = () => {
 
         fetchData();
     }, []); // The empty dependency array ensures that the effect runs only once after the initial render.
-
+console.log(tourData)
     return (
         <>
             {tourData && (
                 <div className="toptext">
                     <div className="Title">
-                        <h2>{tourData.name}</h2>
+                        <h2>Overview</h2>
                     </div>
                     <p>
-                        <strong>{tourData.short_description}</strong>
+                        <strong>{tourData.description.blocks[0].text}</strong>
                     </p>
-                    <p>{tourData.description.blocks[0].text}</p>
+                    <p>{tourData.short_description}</p>
                     {/* Add more rendering logic for other properties if needed */}
                 </div>
             )}

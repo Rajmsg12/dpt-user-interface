@@ -186,7 +186,7 @@ function ContentSection({ selectedCurrency }) {
     const selectedItineraryNames = selectedItinerary.map((option) => option.label);
 
     // Update formData with selected itinerary names
-    formData.preferredItineraryName = selectedItineraryNames.join(', ');
+    formData.itinerary_name = selectedItineraryNames.join(', ');
   
     // Calculate and add additional ticket price to formData
     const additionalTicketPrice = selectedItinerary.reduce((total, selectedOption) => {
@@ -944,9 +944,9 @@ function ContentSection({ selectedCurrency }) {
                                 <Select
                                   isMulti
                                   options={options}
-                                  value={selectedItinerary} // Use 'selectedItinerary' state instead of 'formData.preferredItineraryName'
+                                  value={selectedItinerary} 
                                   onChange={(selectedOptions) => {
-                                    handleInputChange1(selectedOptions, 'preferredItineraryName');
+                                    handleInputChange1(selectedOptions, 'itinerary_name');
                                     setSelectedItinerary(selectedOptions); // Set the selected itinerary data
                                   }}
                                 />

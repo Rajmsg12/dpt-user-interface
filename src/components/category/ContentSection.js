@@ -166,11 +166,16 @@ const ContentSection = ({ selectedCurrency }) => {
               handleCloseSidebar={handleCloseSidebar}
             />
             <>
-              <Overview />
+             
               <div className="listingRhs CategoryTopSectionRHS">
                 <div className="listingGridTab">
+                     <Overview/>
                   <div className="listingToplayer">
-                    <div className="Title"><h2>{formattedCategory}</h2></div>
+               
+                    <div className="Title"><h2>{formattedCategory}</h2>
+                 
+                    </div>
+                    
                     <div>
                       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>

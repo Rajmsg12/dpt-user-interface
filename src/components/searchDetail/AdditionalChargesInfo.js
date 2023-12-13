@@ -6,7 +6,7 @@ const AdditionalChargesInfo = () => {
     const [backendData, setBackendData] = useState(null);
     const url = window.location.href;
     const spliturl = url.split("/");
-    const slug = spliturl[4];
+    const slug = spliturl[5];
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -39,7 +39,7 @@ const AdditionalChargesInfo = () => {
                 <ul>
                 {backendData && backendData.data && backendData.data.map((tour) => (
                     <div  key={tour.id}>
-                      <Editor editorState={EditorState.createWithContent(convertToContentState(tour.included))} readOnly />
+                      <Editor editorState={EditorState.createWithContent(convertToContentState(tour.additional_charges_info))} readOnly />
                       </div>
                 
                   ))}

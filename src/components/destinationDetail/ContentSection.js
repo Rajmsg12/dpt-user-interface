@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 import { Helmet } from "react-helmet";
 import "./Style/TourPage.css";
 import Carousel from "react-multi-carousel";
@@ -11,9 +12,9 @@ import CancellationPolicy from "./CancellationPolicy";
 import UsefulToKnow from "./UsefulToKnow";
 import Itinerary from "./Itinerary";
 import WhatToExpect from "./WhatToExpect";
-import AdditionalChargesInfo from "./AdditionalChargesInfo";
 import DetailOverview from "./BannerTabs";
 import GetInTouch from "./GetInTouch";
+import AdditionalChargesInfo from "./AdditionalChargesInfo";
 import { useParams } from "react-router-dom";
 import { data } from "../../data/Category";
 import { addToCart } from "../cart/CartActions";
@@ -45,11 +46,14 @@ function ContentSection({ selectedCurrency }) {
   const [ticketNumber, setTicketNumber] = useState(0);
   const [adultsNumber, setAdultsNumber] = useState(0);
   const [selectedHotel, setSelectedHotel] = useState(null);
+  const [selectedItinerary, setSelectedItinerary] = useState(null);
+  const [itineraryData, setItineraryData] = useState([]);
   const [hotels, setHotels] = useState([]);
   const [metaTitle, setMetaTitle] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
   const [metaKeywords, setMetaKeywords] = useState('');
   const [tourImage, setTourImage] = useState("");
+
   const formRef = useRef(null);
 
   const navigate = useNavigate()
@@ -135,9 +139,6 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, []);
-  console.log("meta title", metaTitle)
-  console.log("meta description", metaDescription)
-  console.log("meta keywords", metaKeywords)
 
   const [formData, setFormData] = useState({
     tourDate: null,
@@ -182,6 +183,23 @@ function ContentSection({ selectedCurrency }) {
     event.preventDefault();
 
     // Set the tour details in formData
+    const selectedItineraryNames = selectedItinerary.map((option) => option.label);
+
+    // Update formData with selected itinerary names
+    formData.itinerary_name = selectedItineraryNames.join(', ');
+  
+    // Calculate and add additional ticket price to formData
+    const additionalTicketPrice = selectedItinerary.reduce((total, selectedOption) => {
+      const itineraryPrice = itineraryData.find(itinerary => itinerary.name === selectedOption.label);
+      return (
+        total +
+        ((selectedCurrency === 'AED'
+          ? parseInt(itineraryPrice?.itinerary_ticket_price_aed) || 0
+          : parseInt(itineraryPrice?.itinerary_ticket_price_usd) || 0) * ticketNumber)
+      );
+    }, 0);
+  
+    formData.additionalTickets = additionalTicketPrice.toFixed(2);
     formData.tour_id = tour_id;
     formData.tour_slug = tour_slug;
     formData.tourName = tourName;
@@ -201,8 +219,14 @@ function ContentSection({ selectedCurrency }) {
     const infantsPrice =
       (selectedHotel?.infants_price_aed || 0) * infantsNumber || 0;
 
+    const lunchPrice =
+      (selectedHotel?.lunch_price_aed || 0) * lunchNumber || 0;
 
+    const ticketPrice =
+      (selectedItinerary?.itinerary_ticket_price_aed || 0) * ticketNumber || 0;
     // Set the driver's price in formData
+    formData.lunchPrice = lunchPrice.toFixed(2);
+    formData.ticketPrice = ticketPrice.toFixed(2);
     formData.driverTotalPrice = driverTotalPrice.toFixed(2);
 
 
@@ -279,6 +303,26 @@ function ContentSection({ selectedCurrency }) {
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${config.baseUrl}/${slug}`);
+        const data = await response.json();
+        if (data.status === 'success' && data.data.length > 0) {
+          setItineraryData(data.data[0].itinerary_info);
+          console.log(data.data[0].itinerary_info)
+        } else {
+          console.error('Failed to fetch itinerary data');
+        }
+      } catch (error) {
+        console.error('Error fetching itinerary data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to fetch data only once when the component mounts
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -298,6 +342,7 @@ function ContentSection({ selectedCurrency }) {
     fetchData();
   }, []);
   const [attractions, setAttractions] = useState([]);
+  const [language, setLanguage] = useState([]);
 
   useEffect(() => {
     const fetchAttractions = async () => {
@@ -314,6 +359,25 @@ function ContentSection({ selectedCurrency }) {
     };
 
     fetchAttractions();
+  }, []);
+
+  useEffect(() => {
+    const fetchLanguage = async () => {
+      try {
+        const response = await axios.get(`${config.baseUrl}/language/list`);
+        if (response.data.status === 'success') {
+          setLanguage(response.data.data);
+          console.log(response.data.data)
+        } else {
+          console.error('Error fetching attractions');
+        }
+      } catch (error) {
+        console.error('Error fetching attractions', error);
+      }
+    };
+
+
+    fetchLanguage();
   }, []);
 
   useEffect(() => {
@@ -359,14 +423,26 @@ function ContentSection({ selectedCurrency }) {
     dispatch(addToCart(item));
   };
   const cart = useSelector((state) => state.cart);
+
+  const options = itineraryData.map((itinerary) => ({
+    value: itinerary.name, // Assuming 'id' is a unique identifier
+    label: itinerary.name // Assuming 'name' is the property containing the name to display
+  }));
   const handleInputChange = (event, name) => {
     const { value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  };
 
+  };
+  const handleInputChange1 = (selectedOptions, fieldName) => {
+    const selectedItineraryNames = selectedOptions.map((option) => option.label); // Use 'label' instead of 'value'
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [fieldName]: selectedItineraryNames.join(', '), // Join selected options for display
+    }));
+  };
 
 
 
@@ -666,18 +742,19 @@ function ContentSection({ selectedCurrency }) {
                                 <label>Preferred Language*</label>
                                 <select
                                   className="form-select"
-                                  value={formData.preferredGuideLanguage} // Set the value dynamically based on the state
-                                  onChange={(e) => handleInputChange(e, 'preferredGuideLanguage')} // Pass the name to handleInputChange
+                                  value={formData.preferredGuideLanguage}
+                                  onChange={(e) => handleInputChange(e, 'preferredGuideLanguage')}
                                 >
                                   <option value="0">Select Language</option>
-                                  <option value="English">English</option>
-                                  <option value="Arabic">Arabic</option>
-                                  <option value="Spanich">Spanich</option>
-                                  {/* ... (other options) */}
+                                  {language.map((language) => (
+                                    <option key={language.language_id} value={language.language_name}>
+                                      {language.language_name}
+                                    </option>
+                                  ))}
                                 </select>
-
-                              </div>{/* formGroup */}
+                              </div>
                             </div>
+
 
                             <div className="col-md-3">
                               <div className="mb-3 formGroup">
@@ -825,8 +902,6 @@ function ContentSection({ selectedCurrency }) {
                                   </div>
                                 )}
 
-
-
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-6">
@@ -863,38 +938,91 @@ function ContentSection({ selectedCurrency }) {
                               </div> {/* formGroup */}
                             </div>
                             <div className="col-md-12">
-                              <div className="mb-3 formGroup infoDetail">
-                                <label>Additional Tickets</label>
-                                <input
-                                  type="number"
-                                  className="form-control"
-                                  placeholder="No of Ticket"
-                                  name="ticket"
-                                  min="1"
-                                  max="10"
-                                  onChange={(e) => {
-                                    const ticketValue = parseInt(e.target.value);
-                                    setTicketNumber(ticketValue >= 0 ? ticketValue : 0);
-                                  }}
+                              <div className="mb-3 formGroup">
+                                <label>Select Itinerary</label>
 
+                                <Select
+                                  isMulti
+                                  options={options}
+                                  value={selectedItinerary} 
+                                  onChange={(selectedOptions) => {
+                                    handleInputChange1(selectedOptions, 'itinerary_name');
+                                    setSelectedItinerary(selectedOptions); // Set the selected itinerary data
+                                  }}
                                 />
 
-                                {selectedHotel && (
-                                  <div>
-                                    <label>{ticketNumber} ✖ {selectedCurrency} {selectedCurrency === 'AED' ? selectedHotel.ticket_price_aed : selectedHotel.ticket_price_usd} = {selectedCurrency} {
-                                      selectedCurrency === 'AED'
-                                        ? selectedHotel.ticket_price_aed * lunchNumber || 0
-                                        : selectedHotel.ticket_price_usd * lunchNumber || 0
-                                    }</label>
-
-                                    {/* You can similarly display other prices */}
-                                  </div>
-                                )}
-
-
-
-                              </div> {/* formGroup */}
+                              </div>{/* formGroup */}
                             </div>
+                            {selectedItinerary && (
+                              <div className="col-md-12">
+                                <div className="mb-3 formGroup infoDetail">
+                                  <label>No. of Tickets</label>
+                                  <input
+                                    type="number"
+                                    className="form-control"
+                                    placeholder="No of Ticket"
+                                    name="ticket"
+                                    min="1"
+                                    max="10"
+                                    onChange={(e) => {
+                                      const ticketValue = parseInt(e.target.value);
+                                      setTicketNumber(ticketValue >= 0 ? ticketValue : 0);
+                                    }}
+
+                                  />
+
+                                  {selectedItinerary && (
+                                    <div>
+                                      {selectedItinerary.map((selectedOption, index) => {
+                                        // Find the selected itinerary's price from the itineraryData array
+                                        const itineraryPrice = itineraryData.find(
+                                          itinerary => itinerary.name === selectedOption.label
+                                        );
+
+                                        if (itineraryPrice) {
+                                          return (
+                                            <div key={index}>
+                                              <label>
+                                                {ticketNumber} ✖ {selectedCurrency}{' '}
+                                                {selectedCurrency === 'AED'
+                                                  ? itineraryPrice.itinerary_ticket_price_aed
+                                                  : itineraryPrice.itinerary_ticket_price_usd}{' '}
+                                                = {selectedCurrency}{' '}
+                                                {selectedCurrency === 'AED'
+                                                  ? itineraryPrice.itinerary_ticket_price_aed * ticketNumber || 0
+                                                  : itineraryPrice.itinerary_ticket_price_usd * ticketNumber || 0}
+                                              </label>
+                                            </div>
+                                          );
+                                        }
+
+                                        return null; // Handle case where price for selected option isn't found
+                                      })}
+                                      {/* Calculate total price for all selected itineraries */}
+                                      <label>
+                                        Total Price for Selected Itineraries:{' '}
+                                        {selectedItinerary.reduce((total, selectedOption) => {
+                                          const itineraryPrice = itineraryData.find(
+                                            itinerary => itinerary.name === selectedOption.label
+                                          );
+
+                                          return (
+                                            total +
+                                            (selectedCurrency === 'AED'
+                                              ? parseInt(itineraryPrice?.itinerary_ticket_price_aed) || 0
+                                              : parseInt(itineraryPrice?.itinerary_ticket_price_usd) || 0) *
+                                            ticketNumber
+                                          );
+                                        }, 0)}
+                                      </label>
+                                    </div>
+                                  )}
+
+
+
+                                </div> {/* formGroup */}
+                              </div>
+                            )}
                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
                                 <label>Special Request</label>
@@ -935,7 +1063,7 @@ function ContentSection({ selectedCurrency }) {
                 </div>
               </div>
               <WhatToExpect />
-              <AdditionalChargesInfo/>
+              <AdditionalChargesInfo />
               <Itinerary />
               <CancellationPolicy />
               <UsefulToKnow />

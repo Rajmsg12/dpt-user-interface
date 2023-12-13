@@ -61,7 +61,7 @@ const App = () => {
 
         <Route exact path='tour/:title' element={<SearchListing/>} /> 
         <Route exact path='/tour/:country/:title' element={<TrendingDetails/>} /> 
-         {/*    <Route exact path='/plan' element={<Category/>} /> */}
+            <Route exact path='/plan/:title' element={<DetailPage/>} />
        <Route exact path='/:categoryName' element={<Category/>} />
        <Route exact path='/:categoryName/:title' element={<DetailPage/>} />
        <Route exact path='/attraction/:attractionName' element={<Attraction/>} />
