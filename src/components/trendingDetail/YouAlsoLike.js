@@ -69,7 +69,7 @@ const YouAlsoLike = ({ selectedCurrency }) => {
         };
 
         fetchData();
-    }, []);
+    }, [slug]);
 
     useEffect(() => {
         const token = localStorage.getItem("token");

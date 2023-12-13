@@ -111,34 +111,7 @@ function ContentSection({ selectedCurrency }) {
     fetchHotels(); // Call the function to fetch hotels when the component mounts
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${config.baseUrl}/${slug}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
 
-        const data = await response.json();
-        setBackendData(data.data[0]);
-        setTourName(data.data[0].tour_name)
-        setTourPriceAed(data.data[0].tour_price_aed)
-        setTour_Slug(data.data[0].slug)
-        setTourPriceUsd(data.data[0].tour_price_usd)
-        setTourImage(data.data[0].image)
-        setTourId(data.data[0].id)
-        setMetaTitle(data.data[0].meta_title);
-        setMetaDescription(data.data[0].meta_description);
-        setMetaKeywords(data.data[0].meta_keywords);
-
-
-      } catch (error) {
-        console.error("Error fetching data from the backend:", error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
   console.log(backendData)
   const [formData, setFormData] = useState({
     tourDate: null,
@@ -226,6 +199,7 @@ function ContentSection({ selectedCurrency }) {
       (selectedItinerary?.itinerary_ticket_price_aed || 0) * ticketNumber || 0;
     // Set the driver's price in formData
     formData.lunchPrice = lunchPrice.toFixed(2);
+    formData.tour_currency = {selectedCurrency};
     formData.ticketPrice = ticketPrice.toFixed(2);
     formData.driverTotalPrice = driverTotalPrice.toFixed(2);
 
@@ -307,6 +281,35 @@ function ContentSection({ selectedCurrency }) {
     const fetchData = async () => {
       try {
         const response = await fetch(`${config.baseUrl}/${slug}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setBackendData(data.data[0]);
+        setTourName(data.data[0].tour_name)
+        setTourPriceAed(data.data[0].tour_price_aed)
+        setTour_Slug(data.data[0].slug)
+        setTourPriceUsd(data.data[0].tour_price_usd)
+        setTourImage(data.data[0].image)
+        setTourId(data.data[0].id)
+        setMetaTitle(data.data[0].meta_title);
+        setMetaDescription(data.data[0].meta_description);
+        setMetaKeywords(data.data[0].meta_keywords);
+
+
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error.message);
+      }
+    };
+
+    fetchData();
+  }, [slug]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${config.baseUrl}/${slug}`);
         const data = await response.json();
         if (data.status === 'success' && data.data.length > 0) {
           setItineraryData(data.data[0].itinerary_info);
@@ -320,7 +323,7 @@ function ContentSection({ selectedCurrency }) {
     };
 
     fetchData();
-  }, []); // Empty dependency array to fetch data only once when the component mounts
+  }, [slug]); // Empty dependency array to fetch data only once when the component mounts
 
 
 
@@ -340,7 +343,7 @@ function ContentSection({ selectedCurrency }) {
     };
 
     fetchData();
-  }, []);
+  }, [slug]);
   const [attractions, setAttractions] = useState([]);
   const [language, setLanguage] = useState([]);
 

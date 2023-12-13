@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import config from '../../config';
 
 const UserProfile = () => {
+  const [canceledBookingsCount, setCanceledBookingsCount] = useState(0);
   const [formData, setFormData] = useState({
     first_name: '',
     lastName: '',
@@ -68,8 +69,25 @@ const UserProfile = () => {
     }
   }, []);
 
-
-
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch(`${config.baseUrl}/booking/cancele/orders`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setCanceledBookingsCount(data)
+          setIsLoggedIn(true);
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
+        });
+    }
+  }, []);
+  console.log(canceledBookingsCount)
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
