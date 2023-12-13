@@ -37,7 +37,7 @@ const AdditionalChargesInfo = () => {
                 <div className="container">
                 <div class="CategoryToursDescriptionIn">
                     {backendData && backendData.data && backendData.data.map((tour) => (
-                        <h3 key={tour.id}>{tour.name}</h3>
+                        <h3 key={tour.id}><strong>{tour.name} Description</strong></h3>
                     ))}
                     <ul>
                         {backendData && backendData.data && backendData.data.map((tour) => (
