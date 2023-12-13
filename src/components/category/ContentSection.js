@@ -137,8 +137,7 @@ const ContentSection = ({ selectedCurrency }) => {
     };
 
     fetchData();
-  }, []);
-  console.log(apiData)
+  }, [slug]);
 
   if (!apiData) {
     return <p>Loading...</p>;

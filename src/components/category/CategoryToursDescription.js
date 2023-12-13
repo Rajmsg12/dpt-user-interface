@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Editor, EditorState, ContentState, convertFromRaw } from 'draft-js';
 import config from '../../config';
+import {useParams} from 'react-router-dom'
 
 const AdditionalChargesInfo = () => {
     const [backendData, setBackendData] = useState(null);
+    const { categoryName } = useParams();
+    const formattedCategory = categoryName
+    .split('-') // Split by hyphens
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+    .join(' ');
     const url = window.location.href;
     const spliturl = url.split("/");
     const slug = spliturl[3];
@@ -24,7 +30,7 @@ const AdditionalChargesInfo = () => {
         };
 
         fetchData();
-    }, []);
+    }, [slug,setBackendData]);
 
     // Function to convert the JSON data to ContentState
     const convertToContentState = (json) => {
@@ -36,9 +42,9 @@ const AdditionalChargesInfo = () => {
             <div className="CategoryToursDescription">
                 <div className="container">
                 <div class="CategoryToursDescriptionIn">
-                    {backendData && backendData.data && backendData.data.map((tour) => (
-                        <h3 key={tour.id}><strong>{tour.name} Description</strong></h3>
-                    ))}
+                 
+                        <h3><strong>{formattedCategory} Description</strong></h3>
+     
                     <ul>
                         {backendData && backendData.data && backendData.data.map((tour) => (
                             <div key={tour.id}>
