@@ -234,7 +234,7 @@ const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange,handleClo
               </div>
             </div>
   
-            <div className="RatingDiv">
+         {/*   <div className="RatingDiv">
               <div className="sidebarlabel">
                 <h3>Rating</h3>
               </div>
@@ -324,7 +324,7 @@ const LeftSideFilter = ({ handlePriceFilter,handleDurationFilterChange,handleClo
                   </label>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/*  <div className="SpecialsDiv">
               <div className="sidebarlabel">
                 <h3>Specials</h3>

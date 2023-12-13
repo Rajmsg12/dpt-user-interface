@@ -159,7 +159,7 @@ const CategoryLHS = ({ handlePriceFilter, priceRange, handleCloseSidebar, handle
               </div>
             </div>
           </div>
-          <div className="RatingDiv">
+    { /*     <div className="RatingDiv">
             <div className="sidebarlabel">
               <h3>Rating</h3>
             </div>
@@ -251,7 +251,7 @@ const CategoryLHS = ({ handlePriceFilter, priceRange, handleCloseSidebar, handle
                 </label>
               </div>
             </div>
-          </div>
+          </div>*/}
         </div>
         <div className="DubaiPrivateTourDiv">
           <div
@@ -397,9 +397,9 @@ const CategoryLHS = ({ handlePriceFilter, priceRange, handleCloseSidebar, handle
             we offer the best tour packages for Dubai &amp; Abu Dhabi at
             affordable prices.
           </p>
-          <Link href="#" className="cta">
+      { /*   <Link href="#" className="cta">
             Check Out
-          </Link>
+          </Link> */}
         </div>
         <div className="TouristDiv">
           <div className="img">
@@ -408,9 +408,9 @@ const CategoryLHS = ({ handlePriceFilter, priceRange, handleCloseSidebar, handle
           <span>Dubai</span>
           <span>Tourist Visa</span>
           <div className="TouristFooter">
-            <Link href="#" className="cta">
+          {/*  <Link href="#" className="cta">
               Apply Now
-            </Link>
+                      </Link>*/}
           </div>
         </div>
       </div>

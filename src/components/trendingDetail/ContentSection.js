@@ -120,7 +120,7 @@ function ContentSection({ selectedCurrency }) {
         }
 
         const data = await response.json();
-        setBackendData(data);
+        setBackendData(data.data[0]);
         setTourName(data.data[0].tour_name)
         setTourPriceAed(data.data[0].tour_price_aed)
         setTour_Slug(data.data[0].slug)
@@ -139,7 +139,7 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, []);
-
+  console.log(backendData)
   const [formData, setFormData] = useState({
     tourDate: null,
     preferredPickupTime: '0',

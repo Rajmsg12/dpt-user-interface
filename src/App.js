@@ -34,7 +34,7 @@ import EditProfile from "./components/user/editProfile";
 import ChangePassword from "./components/user/changePassword";
 import Review from "./components/user/review";
 import ViewDetail from "./components/user/viewDetail";
-
+import Visa from './components/pages/tourVisa'
 const App = () => {
   return (
     <Router basename={'/'}>
@@ -79,6 +79,7 @@ const App = () => {
        <Route exact path='/changepassword' element={<ChangePassword/>} />
        <Route exact path='/review/:id' element={<Review/>} />
        <Route exact path='/view-detail/:id' element={<ViewDetail/>} />
+       <Route exact path='/tourist-visa' element={<Visa/>} />
        <Route path="*" element={<NotFound/>} />
 
         </Routes>
