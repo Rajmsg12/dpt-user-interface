@@ -62,7 +62,7 @@ const Itinerary = () => {
                                         </div>
                                         <div className="Text">
                                             <div className="title">{item.name}</div>
-                                            <span className="description">{convertDescriptionFromJSON(item.description)}</span>
+                                            <span className="description">{item.description}</span>
                                         </div>
                                     </div>
                                 </button>

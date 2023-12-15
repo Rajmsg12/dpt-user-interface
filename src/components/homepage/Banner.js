@@ -150,7 +150,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/cat/3`);
+        const response = await fetch(`${config.baseUrl}/cat/desert-safari`);
         const data = await response.json();
         setTours(data.data);
       } catch (error) {
@@ -163,7 +163,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/cat/4`);
+        const response = await fetch(`${config.baseUrl}/cat/luxury-tour`);
         const data = await response.json();
         setLuxury(data.data);
       } catch (error) {
@@ -176,7 +176,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/cat/12`);
+        const response = await fetch(`${config.baseUrl}/cat/wedding-on-yatch`);
         const data = await response.json();
         setWedding(data.data);
       } catch (error) {
@@ -189,7 +189,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/cat/15`);
+        const response = await fetch(`${config.baseUrl}/cat/attraction-ticket`);
         const data = await response.json();
         setAttraction(data.data);
       } catch (error) {
@@ -202,7 +202,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/cat/16`);
+        const response = await fetch(`${config.baseUrl}/cat/chauffeur`);
         const data = await response.json();
         setChauffeur(data.data);
       } catch (error) {
@@ -215,7 +215,7 @@ const Banner = ({selectedCurrency}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/cat/14`);
+        const response = await fetch(`${config.baseUrl}/cat/private-tour`);
         const data = await response.json();
         setPrivates(data.data);
       } catch (error) {
@@ -449,13 +449,13 @@ const Banner = ({selectedCurrency}) => {
                   aria-selected="false"><img src="images/homepage/yatch.png" alt="" />Wedding on yatch</button>
                 <button className="nav-link" id="nav-luxurytour-tab" data-bs-toggle="tab" data-bs-target="#nav-luxurytour"
                   type="button" role="tab" aria-controls="nav-luxurytour" aria-selected="false"><img
-                    src="images/homepage/diamond.png" alt="" />Luxury Tours</button>
+                    src="images/homepage/diamond.png" alt="" />Luxury Tour</button>
                 <button className="nav-link" id="nav-privatetour-tab" data-bs-toggle="tab" data-bs-target="#nav-privatetour"
                   type="button" role="tab" aria-controls="nav-privatetour" aria-selected="false"><img
                     src="images/homepage/tour-guide.png" alt="" />Private Tour</button>
                 <button className="nav-link" id="nav-attractiontickets-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-attractiontickets" type="button" role="tab" aria-controls="nav-attractiontickets"
-                  aria-selected="false"><img src="images/homepage/ticket.png" alt="" />Attraction Tickets</button>
+                  aria-selected="false"><img src="images/homepage/ticket.png" alt="" />Attraction Ticket</button>
                 <button className="nav-link" id="nav-chauffeur-tab" data-bs-toggle="tab" data-bs-target="#nav-chauffeur"
                   type="button" role="tab" aria-controls="nav-chauffeur" aria-selected="false"><img
                     src="images/homepage/taxi-driver.png" alt="" />Chauffeur</button>

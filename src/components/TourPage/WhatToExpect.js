@@ -39,7 +39,7 @@ const WhatToExpect = () => {
                 <ul>
                 {backendData && backendData.data && backendData.data.map((tour) => (
                     <div  key={tour.id}>
-                      <Editor editorState={EditorState.createWithContent(convertToContentState(tour.included))} readOnly />
+                      <Editor editorState={EditorState.createWithContent(convertToContentState(tour.expect))} readOnly />
                       </div>
                 
                   ))}
