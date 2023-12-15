@@ -35,11 +35,14 @@ import ChangePassword from "./components/user/changePassword";
 import Review from "./components/user/review";
 import ViewDetail from "./components/user/viewDetail";
 import Visa from './components/pages/tourVisa'
+import ScrollToTop from "./components/ScrollToTop";
+
 const App = () => {
   return (
     <Router basename={'/'}>
       
       <React.Fragment>
+        <ScrollToTop/>
         
         <Routes>
         <Route exact path='/' element={<Homepage/>} /> 

@@ -87,7 +87,6 @@ const UserProfile = () => {
         });
     }
   }, []);
-  console.log(canceledBookingsCount)
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -132,6 +131,7 @@ const UserProfile = () => {
   useEffect(() => {
     fetchBookingDetails();
   }, []);
+  console.log(bookingDetails)
 
   const handleLogout = () => {
     fetch(`${config.baseUrl}/logout`, {

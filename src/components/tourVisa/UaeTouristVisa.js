@@ -1,0 +1,430 @@
+import React, { useState } from 'react';
+import config from '../../config';
+import Swal from 'sweetalert2'
+
+const UaeTouristVisa = () => {
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        country: '',
+        nationality: '',
+        how_did_you_discover_us: '',
+        cell_no: '',
+        arrival_date: '',
+        departure_date: '',
+        upload_hotel_booking:'',
+        upload_your_flight_ticket:'',
+        upload_passport_copy:''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+    const handleCountryChange = (selectedOption) => {
+        setFormData({
+            ...formData,
+            nationality: selectedOption.value
+        });
+    };
+    const handleDiscoverChange = (e) => {
+        setFormData({
+            ...formData,
+            discover_us: e.target.value
+        });
+    };
+
+
+
+    const handleSelectChange = (selectedOption, fieldName) => {
+        setFormData({
+            ...formData,
+            [fieldName]: selectedOption.value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            // Get the uploaded image names from localStorage or wherever they're stored
+            const uploadedImages = JSON.parse(localStorage.getItem('filedata'));
+
+            // Add the uploaded image names to the form data
+            const formDataWithImages = {
+                ...formData,
+                uploadedImages: uploadedImages // Assuming the field name is 'uploadedImages'
+            };
+            const response = await fetch(`${config.baseUrl}/tourist-visa/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                console.log('Form data sent:', responseData);
+                // Clear form fields and show success message
+                setFormData({
+                    name: '',
+                    email: '',
+                    nationality: '',
+                    discover_us: '',
+                    country_code: '',
+                    call_no: '',
+                    address: '',
+                    subject: '',
+                    message: ''
+                });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Form submitted successfully!',
+                    showConfirmButton: false,
+                    timer: 2500 // You can adjust the timer to control how long the message is displayed
+                });
+            } else {
+                console.error('Error submitting form:', response.statusText);
+                // Optionally, handle error state here
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            // Handle fetch error
+        }
+    };
+
+    return (
+        <>
+            <div className="TouristVisaForm">
+                <form onSubmit={handleSubmit}>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup">
+                                <label>Name*</label>
+                                <input
+                                    type="text"
+                                    placeholder="Name"
+                                    required=""
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        {/*col-md-6*/}
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup">
+                                <label>Email*</label>
+                                <input
+                                    type="text"
+                                    placeholder="Email"
+                                    required=""
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        {/*col-md-6*/}
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup">
+                                <label>Country Code*</label>
+                                <select
+                                    name="country"
+                                    id="country"
+                                    required=""
+                                    value={formData.country}
+                                    onChange={handleChange}
+                                >
+                                    {" "}
+                                    <option value="">Select Code</option>{" "}
+                                    <option value={+93}> Afghanistan (+93) </option>{" "}
+                                    <option value={+355}> Albania (+355) </option>{" "}
+                                    <option value={+213}> Algeria (+213) </option>{" "}
+                                    <option value={+684}>
+                                        {" "}
+                                        American Samoa (+684){" "}
+                                    </option>{" "}
+                                    <option value={+376}> Andorra (+376) </option>{" "}
+                                    <option value={+244}> Angola (+244) </option>{" "}
+                                    <option value={+1}> Anguilla (+1) </option>{" "}
+                                    <option value={+1}>
+                                        {" "}
+                                        Antigua and Barbuda (+1){" "}
+                                    </option>{" "}
+                                    <option value={+54}> Argentina (+54) </option>{" "}
+                                    <option value={+374}> Armenia (+374) </option>{" "}
+                                    <option value={+297}> Aruba (+297) </option>{" "}
+                                    <option value={+61}> Australia (+61) </option>{" "}
+                                    <option value={+43}> Austria (+43) </option>{" "}
+                                    <option value={+1}>
+                                        {" "}
+                                        Turks and Caicos Islands (+1){" "}
+                                    </option>{" "}
+                                    <option value={+688}> Tuvalu (+688) </option>{" "}
+                                    <option value={+256}> Uganda (+256) </option>{" "}
+                                    <option value={+380}> Ukraine (+380) </option>{" "}
+                                    <option value={+971}>
+                                        {" "}
+                                        United Arab Emirates (+971){" "}
+                                    </option>{" "}
+                                    <option value={+44}>
+                                        {" "}
+                                        United Kingdom (+44){" "}
+                                    </option>{" "}
+                                    <option value={+1}>
+                                        {" "}
+                                        United States Of America (+1){" "}
+                                    </option>{" "}
+                                    <option value={+598}> Uruguay (+598) </option>{" "}
+                                    <option value={+340}>
+                                        {" "}
+                                        US Virgin Islands (+340){" "}
+                                    </option>{" "}
+                                    <option value={+998}>
+                                        {" "}
+                                        Uzbekistan (+998){" "}
+                                    </option>{" "}
+                                    <option value={+678}> Vanuatu (+678) </option>{" "}
+                                    <option value={+379}> Vatican City (+379) </option>{" "}
+                                    <option value={+58}> Venezuela (+58) </option>{" "}
+                                    <option value={+84}> Vietnam (+84) </option>{" "}
+                                    <option value={+681}>
+                                        {" "}
+                                        Wallis And Futuna (+681){" "}
+                                    </option>{" "}
+                                    <option value={+967}> Yemen (+967) </option>{" "}
+                                    <option value={+381}> Yugoslavia (+381) </option>{" "}
+                                    <option value={+967}> Zambia (+967) </option>{" "}
+                                    <option value={+263}> Zimbabwe (+263) </option>{" "}
+                                </select>
+                            </div>
+                        </div>
+                        {/*col-md-6*/}
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup">
+                                <label>Cell No*</label>
+                                <input
+                                    type="text"
+                                    placeholder="Cell No"
+                                    required=""
+                                    name="cell_no"
+                                    value={formData.cell_no}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        {/*col-md-6*/}
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup">
+                                <label>Nationality*</label>
+                                <select
+                                    name="nationality"
+                                    id="nat"
+                                    data-bv-field="nationality"
+                                    required=""
+                                    value={formData.nationality}
+                                    onChange={handleChange}
+                                >
+                                    {" "}
+                                    <option value="">Select</option>{" "}
+                                    <option value="Afghanistan">Afghanistan</option>{" "}
+                                    <option value="Albania">Albania</option>{" "}
+                                    <option value="Algeria">Algeria</option>{" "}
+                                    <option value="American Samoa">
+                                        American Samoa
+                                    </option>{" "}
+                                    <option value="Andorra">Andorra</option>{" "}
+                                    <option value="Angola">Angola</option>{" "}
+                                    <option value="Anguilla">Anguilla</option>{" "}
+                                    <option value="Antigua and Barbuda">
+                                        Antigua and Barbuda
+                                    </option>{" "}
+                                    <option value="Argentina">Argentina</option>{" "}
+                                    <option value="Armenia">Armenia</option>{" "}
+                                    <option value="Aruba">Aruba</option>{" "}
+                                    <option value="Australia">Australia</option>{" "}
+                                    <option value="Austria">Austria</option>{" "}
+                                    <option value="Azerbaijan">Azerbaijan</option>{" "}
+                                    <option value="Bahamas">Bahamas</option>{" "}
+                                    <option value="Bahrain">Bahrain</option>{" "}
+                                    <option value="Bangladesh">Bangladesh</option>{" "}
+                                    <option value="Ecuador">Ecuador</option>{" "}
+                                    <option value="Egypt">Egypt</option>{" "}
+                                    <option value="El Salvador">El Salvador</option>{" "}
+                                    <option value="Equatorial_Guinea">
+                                        Equatorial_Guinea
+                                    </option>{" "}
+                                    <option value="Eritrea">Eritrea</option>{" "}
+                                    <option value="Estonia">Estonia</option>{" "}
+                                    <option value="Ethiopia">Ethiopia</option>{" "}
+                                    <option value="Falkland Islands">
+                                        Falkland Islands
+                                    </option>{" "}
+                                    <option value="Faroe Islands">Faroe Islands</option>{" "}
+                                    <option value="Fiji">Fiji</option>{" "}
+                                    <option value="Finland">Finland</option>{" "}
+                                    <option value="France">France</option>{" "}
+                                    <option value="French Polynesi">
+                                        French Polynesi
+                                    </option>{" "}
+                                    <option value="Gabon">Gabon</option>{" "}
+                                    <option value="Gambia">Gambia</option>{" "}
+                                    <option value="Georgia">Georgia</option>{" "}
+                                    <option value="Germany">Germany</option>{" "}
+                                    <option value="Ghana">Ghana</option>{" "}
+                                    <option value="Gibraltar">Gibraltar</option>{" "}
+                                    <option value="Greece">Greece</option>{" "}
+                                    <option value="Greenland">Greenland</option>{" "}
+                                    <option value="Grenada">Grenada</option>{" "}
+                                    <option value="Guam">Guam</option>{" "}
+                                    <option value="Guatemala">Guatemala</option>{" "}
+                                    <option value="Guinea">Guinea</option>{" "}
+                                    <option value="Guinea Bissau">Guinea Bissau</option>{" "}
+                                    <option value="Guyana">Guyana</option>{" "}
+                                    <option value="Haiti">Haiti</option>{" "}
+                                    <option value="Honduras">Honduras</option>{" "}
+                                    <option value="Hong Kong">Hong Kong</option>{" "}
+                                    <option value="Hungary">Hungary</option>{" "}
+                                    <option value="Iceland">Iceland</option>{" "}
+                                    <option value="India">India</option>{" "}
+
+                                </select>
+                            </div>
+                        </div>
+
+                        {/*col-md-6*/}
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup">
+                                <label>Arrival Date*</label>
+                                <input
+                                    type="date"
+                                    placeholder="Arrival Date"
+                                    required=""
+                                    name="arrival_date"
+                                    value={formData.arrival_date}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        {/*col-md-6*/}
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup">
+                                <label>Departure Date*</label>
+                                <input
+                                    type="date"
+                                    placeholder="Departure Date"
+                                    required=""
+                                    name="departure_date"
+                                    value={formData.departure_date}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        {/*col-md-6*/}
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup">
+                                <label>No of People*</label>
+                                <input
+                                    type="text"
+                                    placeholder="No of People"
+                                    required=""
+                                    name="no_of_people"
+                                    value={formData.no_of_people}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        {/*col-md-6*/}
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup">
+                                <label>How Did You Discover Us*</label>
+
+                                <select
+                                    id="hdu"
+                                    name="how_did_you_discover_us"
+                                    data-bv-field="how_did_you_discover_us"
+                                    required=""
+                                    value={formData.how_did_you_discover_us}
+                                    onChange={handleChange}
+                                >
+                                    {" "}
+                                    <option value="">Select</option>{" "}
+                                    <option value="Google Search">Google Search</option>{" "}
+                                    <option value="Trip adviser">Trip adviser</option>{" "}
+                                    <option value="Recommended by friend/relatives">
+                                        Recommended by friend/relatives
+                                    </option>{" "}
+                                    <option value="Other">Other</option>{" "}
+                                </select>
+                            </div>
+                        </div>
+                        {/*col-md-6*/}
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup fileattach">
+                                <label>
+                                    Upload Hotel Booking*{" "}
+                                    <small>(You can choose multiple files here)</small>
+                                </label>
+                                <input
+                                    type="file"
+                                    multiple=""
+                                    data-bv-field="hotel_booking[]"
+                                    required=""
+                                />
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="mb-3 formGroup fileattach">
+                                <label>
+                                    Upload Your Flight Ticket*{" "}
+                                    <small>(You can choose multiple files here)</small>
+                                </label>
+                                <input
+                                    type="file"
+                                    name="flight_ticket[]"
+                                    multiple=""
+                                    data-bv-field="flight_ticket[]"
+                                    required=""
+                                />
+                            </div>
+                        </div>
+                        <div className="col-md-12">
+                            <div className="mb-3 formGroup fileattach">
+                                <label>
+                                    Upload Passport Copy{" "}
+                                    <small>(You can choose multiple files here)</small>
+                                </label>
+                                <input
+                                    type="file"
+                                    name="passport_copy[]"
+                                    multiple=""
+                                    data-bv-field="passport_copy[]"
+                                    required=""
+                                />
+                            </div>
+                        </div>
+                        <div className="col-md-12">
+                            <div className="BtnGroupTouristVisa">
+                                <button type="submit" className="cta">
+                                    Apply
+                                </button>
+                                <button type="reset" className="cta">
+                                    Clear
+                                </button>
+                            </div>
+                            {/*BtnGroupTouristVisa*/}
+                        </div>
+                    </div>
+                    {/*row*/}
+                </form>
+            </div>
+        </>
+    )
+}
+
+export default UaeTouristVisa

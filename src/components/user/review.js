@@ -131,7 +131,8 @@ const Review = () => {
                 console.log('Review submitted successfully');
                 setReviewData({
                     rating: '',
-                    comments: ''
+                    comments: '',
+                    
                 });
             } else {
                 // Handle errors, maybe show an error message
