@@ -6,7 +6,7 @@ import ContentSection from '../searchDetail/ContentSection'
 import Footer from '../common/Footer'
 import Memories from '../common/memories'
 import ReviewRatingSection from '../searchDetail/ReviewRatingSection'
-import YouAlsoLike from '../searchDetail/YouAlsoLike'
+import YouAlsoLike from '../trendingDetail/YouAlsoLike'
 
 const DetailSection = () => {
  

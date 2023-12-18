@@ -147,7 +147,7 @@ const PopularTour = ({ selectedCurrency }) => {
                                                             <span>{tour.imgBottomRow.lhsText}</span>
                                                         )}
                                                         <div className="lhstext">
-                                                            <span>{tour.hastag}</span>
+                                                        <span>{tour.hastag}</span>
                                                             <span>{tour.hastagHeading}</span>
                                                         </div>
                                                     </div>

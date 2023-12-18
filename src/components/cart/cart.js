@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "./CartActions";
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
-import {moment} from 'moment'
 import { Link } from 'react-router-dom'
 import './style/cart.css'
 import { getUserPrice } from './PriceUtlis';
@@ -114,7 +113,14 @@ const Cart = () => {
     localStorage.setItem("cartdata", JSON.stringify(updatedCart));
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adding leading zero if needed
+    const day = date.getDate().toString().padStart(2, '0'); // Adding leading zero if needed
 
+    return `${year}-${day}-${month}`;
+  };
 
 
 
@@ -188,7 +194,7 @@ const Cart = () => {
                           <div className="BookingInfotableDiv">
                             <div className="BookingInfotablerow">
                               <span>Tour Date*</span>
-                              <span>{item.tourDate}</span>
+                              <span>{formatDate(item.tourDate)}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
@@ -208,7 +214,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Adults Price*</span>
-                              <span>{item.adultPrice}</span>
+                              <span>{item.selectedCurrency} {item.adultPrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
@@ -217,7 +223,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Children Price</span>
-                              <span>{item.childrenPrice}</span>
+                              <span>{item.selectedCurrency} {item.childrenPrice}</span>
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Additional Driver</span>
@@ -225,7 +231,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Driver Price</span>
-                              <span>{item.driverTotalPrice}</span>
+                              <span>{item.selectedCurrency} {item.driverTotalPrice}</span>
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Additional Lunch</span>
@@ -233,7 +239,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Lunch Price</span>
-                              <span>{item.lunchPrice}</span>
+                              <span>{item.selectedCurrency} {item.lunchPrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                           </div>
@@ -260,7 +266,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Preferred Language Price*</span>
-                              <span>{}</span>
+                              <span>{item.selectedCurrency} {item.languagePrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
@@ -274,8 +280,8 @@ const Cart = () => {
                               <span>{item.infants}</span>
                             </div>
                             <div className="BookingInfotablerow">
-                              <span>Infants</span>
-                              <span>{item.infantsPrice}</span>
+                              <span>Infants Price</span>
+                              <span>{item.selectedCurrency} {item.infantsPrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
@@ -288,7 +294,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Itinerary Price</span>
-                              <span>{item.additionalTickets}</span>
+                              <span>{item.selectedCurrency} {item.additionalTickets}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                           </div>

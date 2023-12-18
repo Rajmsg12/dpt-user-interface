@@ -353,7 +353,7 @@ const ListingSection = ({ selectedCurrency }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="paginationSec">
+                {/*}  <div className="paginationSec">
                     <nav aria-label="...">
                       <ul className="pagination">
                         <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
@@ -392,7 +392,7 @@ const ListingSection = ({ selectedCurrency }) => {
                         </li>
                       </ul>
                     </nav>
-                  </div>
+                  </div>*/}
                 </div>
               </div>
             )}

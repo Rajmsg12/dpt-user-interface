@@ -55,6 +55,7 @@ function ContentSection({ selectedCurrency }) {
   const [metaKeywords, setMetaKeywords] = useState('');
   const [noOfPax, setNoOfPax] = useState('');
   const [language, setLanguage] = useState([]);
+
   const [tourImage, setTourImage] = useState("");
   const [languagesData, setLanguagesData] = useState([]);
 
@@ -161,13 +162,9 @@ function ContentSection({ selectedCurrency }) {
   const handleFormSubmit = (event, tour) => {
     event.preventDefault();
 
-    // Set the tour details in formData
-    const selectedItineraryNames = selectedItinerary.map((option) => option.label);
-
-    // Update formData with selected itinerary names
+    const selectedItineraryNames = selectedItinerary.map(option => option.label);
     formData.itinerary_name = selectedItineraryNames.join(', ');
 
-    // Calculate and add additional ticket price to formData
     const additionalTicketPrice = selectedItinerary.reduce((total, selectedOption) => {
       const itineraryPrice = itineraryData.find(itinerary => itinerary.name === selectedOption.label);
       return (
@@ -177,102 +174,78 @@ function ContentSection({ selectedCurrency }) {
           : parseInt(itineraryPrice?.itinerary_ticket_price_usd) || 0) * ticketNumber)
       );
     }, 0);
-    
+
     formData.additionalTickets = additionalTicketPrice.toFixed(2);
+
     formData.tour_id = tour_id;
     formData.tour_slug = tour_slug;
     formData.tourName = tourName;
     formData.tourImage = tourImage;
     formData.tourPriceAed = tourPriceAed;
     formData.tourPriceUsd = tourPriceUsd;
-    const driverTotalPrice =
-      (selectedHotel?.driver_price_aed || 0) * driverNumber || 0;
 
-    // Similarly for other price calculations
-    const childrenPrice =
-      (selectedHotel?.children_price_aed || 0) * childrenNumber || 0;
+    const driverTotalPrice = (selectedHotel?.driver_price_aed || 0) * driverNumber || 0;
+    const childrenPrice = (selectedHotel?.children_price_aed || 0) * childrenNumber || 0;
+    const adultPrice = (selectedHotel?.adults_price_aed || 0) * adultsNumber || 0;
+    const infantsPrice = (selectedHotel?.infants_price_aed || 0) * infantsNumber || 0;
+    const lunchPrice = (selectedHotel?.lunch_price_aed || 0) * lunchNumber || 0;
+    const ticketPrice = (selectedItinerary?.itinerary_ticket_price_aed || 0) * ticketNumber || 0;
 
-    const adultPrice =
-      (selectedHotel?.adults_price_aed || 0) * adultsNumber || 0;
-
-    const infantsPrice =
-      (selectedHotel?.infants_price_aed || 0) * infantsNumber || 0;
-
-    const lunchPrice =
-      (selectedHotel?.lunch_price_aed || 0) * lunchNumber || 0;
-
-    const ticketPrice =
-      (selectedItinerary?.itinerary_ticket_price_aed || 0) * ticketNumber || 0;
-    // Set the driver's price in formData
     formData.lunchPrice = lunchPrice.toFixed(2);
     formData.tour_currency = { selectedCurrency };
     formData.ticketPrice = ticketPrice.toFixed(2);
     formData.driverTotalPrice = driverTotalPrice.toFixed(2);
-
-
-    // Set the prices in formData
     formData.childrenPrice = childrenPrice.toFixed(2);
     formData.adultPrice = adultPrice.toFixed(2);
     formData.infantsPrice = infantsPrice.toFixed(2);
     formData.tourPriceUsd = tourPriceUsd;
-
-    // Set the selectedCurrency in formData
     formData.selectedCurrency = selectedCurrency;
 
-    // Get all form elements
+    formData.preferredGuideLanguage = selectedLanguage.id;
+    formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedPrice : selectedLanguage.usdPrice;
+
     const formElements = event.target.elements;
 
-    // Iterate through form elements to get input data
     for (let i = 0; i < formElements.length; i++) {
       const element = formElements[i];
-
-      // Check if the element is an input field
       if (element.tagName === 'INPUT') {
-        // Add input data to formData
         formData[element.name] = element.value;
       }
     }
+
     if (!formData.preferredPay || formData.preferredPay === '0') {
       setIsFormValid(false);
       setShowPopup(true);
-
-      // Automatically hide the popup after 5 seconds
       setTimeout(() => {
         setShowPopup(false);
       }, 5000);
-
       return;
     }
 
-    // Check if any select or input is empty
     for (let i = 0; i < formElements.length; i++) {
       const element = formElements[i];
-
       if ((element.tagName === 'INPUT' || element.tagName === 'SELECT') && element.value === '0') {
         setIsFormValid(false);
         setShowPopup(true);
-
-        // Automatically hide the popup after 5 seconds
         setTimeout(() => {
           setShowPopup(false);
         }, 5000);
-
         return;
       }
     }
 
-    // Save the form data in local storage
-    let cartdata = localStorage.getItem("cartdata");
+    let cartdata = localStorage.getItem('cartdata');
     let MyCartData = cartdata ? JSON.parse(cartdata) : [];
     MyCartData.push(formData);
     localStorage.setItem('cartdata', JSON.stringify(MyCartData));
-    console.log(localStorage.getItem("cartdata"));
 
-    // If all checks pass, proceed with adding to cart or other actions
     setIsFormValid(true);
     AddToCart(/* pass your item here */);
     navigate('/cart');
   };
+
+
+
 
   const url = window.location.href;
   const spliturl = url.split("/");
@@ -316,6 +289,7 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, [slug]);
+  console.log(language)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -324,7 +298,6 @@ function ContentSection({ selectedCurrency }) {
         const data = await response.json();
         if (data.status === 'success' && data.data.length > 0) {
           setItineraryData(data.data[0].itinerary_info);
-          console.log(data.data[0].itinerary_info)
         } else {
           console.error('Failed to fetch itinerary data');
         }
@@ -442,16 +415,27 @@ function ContentSection({ selectedCurrency }) {
   const handleInputChange3 = (event, name) => {
     const { value } = event.target;
 
-    // Find the selected language object from the languages array using the ID
-    const selectedLang = language.find(lang => lang.id === value);
+    // Find the selected language object from the languages array using the language name
+    const selectedLang = language.find(lang => lang.language === value);
 
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (selectedLang) {
+      // Update language price based on selectedCurrency
+      const languagePrice = selectedCurrency === 'AED' ? selectedLang.aedPrice : selectedLang.usdPrice;
 
-    setSelectedLanguage(selectedLang); // Update the selected language
+      setFormData(prevData => ({
+        ...prevData,
+        [name]: selectedLang, // Update with the entire language object
+        languagePrice, // Set the language price in the formData
+        preferredGuideLanguage: selectedLang.language, // Ensure preferredGuideLanguage is updated with language name
+      }));
+
+      setSelectedLanguage(selectedLang); // Update the selected language
+    } else {
+      // Handle the case when the selected language is not found
+      console.error("Selected language not found!");
+    }
   };
+
 
 
 
@@ -756,15 +740,18 @@ function ContentSection({ selectedCurrency }) {
                                   onChange={(e) => handleInputChange3(e, 'preferredGuideLanguage')}
                                 >
                                   <option value="0">Select Language</option>
-                                  {language.length > 0 ? (
-                                    language.map(lang => (
-                                      <option key={lang.id} value={lang.id}>
-                                        {lang.language}
-                                      </option>
-                                    ))
-                                  ) : (
-                                    <option value="0">Loading languages...</option>
-                                  )}
+                                  {
+                                    language && language.length > 0 ? (
+                                      language.map(lang => (
+                                        <option key={lang.language} value={lang.language}>
+                                          {lang.language}
+                                        </option>
+                                      ))
+                                    ) : (
+                                      <option value="0">Loading languages...</option>
+                                    )
+                                  }
+
                                 </select>
 
                                 {selectedLanguage && (
