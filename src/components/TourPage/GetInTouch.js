@@ -26,7 +26,6 @@ const GetInTouch = () => {
         const data = await response.json();
         setDestinationInfo(data.data[0].destination_info[0].name)
         setDuration(data.data[0].tour_duration)
-        console.log(data.data[0].tour_duration)
 
       } catch (error) {
         console.error("Error fetching data from the backend:", error.message);

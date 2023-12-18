@@ -24,7 +24,6 @@ const Itinerary = () => {
                 const data = await response.json();
                 if (data.status === 'success' && data.data.length > 0) {
                     setItineraryData(data.data[0].itinerary_info);
-                    console.log(data.data[0])
                 } else {
                     console.error('Failed to fetch itinerary data');
                 }

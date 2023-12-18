@@ -45,9 +45,8 @@ function ContentSection({ selectedCurrency }) {
   const [lunchNumber, setLunchNumber] = useState(0);
   const [ticketNumber, setTicketNumber] = useState(0);
   const [adultsNumber, setAdultsNumber] = useState(0);
-  const [languageNumber, setLanguageNumber] = useState(0);
   const [selectedHotel, setSelectedHotel] = useState(null);
-  const [selectedLanguage, setSelectedLangugae] = useState(null)
+  const [selectedLanguage, setSelectedLanguage] = useState(null)
   const [selectedItinerary, setSelectedItinerary] = useState(null);
   const [itineraryData, setItineraryData] = useState([]);
   const [hotels, setHotels] = useState([]);
@@ -55,7 +54,10 @@ function ContentSection({ selectedCurrency }) {
   const [metaDescription, setMetaDescription] = useState('');
   const [metaKeywords, setMetaKeywords] = useState('');
   const [noOfPax, setNoOfPax] = useState('');
+  const [language, setLanguage] = useState([]);
   const [tourImage, setTourImage] = useState("");
+  const [languagesData, setLanguagesData] = useState([]);
+
 
   const formRef = useRef(null);
 
@@ -123,8 +125,8 @@ function ContentSection({ selectedCurrency }) {
     endLocation: '0',
     hotelName: '0',
     preferredGuideLanguage: '0',
-    language_aed_price: '0',
-    language_usd_price: '0',
+    aedPrice: '0',
+    usdPrice: '0',
     preferredPay: '0',
     adults: '0',
     children: '0',
@@ -175,7 +177,7 @@ function ContentSection({ selectedCurrency }) {
           : parseInt(itineraryPrice?.itinerary_ticket_price_usd) || 0) * ticketNumber)
       );
     }, 0);
-
+    
     formData.additionalTickets = additionalTicketPrice.toFixed(2);
     formData.tour_id = tour_id;
     formData.tour_slug = tour_slug;
@@ -301,6 +303,10 @@ function ContentSection({ selectedCurrency }) {
         setMetaDescription(data.data[0].meta_description);
         setMetaKeywords(data.data[0].meta_keywords);
         setNoOfPax(data.data[0].no_of_pax);
+        const languageString = data.data[0].language; // Get the language string
+        const parsedLanguage = JSON.parse(languageString); // Parse the string to an array
+
+        setLanguage(parsedLanguage);
 
 
       } catch (error) {
@@ -310,7 +316,6 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, [slug]);
-  console.log(noOfPax);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -351,7 +356,7 @@ function ContentSection({ selectedCurrency }) {
     fetchData();
   }, [slug]);
   const [attractions, setAttractions] = useState([]);
-  const [language, setLanguage] = useState([]);
+
 
   useEffect(() => {
     const fetchAttractions = async () => {
@@ -370,24 +375,6 @@ function ContentSection({ selectedCurrency }) {
     fetchAttractions();
   }, []);
 
-  useEffect(() => {
-    const fetchLanguage = async () => {
-      try {
-        const response = await axios.get(`${config.baseUrl}/language/list`);
-        if (response.data.status === 'success') {
-          setLanguage(response.data.data);
-          console.log(response.data.data)
-        } else {
-          console.error('Error fetching attractions');
-        }
-      } catch (error) {
-        console.error('Error fetching attractions', error);
-      }
-    };
-
-
-    fetchLanguage();
-  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -455,16 +442,17 @@ function ContentSection({ selectedCurrency }) {
   const handleInputChange3 = (event, name) => {
     const { value } = event.target;
 
-    // Assuming 'language' is an array containing language objects with 'language_name', 'language_price_aed', and 'language_price_usd' properties
-    const selectedLanguage = language.find(lang => lang.language_name === value);
+    // Find the selected language object from the languages array using the ID
+    const selectedLang = language.find(lang => lang.id === value);
 
-    setFormData((prevData) => ({
+    setFormData(prevData => ({
       ...prevData,
       [name]: value,
     }));
 
-    setSelectedLangugae(selectedLanguage); // Update the selected language
+    setSelectedLanguage(selectedLang); // Update the selected language
   };
+
 
 
 
@@ -768,19 +756,24 @@ function ContentSection({ selectedCurrency }) {
                                   onChange={(e) => handleInputChange3(e, 'preferredGuideLanguage')}
                                 >
                                   <option value="0">Select Language</option>
-                                  {language.map((lang) => (
-                                    <option key={lang.language_id} value={lang.language_name}>
-                                      {lang.language_name}
-                                    </option>
-                                  ))}
+                                  {language.length > 0 ? (
+                                    language.map(lang => (
+                                      <option key={lang.id} value={lang.id}>
+                                        {lang.language}
+                                      </option>
+                                    ))
+                                  ) : (
+                                    <option value="0">Loading languages...</option>
+                                  )}
                                 </select>
+
                                 {selectedLanguage && (
                                   <div>
                                     <label>
                                       {selectedCurrency}{' '}
                                       {selectedCurrency === 'AED'
-                                        ? selectedLanguage.language_price_aed
-                                        : selectedLanguage.language_price_usd}
+                                        ? selectedLanguage.aedPrice
+                                        : selectedLanguage.usdPrice}
                                     </label>
                                     {/* You can similarly display other prices */}
                                   </div>
