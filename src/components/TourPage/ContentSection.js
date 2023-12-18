@@ -45,13 +45,16 @@ function ContentSection({ selectedCurrency }) {
   const [lunchNumber, setLunchNumber] = useState(0);
   const [ticketNumber, setTicketNumber] = useState(0);
   const [adultsNumber, setAdultsNumber] = useState(0);
+  const [languageNumber, setLanguageNumber] = useState(0);
   const [selectedHotel, setSelectedHotel] = useState(null);
+  const [selectedLanguage, setSelectedLangugae] = useState(null)
   const [selectedItinerary, setSelectedItinerary] = useState(null);
   const [itineraryData, setItineraryData] = useState([]);
   const [hotels, setHotels] = useState([]);
   const [metaTitle, setMetaTitle] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
   const [metaKeywords, setMetaKeywords] = useState('');
+  const [noOfPax, setNoOfPax] = useState('');
   const [tourImage, setTourImage] = useState("");
 
   const formRef = useRef(null);
@@ -112,7 +115,6 @@ function ContentSection({ selectedCurrency }) {
   }, []);
 
 
-  console.log(backendData)
   const [formData, setFormData] = useState({
     tourDate: null,
     preferredPickupTime: '0',
@@ -121,6 +123,8 @@ function ContentSection({ selectedCurrency }) {
     endLocation: '0',
     hotelName: '0',
     preferredGuideLanguage: '0',
+    language_aed_price: '0',
+    language_usd_price: '0',
     preferredPay: '0',
     adults: '0',
     children: '0',
@@ -160,7 +164,7 @@ function ContentSection({ selectedCurrency }) {
 
     // Update formData with selected itinerary names
     formData.itinerary_name = selectedItineraryNames.join(', ');
-  
+
     // Calculate and add additional ticket price to formData
     const additionalTicketPrice = selectedItinerary.reduce((total, selectedOption) => {
       const itineraryPrice = itineraryData.find(itinerary => itinerary.name === selectedOption.label);
@@ -171,7 +175,7 @@ function ContentSection({ selectedCurrency }) {
           : parseInt(itineraryPrice?.itinerary_ticket_price_usd) || 0) * ticketNumber)
       );
     }, 0);
-  
+
     formData.additionalTickets = additionalTicketPrice.toFixed(2);
     formData.tour_id = tour_id;
     formData.tour_slug = tour_slug;
@@ -199,7 +203,7 @@ function ContentSection({ selectedCurrency }) {
       (selectedItinerary?.itinerary_ticket_price_aed || 0) * ticketNumber || 0;
     // Set the driver's price in formData
     formData.lunchPrice = lunchPrice.toFixed(2);
-    formData.tour_currency = {selectedCurrency};
+    formData.tour_currency = { selectedCurrency };
     formData.ticketPrice = ticketPrice.toFixed(2);
     formData.driverTotalPrice = driverTotalPrice.toFixed(2);
 
@@ -296,6 +300,7 @@ function ContentSection({ selectedCurrency }) {
         setMetaTitle(data.data[0].meta_title);
         setMetaDescription(data.data[0].meta_description);
         setMetaKeywords(data.data[0].meta_keywords);
+        setNoOfPax(data.data[0].no_of_pax);
 
 
       } catch (error) {
@@ -305,6 +310,7 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, [slug]);
+  console.log(noOfPax);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -445,6 +451,19 @@ function ContentSection({ selectedCurrency }) {
       ...prevFormData,
       [fieldName]: selectedItineraryNames.join(', '), // Join selected options for display
     }));
+  };
+  const handleInputChange3 = (event, name) => {
+    const { value } = event.target;
+
+    // Assuming 'language' is an array containing language objects with 'language_name', 'language_price_aed', and 'language_price_usd' properties
+    const selectedLanguage = language.find(lang => lang.language_name === value);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    setSelectedLangugae(selectedLanguage); // Update the selected language
   };
 
 
@@ -746,15 +765,26 @@ function ContentSection({ selectedCurrency }) {
                                 <select
                                   className="form-select"
                                   value={formData.preferredGuideLanguage}
-                                  onChange={(e) => handleInputChange(e, 'preferredGuideLanguage')}
+                                  onChange={(e) => handleInputChange3(e, 'preferredGuideLanguage')}
                                 >
                                   <option value="0">Select Language</option>
-                                  {language.map((language) => (
-                                    <option key={language.language_id} value={language.language_name}>
-                                      {language.language_name}
+                                  {language.map((lang) => (
+                                    <option key={lang.language_id} value={lang.language_name}>
+                                      {lang.language_name}
                                     </option>
                                   ))}
                                 </select>
+                                {selectedLanguage && (
+                                  <div>
+                                    <label>
+                                      {selectedCurrency}{' '}
+                                      {selectedCurrency === 'AED'
+                                        ? selectedLanguage.language_price_aed
+                                        : selectedLanguage.language_price_usd}
+                                    </label>
+                                    {/* You can similarly display other prices */}
+                                  </div>
+                                )}
                               </div>
                             </div>
 
@@ -783,6 +813,7 @@ function ContentSection({ selectedCurrency }) {
                                   <option value="Pay Later">Pay Later</option>
                                   {/* ... (other options) */}
                                 </select>
+
                               </div>{/* formGroup */}
                             </div>
 
@@ -947,7 +978,7 @@ function ContentSection({ selectedCurrency }) {
                                 <Select
                                   isMulti
                                   options={options}
-                                  value={selectedItinerary} 
+                                  value={selectedItinerary}
                                   onChange={(selectedOptions) => {
                                     handleInputChange1(selectedOptions, 'itinerary_name');
                                     setSelectedItinerary(selectedOptions); // Set the selected itinerary data
@@ -1094,7 +1125,7 @@ function ContentSection({ selectedCurrency }) {
                   </span>
                 </div>
                 <div className="Person">
-                  per {tour.person} person <strong>({tour.tour_duration})</strong>
+                  per {tour.no_of_pax} <strong>({tour.tour_duration})</strong>
                 </div>
                 {/*     <div className="right">
                   <Link to="#">View Offers</Link>
@@ -1273,7 +1304,7 @@ function ContentSection({ selectedCurrency }) {
                   Check Out
                 </Link>*/}
               </div>
-              <Link to="/tourist-visa" className="TouristDiv">
+              <div className="TouristDiv">
                 <div className="img">
                   <img
                     src={
@@ -1289,7 +1320,7 @@ function ContentSection({ selectedCurrency }) {
                     Apply Now
                   </Link>*/}
                 </div>
-              </Link>
+              </div>
             </div>
           </div>
         </div>

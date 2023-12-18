@@ -118,7 +118,7 @@ const PopularTour = ({ selectedCurrency }) => {
     
     return (
         <div>
-            <div className="PopularTours">
+           <div className="PopularTours">
                 <div className="container">
                     <div className="Title">
                         <h2>Popular Tours</h2>
@@ -128,7 +128,7 @@ const PopularTour = ({ selectedCurrency }) => {
                             {popular.map((tour) => (
                                 <div className="carouselItem" key={tour.id}>
                                     <div className="item">
-                                        <Link to={`/plan/${tour.slug}`} className="TabBox">
+                                        <Link to={`/desert-safari/${tour.slug}`} className="TabBox">
                                             <div className="img">
                                                 <img src={`${config.imageUrl}/${tour.image}`} alt="" />
                                                 {tour.discount && (
@@ -225,7 +225,7 @@ const PopularTour = ({ selectedCurrency }) => {
                         </Carousel>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     )
     function getUserPrice(tour) {

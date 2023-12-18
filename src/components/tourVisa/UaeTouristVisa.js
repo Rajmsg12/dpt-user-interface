@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import config from '../../config';
 import Swal from 'sweetalert2'
+import UploadGalleryFiles from '../UploadFiles/upload-gallery-files'
 
 const UaeTouristVisa = () => {
+  
 
     const [formData, setFormData] = useState({
         name: '',
@@ -73,13 +75,15 @@ const UaeTouristVisa = () => {
                 setFormData({
                     name: '',
                     email: '',
+                    country: '',
                     nationality: '',
-                    discover_us: '',
-                    country_code: '',
-                    call_no: '',
-                    address: '',
-                    subject: '',
-                    message: ''
+                    how_did_you_discover_us: '',
+                    cell_no: '',
+                    arrival_date: '',
+                    departure_date: '',
+                    upload_hotel_booking:'',
+                    upload_your_flight_ticket:'',
+                    upload_passport_copy:''
                 });
                 Swal.fire({
                     icon: 'success',
@@ -370,12 +374,7 @@ const UaeTouristVisa = () => {
                                     Upload Hotel Booking*{" "}
                                     <small>(You can choose multiple files here)</small>
                                 </label>
-                                <input
-                                    type="file"
-                                    multiple=""
-                                    data-bv-field="hotel_booking[]"
-                                    required=""
-                                />
+                                <UploadGalleryFiles/>
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -384,13 +383,7 @@ const UaeTouristVisa = () => {
                                     Upload Your Flight Ticket*{" "}
                                     <small>(You can choose multiple files here)</small>
                                 </label>
-                                <input
-                                    type="file"
-                                    name="flight_ticket[]"
-                                    multiple=""
-                                    data-bv-field="flight_ticket[]"
-                                    required=""
-                                />
+                                <UploadGalleryFiles />
                             </div>
                         </div>
                         <div className="col-md-12">
@@ -399,13 +392,7 @@ const UaeTouristVisa = () => {
                                     Upload Passport Copy{" "}
                                     <small>(You can choose multiple files here)</small>
                                 </label>
-                                <input
-                                    type="file"
-                                    name="passport_copy[]"
-                                    multiple=""
-                                    data-bv-field="passport_copy[]"
-                                    required=""
-                                />
+                                <UploadGalleryFiles/>
                             </div>
                         </div>
                         <div className="col-md-12">

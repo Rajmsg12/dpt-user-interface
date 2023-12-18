@@ -6,19 +6,19 @@ import { useParams } from 'react-router-dom';
 const GetInTouch = () => {
   const [destinationInfo, setDestinationInfo] = useState();
   const [duration, setDuration] = useState();
-  const { title } = useParams();
-  const formattedTitle = title
-  .split('-') // Split by hyphens
-  .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-  .join(' ');
+  // const { slug } = useParams();
+  // const formattedTitle = slug
+  // .split('-') // Split by hyphens
+  // .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+  // .join(' ');
   const url = window.location.href;
   const spliturl = url.split("/");
-  const slug = spliturl[5];
+  const slug1 = spliturl[5];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/${slug}`);
+        const response = await fetch(`${config.baseUrl}/${slug1}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

@@ -9,6 +9,12 @@ const BreadCrum = () => {
   .split('-') // Split by hyphens
   .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
   .join(' ');
+  const { country } = useParams();
+  const formattedCategory = country
+  .split('-') // Split by hyphens
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+  .join(' ');
+  const formattedLink = `/destination/${formattedCategory.replace(/ /g, "-").toLowerCase()}`;
   return (
     <div>
     <div className="BreadcrumbSection">
@@ -19,7 +25,7 @@ const BreadCrum = () => {
             <Link to="/">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to="/">Dubai Tour</Link>
+            <Link to={`${formattedLink}`}>{formattedCategory}</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">{formattedTitle}</li>
         </ol>

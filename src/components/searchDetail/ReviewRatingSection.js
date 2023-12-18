@@ -94,7 +94,7 @@ const ReviewRatingSection = () => {
               {/* ShowingReviewRow */}
             </div>
             {/* ShowingReviewWidget */}
-          {/*  <div className="center">
+           {/* <div className="center">
               <div className="cta">
                 <Link to="#"> <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697705131/down-arrow_wuatf6.png"} alt="" /></Link>
               </div>

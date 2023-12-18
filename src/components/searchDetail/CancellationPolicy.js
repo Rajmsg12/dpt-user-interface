@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Editor, EditorState, ContentState, convertFromRaw } from 'draft-js';
 import config from '../../config';
-
 const CancellationPolicy = () => {
     const [backendData, setBackendData] = useState(null);
     const url = window.location.href;

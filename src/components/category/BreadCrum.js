@@ -17,9 +17,6 @@ const BreadCrum = () => {
           <li className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-          <li className="breadcrumb-item">
-            <Link to="/">Caterogy</Link>
-          </li>
           <li className="breadcrumb-item active" aria-current="page">{formattedCategory}</li>
         </ol>
       </nav>

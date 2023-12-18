@@ -17,6 +17,7 @@ import Category from './components/pages/cateory'
 import Cart from './components/pages/cart'
 import TrendingPlaces from "./components/pages/trendingPlaces";
 import SearchListing from './components/pages/SearchListingMain'
+import SearchDetail from './components/pages/searchDetail'
 import TrendingDetails from './components/pages/TrendingDetail'
 import Attraction from './components/pages/attraction'
 import BillingDetails from "./components/pages/billingDetails";
@@ -63,8 +64,8 @@ const App = () => {
         <Route exact path='/trending-tour/:location/:title' element={<TrendingDetails/>} />
 
         <Route exact path='tour/:title' element={<SearchListing/>} /> 
-        <Route exact path='/tour/:country/:title' element={<TrendingDetails/>} /> 
-            <Route exact path='/plan/:title' element={<DetailPage/>} />
+        <Route exact path='/tour/:location/:title' element={<SearchDetail/>} /> 
+        <Route exact path='/desert-safari/:title' element={<DetailPage/>} />
        <Route exact path='/:categoryName' element={<Category/>} />
        <Route exact path='/:categoryName/:title' element={<DetailPage/>} />
        <Route exact path='/attraction/:attractionName' element={<Attraction/>} />

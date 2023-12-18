@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "./CartActions";
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
+import {moment} from 'moment'
 import { Link } from 'react-router-dom'
 import './style/cart.css'
 import { getUserPrice } from './PriceUtlis';
@@ -126,6 +127,7 @@ const Cart = () => {
               <div className="EmptyCartMessage">Your cart is empty</div>
             ) : (
               cart.map((item, index) => (
+
                 <div key={index} className="CartBoxWrapper">
                   <div className="CartTopBox">
                     <div className="CartimgWrapper">
@@ -198,15 +200,40 @@ const Cart = () => {
                               <span>Preferred Language*</span>
                               <span>{item.preferredGuideLanguage}</span>
                             </div>
+                           
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Adults*</span>
                               <span>{item.adults}</span>
                             </div>
+                            <div className="BookingInfotablerow">
+                              <span>Adults Price*</span>
+                              <span>{item.adultPrice}</span>
+                            </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Children</span>
                               <span>{item.children}</span>
+                            </div>
+                            <div className="BookingInfotablerow">
+                              <span>Children Price</span>
+                              <span>{item.childrenPrice}</span>
+                            </div>
+                            <div className="BookingInfotablerow">
+                              <span>Additional Driver</span>
+                              <span>{item.driver}</span>
+                            </div>
+                            <div className="BookingInfotablerow">
+                              <span>Driver Price</span>
+                              <span>{item.driverTotalPrice}</span>
+                            </div>
+                            <div className="BookingInfotablerow">
+                              <span>Additional Lunch</span>
+                              <span>{item.lunch}</span>
+                            </div>
+                            <div className="BookingInfotablerow">
+                              <span>Lunch Price</span>
+                              <span>{item.lunchPrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                           </div>
@@ -231,20 +258,37 @@ const Cart = () => {
                               }
 
                             </div>
+                            <div className="BookingInfotablerow">
+                              <span>Preferred Language Price*</span>
+                              <span>{}</span>
+                            </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Pref.currency</span>
                               <span>{item.selectedCurrency}</span>
                             </div>
+                            
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Infants</span>
                               <span>{item.infants}</span>
                             </div>
+                            <div className="BookingInfotablerow">
+                              <span>Infants</span>
+                              <span>{item.infantsPrice}</span>
+                            </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Payment Mode*</span>
                               <span>{item.preferredPay}</span>
+                            </div>
+                            <div className="BookingInfotablerow">
+                              <span>Itinerary Name</span>
+                              <span>{item.itinerary_name}</span>
+                            </div>
+                            <div className="BookingInfotablerow">
+                              <span>Itinerary Price</span>
+                              <span>{item.additionalTickets}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                           </div>

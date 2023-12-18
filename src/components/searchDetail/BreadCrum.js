@@ -7,8 +7,14 @@ const BreadCrum = () => {
   const { title } = useParams();
   const formattedTitle = title
   .split('-') // Split by hyphens
-  .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-  .join(' ');
+ .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+ .join(' ');
+ const { location } = useParams();
+ const formattedCategory = location
+ .split('-') // Split by hyphens
+ .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+ .join(' ');
+ const formattedLink = `/tour/${formattedCategory.replace(/ /g, "-").toLowerCase()}`;
   return (
     <div>
     <div className="BreadcrumbSection">
@@ -16,12 +22,13 @@ const BreadCrum = () => {
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <Link to="/">Home</Link>
+            <Link to="">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to="/">Dubai Tour</Link>
+            <Link to={`${formattedLink}`}>{formattedCategory}</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">{formattedTitle}</li>
+         {/* <li className="breadcrumb-item active" aria-current="page">{formattedTitle}</li> */}
         </ol>
       </nav>
     </div>

@@ -16,16 +16,13 @@ const Homepage = () => {
     <div className="HomePageMin">
     <React.Fragment>
         <Header />
-       
        <Banner/>
-    
        <TopDestination/>
        <PopularTour/>
        <ChooseDpt/>
        <CustomerSay/>
        <TrendingPlaces/>
         <PopularAttraction/>
-        
         <Faq/>
         <Memories/>
         <Footer />

@@ -118,7 +118,7 @@ const YouAlsoLike = ({selectedCurrency}) => {
                         {tourData.map((tour, index) => (
                             <div className="carouselItem" key={tour.id}>
                             <div className="item">
-                                <Link to={`/plan/${tour.slug}`} className="TabBox">
+                                <Link to={`/dubai/${tour.slug}`} className="TabBox">
                                     <div className="img">
                                         <img src={`${config.imageUrl}/${tour.image}`} alt="" />
                                         {tour.discount && (

@@ -109,7 +109,7 @@ const Register = () => {
               </div>
               {error && <div className="error-message" style={{color:"green"}}>{error}</div>}
               <div className="CheckBoxrow">
-                <div className="form-check">
+            {/*    <div className="form-check">
                   <input
                     className="form-check-input"
                     type="checkbox"
@@ -120,7 +120,7 @@ const Register = () => {
                   <label className="form-check-label" htmlFor="flexCheckChecked">
                     I agree to all Terms and Conditions*
                   </label>
-                </div>
+                </div>*/}
               </div>
               <div className="formGroup">
                 <button type="submit" className="btn">Create Account</button>
