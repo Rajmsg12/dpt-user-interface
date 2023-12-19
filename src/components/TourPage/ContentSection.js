@@ -201,7 +201,7 @@ function ContentSection({ selectedCurrency }) {
     formData.tourPriceUsd = tourPriceUsd;
     formData.selectedCurrency = selectedCurrency;
 
-    formData.preferredGuideLanguage = selectedLanguage.id;
+    formData.preferredGuideLanguage = selectedLanguage.language;
     formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedPrice : selectedLanguage.usdPrice;
 
     const formElements = event.target.elements;
@@ -414,27 +414,25 @@ function ContentSection({ selectedCurrency }) {
   };
   const handleInputChange3 = (event, name) => {
     const { value } = event.target;
-
+  
     // Find the selected language object from the languages array using the language name
     const selectedLang = language.find(lang => lang.language === value);
-
+  
     if (selectedLang) {
-      // Update language price based on selectedCurrency
-      const languagePrice = selectedCurrency === 'AED' ? selectedLang.aedPrice : selectedLang.usdPrice;
-
+      setSelectedLanguage(selectedLang); // Update the selected language
+  
       setFormData(prevData => ({
         ...prevData,
         [name]: selectedLang, // Update with the entire language object
-        languagePrice, // Set the language price in the formData
-        preferredGuideLanguage: selectedLang.language, // Ensure preferredGuideLanguage is updated with language name
+        preferredGuideLanguage: selectedLang, // Set preferredGuideLanguage to the entire language object
       }));
-
-      setSelectedLanguage(selectedLang); // Update the selected language
     } else {
       // Handle the case when the selected language is not found
       console.error("Selected language not found!");
     }
   };
+  
+  
 
 
 

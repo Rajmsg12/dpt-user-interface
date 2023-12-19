@@ -12,7 +12,7 @@ const Banner = () => {
   useEffect(() => {
     const fetchTourData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/dubai/${slug}`);
+        const response = await fetch(`${config.baseUrl}/plan/${slug}`);
         const data = await response.json();
   
         if (data.status === 'success' && data.data.length > 0) {

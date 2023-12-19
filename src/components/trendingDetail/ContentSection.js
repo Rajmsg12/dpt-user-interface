@@ -201,7 +201,7 @@ function ContentSection({ selectedCurrency }) {
     formData.tourPriceUsd = tourPriceUsd;
     formData.selectedCurrency = selectedCurrency;
 
-    formData.preferredGuideLanguage = selectedLanguage.id;
+    formData.preferredGuideLanguage = selectedLanguage.language;
     formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedPrice : selectedLanguage.usdPrice;
 
     const formElements = event.target.elements;

@@ -26,12 +26,15 @@ const Cart = () => {
     const totalAdultPrice = parseFloat(item.adultPrice || 0);
     const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
     const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
-    const totalLunchPrice = parseFloat(item.lunchTotalPrice || 0);
+    const totalLunchPrice = parseFloat(item.lunchPrice || 0);
     const totalTicketPrice = parseFloat(item.additionalTickets || 0);
+    const totalLanguagePrice = parseFloat(item.languagePrice || 0);
     const itemPriceAED = parseFloat(item.tourPriceAed) || 0;
-    const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalLunchPrice + totalTicketPrice;
+    console.log("totalInfantsPrice",totalLanguagePrice)
+    const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalLunchPrice + totalTicketPrice + totalLanguagePrice;
     return totalPriceForItem.toFixed(2); // Format the price to two decimal places
   };
+
 
   const particularItemPriceUsd = (item) => {
     if (!item) return 0; // Check if item is undefined or null
@@ -42,20 +45,21 @@ const Cart = () => {
     const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
     const totalLunchPrice = parseFloat(item.lunchPrice || 0);
     const totalTicketPrice = parseFloat(item.additionalTickets || 0);
+    const totalLanguagePrice = parseFloat(item.languagePrice || 0);
     const itemPriceUSD = parseFloat(item.tourPriceUsd) || 0;
-    const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalTicketPrice + totalLunchPrice;
+    const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalTicketPrice + totalLunchPrice + totalLanguagePrice;
     return totalPriceForItem.toFixed(2); // Format the price to two decimal places
   };
 
-  const calculateTotal = () => {
+  const calculateTotal = (selectedCurrency) => {
     const subtotal = cart.reduce((total, item) => {
-      return total + parseFloat(particularItemPriceAed(item)); // Calculate subtotal for AED prices
+      return total + (selectedCurrency === 'AED' ? parseFloat(particularItemPriceAed(item)) : parseFloat(particularItemPriceUsd(item)));
     }, 0);
-
+  
     const taxPercentage = 0.18; // 18% tax
     const total = subtotal * taxPercentage;
     const fullTotal = subtotal + total;
-
+  
     return {
       subtotal,
       taxPercentage,
@@ -63,6 +67,7 @@ const Cart = () => {
       total
     };
   };
+  
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartCount, setCartCount] = useState("");

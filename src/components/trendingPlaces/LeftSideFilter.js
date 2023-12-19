@@ -49,7 +49,6 @@ const LeftSideFilter = ({ selectedCurrency, handlePriceFilter, handleCloseSideba
       handleDurationFilterChange(null);
     }
   };
-  console.log(selectedCurrency)
   return (
     <>
       <div id="sidebarFilter" className="listingLhs">

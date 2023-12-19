@@ -132,6 +132,7 @@ input {
 
 .innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch {
   width: 100%;
+  position: relative;
 }
 
 .innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch .form {
@@ -190,11 +191,22 @@ input {
   font-weight: 500;
 }
 
-.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderRHS .Headerdropdownmenu .dropdown ul li a {
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderRHS .Headerdropdownmenu .dropdown ul .dropdown-item , .dropdown.userIcon ul a{
   display: block;
   padding: 2px 10px;
   font-size: 12px;
-  color: #000000;
+  color: #000;
+  width: auto !important;
+  min-width:auto !important;
+  height: auto !important;
+  min-height:auto !important;
+  background-color: #fff !important;
+  border-radius: 0px !important;
+}
+
+.dropdown.userIcon .userIconTag{
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-person' viewBox='0 0 16 16'%3E%3Cpath d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z'/%3E%3C/svg%3E");
+  background-size:23px !important;
 }
 
 .innerpageHeader .innerHeader .innerHeaderWrapper .HeaderRHS .dropdown-toggle::after {
@@ -209,10 +221,17 @@ input {
   background-position: center center;
   position: relative;
   top: 6px;
-  margin-left: 0px;
+  /* margin-left: 0px; */
   left: -1px;
 }
 
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch ul {
+  padding: 5px;
+  font-size: 14px;
+  color: #000;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
 .innerpageHeader .innerHeader .innerHeaderWrapper .HeaderRHS .addtocart {
   display: flex;
   gap: 10px;
@@ -331,6 +350,7 @@ input {
   font-weight: 700;
   margin: 0px;
   color: #000;
+  width:50%;
 }
 
 .TopSection .TopSectionWrapper .TopSectionRHS {
@@ -431,6 +451,9 @@ input {
   }
   .TopSection .TopSectionWrapper .TopSectionRHS {
     margin: 20px 0px 15px;
+  }
+  .TopSection .TopSectionWrapper h1{
+    width:100%;
   }
 }
 @media screen and (max-width: 575px) {
@@ -1062,6 +1085,7 @@ input {
     padding-left: 20px;
     background-size: 16px;
   }
+ 
 }
 .DetailTab {
   position: relative;
@@ -1141,6 +1165,7 @@ input {
 .DetailTab .OverviewSection ul {
   padding: 10px 0px 0px 30px;
   border: 0px;
+  list-style: disc;
 }
 .DetailTab .OverviewSection ul li {
   font-size: 16px;
@@ -1231,6 +1256,10 @@ input {
   background-position: left top 2px;
 }
 
+.DetailTab .SecondPartTab .datainnerUl.crossicon .UlWrapper ul li:after {
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%23FF0000' class='bi bi-x-lg' viewBox='0 0 16 16'%3E%3Cpath d='M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z'/%3E%3C/svg%3E");
+  background-position: left top 0px;
+}
 .BookThisTourSec {
   padding-top: 40px;
 }
@@ -1628,13 +1657,20 @@ input {
 .CancellationPolicy .datainnerUl .UlWrapper {
   flex: 0 0 48%;
 }
-.CancellationPolicy .datainnerUl .UlWrapper div {
+
+.CancellationPolicy ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0px 15px !important;
+  margin: 16px 0px 0px;
+}
+.CancellationPolicy ul li {
   font-size: 16px;
   color: #000;
   padding: 0px 0px 15px 25px;
   position: relative;
 }
-.CancellationPolicy .datainnerUl .UlWrapper div::after {
+.CancellationPolicy ul li::after {
   content: "";
   background-image: url(../../../../public/images/homepage/tick.png);
   background-repeat: no-repeat;
@@ -1646,11 +1682,14 @@ input {
   background-size: 17px;
   background-position: left top 2px;
 }
-.CancellationPolicy .datainnerUl .UlWrapper:last-child div::after {
+.CancellationPolicy ul li:nth-child(2)::after, .CancellationPolicy ul li:nth-child(4)::after{
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%23FF0000' class='bi bi-x-lg' viewBox='0 0 16 16'%3E%3Cpath d='M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z'/%3E%3C/svg%3E");
+}
+/* .CancellationPolicy .datainnerUl .UlWrapper:last-child div::after {
   content: "";
   background-image: url(../../../../public/images/homepage/close.png);
   background-size: 15px;
-}
+} */
 
 @media screen and (max-width: 767px) {
   .CancellationPolicy {
@@ -1666,6 +1705,12 @@ input {
   .CancellationPolicy .datainnerUl .UlWrapper {
     flex: 1;
   }
+  .CancellationPolicy ul {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0px!important;
+}
+
+
 }
 .usefultoknow {
   position: relative;
@@ -1695,7 +1740,7 @@ input {
   background-position: left top 0px;
 }
 .usefultoknow ul {
-  /* padding: 0px 0px 0px 25px; */
+  padding: 0px 0px 0px 25px;
   list-style: disc;
 }
 ul.public-DraftStyleDefault-ul {
@@ -1912,6 +1957,7 @@ ul.public-DraftStyleDefault-ul {
   margin: 4px;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
+  display: block;
 }
 
 .TabBox:hover {
@@ -2016,7 +2062,12 @@ ul.public-DraftStyleDefault-ul {
   color: #000;
   font-weight: 600;
   margin: 0px;
-  min-height: 40px;
+  min-height: 38px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
 }
 
 .TabBox p {
@@ -3002,6 +3053,10 @@ position: relative;
   width: 100%;
 }
 
+.CrossIcon{
+  position: relative;
+}
+
 @media screen and (max-width:1199px) {
   .container {
     max-width: 1100px;}
@@ -3070,4 +3125,7 @@ position: relative;
       max-width:100% !important;
       min-width:100% !important;
   }
+}
+.widSSP.widSSPnarrow {
+  width: 100% !important;
 }

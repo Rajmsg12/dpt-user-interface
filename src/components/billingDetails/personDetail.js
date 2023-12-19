@@ -20,7 +20,9 @@ const PersonDetail = ({ selectedCurrency }) => {
         const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
         const itemPriceAED = parseFloat(item.tourPriceAed) || 0;
         const totalTicketPrice = parseFloat(item.additionalTickets || 0);
-        const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalTicketPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice;
+        const totalLanguagePrice = parseFloat(item.languagePrice || 0);
+        const totalLunchPrice = parseFloat(item.lunchPrice || 0)
+        const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalTicketPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalLanguagePrice + totalLunchPrice;
         return totalPriceForItem.toFixed(2); // Format the price to two decimal places
     };
 
@@ -32,8 +34,10 @@ const PersonDetail = ({ selectedCurrency }) => {
         const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
         const totalDriverPrice = parseFloat(item.driverTotalPrice || 0);
         const totalTicketPrice = parseFloat(item.additionalTickets || 0);
+        const totalLanguagePrice = parseFloat(item.languagePrice || 0);
+        const totalLunchPrice = parseFloat(item.lunchPrice || 0);
         const itemPriceUSD = parseFloat(item.tourPriceUsd) || 0;
-        const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalTicketPrice + totalChildrenPrice + totalDriverPrice;
+        const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalTicketPrice + totalChildrenPrice + totalDriverPrice + totalLanguagePrice + totalLunchPrice;
         return totalPriceForItem.toFixed(2); // Format the price to two decimal places
     };
     const subtotal = Array.isArray(MyCartDetail)
@@ -42,18 +46,25 @@ const PersonDetail = ({ selectedCurrency }) => {
         }, 0)
         : 0;
 
-    const calculateTotal = () => {
-        const taxPercentage = 0.18; // 18% tax
-        const total = subtotal * taxPercentage;
-        const fullTotal = subtotal + total;
-
-        return {
-            subtotal,
-            taxPercentage,
-            fullTotal,
-            total
-        };
-    };
+        const calculateTotal = (selectedCurrency) => {
+            const subtotal = Array.isArray(MyCartDetail)
+              ? MyCartDetail.reduce((total, item) => {
+                  return total + (selectedCurrency === 'AED' ? parseFloat(particularItemPriceAed(item)) : parseFloat(particularItemPriceUsd(item)));
+                }, 0)
+              : 0;
+          
+            const taxPercentage = 0.18; // 18% tax
+            const total = subtotal * taxPercentage;
+            const fullTotal = subtotal + total;
+          
+            return {
+              subtotal,
+              taxPercentage,
+              fullTotal,
+              total
+            };
+          };
+          
 
     //   const storedCurrency = localStorage.getItem('selectedCurrency');
     //   const parsedCurrency = storedCurrency ? JSON.parse(storedCurrency) : 'AED';
@@ -431,7 +442,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                             {/*OrderSummaryTablerow*/}
                                             <div className="OrderSummaryTablerow">
                                                 <span>Order total</span>
-                                                {ourSelectedCurrency} <strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                                                {ourSelectedCurrency}<strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
                                             </div>
                                             {/*OrderSummaryTablerow*/}
                                             <div className="ProceedCheckoutCta">
