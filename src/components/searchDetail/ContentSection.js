@@ -1105,7 +1105,7 @@ function ContentSection({ selectedCurrency }) {
                   </span>
                 </div>
                 <div className="Person">
-                  per {tour.no_of_pax} <strong>({tour.tour_duration})</strong>
+                   {tour.no_of_pax} <strong>({tour.tour_duration})</strong>
                 </div>
                 {/*     <div className="right">
                   <Link to="#">View Offers</Link>
