@@ -242,7 +242,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                     ) : (
                                         <span>USD</span>
                                     )}
-                                    <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                    <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
                                 </div>
                             ) : (
                                 <div className="aedtext">
@@ -251,7 +251,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                     ) : (
                                         <span>USD</span>
                                     )}
-                                    <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                    <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
                                 </div>
                             )}
                         </div>
@@ -312,7 +312,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                       ) : (
                                           <span>USD</span>
                                       )}
-                                      <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                      <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
                                   </div>
                               ) : (
                                   <div>
@@ -321,7 +321,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                       ) : (
                                           <span>USD</span>
                                       )}
-                                      <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                      <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
                                   </div>
                               )}
                                 </div>

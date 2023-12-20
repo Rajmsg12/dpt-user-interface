@@ -296,7 +296,7 @@ const ListingSection = () => {
                       <div className="aedLHS">
                         <span>Starting from</span>
                         <div className="aedtext">
-                          AED <strong>{tour.tour_price_aed}</strong> up to {tour.person} people
+                          AED <strong>{tour.tour_price_aed}</strong> {tour.no_of_pax}
                         </div>
                       </div>
                       <div className="aedRHS">{tour.tour_duration}</div>
