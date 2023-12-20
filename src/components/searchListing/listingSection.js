@@ -1,22 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Styles/TourListing.css';
+import { data } from '../../data/TourListing';
 import LeftSideFilter from './LeftSideFilter';
+import { useParams } from 'react-router-dom';
 import config from '../../config';
-import { useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
-const ListingSection = () => {
-  const [data, setData] = useState([]);
+const itemsPerPage = 9;
+const ListingSection = ({ selectedCurrency }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
   const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
   const [apiData, setApiData] = useState(null);
-  const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
-  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
-
-  const navigate = useNavigate()
+  const [userType, setUserType] = useState(null);
+  const [userDiscount, setUserDiscount] = useState(null);
   const [clickedTourId, setClickedTourId] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+ const navigate = useNavigate()
+  // Initial price value as a number
+  const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
+  const totalItems = data.TourListing.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  // const handlePageChange = (page) => {
+  //   if (page >= 1 && page <= totalPages) {
+  //     setCurrentPage(page);
+  //   }
+  // };
+
+  const handleDurationFilterChange = (duration) => {
+    setSelectedDurationFilter(duration);
+  };
+
+  const handlePriceFilter = (newPriceRange) => {
+    setSelectedPriceRange(newPriceRange);
+  };
+  const handleRatingFilterChange = (rating) => {
+    setSelectedRatingFilter((prevRating) => {
+      // If the same rating is clicked again, unselect it
+      if (prevRating === rating) {
+        return null;
+      }
+      // Otherwise, select the new rating
+      return rating;
+    });
+  };
   const addToWishlist = async (tourId) => {
     console.log('Adding to wishlist:', tourId); // Check if function is triggered
 
@@ -53,58 +86,6 @@ const ListingSection = () => {
         console.error('Error adding tour to wishlist:', error);
     }
 };
- 
-
-  const itemsPerPage = 9;
-  const handleToggleSidebarMenu = () => {
-    setIsSidebarMenuOpen((prevIsSidebarMenuOpen) => !prevIsSidebarMenuOpen);
-  };
-
-  const handleCloseSidebar = () => {
-    console.log('Closing sidebar');
-    setIsSidebarMenuOpen(false);
-  };
-  
-
-
-
-  const totalItems = data.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-
-
-  const handleDurationFilterChange = (duration) => {
-    setSelectedDurationFilter(duration);
-  };
-
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
-
-  const handlePriceFilter = (newPriceRange) => {
-    setSelectedPriceRange(newPriceRange);
-  };
-
-  const handleRatingFilterChange = (rating) => {
-    setSelectedRatingFilter((prevRating) => {
-      // If the same rating is clicked again, unselect it
-      if (prevRating === rating) {
-        return null;
-      }
-      // Otherwise, select the new rating
-      return rating;
-    });
-  };
-
-  const categoryList = data.CategoryList || [];
-  
-
-  // Filter items based on the selected price range
   const url = window.location.href;
   const splitUrl = url.split("/");
   const slug = splitUrl[4];
@@ -114,10 +95,6 @@ const ListingSection = () => {
   
   // Capitalize the first letter of each word and join them with a space
   const convertedText = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-  
-  
-
-  // ... (previous code)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,293 +121,372 @@ const ListingSection = () => {
 
     fetchData();
   }, []);
+  console.log(apiData)
 
-
-
-
-  const filteredData = data.filter((tour) => {
-    const tourPrice = parseInt(tour.tour_info.replace(',', ''));
-    console.log(tourPrice)
-    const tourRating = parseInt(tour.rating);
-
-    if (
-      selectedDurationFilter &&
-      selectedDurationFilter.includes(tour.duration)
-    ) {
-      return (
-        tourPrice >= selectedPriceRange[0] &&
-        tourPrice <= selectedPriceRange[1] &&
-        tourRating >= selectedRatingFilter
-      );
-    } else if (!selectedDurationFilter) {
-      return (
-        tourPrice >= selectedPriceRange[0] &&
-        tourPrice <= selectedPriceRange[1] &&
-        tourRating >= selectedRatingFilter
-      );
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch(`${config.baseUrl}/welcome`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setUserType(data.data.user_type); // Set user type from login API
+          setUserDiscount(data.data.discount); // Set user discount from login API
+        })
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+        });
     }
-    return false; // Exclude items that don't match the duration filter
-  });
-  // const itemsToShow = filteredData.slice(startIndex, endIndex);
-  console.log(filteredData)
+  }, []);
 
-  const itemsToShow = apiData;
+  const filteredData = apiData && apiData
+    ? apiData.filter((tour) => {
+      const tourPrice = parseInt(tour.tour_price_aed);
+      const tourDiscount = parseInt(tour.discount); // Use the field you want for filtering
 
-  if (!apiData) {
-    return <p>No Data Found</p>;
-  }
-  
-  
+      if (
+        selectedDurationFilter &&
+        selectedDurationFilter.includes(tour.tour_duration)
+      ) {
+        return (
+          tourPrice >= selectedPriceRange[0] &&
+          tourPrice <= selectedPriceRange[1] &&
+          tourDiscount >= selectedRatingFilter // Use the selectedRatingFilter as needed
+        );
+      } else if (!selectedDurationFilter) {
+        return (
+          tourPrice >= selectedPriceRange[0] &&
+          tourPrice <= selectedPriceRange[1] &&
+          tourDiscount >= selectedRatingFilter // Use the selectedRatingFilter as needed
+        );
+      }
+      return false; // Exclude items that don't match the duration filter
+    })
+    : [];
+
+
+
+
+  const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
     <div>
-    <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
+      <div className="listingPage">
         <div className="container">
           <div className="listingPageWrapper">
-          <LeftSideFilter
-          handlePriceFilter={handlePriceFilter}
-          priceRange={selectedPriceRange}
-          handleRatingFilterChange={handleRatingFilterChange}
-          selectedRatingFilter={selectedRatingFilter}
-          handleDurationFilterChange={handleDurationFilterChange}
-          handleCloseSidebar={handleCloseSidebar}
-        />
+            <LeftSideFilter
+              handlePriceFilter={handlePriceFilter}
+              priceRange={selectedPriceRange}
+              handleRatingFilterChange={handleRatingFilterChange}
+              selectedRatingFilter={selectedRatingFilter}
+              handleDurationFilterChange={handleDurationFilterChange}
+            />
 
-        <div className="listingRhs">
-        <div className="listingGridTab">
-          <div className="listingToplayer">
-            <div className="productactive">{apiData.length} activities found</div>
+            {filteredData.length === 0 ? (
+              <p>No Tours Found</p>
+            ) : (
+              <div className="listingRhs">
+                <div className="listingGridTab">
+                  <div className="listingToplayer">
+                    <div className="productactive">{filteredData.length} activities found</div>
+                    <div>
+                      <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <div className="filterDiv"></div>
+                        <li className="nav-item" role="presentation">
+                          <button
+                            className="nav-link active"
+                            id="pills-grid-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-grid"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-grid"
+                            aria-selected="false"
+                          >
+                            Grid <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211736/grid_emrbiy.png"} alt="" />
+                          </button>
+                        </li>
+                        <li className="nav-item" role="presentation">
+                          <button
+                            className="nav-link "
+                            id="pills-listing-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-listing"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-listing"
+                            aria-selected="true"
+                          >
+                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211812/list_k2k6ct.png"} alt="" />
+                            Listing
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="tab-content " id="pills-tabContentlisting">
+                    <div className="tab-pane fade show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
+                      <div className="listingRow GridRowWrapper">
+                        {filteredData.length > 0 ? (
+                          itemsToShow.map((tour) => (
+                            <Link to={`${tour.slug}`} className="TabBox" key={`grid-${tour.slug}`}>
 
-            <div>
-              <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-              <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>
-                <li className="nav-item" role="presentation">
-                  <button
-                    className="nav-link active"
-                    id="pills-grid-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-grid"
-                    type="button"
-                    role="tab"
-                    aria-controls="pills-grid"
-                    aria-selected="false"
-                  >
-                    Grid <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211736/grid_emrbiy.png"} alt="" />
-                  </button>
-                </li>
-                <li className="nav-item" role="presentation">
-                  <button
-                    className="nav-link "
-                    id="pills-listing-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-listing"
-                    type="button"
-                    role="tab"
-                    aria-controls="pills-listing"
-                    aria-selected="true"
-                  >
-                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211812/list_k2k6ct.png"} alt="" />
-                    Listing
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="tab-content" id="pills-tabContentlisting">
-            <div className="tab-pane fade  show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
-              <div className="listingRow GridRowWrapper">
-                {itemsToShow.map((tour) => (
-                  <Link to={`${tour.slug}`} className="TabBox" key={`grid-${tour.slug}`}>
-
-                    <div className="img">
-                      <img src={`${config.imageUrl}/${tour.image}`} alt="" />
-                      <div className="discountrow">
-                        <div className="discount">
-                          <span>{tour.discount} %</span>
-                        </div>
-                        <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
-                      </div>
-                      <div className="imgBottomRow">
-                        <div className="lhstext">
-                          <span>{tour.hastag}</span>
-                        </div>
-                        <div className="rhsimg">
-                         
-                            {tour.sticker_info[0].id === '1' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                alt=""
-                              />
-                            )}
-                            {tour.sticker_info[0].id === '2' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                alt=""
-                              />
-                            )}
-                            {tour.sticker_info[0].id === '3' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                alt=""
-                              />
-                            )}
-                            {tour.sticker_info.length > 1 && (
-                              <img
-                                src={tour.sticker_info[1].id}
-                                alt=""
-                              />
-                            )}
-                       
-                        </div>
-
-
+                            <div className="img">
+                              <img src={`${config.imageUrl}/${tour.image}`} alt="" />
+                              <div className="discountrow">
+                                <div className="discount">
+                                  <span>{tour.discount} %</span>
+                                </div>
+                                <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
+                              </div>
+                              <div className="imgBottomRow">
+                                <div className="lhstext">
+                                  <span>{tour.hastag}</span>
+                                </div>
+                                <div className="rhsimg">
+                                 
+                                    {tour.sticker_info[0].id === '1' && (
+                                      <img
+                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                        alt=""
+                                      />
+                                    )}
+                                    {tour.sticker_info[0].id === '2' && (
+                                      <img
+                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                        alt=""
+                                      />
+                                    )}
+                                    {tour.sticker_info[0].id === '3' && (
+                                      <img
+                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                        alt=""
+                                      />
+                                    )}
+                                    {tour.sticker_info.length > 1 && (
+                                      <img
+                                        src={tour.sticker_info[1].id}
+                                        alt=""
+                                      />
+                                    )}
+                               
+                                </div>
+        
+        
+                              </div>
+                            </div>
+                            <div className="TabBoxBody">
+                              <h4>{tour.tour_name}</h4>
+                              <p>{tour.intro}</p>
+                              <div className="ReviewRow">
+                                <span className="location">{tour.destination_info[0].name}</span>
+                              </div>
+                            </div>
+                            <div className="TabBoxFooter">
+                              <div className="aedLHS">
+                                <span>Starting from</span>
+                                <div className="aedtext">
+                                    {isLoggedIn ? (
+                                      <div className="aedtext">
+                                        {selectedCurrency === "AED" ? (
+                                          <span>AED</span>
+                                        ) : (
+                                          <span>USD</span>
+                                        )}
+                                        <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                      </div>
+                                    ) : (
+                                      <div className="aedtext">
+                                        {selectedCurrency === "AED" ? (
+                                          <span>AED</span>
+                                        ) : (
+                                          <span>USD</span>
+                                        )}
+                                        <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                      </div>
+                                    )}
+                                  </div>
+                              </div>
+                              <div className="aedRHS">{tour.tour_duration}</div>
+                            </div>
+                          </Link>
+                          ))
+                        ) : (
+                          <p>No items within the selected price range.</p>
+                        )}
                       </div>
                     </div>
-                    <div className="TabBoxBody">
-                      <h4>{tour.tour_name}</h4>
-                      <p>{tour.intro}</p>
-                      <div className="ReviewRow">
-                        <span className="location">{tour.destination_info[0].name}</span>
-                      </div>
-                    </div>
-                    <div className="TabBoxFooter">
-                      <div className="aedLHS">
-                        <span>Starting from</span>
-                        <div className="aedtext">
-                          AED <strong>{tour.tour_price_aed}</strong> up to {tour.person} people
-                        </div>
-                      </div>
-                      <div className="aedRHS">{tour.tour_duration}</div>
-                    </div>
-                  </Link>
-                ))
-                }
-              </div>
-            </div>
-            <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
-              <div className="listingRow">
-                {itemsToShow.map((tour) => (
-                  <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.tour_slug}`}>
-                    <div className="listingBoxImg">
-                      <img src={`${config.imageUrl}/${tour.image}`} alt="" />
-                      <div className="discountrow">
-                        <div className="discount">
-                          <span>{tour.discount} %</span>
-                        </div>
-                        <div className="wishlistIcon"></div>
-                      </div>
-                      <div className="imgBottomRow">
-                        <div className="lhstext">
-                          <span>{tour.hastag}</span>
-                        </div>
-                        <div className="rhsimg">
-                          <div>
-                            {tour.sticker_info[0].id === '1' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                alt=""
-                              />
-                            )}
-                            {tour.sticker_info[0].id === '2' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                alt=""
-                              />
-                            )}
-                            {tour.sticker_info[0].id === '3' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                alt=""
-                              />
-                            )}
-                            {tour.sticker_info.length > 1 && (
-                              <img
-                                src={tour.sticker_info[1].id}
-                                alt=""
-                              />
-                            )}
+                    <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
+                      <div className="listingRow">
+                        {itemsToShow.map((tour) => (
+                          <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.tour_slug}`}>
+                          <div className="listingBoxImg">
+                            <img src={`${config.imageUrl}/${tour.image}`} alt="" />
+                            <div className="discountrow">
+                              <div className="discount">
+                                <span>{tour.discount} %</span>
+                              </div>
+                              <div className="wishlistIcon"></div>
+                            </div>
+                            <div className="imgBottomRow">
+                              <div className="lhstext">
+                                <span>{tour.hastag}</span>
+                              </div>
+                              <div className="rhsimg">
+                                <div>
+                                  {tour.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {tour.sticker_info.length > 1 && (
+                                    <img
+                                      src={tour.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+                                </div>
+                              </div>
+      
+      
+                            </div>
                           </div>
-                        </div>
-
-
-                      </div>
-                    </div>
-                    <div className="listingBoxContent">
-                      <div className="listingBoxTop">
-                        <h4>{tour.tour_name}</h4>
-                        <div className="ReviewsDivrow">
-                          <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
-                          <span>5 | 500 Reviews</span>
-                        </div>
-                        <div className="descrition">
-                          <p>{tour.intro}</p>
-                        </div>
-                      </div>
-                      <div className="listingBoxFooter">
-                        <div className="listboxlhs">
-                          <span>Free Cancellation</span>
-                          <span>6 Days</span>
-                        </div>
-                        <div className="listboxrhs">
-                          <div className="startingFromTag">Starting from</div>
-                          <div className="price">
-                            AED <strong>{tour.tour_price_aed}</strong> {}
+                          <div className="listingBoxContent">
+                            <div className="listingBoxTop">
+                              <h4>{tour.tour_name}</h4>
+                              <div className="ReviewsDivrow">
+                                <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
+                                <span>5 | 500 Reviews</span>
+                              </div>
+                              <div className="descrition">
+                                <p>{tour.intro}</p>
+                              </div>
+                            </div>
+                            <div className="listingBoxFooter">
+                              <div className="listboxlhs">
+                                <span>Free Cancellation</span>
+                                <span>6 Days</span>
+                              </div>
+                              <div className="listboxrhs">
+                                <div className="startingFromTag">Starting from</div>
+                                <div className="price">
+                                    {isLoggedIn ? (
+                                      <div className="aedtext">
+                                        {selectedCurrency === "AED" ? (
+                                          <span>AED</span>
+                                        ) : (
+                                          <span>USD</span>
+                                        )}
+                                        <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                      </div>
+                                    ) : (
+                                      <div className="aedtext">
+                                        {selectedCurrency === "AED" ? (
+                                          <span>AED</span>
+                                        ) : (
+                                          <span>USD</span>
+                                        )}
+                                        <strong>{getUserPrice(tour)}</strong>{tour.tour_no_of_pax}
+                                      </div>
+                                    )}
+                                  </div>
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        </Link>
+                        ))}
                       </div>
                     </div>
-                  </Link>
-                ))}
+                  </div>
+                {/*}  <div className="paginationSec">
+                    <nav aria-label="...">
+                      <ul className="pagination">
+                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+
+                          <Link
+                            className="page-link"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            to="#"
+                          >
+                            Previous
+                          </Link>
+                        </li>
+                        {[...Array(totalPages)].map((_, page) => (
+                          <li
+                            key={page}
+                            className={`page-item ${currentPage === page + 1 ? 'active' : ''}`}
+                          >
+                            <Link
+                              className="page-link"
+                              onClick={() => handlePageChange(page + 1)}
+                              to="#"
+                            >
+                              {page + 1}
+                            </Link>
+                          </li>
+                        ))}
+                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+
+                          <Link
+                            className="page-link"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            to="#"
+                          >
+                            Next
+                          </Link>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>*/}
+                </div>
               </div>
-            </div>
+            )}
           </div>
-       {/*}   <div className="paginationSec">
-            <nav aria-label="...">
-              <ul className="pagination">
-                <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-
-                  <Link
-                    className="page-link"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    to="#"
-                  >
-                    Previous
-                  </Link>
-                </li>
-                {[...Array(totalPages)].map((_, page) => (
-                  <li
-                    key={page}
-                    className={`page-item ${currentPage === page + 1 ? 'active' : ''}`}
-                  >
-                    <Link
-                      className="page-link"
-                      onClick={() => handlePageChange(page + 1)}
-                      to="#"
-                    >
-                      {page + 1}
-                    </Link>
-                  </li>
-                ))}
-                <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-
-                  <Link
-                    className="page-link"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    to="#"
-                  >
-                    Next
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>*/}
         </div>
       </div>
     </div>
-  </div>
-  <div className="menuOverlay"></div>
-</div>
-</div>
-);
-};
+  );
+  function getUserPrice(tour) {
+    let price = 0;
 
-export default ListingSection;
+    if (userType === 2) {
+      // Agent user type
+      price =
+        selectedCurrency === "AED"
+          ? tour.tour_price_aed - (tour.tour_price_aed * userDiscount) / 100
+          : tour.tour_price_usd - (tour.tour_price_usd * userDiscount) / 100;
+    } else if (userType === 3) {
+      // Normal user type
+      price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
+    } else {
+      // Default case (handle other user types if needed)
+      price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
+    }
+
+    // Remove decimal part
+    return Math.floor(price);
+  }
+  
+
+}
+const mapStateToProps = (state) => ({
+  selectedCurrency: state.currency.selectedCurrency,
+  // ... (other state mappings)
+});
+
+export default connect(mapStateToProps)(ListingSection);

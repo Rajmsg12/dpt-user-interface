@@ -113,8 +113,6 @@ const ListingSection = ({ selectedCurrency }) => {
     })
     : [];
 
-
-
   const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
     <div>
