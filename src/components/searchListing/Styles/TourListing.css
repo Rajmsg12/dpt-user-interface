@@ -209,7 +209,7 @@ input {
   background-position: center center;
   position: relative;
   top: 6px;
-  margin-left: 0px;
+  /* margin-left: 0px; */
   left: -1px;
 }
 
@@ -1117,7 +1117,7 @@ input {
 .accordionDivWrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  gap:0px 30px;
 }
 
 .faqBox .accordion-button:not(.collapsed) {

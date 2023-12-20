@@ -296,7 +296,7 @@ const ListingSection = () => {
                       <div className="aedLHS">
                         <span>Starting from</span>
                         <div className="aedtext">
-                          AED <strong>{tour.tour_price_aed}</strong> {tour.no_of_pax}
+                          AED <strong>{tour.tour_price_aed}</strong> up to {tour.person} people
                         </div>
                       </div>
                       <div className="aedRHS">{tour.tour_duration}</div>
@@ -373,7 +373,7 @@ const ListingSection = () => {
                         <div className="listboxrhs">
                           <div className="startingFromTag">Starting from</div>
                           <div className="price">
-                            AED <strong>{tour.tour_price_aed}</strong> {tour.no_of_pax}
+                            AED <strong>{tour.tour_price_aed}</strong> {}
                           </div>
                         </div>
                       </div>

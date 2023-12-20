@@ -24,11 +24,11 @@ const ListingSection = ({ selectedCurrency }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  // const handlePageChange = (page) => {
+  //   if (page >= 1 && page <= totalPages) {
+  //     setCurrentPage(page);
+  //   }
+  // };
 
   const handleDurationFilterChange = (duration) => {
     setSelectedDurationFilter(duration);
@@ -141,28 +141,28 @@ const ListingSection = ({ selectedCurrency }) => {
                         <div className="filterDiv"></div>
                         <li className="nav-item" role="presentation">
                           <button
-                            className="nav-link"
+                            className="nav-link active"
                             id="pills-grid-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-grid"
                             type="button"
                             role="tab"
                             aria-controls="pills-grid"
-                            aria-selected="true"
+                            aria-selected="false"
                           >
                             Grid <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211736/grid_emrbiy.png"} alt="" />
                           </button>
                         </li>
                         <li className="nav-item" role="presentation">
                           <button
-                            className="nav-link active"
+                            className="nav-link "
                             id="pills-listing-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-listing"
                             type="button"
                             role="tab"
                             aria-controls="pills-listing"
-                            aria-selected="false"
+                            aria-selected="true"
                           >
                             <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211812/list_k2k6ct.png"} alt="" />
                             Listing
@@ -171,12 +171,12 @@ const ListingSection = ({ selectedCurrency }) => {
                       </ul>
                     </div>
                   </div>
-                  <div className="tab-content" id="pills-tabContentlisting">
-                    <div className="tab-pane fade" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
+                  <div className="tab-content " id="pills-tabContentlisting">
+                    <div className="tab-pane fade show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab">
                       <div className="listingRow GridRowWrapper">
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
-                            <Link to={`/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.id}`}>
+                            <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.id}`}>
                               <div className="img">
                                 <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                                 <div className="discountrow">
@@ -246,7 +246,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                         ) : (
                                           <span>USD</span>
                                         )}
-                                        <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                        <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
                                       </div>
                                     )}
                                   </div>
@@ -260,7 +260,7 @@ const ListingSection = ({ selectedCurrency }) => {
                         )}
                       </div>
                     </div>
-                    <div className="tab-pane fade show active" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
+                    <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                       <div className="listingRow">
                         {itemsToShow.map((tour) => (
                           <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.id}`}>

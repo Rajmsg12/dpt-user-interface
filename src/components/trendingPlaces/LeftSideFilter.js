@@ -6,7 +6,16 @@ import { data } from '../../data/TourListing'
 import config from '../../config'
 import { connect } from 'react-redux';
 
-const LeftSideFilter = ({ selectedCurrency, handlePriceFilter, handleCloseSidebar, handleDurationFilterChange, priceRange, handleRatingFilterChange, selectedRatingFilter }) => {
+const LeftSideFilter = ({
+  selectedCurrency,
+  handlePriceFilter,
+  handleCloseSidebar,
+  handleDurationFilterChange,
+  priceRange,
+  handleRatingFilterChange,
+  selectedRatingFilter
+}) => {
+  const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [categories, setCategories] = useState([]);
   const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(true);
@@ -40,14 +49,23 @@ const LeftSideFilter = ({ selectedCurrency, handlePriceFilter, handleCloseSideba
   const toggleCategories = () => {
     setShowAllCategories(!showAllCategories);
   }
+
   const handleDurationCheckboxChange = (event, selectedDurations) => {
+    let updatedDurationFilter = selectedDurationFilter ? [...selectedDurationFilter] : [];
+
     if (event.target.checked) {
-      // If the checkbox is checked, set the selected durations
-      handleDurationFilterChange(selectedDurations);
+      updatedDurationFilter = updatedDurationFilter.concat(selectedDurations);
     } else {
-      // If the checkbox is unchecked, remove the selected durations
-      handleDurationFilterChange(null);
+      selectedDurations.forEach((duration) => {
+        const index = updatedDurationFilter.indexOf(duration);
+        if (index !== -1) {
+          updatedDurationFilter.splice(index, 1);
+        }
+      });
     }
+
+    setSelectedDurationFilter(updatedDurationFilter.length > 0 ? updatedDurationFilter : null);
+    handleDurationFilterChange(updatedDurationFilter.length > 0 ? updatedDurationFilter : null);
   };
   return (
     <>

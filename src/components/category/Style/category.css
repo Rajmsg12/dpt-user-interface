@@ -301,6 +301,45 @@
   font-size: 14px;
   font-weight: 500;
 }
+.rangeSliderTopLayer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px 0px 10px;
+  padding-right: 15px;
+}
+.leftSideFilter {
+  width: 100%;
+}
+.leftSideFilter .rc-slider-track, .leftSideFilter .rc-slider-tracks {
+  background-color: #000;
+}
+.leftSideFilter .priceRangeSlider {
+  display: flex;
+  flex-direction: column-reverse;
+  row-gap: 10px;
+}
+.leftSideFilter .rc-slider-handle {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  min-height: 22px;
+  margin-top: -10px;
+  background-color: #fff;
+  opacity: 1;
+  border: 0px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+}
+.leftSideFilter .rc-slider {
+  width: 95%;
+  margin: 0 auto;
+}
+.priceRangeLabel {
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 
 /*RatingDiv*/
 .RatingDiv {
@@ -564,6 +603,8 @@
 .CategoryTopSectionRHS .toptext .Title h2 {
   font-size: 30px;
   font-weight: 700;
+  padding:0px;
+  border:0px;
   margin-bottom: 15px;
   color: #000;
 }
@@ -595,6 +636,11 @@
   margin-bottom: 25px;
 }
 
+.listingToplayer .Title h2{
+  padding:0px;
+  border:0px;
+  margin-bottom:15px;
+}
 .filterDiv {
   width: 45px;
   min-width: 45px;
@@ -644,7 +690,7 @@
 }
 
 /*listingRow*/
-.listingBox > a {
+.listingBox{
   position: relative;
   display: flex;
   border: 1px solid #E0E0E0;
@@ -916,7 +962,7 @@
   }
 }
 @media screen and (max-width: 767px) {
-  .listingBox > a {
+  .listingBox{
     padding: 12px;
     margin-bottom: 15px;
     flex-direction: column;
@@ -1239,6 +1285,7 @@
   margin-bottom: 35px;
   color: #000;
   padding: 0px;
+  border:0px;
 }
 
 .customersayrhs {
@@ -1363,7 +1410,7 @@
 .accordionDivWrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  gap:0px 30px;
 }
 
 .faqBox .accordion-button:not(.collapsed) {
@@ -1825,7 +1872,7 @@ footer {
 /*======== footer ======*/
 .BreadcrumbSection .breadcrumb {
   margin: 0px;
-  padding: 30px 0px;
+  padding: 30px 0px !important;
 }
 
 .BreadcrumbSection .breadcrumb li a, .BreadcrumbSection .breadcrumb li {
@@ -1867,6 +1914,18 @@ footer {
   background-color: transparent;
   display: none;
 }
+.menuOverlay {
+  background-color: rgba(0, 0, 0, 0.35);
+  position: absolute;
+  height: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  transition: all ease 0.3s;
+  display: none;
+}
 
 @media screen and (max-width: 991.33px) {
   .CategorySectionWrapper {
@@ -1896,8 +1955,14 @@ footer {
   }
 }
 @media screen and (max-width: 991.32px) {
-  body.sidebarMenuOpen .CategorySectionWrapper .CategoryTopSectionLHS {
+  .body.sidebarMenuOpen .CategorySectionWrapper .CategoryTopSectionLHS {
     left: 0;
+  }
+  .closeIcon{
+    display: block;
+  }
+  .body.sidebarMenuOpen .menuOverlay{
+    display: block;
   }
 }
 @media screen and (max-width: 991px) {

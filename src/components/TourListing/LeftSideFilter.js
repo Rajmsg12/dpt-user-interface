@@ -4,11 +4,23 @@ import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
 import { data } from '../../data/TourListing'
 import config from '../../config'
+import { connect } from 'react-redux';
 
-const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationFilterChange, priceRange, handleRatingFilterChange, selectedRatingFilter }) => {
+const LeftSideFilter = ({
+  selectedCurrency,
+  handlePriceFilter,
+  handleCloseSidebar,
+  handleDurationFilterChange,
+  priceRange,
+  handleRatingFilterChange,
+  selectedRatingFilter
+}) => {
+  const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [categories, setCategories] = useState([]);
   const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(true);
+  const [userType, setUserType] = useState(null);
+  const [userDiscount, setUserDiscount] = useState(null);
 
   const toggleSidebarMenu = () => {
     setIsSidebarMenuOpen(!isSidebarMenuOpen);
@@ -37,14 +49,23 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
   const toggleCategories = () => {
     setShowAllCategories(!showAllCategories);
   }
+
   const handleDurationCheckboxChange = (event, selectedDurations) => {
+    let updatedDurationFilter = selectedDurationFilter ? [...selectedDurationFilter] : [];
+
     if (event.target.checked) {
-      // If the checkbox is checked, set the selected durations
-      handleDurationFilterChange(selectedDurations);
+      updatedDurationFilter = updatedDurationFilter.concat(selectedDurations);
     } else {
-      // If the checkbox is unchecked, remove the selected durations
-      handleDurationFilterChange(null);
+      selectedDurations.forEach((duration) => {
+        const index = updatedDurationFilter.indexOf(duration);
+        if (index !== -1) {
+          updatedDurationFilter.splice(index, 1);
+        }
+      });
     }
+
+    setSelectedDurationFilter(updatedDurationFilter.length > 0 ? updatedDurationFilter : null);
+    handleDurationFilterChange(updatedDurationFilter.length > 0 ? updatedDurationFilter : null);
   };
   return (
     <>
@@ -227,7 +248,7 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
                       onChange={(value) => handlePriceFilter(value)}
                     />
                     <div className="priceRangeLabel">
-                      Price Range: AED {priceRange[0].toLocaleString('en-US')} - {priceRange[1].toLocaleString('en-US')}
+                      Price Range: {selectedCurrency} {priceRange[0].toLocaleString('en-US')} - {priceRange[1].toLocaleString('en-US')}
                     </div>
                   </div>
                 </div>
@@ -235,7 +256,7 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
             </div>
           </div>
 
-          <div className="RatingDiv">
+     {/*  <div className="RatingDiv">
             <div className="sidebarlabel">
               <h3>Rating</h3>
             </div>
@@ -325,7 +346,7 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
                 </label>
               </div>
             </div>
-          </div>
+          </div>*/} 
           {/*  <div className="SpecialsDiv">
             <div className="sidebarlabel">
               <h3>Specials</h3>
@@ -519,6 +540,31 @@ const LeftSideFilter = ({ handlePriceFilter, handleCloseSidebar, handleDurationF
       </div>
     </>
   )
+  function getUserPrice(tour) {
+    let price = 0;
+
+    if (userType === 2) {
+        // Agent user type
+        price =
+            selectedCurrency === "AED"
+                ? tour.tour_price_aed - (tour.tour_price_aed * userDiscount) / 100
+                : tour.tour_price_usd - (tour.tour_price_usd * userDiscount) / 100;
+    } else if (userType === 3) {
+        // Normal user type
+        price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
+    } else {
+        // Default case (handle other user types if needed)
+        price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
+    }
+
+    // Remove decimal part
+    return Math.floor(price);
 }
 
-export default LeftSideFilter
+}
+const mapStateToProps = (state) => ({
+selectedCurrency: state.currency.selectedCurrency,
+// ... (other state mappings)
+});
+
+export default connect(mapStateToProps)(LeftSideFilter);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Editor, EditorState, ContentState, convertFromRaw } from 'draft-js';
 import config from '../../config';
+
 const IncludedExclusive = () => {
   const [backendData, setBackendData] = useState(null);
   const url = window.location.href;
@@ -44,7 +45,7 @@ const IncludedExclusive = () => {
         </div> {/* datainnerUl */}
 
         <div className="tab-pane fade" id="pills-exclusive" role="tabpanel" aria-labelledby="pills-exclusive-tab">
-          <div className="datainnerUl">
+          <div className="datainnerUl crossicon">
             <div className="UlWrapper">
             {backendData && backendData.data && backendData.data.map((tour) => (
               <div className="UlWrapper" key={tour.id}>
