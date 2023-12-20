@@ -1,12 +1,32 @@
-import React , {useEffect , useState} from 'react';
-import { data } from '../../data/Category'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
+import { data } from '../../data/TourListing'
 import config from '../../config'
+import { connect } from 'react-redux';
 
-const CategoryLHS = ({ handlePriceFilter, priceRange, handleCloseSidebar, handleRatingFilterChange, selectedRatingFilter, handleDurationFilterChange }) => {
+const CategoryLHS = ({
+  selectedCurrency,
+  handlePriceFilter,
+  handleCloseSidebar,
+  handleDurationFilterChange,
+  priceRange,
+  handleRatingFilterChange,
+  selectedRatingFilter
+}) => {
+  const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(true);
+  const [userType, setUserType] = useState(null);
+  const [userDiscount, setUserDiscount] = useState(null);
   const [tourList, setTourList] = useState([]);
+
+  const toggleSidebarMenu = () => {
+    setIsSidebarMenuOpen(!isSidebarMenuOpen);
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,15 +42,27 @@ const CategoryLHS = ({ handlePriceFilter, priceRange, handleCloseSidebar, handle
   
     fetchData();
   }, []);
-  
+
+  const toggleCategories = () => {
+    setShowAllCategories(!showAllCategories);
+  }
+
   const handleDurationCheckboxChange = (event, selectedDurations) => {
+    let updatedDurationFilter = selectedDurationFilter ? [...selectedDurationFilter] : [];
+
     if (event.target.checked) {
-      // If the checkbox is checked, set the selected durations
-      handleDurationFilterChange(selectedDurations);
+      updatedDurationFilter = updatedDurationFilter.concat(selectedDurations);
     } else {
-      // If the checkbox is unchecked, remove the selected durations
-      handleDurationFilterChange(null);
+      selectedDurations.forEach((duration) => {
+        const index = updatedDurationFilter.indexOf(duration);
+        if (index !== -1) {
+          updatedDurationFilter.splice(index, 1);
+        }
+      });
     }
+
+    setSelectedDurationFilter(updatedDurationFilter.length > 0 ? updatedDurationFilter : null);
+    handleDurationFilterChange(updatedDurationFilter.length > 0 ? updatedDurationFilter : null);
   };
 
   return (

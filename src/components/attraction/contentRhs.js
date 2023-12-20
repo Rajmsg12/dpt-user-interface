@@ -242,7 +242,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                     ) : (
                                         <span>USD</span>
                                     )}
-                                    <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                    <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
                                 </div>
                             ) : (
                                 <div className="aedtext">
@@ -251,7 +251,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                     ) : (
                                         <span>USD</span>
                                     )}
-                                    <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                    <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
                                 </div>
                             )}
                         </div>
@@ -312,7 +312,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                       ) : (
                                           <span>USD</span>
                                       )}
-                                      <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                      <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
                                   </div>
                               ) : (
                                   <div>
@@ -334,7 +334,7 @@ const ListingSection = ({ selectedCurrency }) => {
                     </div>
                   </div>
                 </div>
-              {/*}  <div className="paginationSec">
+                <div className="paginationSec">
                   <nav aria-label="...">
                     <ul className="pagination">
                       <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
@@ -373,7 +373,7 @@ const ListingSection = ({ selectedCurrency }) => {
                       </li>
                     </ul>
                   </nav>
-                </div>*/}
+                </div>
               </div>
             </div>
           </div>

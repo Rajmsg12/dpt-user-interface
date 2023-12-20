@@ -73,31 +73,6 @@ const ContentSection = ({ selectedCurrency }) => {
     });
   };
 
-
-
-  // Filter items based on the selected price range
-  const filteredData = data.CategoryList.filter((tour) => {
-    const tourPrice = parseInt(tour.price.replace(',', ''));
-    const tourRating = parseInt(tour.rating);
-
-    if (
-      selectedDurationFilter &&
-      selectedDurationFilter.includes(tour.duration)
-    ) {
-      return (
-        tourPrice >= selectedPriceRange[0] &&
-        tourPrice <= selectedPriceRange[1] &&
-        tourRating >= selectedRatingFilter
-      );
-    } else if (!selectedDurationFilter) {
-      return (
-        tourPrice >= selectedPriceRange[0] &&
-        tourPrice <= selectedPriceRange[1] &&
-        tourRating >= selectedRatingFilter
-      );
-    }
-    return false; // Exclude items that don't match the duration filter
-  });
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -139,11 +114,32 @@ const ContentSection = ({ selectedCurrency }) => {
     fetchData();
   }, [slug]);
 
-  if (!apiData) {
-    return <p>Loading...</p>;
-  }
+  const filteredData = apiData && apiData.tour_info
+  ? apiData.tour_info.filter((tour) => {
+    const tourPrice = parseInt(tour.tour_tour_price_aed.replace(',', ''));
+    const tourDiscount = parseInt(tour.tour_discount); // Use the field you want for filtering
 
-  const itemsToShow = apiData.tour_info;
+    if (
+      selectedDurationFilter &&
+      selectedDurationFilter.includes(tour.tour_tour_duration)
+    ) {
+      return (
+        tourPrice >= selectedPriceRange[0] &&
+        tourPrice <= selectedPriceRange[1] &&
+        tourDiscount >= selectedRatingFilter // Use the selectedRatingFilter as needed
+      );
+    } else if (!selectedDurationFilter) {
+      return (
+        tourPrice >= selectedPriceRange[0] &&
+        tourPrice <= selectedPriceRange[1] &&
+        tourDiscount >= selectedRatingFilter // Use the selectedRatingFilter as needed
+      );
+    }
+    return false; // Exclude items that don't match the duration filter
+  })
+  : [];
+
+const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
     <>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
@@ -274,7 +270,7 @@ const ContentSection = ({ selectedCurrency }) => {
                             </Link>
                           ))
                         ) : (
-                          <p>No items within the selected price range.</p>
+                          <p>No Tour Found</p>
                         )}
                       </div>
                     </div>
