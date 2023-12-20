@@ -541,7 +541,7 @@ const Banner = ({selectedCurrency}) => {
                                 ) : (
                                     <span>USD</span>
                                 )}
-                                <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax} 
                             </div>
                         ) : (
                             <div className="aedtext">
@@ -550,7 +550,7 @@ const Banner = ({selectedCurrency}) => {
                                 ) : (
                                     <span>USD</span>
                                 )}
-                                <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax} 
                             </div>
                         )}
                     </div>
@@ -638,7 +638,7 @@ const Banner = ({selectedCurrency}) => {
                                 ) : (
                                     <span>USD</span>
                                 )}
-                                <strong>{getUserPrice(wedding)}</strong> Per {wedding.person} Person
+                                <strong>{getUserPrice(wedding)}</strong> {wedding.no_of_pax} 
                             </div>
                         ) : (
                             <div className="aedtext">
@@ -647,7 +647,7 @@ const Banner = ({selectedCurrency}) => {
                                 ) : (
                                     <span>USD</span>
                                 )}
-                                <strong>{getUserPrice(wedding)}</strong> Per {wedding.person} Person
+                                <strong>{getUserPrice(wedding)}</strong> {wedding.no_of_pax}
                             </div>
                         )}
                     </div>
@@ -733,7 +733,7 @@ const Banner = ({selectedCurrency}) => {
                               ) : (
                                   <span>USD</span>
                               )}
-                              <strong>{getUserPrice(luxury)}</strong> Per {luxury.person} Person
+                              <strong>{getUserPrice(luxury)}</strong> {luxury.no_of_pax}
                           </div>
                       ) : (
                           <div className="aedtext">
@@ -742,7 +742,7 @@ const Banner = ({selectedCurrency}) => {
                               ) : (
                                   <span>USD</span>
                               )}
-                              <strong>{getUserPrice(luxury)}</strong> Per {luxury.person} Person
+                              <strong>{getUserPrice(luxury)}</strong> {luxury.no_of_pax}
                           </div>
                       )}
                   </div>
@@ -827,7 +827,7 @@ const Banner = ({selectedCurrency}) => {
                                 ) : (
                                     <span>USD</span>
                                 )}
-                                <strong>{getUserPrice(privates)}</strong> Per {privates.person} Person
+                                <strong>{getUserPrice(privates)}</strong> {privates.no_of_pax} 
                             </div>
                         ) : (
                             <div className="aedtext">
@@ -836,7 +836,7 @@ const Banner = ({selectedCurrency}) => {
                                 ) : (
                                     <span>USD</span>
                                 )}
-                                <strong>{getUserPrice(privates)}</strong> Per {privates.person} Person
+                                <strong>{getUserPrice(privates)}</strong> {privates.no_of_pax} 
                             </div>
                         )}
                     </div>
@@ -921,7 +921,7 @@ const Banner = ({selectedCurrency}) => {
                               ) : (
                                   <span>USD</span>
                               )}
-                              <strong>{getUserPrice(attraction)}</strong> Per {attraction.person} Person
+                              <strong>{getUserPrice(attraction)}</strong> {attraction.no_of_pax} 
                           </div>
                       ) : (
                           <div className="aedtext">
@@ -930,7 +930,7 @@ const Banner = ({selectedCurrency}) => {
                               ) : (
                                   <span>USD</span>
                               )}
-                              <strong>{getUserPrice(attraction)}</strong> Per {attraction.person} Person
+                              <strong>{getUserPrice(attraction)}</strong> {attraction.no_of_pax} 
                           </div>
                       )}
                   </div>
@@ -1016,7 +1016,7 @@ const Banner = ({selectedCurrency}) => {
                               ) : (
                                   <span>USD</span>
                               )}
-                              <strong>{getUserPrice(chauffeur)}</strong> Per {chauffeur.person} Person
+                              <strong>{getUserPrice(chauffeur)}</strong> {chauffeur.no_of_pax}
                           </div>
                       ) : (
                           <div className="aedtext">
@@ -1025,7 +1025,7 @@ const Banner = ({selectedCurrency}) => {
                               ) : (
                                   <span>USD</span>
                               )}
-                              <strong>{getUserPrice(chauffeur)}</strong> Per {chauffeur.person} Person
+                              <strong>{getUserPrice(chauffeur)}</strong> {chauffeur.no_of_pax}
                           </div>
                       )}
                   </div>

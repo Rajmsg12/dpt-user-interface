@@ -188,7 +188,7 @@ const YouAlsoLike = ({selectedCurrency}) => {
                                                   ) : (
                                                     <span>USD</span>
                                                   )}
-                                                  <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                  <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax} 
                                                 </div>
                                               ) : (
                                                 <div className="aedtext">
@@ -197,7 +197,7 @@ const YouAlsoLike = ({selectedCurrency}) => {
                                                   ) : (
                                                     <span>USD</span>
                                                   )}
-                                                  <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                                  <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
                                                 </div>
                                               )}
                                         </div>

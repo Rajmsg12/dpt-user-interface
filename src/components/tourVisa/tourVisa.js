@@ -113,17 +113,17 @@ const tourVisa = () => {
                                             </p>
                                             <p>
                                                 <strong>
-                                                    USD 105 / AED 380 <span>per person. (14 days)</span>
+                                                    USD 105 / AED 380 <span> (14 days)</span>
                                                 </strong>
                                             </p>
                                             <p>
                                                 <strong>
-                                                    USD 129 / AED 470 <span>per person. (30 days)</span>
+                                                    USD 129 / AED 470 <span>(30 days)</span>
                                                 </strong>
                                             </p>
                                             <p>
                                                 <strong>
-                                                    USD 399 / AED 1455 <span>per person. (90 days)</span>
+                                                    USD 399 / AED 1455 <span> (90 days)</span>
                                                 </strong>
                                             </p>
                                             <p>
@@ -131,12 +131,12 @@ const tourVisa = () => {
                                             </p>
                                             <p>
                                                 <strong>
-                                                    USD 384 / AED 1400 <span> per person. (30 days)</span>
+                                                    USD 384 / AED 1400 <span> (30 days)</span>
                                                 </strong>
                                             </p>
                                             <p>
                                                 <strong>
-                                                    USD 699 / AED 2550 <span> per person. (90 days) </span>
+                                                    USD 699 / AED 2550 <span>  (90 days) </span>
                                                 </strong>
                                             </p>
                                             <p>

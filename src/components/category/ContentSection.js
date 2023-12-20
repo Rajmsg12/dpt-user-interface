@@ -256,7 +256,7 @@ const ContentSection = ({ selectedCurrency }) => {
                                       ) : (
                                         <span>USD</span>
                                       )}
-                                      <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                      <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax} 
                                     </div>
                                   ) : (
                                     <div className="aedtext">
@@ -265,7 +265,7 @@ const ContentSection = ({ selectedCurrency }) => {
                                       ) : (
                                         <span>USD</span>
                                       )}
-                                      <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                      <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
                                     </div>
                                   )}
                                 </div>
@@ -350,7 +350,7 @@ const ContentSection = ({ selectedCurrency }) => {
                                         ) : (
                                           <span>USD</span>
                                         )}
-                                        <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                        <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
                                       </div>
                                     ) : (
                                       <div>
@@ -359,7 +359,7 @@ const ContentSection = ({ selectedCurrency }) => {
                                         ) : (
                                           <span>USD</span>
                                         )}
-                                        <strong>{getUserPrice(tour)}</strong> Per {tour.person} Person
+                                        <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
                                       </div>
                                     )}
                                   </div>

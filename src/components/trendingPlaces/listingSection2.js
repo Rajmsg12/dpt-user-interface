@@ -329,7 +329,7 @@ const ListingSection = ({ selectedCurrency }) => {
                             <div className="listboxrhs">
                               <div className="startingFromTag">Starting from</div>
                               <div className="price">
-                                AED <strong>{tour.tour_tour_price_aed}</strong> Per {tour.person} Person
+                                AED <strong>{tour.tour_tour_price_aed}</strong> {tour.no_of_pax}
                               </div>
                             </div>
                           </div>
