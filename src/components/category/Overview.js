@@ -36,9 +36,6 @@ console.log(tourData)
                     <div className="Title">
                         <h2>Overview</h2>
                     </div>
-                    <p>
-                        <strong>{tourData.description.blocks[0].text}</strong>
-                    </p>
                     <p>{tourData.short_description}</p>
                     {/* Add more rendering logic for other properties if needed */}
                 </div>

@@ -28,10 +28,8 @@ import { useNavigate } from "react-router-dom";
 import './Style/TourPage.css'
 
 function ContentSection({ selectedCurrency }) {
-  const { title } = useParams();
   const [backendData, setBackendData] = useState(null);
   const dispatch = useDispatch();
-  const [selectedDate, setSelectedDate] = useState(null)
   const [isFormValid, setIsFormValid] = useState(true);
   const [tourName, setTourName] = useState("");
   const [tourPriceAed, setTourPriceAed] = useState("");
@@ -123,7 +121,8 @@ function ContentSection({ selectedCurrency }) {
     preferredPickupLocation: '0',
     pickupLocation: '0',
     endLocation: '0',
-    hotelName: '0',
+    preferredEndLocation:'0',
+    preferredHotelName: '0',
     preferredGuideLanguage: '0',
     aedPrice: '0',
     usdPrice: '0',
@@ -131,8 +130,8 @@ function ContentSection({ selectedCurrency }) {
     adults: '0',
     children: '0',
     infants: '0',
-    additionalDriver: '0',
-    additionalLunch: '0',
+    preferredDriver: '0',
+    preferredLunc: '0',
     additionalTickets: '0',
     specialRequest: '',
     otherPlaceName: '',
@@ -191,16 +190,15 @@ function ContentSection({ selectedCurrency }) {
     const ticketPrice = (selectedItinerary?.itinerary_ticket_price_aed || 0) * ticketNumber || 0;
 
     formData.lunchPrice = lunchPrice.toFixed(2);
-    formData.tour_currency = { selectedCurrency };
+    formData.preferredCurrency = selectedCurrency;
     formData.ticketPrice = ticketPrice.toFixed(2);
     formData.driverTotalPrice = driverTotalPrice.toFixed(2);
     formData.childrenPrice = childrenPrice.toFixed(2);
     formData.adultPrice = adultPrice.toFixed(2);
     formData.infantsPrice = infantsPrice.toFixed(2);
     formData.tourPriceUsd = tourPriceUsd;
-    formData.selectedCurrency = selectedCurrency;
 
-    formData.preferredGuideLanguage = selectedLanguage.lnname;
+    formData.language = selectedLanguage.lnname;
     formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedprice : selectedLanguage.usdprice;
 
     const formElements = event.target.elements;
@@ -412,27 +410,25 @@ function ContentSection({ selectedCurrency }) {
   };
   const handleInputChange3 = (event, name) => {
     const { value } = event.target;
-
+  
     // Find the selected language object from the languages array using the language name
     const selectedLang = language.find(lang => lang.lnname === value);
-
+  
     if (selectedLang) {
-      // Update language price based on selectedCurrency
-      const languagePrice = selectedCurrency === 'AED' ? selectedLang.aedprice : selectedLang.usdprice;
-
+      setSelectedLanguage(selectedLang); // Update the selected language
+  
       setFormData(prevData => ({
         ...prevData,
-        [name]: selectedLang, // Update with the entire language object
-        languagePrice, // Set the language price in the formData
-        preferredGuideLanguage: selectedLang.lnname, // Ensure preferredGuideLanguage is updated with language name
+        preferredGuideLanguage: selectedLang.lnname, // Update with the language name
       }));
-
-      setSelectedLanguage(selectedLang); // Update the selected language
     } else {
       // Handle the case when the selected language is not found
       console.error("Selected language not found!");
     }
   };
+  
+  
+  
 
 
 
@@ -804,7 +800,8 @@ function ContentSection({ selectedCurrency }) {
                                   placeholder="No of Adults"
                                   name="adults"
                                   min="1"
-                                  max="20"
+                                  max="15"
+                                  oninput="validity.valid||(value='');"
                                   onChange={(e) => {
                                     const adultsValue = parseInt(e.target.value);
                                     setAdultsNumber(adultsValue >= 0 ? adultsValue : 0);
@@ -891,10 +888,10 @@ function ContentSection({ selectedCurrency }) {
                                 <input
                                   type="number"
                                   className="form-control"
-                                  placeholder="No of Infants"
-                                  name="driver"
+                                  placeholder="No of Driver"
+                                  name="preferredDriver"
                                   min="1"
-                                  max="10"
+                                  max="9"
                                   onChange={(e) => {
                                     const driverValue = parseInt(e.target.value);
                                     setDriverNumber(driverValue >= 0 ? driverValue : 0);
@@ -918,12 +915,12 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Additional Lunch</label>
+                                <label>Additional Lunch </label>
                                 <input
                                   type="number"
                                   className="form-control"
                                   placeholder="No of Lunch"
-                                  name="lunch"
+                                  name="preferredLunc"
                                   min="1"
                                   max="10"
                                   onChange={(e) => {

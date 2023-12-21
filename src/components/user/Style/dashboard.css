@@ -937,6 +937,7 @@ cursor: pointer;
  /* white-space: nowrap;
  overflow: hidden;
  text-overflow: ellipsis; */
+ overflow-wrap: anywhere;
 }
 .CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow span:last-child{
   width:50%;

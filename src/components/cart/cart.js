@@ -206,6 +206,10 @@ const Cart = () => {
                               <span>Pickup Location*</span>
                               <span>{item.preferredPickupLocation}</span>
                             </div>
+                            <div className="BookingInfotablerow">
+                              <span>Hotel Name*</span>
+                              <span>{item.preferredHotelName}</span>
+                            </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Preferred Language*</span>
@@ -232,7 +236,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Additional Driver</span>
-                              <span>{item.driver}</span>
+                              <span>{item.preferredDriver}</span>
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Driver Price</span>
@@ -240,7 +244,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Additional Lunch</span>
-                              <span>{item.lunch}</span>
+                              <span>{item.preferredLunc}</span>
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Lunch Price</span>
@@ -276,7 +280,7 @@ const Cart = () => {
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Pref.currency</span>
-                              <span>{item.selectedCurrency}</span>
+                              <span>{item.preferredCurrency}</span>
                             </div>
                             
                             {/*BookingInfotablerow*/}

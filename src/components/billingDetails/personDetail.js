@@ -7,6 +7,7 @@ import config from '../../config'
 const PersonDetail = ({ selectedCurrency }) => {
     let cartdata = localStorage.getItem("cartdata");
     const MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
+    console.log(MyCartDetail)
     const totalPrice = MyCartDetail.map(item => item.tourPriceAed).reduce((acc, price) => acc + price, 0);
     const navigate = useNavigate()
     const ourSelectedCurrency = MyCartDetail.length > 0 ? MyCartDetail[0].selectedCurrency : 'AED';
@@ -389,7 +390,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     <div className="mb-3 formGroup">
                                                         <label>Cell No*</label>
                                                         <input
-                                                            type="text"
+                                                            type="tel"
                                                             className="form-control"
                                                             placeholder="Enter Cell No"
                                                             required=""

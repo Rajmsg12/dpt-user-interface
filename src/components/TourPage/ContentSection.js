@@ -28,10 +28,8 @@ import { useNavigate } from "react-router-dom";
 import './Style/TourPage.css'
 
 function ContentSection({ selectedCurrency }) {
-  const { title } = useParams();
   const [backendData, setBackendData] = useState(null);
   const dispatch = useDispatch();
-  const [selectedDate, setSelectedDate] = useState(null)
   const [isFormValid, setIsFormValid] = useState(true);
   const [tourName, setTourName] = useState("");
   const [tourPriceAed, setTourPriceAed] = useState("");
@@ -123,7 +121,8 @@ function ContentSection({ selectedCurrency }) {
     preferredPickupLocation: '0',
     pickupLocation: '0',
     endLocation: '0',
-    hotelName: '0',
+    preferredEndLocation:'0',
+    preferredHotelName: '0',
     preferredGuideLanguage: '0',
     aedPrice: '0',
     usdPrice: '0',
@@ -131,8 +130,8 @@ function ContentSection({ selectedCurrency }) {
     adults: '0',
     children: '0',
     infants: '0',
-    additionalDriver: '0',
-    additionalLunch: '0',
+    preferredDriver: '0',
+    preferredLunc: '0',
     additionalTickets: '0',
     specialRequest: '',
     otherPlaceName: '',
@@ -191,16 +190,15 @@ function ContentSection({ selectedCurrency }) {
     const ticketPrice = (selectedItinerary?.itinerary_ticket_price_aed || 0) * ticketNumber || 0;
 
     formData.lunchPrice = lunchPrice.toFixed(2);
-    formData.tour_currency = { selectedCurrency };
+    formData.preferredCurrency = selectedCurrency;
     formData.ticketPrice = ticketPrice.toFixed(2);
     formData.driverTotalPrice = driverTotalPrice.toFixed(2);
     formData.childrenPrice = childrenPrice.toFixed(2);
     formData.adultPrice = adultPrice.toFixed(2);
     formData.infantsPrice = infantsPrice.toFixed(2);
     formData.tourPriceUsd = tourPriceUsd;
-    formData.selectedCurrency = selectedCurrency;
 
-    formData.preferredGuideLanguage = selectedLanguage.lnname;
+    formData.language = selectedLanguage.lnname;
     formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedprice : selectedLanguage.usdprice;
 
     const formElements = event.target.elements;
@@ -891,7 +889,7 @@ function ContentSection({ selectedCurrency }) {
                                   type="number"
                                   className="form-control"
                                   placeholder="No of Driver"
-                                  name="driver"
+                                  name="preferredDriver"
                                   min="1"
                                   max="9"
                                   onChange={(e) => {
@@ -922,7 +920,7 @@ function ContentSection({ selectedCurrency }) {
                                   type="number"
                                   className="form-control"
                                   placeholder="No of Lunch"
-                                  name="lunch"
+                                  name="preferredLunc"
                                   min="1"
                                   max="10"
                                   onChange={(e) => {

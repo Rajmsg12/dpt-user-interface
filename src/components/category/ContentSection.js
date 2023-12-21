@@ -251,8 +251,7 @@ const itemsToShow = filteredData.slice(startIndex, endIndex);
                                         <span>AED</span>
                                       ) : (
                                         <span>USD</span>
-                                      )}
-                                      <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax} 
+                                      )} <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax} 
                                     </div>
                                   ) : (
                                     <div className="aedtext">
@@ -260,8 +259,7 @@ const itemsToShow = filteredData.slice(startIndex, endIndex);
                                         <span>AED</span>
                                       ) : (
                                         <span>USD</span>
-                                      )}
-                                      <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                      )} <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
                                     </div>
                                   )}
                                 </div>
