@@ -795,7 +795,7 @@ function ContentSection({ selectedCurrency }) {
 
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Adults <span style={{ fontSize: '10px' }}>(max 15)</span></label>
+                                <label>Adults</label>
                                 <input
                                   type="number"
                                   className="form-control"
@@ -826,7 +826,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Children <span style={{ fontSize: '10px' }}>(max 10)</span></label>
+                                <label>Children</label>
                                 <input
                                   type="number"
                                   className="form-control"
@@ -855,7 +855,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Infants <span style={{ fontSize: '10px' }}>(max 10)</span></label>
+                                <label>Infants</label>
                                 <input
                                   type="number"
                                   className="form-control"
@@ -886,7 +886,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Additional Driver <span style={{ fontSize: '10px' }}>(max 9)</span></label>
+                                <label>Additional Driver</label>
                                 <input
                                   type="number"
                                   className="form-control"
@@ -917,7 +917,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Additional Lunch <span style={{ fontSize: '10px' }}>(max 10)</span></label>
+                                <label>Additional Lunch </label>
                                 <input
                                   type="number"
                                   className="form-control"
@@ -967,7 +967,7 @@ function ContentSection({ selectedCurrency }) {
                             {selectedItinerary && (
                               <div className="col-md-12">
                                 <div className="mb-3 formGroup infoDetail">
-                                  <label>No. of Tickets <span style={{ fontSize: '10px' }}>(max 10)</span></label>
+                                  <label>No. of Tickets</label>
                                   <input
                                     type="number"
                                     className="form-control"
