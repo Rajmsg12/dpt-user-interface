@@ -1,7 +1,7 @@
 import React, { useState ,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import '../../components/TourListing/Styles/TourListing.css';
-import LeftSideFilter from './contentLhs';
+import LeftSideFilter from './LeftSideFilter';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import config from '../../config';
@@ -321,7 +321,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                       ) : (
                                           <span>USD</span>
                                       )}
-                                      <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                      <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
                                   </div>
                               )}
                                 </div>

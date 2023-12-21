@@ -57,7 +57,6 @@ function ContentSection({ selectedCurrency }) {
   const [language, setLanguage] = useState([]);
 
   const [tourImage, setTourImage] = useState("");
-  const [languagesData, setLanguagesData] = useState([]);
 
 
   const formRef = useRef(null);
@@ -201,8 +200,8 @@ function ContentSection({ selectedCurrency }) {
     formData.tourPriceUsd = tourPriceUsd;
     formData.selectedCurrency = selectedCurrency;
 
-    formData.preferredGuideLanguage = selectedLanguage.language;
-    formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedPrice : selectedLanguage.usdPrice;
+    formData.preferredGuideLanguage = selectedLanguage.lnname;
+    formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedprice : selectedLanguage.usdprice;
 
     const formElements = event.target.elements;
 
@@ -289,7 +288,6 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, [slug]);
-  console.log(language)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -416,21 +414,21 @@ function ContentSection({ selectedCurrency }) {
     const { value } = event.target;
   
     // Find the selected language object from the languages array using the language name
-    const selectedLang = language.find(lang => lang.language === value);
+    const selectedLang = language.find(lang => lang.lnname === value);
   
     if (selectedLang) {
       setSelectedLanguage(selectedLang); // Update the selected language
   
       setFormData(prevData => ({
         ...prevData,
-        [name]: selectedLang, // Update with the entire language object
-        preferredGuideLanguage: selectedLang, // Set preferredGuideLanguage to the entire language object
+        preferredGuideLanguage: selectedLang.lnname, // Update with the language name
       }));
     } else {
       // Handle the case when the selected language is not found
       console.error("Selected language not found!");
     }
   };
+  
   
   
 
@@ -741,8 +739,8 @@ function ContentSection({ selectedCurrency }) {
                                   {
                                     language && language.length > 0 ? (
                                       language.map(lang => (
-                                        <option key={lang.language} value={lang.language}>
-                                          {lang.language}
+                                        <option key={lang.lnname} value={lang.lnname}>
+                                          {lang.lnname}
                                         </option>
                                       ))
                                     ) : (
@@ -757,8 +755,8 @@ function ContentSection({ selectedCurrency }) {
                                     <label>
                                       {selectedCurrency}{' '}
                                       {selectedCurrency === 'AED'
-                                        ? selectedLanguage.aedPrice
-                                        : selectedLanguage.usdPrice}
+                                        ? selectedLanguage.aedprice
+                                        : selectedLanguage.usdprice}
                                     </label>
                                     {/* You can similarly display other prices */}
                                   </div>
@@ -797,14 +795,15 @@ function ContentSection({ selectedCurrency }) {
 
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Adults</label>
+                                <label>Adults <span style={{ fontSize: '10px' }}>(max 15)</span></label>
                                 <input
                                   type="number"
                                   className="form-control"
                                   placeholder="No of Adults"
                                   name="adults"
                                   min="1"
-                                  max="20"
+                                  max="15"
+                                  oninput="validity.valid||(value='');"
                                   onChange={(e) => {
                                     const adultsValue = parseInt(e.target.value);
                                     setAdultsNumber(adultsValue >= 0 ? adultsValue : 0);
@@ -827,7 +826,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Children</label>
+                                <label>Children <span style={{ fontSize: '10px' }}>(max 10)</span></label>
                                 <input
                                   type="number"
                                   className="form-control"
@@ -856,7 +855,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Infants</label>
+                                <label>Infants <span style={{ fontSize: '10px' }}>(max 10)</span></label>
                                 <input
                                   type="number"
                                   className="form-control"
@@ -887,14 +886,14 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-4">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Additional Driver</label>
+                                <label>Additional Driver <span style={{ fontSize: '10px' }}>(max 9)</span></label>
                                 <input
                                   type="number"
                                   className="form-control"
-                                  placeholder="No of Infants"
+                                  placeholder="No of Driver"
                                   name="driver"
                                   min="1"
-                                  max="10"
+                                  max="9"
                                   onChange={(e) => {
                                     const driverValue = parseInt(e.target.value);
                                     setDriverNumber(driverValue >= 0 ? driverValue : 0);
@@ -918,7 +917,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup infoDetail">
-                                <label>Additional Lunch</label>
+                                <label>Additional Lunch <span style={{ fontSize: '10px' }}>(max 10)</span></label>
                                 <input
                                   type="number"
                                   className="form-control"
@@ -968,7 +967,7 @@ function ContentSection({ selectedCurrency }) {
                             {selectedItinerary && (
                               <div className="col-md-12">
                                 <div className="mb-3 formGroup infoDetail">
-                                  <label>No. of Tickets</label>
+                                  <label>No. of Tickets <span style={{ fontSize: '10px' }}>(max 10)</span></label>
                                   <input
                                     type="number"
                                     className="form-control"

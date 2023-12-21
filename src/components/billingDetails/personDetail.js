@@ -154,27 +154,38 @@ const PersonDetail = ({ selectedCurrency }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         const isFormValid = validateForm();
-
+    
         if (isFormValid) {
             const token = localStorage.getItem("token");
-
             const headers = {
                 'Content-Type': 'application/json',
             };
-
+    
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
             }
-
+    
             try {
-                const response = await fetch(`${config.baseUrl}/cart/add`, {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(formData),
-                });
-
+                let response;
+    
+                if (token) {
+                    response = await fetch(`${config.baseUrl}/cart/add`, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(formData),
+                    });
+                } else {
+                    response = await fetch(`${config.baseUrl}/cart/add`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
+                }
+    
                 if (response.ok) {
                     console.log('Booking successful');
                     localStorage.removeItem("cartdata");
@@ -189,9 +200,12 @@ const PersonDetail = ({ selectedCurrency }) => {
             console.log('Form has validation errors');
         }
     };
-
-
-
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scrolling behavior
+        });
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -200,6 +214,7 @@ const PersonDetail = ({ selectedCurrency }) => {
             [name]: value,
         }));
     };
+
 
     return (
         <div>
@@ -413,6 +428,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     {/*formGroup*/}
                                                 </div>
                                             </div>
+                                            <div className="TopArrow" onClick={scrollToTop}></div>
                                             {/*row*/}
                                         </form>
 
@@ -450,6 +466,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     Book Now
                                                 </button>
                                             </div>
+                                            
                                             {/*ProceedCheckoutCta*/}
                                             {/*PaymentMethodGroup*/}
                                         </div>
@@ -465,6 +482,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                     </div>
                     {/*container*/}
                 </div>
+               
             </form>
         </div>
     )

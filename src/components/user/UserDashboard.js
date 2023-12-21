@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import config from '../../config';
 
 const UserProfile = () => {
-  const [canceledBookingsCount, setCanceledBookingsCount] = useState(0);
   const [formData, setFormData] = useState({
     first_name: '',
     lastName: '',
@@ -28,8 +27,9 @@ const UserProfile = () => {
 
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-
+  const [latestBookingsCount, setLatestBookingsCount] = useState(0); 
   const [first_name, setUserName] = useState('');
+  const [canceledBookingsCount, setCanceledBookingsCount] = useState(0);
   const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -69,24 +69,6 @@ const UserProfile = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      fetch(`${config.baseUrl}/booking/cancele/orders`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setCanceledBookingsCount(data)
-          setIsLoggedIn(true);
-        })
-        .catch((error) => {
-          console.error('Error fetching user data:', error);
-        });
-    }
-  }, []);
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -131,7 +113,6 @@ const UserProfile = () => {
   useEffect(() => {
     fetchBookingDetails();
   }, []);
-  console.log(bookingDetails)
 
   const handleLogout = () => {
     fetch(`${config.baseUrl}/logout`, {
@@ -182,6 +163,55 @@ const UserProfile = () => {
         });
     }
   };
+// Update useEffect blocks for fetching latest and canceled bookings count
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  console.log(token)
+  if (token) {
+    fetch(`${config.baseUrl}/booking/latest/orders`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Access the correct property containing the array
+        if (data && data.data && Array.isArray(data.data)) {
+          setLatestBookingsCount(data.data.length);
+        } else {
+          // Handle the case where the data structure doesn't match the expected format
+          console.error('Unexpected data format for latest bookings:', data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching latest bookings data:', error);
+      });
+  }
+}, []);
+
+// Similar modification for fetching canceled bookings count
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    fetch(`${config.baseUrl}/booking/cancele/orders`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.data && Array.isArray(data.data)) {
+          setCanceledBookingsCount(data.data.length);
+        } else {
+          console.error('Unexpected data format for canceled bookings:', data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching canceled bookings data:', error);
+      });
+  }
+}, []);
+
   return (
     <>
       <>
@@ -311,14 +341,14 @@ const UserProfile = () => {
                     <div className="DashboardBox">
                       <div className="Icon"><img src="images/homepage/next-weekicon.png" alt="" /></div>
                       <div className="Text">
-                        <div className="Heading">3</div>
+                      <div className="Heading">{latestBookingsCount}</div> 
                         <div className="SubHeading">Upcoming Bookings</div>
                       </div>
                     </div>
                     <div className="DashboardBox">
                       <div className="Icon"><img src="images/homepage/forbiddenicon.png" alt="" /></div>
                       <div className="Text">
-                        <div className="Heading">5</div>
+                      <div className="Heading">{canceledBookingsCount}</div>
                         <div className="SubHeading">Cancel Bookings</div>
                       </div>
                     </div>

@@ -81,12 +81,14 @@ const ListingSection = ({ selectedCurrency }) => {
         .then(data => {
           setUserType(data.data.user_type); // Set user type from login API
           setUserDiscount(data.data.discount); // Set user discount from login API
+          setIsLoggedIn(true); // Set isLoggedIn to true when the token is present
         })
         .catch(error => {
           console.error("Error fetching user data:", error);
         });
     }
   }, []);
+  
 
   const filteredData = apiData && apiData.tour_info
     ? apiData.tour_info.filter((tour) => {
@@ -235,7 +237,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                         ) : (
                                           <span>USD</span>
                                         )}
-                                        <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                        <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
                                       </div>
                                     ) : (
                                       <div className="aedtext">
@@ -244,7 +246,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                         ) : (
                                           <span>USD</span>
                                         )}
-                                        <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                        <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
                                       </div>
                                     )}
                                   </div>

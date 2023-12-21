@@ -201,8 +201,8 @@ function ContentSection({ selectedCurrency }) {
     formData.tourPriceUsd = tourPriceUsd;
     formData.selectedCurrency = selectedCurrency;
 
-    formData.preferredGuideLanguage = selectedLanguage.language;
-    formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedPrice : selectedLanguage.usdPrice;
+    formData.preferredGuideLanguage = selectedLanguage.lnname;
+    formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedprice : selectedLanguage.usdprice;
 
     const formElements = event.target.elements;
 
@@ -289,7 +289,6 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, [slug]);
-  console.log(language)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -416,17 +415,17 @@ function ContentSection({ selectedCurrency }) {
     const { value } = event.target;
 
     // Find the selected language object from the languages array using the language name
-    const selectedLang = language.find(lang => lang.language === value);
+    const selectedLang = language.find(lang => lang.lnname === value);
 
     if (selectedLang) {
       // Update language price based on selectedCurrency
-      const languagePrice = selectedCurrency === 'AED' ? selectedLang.aedPrice : selectedLang.usdPrice;
+      const languagePrice = selectedCurrency === 'AED' ? selectedLang.aedprice : selectedLang.usdprice;
 
       setFormData(prevData => ({
         ...prevData,
         [name]: selectedLang, // Update with the entire language object
         languagePrice, // Set the language price in the formData
-        preferredGuideLanguage: selectedLang.language, // Ensure preferredGuideLanguage is updated with language name
+        preferredGuideLanguage: selectedLang.lnname, // Ensure preferredGuideLanguage is updated with language name
       }));
 
       setSelectedLanguage(selectedLang); // Update the selected language
@@ -743,8 +742,8 @@ function ContentSection({ selectedCurrency }) {
                                   {
                                     language && language.length > 0 ? (
                                       language.map(lang => (
-                                        <option key={lang.language} value={lang.language}>
-                                          {lang.language}
+                                        <option key={lang.lnname} value={lang.lnname}>
+                                          {lang.lnname}
                                         </option>
                                       ))
                                     ) : (
@@ -759,8 +758,8 @@ function ContentSection({ selectedCurrency }) {
                                     <label>
                                       {selectedCurrency}{' '}
                                       {selectedCurrency === 'AED'
-                                        ? selectedLanguage.aedPrice
-                                        : selectedLanguage.usdPrice}
+                                        ? selectedLanguage.aedprice
+                                        : selectedLanguage.usdprice}
                                     </label>
                                     {/* You can similarly display other prices */}
                                   </div>
