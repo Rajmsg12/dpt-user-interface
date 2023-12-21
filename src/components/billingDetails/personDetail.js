@@ -151,7 +151,6 @@ const PersonDetail = ({ selectedCurrency }) => {
 
     });
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -168,23 +167,11 @@ const PersonDetail = ({ selectedCurrency }) => {
             }
     
             try {
-                let response;
-    
-                if (token) {
-                    response = await fetch(`${config.baseUrl}/cart/add`, {
-                        method: 'POST',
-                        headers: headers,
-                        body: JSON.stringify(formData),
-                    });
-                } else {
-                    response = await fetch(`${config.baseUrl}/cart/add`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData),
-                    });
-                }
+                const response = await fetch(`${config.baseUrl}/cart/add`, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(formData),
+                });
     
                 if (response.ok) {
                     console.log('Booking successful');
@@ -200,6 +187,7 @@ const PersonDetail = ({ selectedCurrency }) => {
             console.log('Form has validation errors');
         }
     };
+    
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
