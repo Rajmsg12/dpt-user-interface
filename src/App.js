@@ -43,7 +43,6 @@ const ViewBookingTour = lazy(() => import("./components/user/viewBookingTour"));
 const App = () => {
   return (
     <Router basename={'/'}>
-
       <React.Fragment>
         <ScrollToTop />
         <Suspense fallback={<div>Loading...</div>}>

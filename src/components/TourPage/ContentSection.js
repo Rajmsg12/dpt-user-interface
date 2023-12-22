@@ -200,7 +200,17 @@ function ContentSection({ selectedCurrency }) {
 
     formData.language = selectedLanguage.lnname;
     formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedprice : selectedLanguage.usdprice;
-
+    formData.tourtotal = (
+      parseFloat(additionalTicketPrice) +
+      parseFloat(lunchPrice) +
+      parseFloat(ticketPrice) +
+      parseFloat(driverTotalPrice) +
+      parseFloat(childrenPrice) +
+      parseFloat(infantsPrice) +
+      (selectedCurrency === 'AED' ? parseFloat(selectedLanguage.aedprice) : parseFloat(selectedLanguage.usdprice)) +
+      parseFloat(adultPrice)
+    ).toFixed(2);
+    
     const formElements = event.target.elements;
 
     for (let i = 0; i < formElements.length; i++) {

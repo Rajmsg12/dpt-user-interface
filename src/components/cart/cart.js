@@ -14,8 +14,6 @@ const Cart = () => {
   const [cart, setCart] = useState([]);
   // const cart = useSelector((state) => state.cart.cart);
   const ourSelectedCurrency = cart.length > 0 ? cart[0].selectedCurrency : 'AED';
-  console.log(cartdata);
-
 
   const navigate = useNavigate()
 
@@ -30,7 +28,6 @@ const Cart = () => {
     const totalTicketPrice = parseFloat(item.additionalTickets || 0);
     const totalLanguagePrice = parseFloat(item.languagePrice || 0);
     const itemPriceAED = parseFloat(item.tourPriceAed) || 0;
-    console.log("totalInfantsPrice",totalLanguagePrice)
     const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalLunchPrice + totalTicketPrice + totalLanguagePrice;
     return totalPriceForItem.toFixed(2); // Format the price to two decimal places
   };
@@ -151,17 +148,17 @@ const Cart = () => {
                         {isLoggedIn ? (
                           <div className="aedtext">
                             {item.selectedCurrency === "AED" ? (
-                              <strong>AED {particularItemPriceAed(item)}</strong>
+                              <strong>{item.preferredCurrency} {particularItemPriceAed(item)}</strong>
                             ) : (
-                              <strong>USD {particularItemPriceUsd(item)}</strong>
+                              <strong>{item.preferredCurrency} {particularItemPriceUsd(item)}</strong>
                             )}
                           </div>
                         ) : (
                           <div className="aedtext">
                             {item.selectedCurrency === "AED" ? (
-                              <strong>AED {particularItemPriceAed(item)}</strong>
+                              <strong>{item.preferredCurrency} {particularItemPriceAed(item)}</strong>
                             ) : (
-                              <strong>USD {particularItemPriceUsd(item)}</strong>
+                              <strong>{item.preferredCurrency} {particularItemPriceUsd(item)}</strong>
                             )}
                           </div>
                         )}

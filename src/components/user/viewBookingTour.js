@@ -34,26 +34,26 @@ const ViewBookingTour = () => {
     const fetchBookingList = () => {
         const token = localStorage.getItem('token');
         fetch(`${config.baseUrl}/booking/list/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         })
-          .then((response) => response.json())
-          .then((data) => {
-            // Assuming the response data is an array of booking items
-            setBookingList(data.data);
-          })
-          .catch((error) => {
-            console.error('Error fetching booking list:', error);
-          });
-      };
-      
-      // Use useEffect to fetch booking list from the API on component mount
-      useEffect(() => {
+            .then((response) => response.json())
+            .then((data) => {
+                // Assuming the response data is an array of booking items
+                setBookingList(data.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching booking list:', error);
+            });
+    };
+
+    // Use useEffect to fetch booking list from the API on component mount
+    useEffect(() => {
         fetchBookingList();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
-      
+    }, []);
+
     console.log(bookingList)
 
     useEffect(() => {
@@ -125,6 +125,7 @@ const ViewBookingTour = () => {
     useEffect(() => {
         fetchBookingDetails();
     }, []);
+
 
     const handleLogout = () => {
         fetch(`${config.baseUrl}/logout`, {
@@ -280,9 +281,22 @@ const ViewBookingTour = () => {
                                                         <div className="CartContentWrapper">
                                                             <h4>{item.tour_name}</h4>
                                                             <div className="Price">
-                                                            {item.tour_currency} {item.tourPriceAed}
-
+                                                           {item.tour_currency} {item.tour_currency === 'AED' ? (
+                                                                    <>
+                                                                     {item.tourPriceAed + item.tourtotal}
+                                                                    </>
+                                                                ) : item.tour_currency === 'USD' ? (
+                                                                    <>
+                                                                        {item.tourPriceUsd + item.tourtotal}
+                                                                    </>
+                                                                ) : (
+                                                                    // Handle other currency types here if needed
+                                                                    <>
+                                                                        {item.tourPrice + item.tourtotal}
+                                                                    </>
+                                                                )}
                                                             </div>
+
                                                             <div className="BtnGroup">
                                                                 <Link
                                                                     href="#"

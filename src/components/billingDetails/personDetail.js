@@ -7,7 +7,6 @@ import config from '../../config'
 const PersonDetail = ({ selectedCurrency }) => {
     let cartdata = localStorage.getItem("cartdata");
     const MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
-    console.log(MyCartDetail)
     const totalPrice = MyCartDetail.map(item => item.tourPriceAed).reduce((acc, price) => acc + price, 0);
     const navigate = useNavigate()
     const ourSelectedCurrency = MyCartDetail.length > 0 ? MyCartDetail[0].selectedCurrency : 'AED';
@@ -144,11 +143,12 @@ const PersonDetail = ({ selectedCurrency }) => {
         discover_us: '',
         country: '',
         cell_no: '',
+        tax:0.18,
         special_equest: '',
         cart_data: MyCartDetail,
 
-        sub_total: calculateTotal().fullTotal,
-        total: totalPrice,
+        sub_total: calculateTotal().subtotal,
+        total: calculateTotal().fullTotal,
 
     });
 
