@@ -237,29 +237,28 @@ const ViewBookingTour = () => {
                                     <span className="closeIcon" />
                                 </div>
                                 <Link to="/user-dashboard" className="nav-link active DashboardIcon">
-                                    <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/dashboardicon_n9cufo.png"} alt="" /> Dashboard
                                 </Link>
                                 <Link to="/booking" className="nav-link MyBookingIcon">
-                                    <img src="images/homepage/mybookingicon.png" alt="" /> My Bookings
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772237/mybookingicon_aume73.png"} alt="" /> My Bookings
                                 </Link>
                                 <Link to="/wishlist" className="nav-link WishlistIcon">
-                                    <img src="images/homepage/wislisticonnew.png" alt="" />
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772538/wislisticonnew_t8tvl3.png"} alt="" />
                                     Wishlist
                                 </Link>
                                 <Link to="/editprofile" className="nav-link EditrofileIcon">
-                                    <img src="images/homepage/pen.png" alt="" /> Edit Profile
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/pen_tfhsvm.png"} alt="" /> Edit Profile
                                 </Link>
                                 <Link to="/changepassword" className="nav-link ChangePassWordIcon">
-                                    <img src="images/homepage/changepasswordicon.png" alt="" />
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772237/changepasswordicon_lgsgic.png"} alt="" />
                                     Change Password
                                 </Link>
                                 <div className="logoutDiv">
-                                    <Link to="/">
-                                        <img src="images/homepage/logouticon.png" alt="" />
-                                        Logout
-                                    </Link>
+                                    <Link onClick={handleLogout}><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/logouticon_swvo87.png"} alt="" />Logout</Link>
                                 </div>
-
+                                {/*  <Link href="/help" className="nav-link HelpIcon">
+                                <img src="images/customer-supporticon.png" alt="" /> Help
+                            </Link>*/}
                             </div>
                             {/*topSidebar*/}
 
@@ -267,9 +266,11 @@ const ViewBookingTour = () => {
                         {/*userboardLHS*/}
                         <div className="tab-content userboardRHS">
                             <div className="userboardArea">
-                                <div className="container">
-                                    <div className="CartPageContentWrapper">
-                                        <div className="CartPageContenLHS">
+                                <div className="UserBoardinner">
+                                    <h2>Booking Tour Details</h2>
+
+                                    <div className="CartPageContentWrappera">
+                                        <div className="CartPageContenLHSa">
                                             {bookingList.map((item, index) => (
 
                                                 <div key={index} className="CartBoxWrapper">
@@ -279,11 +280,19 @@ const ViewBookingTour = () => {
                                                         </div>
                                                         {/*CartimgWrapper*/}
                                                         <div className="CartContentWrapper">
-                                                            <h4>{item.tour_name}</h4>
+                                                            <div className="textWithNewIcon">
+                                                                <h4>{item.tour_name}</h4>
+                                                                <div className="AllIconsNew">
+                                                                    <Link to= {`/review/${item.id}`}className="reviewstarIconNew"></Link>
+                                                                
+                                                                    {/* <a href="#" className="TrashIconNew"></a> */}
+                                                                </div>
+                                                            </div>
+
                                                             <div className="Price">
-                                                           {item.tour_currency} {item.tour_currency === 'AED' ? (
+                                                                {item.tour_currency} {item.tour_currency === 'AED' ? (
                                                                     <>
-                                                                     {item.tourPriceAed + item.tourtotal}
+                                                                        {item.tourPriceAed + item.tourtotal}
                                                                     </>
                                                                 ) : item.tour_currency === 'USD' ? (
                                                                     <>
@@ -308,7 +317,14 @@ const ViewBookingTour = () => {
                                                                     onClick={() => setExpandedItemIndex(index)}
                                                                 >
                                                                     Booking Info
-                                                                </Link>
+                                                                </Link>  <div className="Status">
+                                                                    {item.status === 0 && <a className="cta pending"><span>Pending</span></a>}
+                                                                    {item.status === 1 && <a className="cta success"><span>Success</span></a>}
+                                                                    {item.status === 2 && <a className="cta canceled"><span>Canceled</span></a>}
+                                                                </div>
+
+
+
 
                                                             </div>
                                                             <div className="EditTrashGroup">

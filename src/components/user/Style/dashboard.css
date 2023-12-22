@@ -429,7 +429,7 @@ header.userHeader {
 }
 
 .Date {
-  width: 10%;
+  width: 11%;
 }
 
 .TotalPayment {
@@ -1128,4 +1128,68 @@ cursor: pointer;
 a.nav-link.ChangePassWordIcon img {
   height: 28px;
 }
+
+
+
+.UserBoardinner h2 {
+  font-size: 20px;
+  color: #000;
+  font-weight: 500;
+  margin: 0px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 4px;
+}
+.textWithNewIcon {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.AllIconsNew {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.AllIconsNew a{
+  width: 30px;
+    min-width: 30px;
+    height: 30px;
+    min-height: 30px;
+    border-radius: 100px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 13px;
+}
+.AllIconsNew a.reviewstarIconNew{
+  background-color: #ffe234;
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23fff' class='bi bi-star-half' viewBox='0 0 16 16'%3E%3Cpath d='M5.354 5.119 7.538.792A.516.516 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.537.537 0 0 1 16 6.32a.548.548 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.52.52 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.58.58 0 0 1 .085-.302.513.513 0 0 1 .37-.245l4.898-.696zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.565.565 0 0 1 .162-.505l2.907-2.77-4.052-.576a.525.525 0 0 1-.393-.288L8.001 2.223 8 2.226v9.8z'/%3E%3C/svg%3E");
+}
+.AllIconsNew a.TrashIconNew{
+  background-color:#FF0000;
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' class='bi bi-trash3' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5'/%3E%3C/svg%3E");
+}
+.CartBoxWrapper .CartContentWrapper .textWithNewIcon h4 {
+  padding: 0px 15px 0px 0px;
+}
+
+.success {
+  background-color: #6CA329 !important;
+  border-color: #6CA329 !important;
+  color: #fff !important;
+
+}
+
+.canceled{
+  background-color: #E81A46 !important;
+  border-color: #E81A46 !important;
+  color: #fff !important;
+}
+
+.pending{
+  background-color: #11A1FD !important;
+  border-color: #11A1FD !important;
+  color: #fff !important;
+}
+
 /*userboard new css*/
