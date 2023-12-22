@@ -706,8 +706,6 @@ function ContentSection({ selectedCurrency }) {
                                       maxLength={13} // Restricts input to a maximum length of 13 characters
                                       required
                                     />
-                                  
-
                                   </div>
                                 )}
 

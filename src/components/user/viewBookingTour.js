@@ -369,7 +369,7 @@ const ViewBookingTour = () => {
                                                                         </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Adults Price*</span>
-                                                                            <span>{item.selectedCurrency} {item.adult_price}</span>
+                                                                            <span>{item.tour_currency} {item.adult_price}</span>
                                                                         </div>
                                                                         {/*BookingInfotablerow*/}
                                                                         <div className="BookingInfotablerow">
@@ -378,7 +378,7 @@ const ViewBookingTour = () => {
                                                                         </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Children Price</span>
-                                                                            <span>{item.selectedCurrency} {item.children_price}</span>
+                                                                            <span>{item.tour_currency} {item.children_price}</span>
                                                                         </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Additional Driver</span>
@@ -386,7 +386,7 @@ const ViewBookingTour = () => {
                                                                         </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Driver Price</span>
-                                                                            <span>{item.selectedCurrency} {item.driver_total_price}</span>
+                                                                            <span>{item.tour_currency} {item.driver_total_price}</span>
                                                                         </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Additional Lunch</span>
@@ -394,12 +394,17 @@ const ViewBookingTour = () => {
                                                                         </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Lunch Price</span>
-                                                                            <span>{item.selectedCurrency} {item.lunch_price}</span>
+                                                                            <span>{item.tour_currency} {item.lunch_price}</span>
                                                                         </div>
                                                                         {/*BookingInfotablerow*/}
                                                                     </div>
                                                                     {/*BookingInfotableDiv*/}
                                                                     <div className="BookingInfotableDiv">
+                                                                    <div className="BookingInfotablerow">
+                                                                            <span>ORDER ID* </span>
+
+                                                                            <span>{item.order_id}</span>
+                                                                        </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Preferred Pickup Time* </span>
 
@@ -421,7 +426,7 @@ const ViewBookingTour = () => {
                                                                         </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Preferred Language Price*</span>
-                                                                            <span>{item.selectedCurrency} {item.language_price}</span>
+                                                                            <span>{item.tour_currency} {item.language_price}</span>
                                                                         </div>
                                                                         {/*BookingInfotablerow*/}
                                                                         <div className="BookingInfotablerow">
@@ -436,7 +441,7 @@ const ViewBookingTour = () => {
                                                                         </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Infants Price</span>
-                                                                            <span>{item.selectedCurrency} {item.infants_price}</span>
+                                                                            <span>{item.tour_currency} {item.infants_price}</span>
                                                                         </div>
                                                                         {/*BookingInfotablerow*/}
                                                                         <div className="BookingInfotablerow">
@@ -449,7 +454,11 @@ const ViewBookingTour = () => {
                                                                         </div>
                                                                         <div className="BookingInfotablerow">
                                                                             <span>Itinerary Price</span>
-                                                                            <span>{item.selectedCurrency} {item.additional_tickets_price}</span>
+                                                                            <span>{item.tour_currency} {item.additional_tickets_price}</span>
+                                                                        </div>
+                                                                        <div className="BookingInfotablerow">
+                                                                            <span>Special Request</span>
+                                                                            <span>{item.special_equest}</span>
                                                                         </div>
                                                                         {/*BookingInfotablerow*/}
                                                                     </div>

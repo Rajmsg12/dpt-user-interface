@@ -389,8 +389,7 @@ const Wishlist = ({ selectedCurrency }) => {
                                                                         <span>AED</span>
                                                                     ) : (
                                                                         <span>USD</span>
-                                                                    )}
-                                                                    <strong>{getUserPrice(item)}</strong>
+                                                                    )} <strong>{getUserPrice(item)}</strong>
                                                                 </div>
                                                             ) : (
                                                                 <div className="aedtext">
@@ -398,8 +397,7 @@ const Wishlist = ({ selectedCurrency }) => {
                                                                         <span>AED</span>
                                                                     ) : (
                                                                         <span>USD</span>
-                                                                    )}
-                                                                    <strong>{getUserPrice(item)}</strong>
+                                                                    )} <strong>{getUserPrice(item)}</strong>
                                                                 </div>
                                                             )}
                                                         </div>

@@ -586,6 +586,9 @@
         margin-top: 6px;
         white-space: nowrap;
     }
+    .aedtext span{
+        color: #FA7436 !important;
+    }
     .HomePageMin .aedtext strong {
         font-size: 18px;
         margin: 0px 2px;

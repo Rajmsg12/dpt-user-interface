@@ -13,7 +13,7 @@ const Cart = () => {
   let cartdata = localStorage.getItem("cartdata");
   const [cart, setCart] = useState([]);
   // const cart = useSelector((state) => state.cart.cart);
-  const ourSelectedCurrency = cart.length > 0 ? cart[0].selectedCurrency : 'AED';
+  const ourSelectedCurrency = cart.length > 0 ? cart[0].preferredCurrency : 'AED';
 
   const navigate = useNavigate()
 
@@ -220,7 +220,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Adults Price*</span>
-                              <span>{item.selectedCurrency} {item.adultPrice}</span>
+                              <span>{item.preferredCurrency} {item.adultPrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
@@ -229,7 +229,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Children Price</span>
-                              <span>{item.selectedCurrency} {item.childrenPrice}</span>
+                              <span>{item.preferredCurrency} {item.childrenPrice}</span>
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Additional Driver</span>
@@ -237,7 +237,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Driver Price</span>
-                              <span>{item.selectedCurrency} {item.driverTotalPrice}</span>
+                              <span>{item.preferredCurrency} {item.driverTotalPrice}</span>
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Additional Lunch</span>
@@ -245,7 +245,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Lunch Price</span>
-                              <span>{item.selectedCurrency} {item.lunchPrice}</span>
+                              <span>{item.preferredCurrency} {item.lunchPrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                           </div>
@@ -272,7 +272,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Preferred Language Price*</span>
-                              <span>{item.selectedCurrency} {item.languagePrice}</span>
+                              <span>{item.preferredCurrency} {item.languagePrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
@@ -287,7 +287,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Infants Price</span>
-                              <span>{item.selectedCurrency} {item.infantsPrice}</span>
+                              <span>{item.preferredCurrency} {item.infantsPrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
@@ -300,7 +300,7 @@ const Cart = () => {
                             </div>
                             <div className="BookingInfotablerow">
                               <span>Itinerary Price</span>
-                              <span>{item.selectedCurrency} {item.additionalTickets}</span>
+                              <span>{item.preferredCurrency} {item.additionalTickets}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                           </div>

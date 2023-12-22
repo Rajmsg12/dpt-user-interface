@@ -1,6 +1,11 @@
-.BreadcrumbSection {
+/* .BreadcrumbSection {
     margin: 0px 0px 30px;
-  }
+  } */
+
+  .BreadcrumbSection .breadcrumb {
+    margin: 0px;
+    padding: 30px 0px;
+}
   
   .TopAboutUs {
     text-align: center;
