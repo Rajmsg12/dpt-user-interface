@@ -333,7 +333,7 @@ const Wishlist = ({ selectedCurrency }) => {
                                     {" "}
                                     <img src="images/homepage/innerlogo.svg" alt="" />
                                 </Link>
-                                <span className="closeIcon" />
+                                <span className="closeIcon" onClick={closeMenu}/>
                             </div>
                             <Link to="/user-dashboard" className="nav-link DashboardIcon">
                                 <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard

@@ -249,9 +249,9 @@ const EditProfile = () => {
                             <div className="sidebarLogo">
                                 <Link to="/">
                                     {" "}
-                                    <img src="images/innerlogo.svg" alt="" />
+                                    <img src="images/homepage/innerlogo.svg" alt="" />
                                 </Link>
-                                <span className="closeIcon" />
+                                <span className="closeIcon" onClick={closeMenu}/>
                             </div>
                             <Link to="/user-dashboard" className="nav-link  DashboardIcon">
                                 <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard

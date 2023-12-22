@@ -247,9 +247,9 @@ const ViewDetail = () => {
                             <div className="sidebarLogo">
                                 <Link to="/">
                                     {" "}
-                                    <img src="images/innerlogo.svg" alt="" />
+                                    <img src="images/homepage/innerlogo.svg" alt="" />
                                 </Link>
-                                <span className="closeIcon" />
+                                <span className="closeIcon" onClick={closeMenu}/>
                             </div>
                             <Link to="/user-dashboard" className="nav-link active DashboardIcon">
                                 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1701772236/dashboardicon_n9cufo.png"} alt="" /> Dashboard

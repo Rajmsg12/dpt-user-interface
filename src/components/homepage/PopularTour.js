@@ -15,7 +15,6 @@ const PopularTour = ({ selectedCurrency }) => {
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
     const [clickedTourId, setClickedTourId] = useState(null);
-    console.log(selectedCurrency)
     const navigate = useNavigate()
 
     const responsive = {
@@ -46,7 +45,6 @@ const PopularTour = ({ selectedCurrency }) => {
                 if (result.status === 'success') {
                     setPopular(result.data);
                     setSticker(result.data.map(tour => tour.sticker));
-                    console.log(result.data)
 
                 } else {
                     console.error('Error fetching popular tours:', result.message);
@@ -80,7 +78,6 @@ const PopularTour = ({ selectedCurrency }) => {
         }
     }, []);
     const addToWishlist = async (tourId) => {
-        console.log('Adding to wishlist:', tourId); // Check if function is triggered
     
         try {
             const token = localStorage.getItem("token");
