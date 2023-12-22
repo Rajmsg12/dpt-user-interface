@@ -274,6 +274,7 @@ const ViewBookingTour = () => {
                                             {bookingList.map((item, index) => (
 
                                                 <div key={index} className="CartBoxWrapper">
+                                                     <Link to={`/tour/${item.tour_slug}/${item.tour_slug}`}>
                                                     <div className="CartTopBox">
                                                         <div className="CartimgWrapper">
                                                             <img src={`${config.imageUrl}/${item.tour_image}`} alt={item.tourName} />
@@ -336,6 +337,7 @@ const ViewBookingTour = () => {
                                                         </div>
                                                         {/*CartContentWrapper*/}
                                                     </div>
+                                                    </Link>
                                                     {/*CartTopBox*/}
                                                     <div className="CartBottomBox">
                                                         <div className="collapse" id={`collapseExample${index}`}>

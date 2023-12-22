@@ -377,7 +377,7 @@ useEffect(() => {
                          
                           <div className="BillingName">{booking.first_name}</div>
                           <div className="Date">{moment(booking.booking_date).format("DD-MM-YYYY")}</div>
-                          <div className="TotalPayment">{booking.total}</div>
+                          <div className="TotalPayment">{booking.currency} {booking.total}</div>
                           <div className="Action">
                             <div className="IconsAll">
                               <Link to={`/view-tour/${booking.id}`} className="view"></Link>

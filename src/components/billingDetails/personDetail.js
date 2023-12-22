@@ -9,7 +9,7 @@ const PersonDetail = ({ selectedCurrency }) => {
     const MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
     const totalPrice = MyCartDetail.map(item => item.tourPriceAed).reduce((acc, price) => acc + price, 0);
     const navigate = useNavigate()
-    const ourSelectedCurrency = MyCartDetail.length > 0 ? MyCartDetail[0].selectedCurrency : 'AED';
+    const ourSelectedCurrency = MyCartDetail.length > 0 ? MyCartDetail[0].preferredCurrency : 'AED';
 
     const particularItemPriceAed = (item) => {
         if (!item) return 0; // Check if item is undefined or null
@@ -105,6 +105,7 @@ const PersonDetail = ({ selectedCurrency }) => {
             newErrors.last_name = 'Last name is required';
             valid = false;
         }
+     
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const formattedEmail = formData.email.trim().toLowerCase(); // Convert email to lowercase
@@ -126,6 +127,22 @@ const PersonDetail = ({ selectedCurrency }) => {
             newErrors.confirm_email = 'Emails do not match';
             valid = false;
         }
+        if (!formData.nationality) {
+            newErrors.nationality = 'Please select nationality';
+            valid = false;
+        }
+        if (!formData.discover_us) {
+            newErrors.discover_us = 'Please select Discover Us';
+            valid = false;
+        }
+        if (!formData.country) {
+            newErrors.country = 'Please select Country Code';
+            valid = false;
+        }
+        if (!formData.cell_no) {
+            newErrors.cell_no = 'Please select Cell Number';
+            valid = false;
+        }
 
         setErrors(newErrors);
         return valid;
@@ -144,6 +161,7 @@ const PersonDetail = ({ selectedCurrency }) => {
         country: '',
         cell_no: '',
         tax:0.18,
+        currency: ourSelectedCurrency,
         special_equest: '',
         cart_data: MyCartDetail,
 
@@ -156,7 +174,7 @@ const PersonDetail = ({ selectedCurrency }) => {
         e.preventDefault();
     
         const isFormValid = validateForm();
-    
+        
         if (isFormValid) {
             const token = localStorage.getItem("token");
             const headers = {
@@ -356,7 +374,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     </div>
                                                     {/*formGroup*/}
                                                 </div>
-                                                <div className="col-md-3">
+                                                <div className="col-md-6">
                                                     <div className="mb-3 formGroup">
                                                         <label>Country Code*</label>
                                                         <select
@@ -386,7 +404,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     </div>
                                                     {/*formGroup*/}
                                                 </div>
-                                                <div className="col-md-3">
+                                                <div className="col-md-6">
                                                     <div className="mb-3 formGroup">
                                                         <label>Cell No*</label>
                                                         <input
@@ -447,7 +465,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                             {/*OrderSummaryTablerow*/}
                                             <div className="OrderSummaryTablerow">
                                                 <span>Order total</span>
-                                                {ourSelectedCurrency}<strong>{calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                                                <strong>{ourSelectedCurrency} {calculateTotal().fullTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
                                             </div>
                                             {/*OrderSummaryTablerow*/}
                                             <div className="ProceedCheckoutCta">
