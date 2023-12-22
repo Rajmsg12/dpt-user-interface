@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy , memo } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
@@ -37,6 +37,8 @@ const Review = lazy(() => import("./components/user/review"));
 const ViewDetail = lazy(() => import("./components/user/viewDetail"));
 const Visa = lazy(() => import('./components/pages/tourVisa'));
 const ScrollToTop = lazy(() => import("./components/ScrollToTop"));
+const ViewBookingTour = lazy(() => import("./components/user/viewBookingTour"));
+
 
 const App = () => {
   return (
@@ -83,6 +85,7 @@ const App = () => {
             <Route exact path='/changepassword' element={<ChangePassword />} />
             <Route exact path='/review/:id' element={<Review />} />
             <Route exact path='/view-detail/:id' element={<ViewDetail />} />
+            <Route exact path='/view-tour/:id' element={<ViewBookingTour />} />
             <Route exact path='/tourist-visa' element={<Visa />} />
             <Route path="*" element={<NotFound />} />
 
@@ -93,4 +96,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default memo(App);

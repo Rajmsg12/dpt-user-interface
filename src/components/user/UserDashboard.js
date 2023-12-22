@@ -93,7 +93,7 @@ const UserProfile = () => {
   const fetchBookingDetails = () => {
     const token = localStorage.getItem('token');
     if (token) {
-      fetch(`${config.baseUrl}/booking/list`, {
+      fetch(`${config.baseUrl}/order/list`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -365,26 +365,22 @@ useEffect(() => {
 
                       <div className="BookingDetailRow">
                         <div className="srno">SN</div>
-                        <div className="OrderID">Order ID</div>
                         <div className="BillingName">Billing Name</div>
                         <div className="Date">Date</div>
                         <div className="TotalPayment">Total Payment</div>
-                        <div className="Status">Status</div>
-                        <div className="Action">Action</div>
+                        <div className="Action">Detail</div>
                       </div>
 
                       {bookingDetails.map((booking, index) => (
                         <div className="BookingDetailRow">
                           <div className="srno">{index + 1}</div>
-                          <div className="OrderID">{booking.order_id}</div>
+                         
                           <div className="BillingName">{booking.first_name}</div>
                           <div className="Date">{moment(booking.booking_date).format("DD-MM-YYYY")}</div>
                           <div className="TotalPayment">{booking.total}</div>
-                          <div className="Status"><Link to="" className="cta pending">Pending</Link></div>
                           <div className="Action">
                             <div className="IconsAll">
-                              <Link to={`/review/${booking.id}`} className="reviewstarIcon"></Link>
-                              <Link to={`/view-detail/${booking.id}`} className="view"></Link>
+                              <Link to={`/view-tour/${booking.id}`} className="view"></Link>
                             </div>
                           </div>
                         </div>
