@@ -15,10 +15,9 @@ const Register = () => {
   const navigate =useNavigate()
   const [error, setError] = useState('');
 
-  // Function to handle form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Create a data object to send in the request body
     const data = {
       first_name,
@@ -26,7 +25,7 @@ const Register = () => {
       password,
       confirm_password: confirm_password,
     };
-
+  
     try {
       // Send a POST request to the backend API
       const response = await fetch(`${config.baseUrl}/register`, {
@@ -36,21 +35,25 @@ const Register = () => {
         },
         body: JSON.stringify(data),
       });
-
+  
       if (response.ok) {
-        // Registration successful - you can handle the success scenario here
-        // For example, you can redirect the user to a success page or display a success message.
+        // Registration successful - handle the success scenario here
         console.log('Registration successful');
-        navigate('/login')
+        navigate('/login');
       } else {
         // Registration failed - handle the error scenario here
-        // For example, you can display an error message to the user.
-        setError('Registration failed');
+        const errorData = await response.json(); // Parse error response JSON
+        if (errorData && errorData.msg === 'This email allresy exist') {
+          setError('This email is already in use');
+        } else {
+          setError('Registration failed');
+        }
       }
     } catch (error) {
-      setError('An error occurred:', error);
+      setError('Registration Failed', error);
     }
   };
+  
 
   return (
     <div>

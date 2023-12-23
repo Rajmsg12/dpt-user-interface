@@ -121,7 +121,7 @@ function ContentSection({ selectedCurrency }) {
     preferredPickupLocation: '0',
     pickupLocation: '0',
     endLocation: '0',
-    preferredEndLocation:'0',
+    preferredEndLocation: '0',
     preferredHotelName: '0',
     preferredGuideLanguage: '0',
     aedPrice: '0',
@@ -210,7 +210,7 @@ function ContentSection({ selectedCurrency }) {
       (selectedCurrency === 'AED' ? parseFloat(selectedLanguage.aedprice) : parseFloat(selectedLanguage.usdprice)) +
       parseFloat(adultPrice)
     ).toFixed(2);
-    
+
     const formElements = event.target.elements;
 
     for (let i = 0; i < formElements.length; i++) {
@@ -420,13 +420,13 @@ function ContentSection({ selectedCurrency }) {
   };
   const handleInputChange3 = (event, name) => {
     const { value } = event.target;
-  
+
     // Find the selected language object from the languages array using the language name
     const selectedLang = language.find(lang => lang.lnname === value);
-  
+
     if (selectedLang) {
       setSelectedLanguage(selectedLang); // Update the selected language
-  
+
       setFormData(prevData => ({
         ...prevData,
         preferredGuideLanguage: selectedLang.lnname, // Update with the language name
@@ -436,9 +436,9 @@ function ContentSection({ selectedCurrency }) {
       console.error("Selected language not found!");
     }
   };
-  
-  
-  
+
+
+
 
 
 
@@ -585,12 +585,17 @@ function ContentSection({ selectedCurrency }) {
                                     customInput={
                                       <input
                                         style={{
-                                          width: '100%', // Set the width to 100%
-                                          paddingLeft: "10px"
+                                          width: '100%',
+                                          paddingLeft: '10px',
+                                          cursor: 'pointer', // Hide text color (to avoid showing typed text)
+                                          userSelect: 'none', // Disable text selection
                                         }}
+                                        readOnly // Make the input read-only to prevent typing
+                                        onClick={(e) => e.target.blur()} // Hide the keyboard upon click (optional)
                                       />
                                     }
                                   />
+
                                 </div>
                               </div>{/* formGroup */}
                             </div>
@@ -706,7 +711,7 @@ function ContentSection({ selectedCurrency }) {
                                       maxLength={13} // Restricts input to a maximum length of 13 characters
                                       required
                                     />
-                                  
+
 
                                   </div>
                                 )}
@@ -732,6 +737,7 @@ function ContentSection({ selectedCurrency }) {
                                       {hotel.hotel_name}
                                     </option>
                                   ))}
+                                  <option value="Other (self booking)">Other (self booking)</option>
                                 </select>
                               </div>{/* formGroup */}
                             </div>
@@ -1110,7 +1116,7 @@ function ContentSection({ selectedCurrency }) {
                   </span>
                 </div>
                 <div className="Person">
-                   {tour.no_of_pax} <strong>({tour.tour_duration})</strong>
+                  {tour.no_of_pax} <strong>({tour.tour_duration})</strong>
                 </div>
                 {/*     <div className="right">
                   <Link to="#">View Offers</Link>

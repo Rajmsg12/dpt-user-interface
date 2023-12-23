@@ -576,7 +576,7 @@ function ContentSection({ selectedCurrency }) {
                               <div className="mb-3 formGroup">
                                 <label>Tour Date*</label>
                                 <div className="input-group date" id="datepicker">
-                                  <DatePicker
+                                <DatePicker
                                     selected={formData.tourDate}
                                     onChange={(date) => setFormData((prevData) => ({ ...prevData, tourDate: date }))}
                                     dateFormat="MM/dd/yyyy"
@@ -585,9 +585,13 @@ function ContentSection({ selectedCurrency }) {
                                     customInput={
                                       <input
                                         style={{
-                                          width: '100%', // Set the width to 100%
-                                          paddingLeft: "10px"
+                                          width: '100%',
+                                          paddingLeft: '10px',
+                                          cursor: 'pointer', // Hide text color (to avoid showing typed text)
+                                          userSelect: 'none', // Disable text selection
                                         }}
+                                        readOnly // Make the input read-only to prevent typing
+                                        onClick={(e) => e.target.blur()} // Hide the keyboard upon click (optional)
                                       />
                                     }
                                   />
@@ -731,6 +735,7 @@ function ContentSection({ selectedCurrency }) {
                                       {hotel.hotel_name}
                                     </option>
                                   ))}
+                                  <option value="Other (self booking)">Other (self booking)</option>
                                 </select>
                               </div>{/* formGroup */}
                             </div>
@@ -839,8 +844,8 @@ function ContentSection({ selectedCurrency }) {
                                   className="form-control"
                                   placeholder="Age 5-12"
                                   name="children"
-                                  min="1"
-                                  max="10"
+                                  min="0"
+                                  max="15"
                                   onChange={(e) => {
                                     const childrenValue = parseInt(e.target.value);
                                     setChildrenNumber(childrenValue >= 0 ? childrenValue : 0);
@@ -868,8 +873,8 @@ function ContentSection({ selectedCurrency }) {
                                   className="form-control"
                                   placeholder="No of Infants"
                                   name="infants"
-                                  min="1"
-                                  max="10"
+                                  min="0"
+                                  max="15"
                                   onChange={(e) => {
                                     const infantsValue = parseInt(e.target.value);
                                     setInfantsNumber(infantsValue >= 0 ? infantsValue : 0);

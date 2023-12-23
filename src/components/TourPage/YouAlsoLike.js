@@ -156,30 +156,31 @@ const YouAlsoLike = ({selectedCurrency}) => {
                                             </div>
                                             <div className="rhsimg">
 
-                                                {tour.sticker_info[0].id === '1' && (
-                                                    <img
-                                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                                        alt=""
-                                                    />
-                                                )}
-                                                {tour.sticker_info[0].id === '2' && (
-                                                    <img
-                                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                                        alt=""
-                                                    />
-                                                )}
-                                                {tour.sticker_info[0].id === '3' && (
-                                                    <img
-                                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                                        alt=""
-                                                    />
-                                                )}
-                                                {tour.sticker_info.length > 1 && (
-                                                    <img
-                                                        src={tour.sticker_info[1].id}
-                                                        alt=""
-                                                    />
-                                                )}
+                                               
+                                            {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '1' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                        {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '2' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                           {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '3' && (
+                                                            <img
+                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                                                alt=""
+                                                            />
+                                                        )}
+                                                        {tour.sticker_info.length > 1 && (
+                                                            <img
+                                                                src={tour.sticker_info[1].id}
+                                                                alt=""
+                                                            />
+                                                        )}
 
                                             </div>
                                         </div>

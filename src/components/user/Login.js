@@ -13,7 +13,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const handleRememberMe = (e) => {
-        setRememberMe(e.target.checked); // 2. Handle Checkbox Change
+        setRememberMe(e.target.checked); 
     };
 
     const handleLogin = async (e) => {
@@ -31,7 +31,6 @@ const Login = () => {
             if (response.ok) {
                 const data = await response.json();
                 localStorage.setItem('token', data.token);
-                localStorage.setItem('name', data.name);
 
                 // Save login details if Remember Me is checked
                 if (rememberMe) {
@@ -43,7 +42,8 @@ const Login = () => {
                     localStorage.removeItem('rememberedPassword');
                 }
 
-                navigate('/user-dashboard');
+                // navigate('/user-dashboard');
+                navigate(-1)
             } else {
                 setError('Invalid email or password. Please try again.');
             }
