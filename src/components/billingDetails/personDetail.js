@@ -435,7 +435,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     {/*formGroup*/}
                                                 </div>
                                             </div>
-                                            <div className="TopArrow" onClick={scrollToTop}></div>
+                                            <div className="TopArrow" onClick={scrollToTop}>Continue</div>
                                             {/*row*/}
                                         </form>
 

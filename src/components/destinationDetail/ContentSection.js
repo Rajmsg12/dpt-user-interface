@@ -896,7 +896,7 @@ function ContentSection({ selectedCurrency }) {
 
                               </div> {/* formGroup */}
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-6">
                               <div className="mb-3 formGroup infoDetail">
                                 <label>Additional Driver</label>
                                 <input
