@@ -323,6 +323,8 @@ const EditProfile = () => {
                                                 className="form-control"
                                                 placeholder="Phone Number"
                                                 value={formData.phoneno}
+                                                pattern="[0-9]*" // Accepts only numerical values
+                                                maxLength={13}
                                                 onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
                                                 required
                                             />

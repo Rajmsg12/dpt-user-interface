@@ -9,7 +9,9 @@ const PersonDetail = ({ selectedCurrency }) => {
     const MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
     const totalPrice = MyCartDetail.map(item => item.tourPriceAed).reduce((acc, price) => acc + price, 0);
     const navigate = useNavigate()
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
     const ourSelectedCurrency = MyCartDetail.length > 0 ? MyCartDetail[0].preferredCurrency : 'AED';
+    const [emailExistsError, setEmailExistsError] = useState('');
 
     const particularItemPriceAed = (item) => {
         if (!item) return 0; // Check if item is undefined or null
@@ -185,6 +187,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                         console.log('Fetched user data:', data.data); // Log fetched data to console
 
                         if (data.success && data.data) {
+                            setUserLoggedIn(true); // Set userLoggedIn to true if user data is fetched
                             const { first_name, last_name, email } = data.data;
                             setFormData((prevFormData) => ({
                                 ...prevFormData,
@@ -204,14 +207,13 @@ const PersonDetail = ({ selectedCurrency }) => {
         fetchUserData();
     }, []);
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const isFormValid = validateForm();
 
         if (isFormValid) {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             const headers = {
                 'Content-Type': 'application/json',
             };
@@ -229,10 +231,16 @@ const PersonDetail = ({ selectedCurrency }) => {
 
                 if (response.ok) {
                     console.log('Booking successful');
-                    localStorage.removeItem("cartdata");
+                    localStorage.removeItem('cartdata');
                     navigate('/thankyou');
                 } else {
-                    console.error('Booking failed');
+                    const errorData = await response.json();
+                    if (errorData.msg === 'Email already exists. Please log in.') {
+                        // Set the state to display the error message
+                        setEmailExistsError(errorData.msg);
+                    } else {
+                        console.error('Booking failed');
+                    }
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -241,6 +249,7 @@ const PersonDetail = ({ selectedCurrency }) => {
             console.log('Form has validation errors');
         }
     };
+
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -284,7 +293,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             name="first_name"
                                                             value={formData.first_name} // Bind the first name value from state
                                                             onChange={handleChange}
-                                                            disabled={formData.first_name !== ''} // Disable input if there's a default value
+                                                            disabled={userLoggedIn && formData.first_name !== ''} // Disable if user logged in and default value exists
                                                         />
                                                         {errors.first_name && <div className="error">{errors.first_name}</div>}
                                                     </div>
@@ -300,7 +309,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             required=""
                                                             name="last_name" // Make sure the name attribute is correct
                                                             value={formData.last_name}
-                                                            disabled={formData.last_name !== ''}  // Ensure the value is controlled
+                                                            disabled={userLoggedIn && formData.last_name !== ''} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
                                                         {errors.last_name && <div className="error">{errors.localStorage_name}</div>}
@@ -319,7 +328,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             name="email"
                                                             value={formData.email} // Bind the email value from state
                                                             onChange={handleChange}
-                                                            disabled={formData.email !== ''} // Disable input if there's a default value
+                                                            disabled={userLoggedIn && formData.email !== ''} // Disable input if there's a default value
                                                         />
                                                         {errors.email && <div className="error">{errors.email}</div>}
 
@@ -335,8 +344,8 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             placeholder="Confirm Email"
                                                             required=""
                                                             name="confirm_email" // Make sure the name attribute is correct
-                                                            value={formData.confirm_email} 
-                                                            disabled={formData.confirm_email !== ''} // Ensure the value is controlled
+                                                            value={formData.confirm_email}
+                                                            disabled={userLoggedIn && formData.confirm_email !== ''} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
                                                         {errors.confirm_email && <div className="error">{errors.confirm_email}</div>}
@@ -515,7 +524,11 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                 <button type="submit" className="cta">
                                                     Book Now
                                                 </button>
+                                                <p style={{ textAlign: 'center', color: 'red' }} className={emailExistsError ? 'error-message' : ''}>
+                                                    {emailExistsError}
+                                                </p>
                                             </div>
+
 
                                             {/*ProceedCheckoutCta*/}
                                             {/*PaymentMethodGroup*/}

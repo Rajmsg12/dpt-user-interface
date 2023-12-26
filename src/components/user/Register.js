@@ -87,7 +87,7 @@ const Register = () => {
                   className="form-control"
                   placeholder="Last Name"
                   required
-                  value={first_name}
+                  value={last_name}
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
