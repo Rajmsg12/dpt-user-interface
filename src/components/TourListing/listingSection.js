@@ -16,6 +16,7 @@ const ListingSection = ({ selectedCurrency }) => {
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
   // Initial price value as a number
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const totalItems = data.TourListing.length;
@@ -49,6 +50,16 @@ const ListingSection = ({ selectedCurrency }) => {
   const url = window.location.href;
   const spliturl = url.split("/");
   const slug = spliturl[4];
+
+  const handleToggleSidebarMenu = () => {
+    setIsSidebarMenuOpen((prevIsSidebarMenuOpen) => !prevIsSidebarMenuOpen);
+  };
+
+  const handleCloseSidebar = () => {
+    console.log('Closing sidebar');
+    setIsSidebarMenuOpen(false);
+  };
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -122,7 +133,7 @@ const ListingSection = ({ selectedCurrency }) => {
     const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
     <div>
-      <div className="listingPage">
+      <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
         <div className="container">
           <div className="listingPageWrapper">
             <LeftSideFilter
@@ -131,6 +142,7 @@ const ListingSection = ({ selectedCurrency }) => {
               handleRatingFilterChange={handleRatingFilterChange}
               selectedRatingFilter={selectedRatingFilter}
               handleDurationFilterChange={handleDurationFilterChange}
+              handleCloseSidebar={handleCloseSidebar}
             />
 
             {filteredData.length === 0 ? (
@@ -142,7 +154,7 @@ const ListingSection = ({ selectedCurrency }) => {
                     <div className="productactive">{filteredData.length} activities found</div>
                     <div>
                       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <div className="filterDiv"></div>
+                      <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>
                         <li className="nav-item" role="presentation">
                           <button
                             className="nav-link active"
@@ -386,6 +398,7 @@ const ListingSection = ({ selectedCurrency }) => {
             )}
           </div>
         </div>
+        <div className="menuOverlay"></div>
       </div>
     </div>
   );

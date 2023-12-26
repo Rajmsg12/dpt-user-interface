@@ -400,7 +400,7 @@ const ContentSection = ({ selectedCurrency }) => {
             </>
           </div>
         </div>
-        <div className="menuOverlay"></div>
+        {/* <div className="menuOverlay"></div> */}
       </div>
 
     </>
