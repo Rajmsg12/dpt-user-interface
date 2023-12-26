@@ -14,7 +14,7 @@ const ContentSection = ({ selectedCurrency }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 5000]);
   const totalItems = data.CategoryList.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
   const [apiData, setApiData] = useState(null);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const [selectedDurationFilter, setSelectedDurationFilter] = useState(null);
@@ -43,18 +43,15 @@ const ContentSection = ({ selectedCurrency }) => {
 
 
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-
-
   const handleDurationFilterChange = (duration) => {
     setSelectedDurationFilter(duration);
   };
 
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+  const handlePageChange = (increment) => {
+    const nextPage = currentPage + increment;
+    const newStartIndex = (nextPage - 1) * itemsPerPage;
+    if (newStartIndex >= 0 && newStartIndex < filteredData.length) {
+      setCurrentPage(nextPage);
     }
   };
 
@@ -139,7 +136,14 @@ const ContentSection = ({ selectedCurrency }) => {
   })
   : [];
 
-const itemsToShow = filteredData.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  // Check if pagination is needed based on the number of items
+  const showPagination = filteredData.length > itemsPerPage;
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
     <>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
@@ -365,46 +369,32 @@ const itemsToShow = filteredData.slice(startIndex, endIndex);
                       </div>
                     </div>
                   </div>
-                 {/* <div className="paginationSec">
-                    <nav aria-label="...">
-                      <ul className="pagination">
-                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-
-                          <Link
-                            className="page-link"
-                            onClick={() => handlePageChange(currentPage - 1)}
-                            to="#"
-                          >
-                            Previous
-                          </Link>
-                        </li>
-                        {[...Array(totalPages)].map((_, page) => (
-                          <li
-                            key={page}
-                            className={`page-item ${currentPage === page + 1 ? 'active' : ''}`}
-                          >
-                            <Link
-                              className="page-link"
-                              onClick={() => handlePageChange(page + 1)}
-                              to="#"
-                            >
-                              {page + 1}
-                            </Link>
-                          </li>
-                        ))}
-                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-
-                          <Link
-                            className="page-link"
-                            onClick={() => handlePageChange(currentPage + 1)}
-                            to="#"
-                          >
-                            Next
-                          </Link>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>*/}
+                  <div className="paginationSec">
+                  {showPagination && (
+          <nav aria-label="...">
+            <ul className="pagination">
+              <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                <Link
+                  className="page-link"
+                  onClick={() => handlePageChange(-1)}
+                  to="#"
+                >
+                  Previous
+                </Link>
+              </li>
+              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                <Link
+                  className="page-link"
+                  onClick={() => handlePageChange(1)}
+                  to="#"
+                >
+                  Next
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        )}
+                  </div>
                 </div>
               </div>
             </>
