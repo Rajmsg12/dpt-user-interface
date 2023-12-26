@@ -18,9 +18,8 @@ const ListingSection = ({ selectedCurrency }) => {
   const [userDiscount, setUserDiscount] = useState(null);
   const [clickedTourId, setClickedTourId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
   const navigate = useNavigate()
-  // Initial price value as a number
+  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const totalItems = data.TourListing.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -98,8 +97,6 @@ const ListingSection = ({ selectedCurrency }) => {
     console.log('Closing sidebar');
     setIsSidebarMenuOpen(false);
   };
-
-  // Split the slug into words using hyphen as the separator
   const words = slug.split('-');
 
   // Capitalize the first letter of each word and join them with a space
@@ -175,8 +172,6 @@ const ListingSection = ({ selectedCurrency }) => {
     })
     : [];
 
-
-  const showPagination = filteredData.length > itemsPerPage;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -339,7 +334,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                 <div className="discount">
                                   <span>{tour.discount} %</span>
                                 </div>
-                                <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
+                                <div className="wishlistIcon"></div>
                               </div>
                               <div className="imgBottomRow">
                                 <div className="lhstext">
@@ -424,8 +419,8 @@ const ListingSection = ({ selectedCurrency }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="paginationSec">
-                    {showPagination && (
+                  {filteredData.length > itemsPerPage && (
+                    <div className="paginationSec">
                       <nav aria-label="...">
                         <ul className="pagination">
                           <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -437,7 +432,7 @@ const ListingSection = ({ selectedCurrency }) => {
                               Previous
                             </Link>
                           </li>
-                          <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                          <li className={`page-item ${endIndex >= filteredData.length ? 'disabled' : ''}`}>
                             <Link
                               className="page-link"
                               onClick={() => handlePageChange(1)}
@@ -448,8 +443,8 @@ const ListingSection = ({ selectedCurrency }) => {
                           </li>
                         </ul>
                       </nav>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

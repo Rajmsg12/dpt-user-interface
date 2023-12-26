@@ -16,11 +16,11 @@ const ListingSection = ({ selectedCurrency }) => {
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
   // Initial price value as a number
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const totalItems = data.TourListing.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
 
   const handlePageChange = (increment) => {
     const nextPage = currentPage + increment;
@@ -59,7 +59,7 @@ const ListingSection = ({ selectedCurrency }) => {
     console.log('Closing sidebar');
     setIsSidebarMenuOpen(false);
   };
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,6 +78,7 @@ const ListingSection = ({ selectedCurrency }) => {
 
     fetchData();
   }, []);
+  console.log(apiData)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -102,7 +103,7 @@ const ListingSection = ({ selectedCurrency }) => {
     ? apiData.tour_info.filter((tour) => {
       const tourPrice = parseInt(tour.tour_tour_price_aed.replace(',', ''));
       const tourDiscount = parseInt(tour.tour_discount); // Use the field you want for filtering
-  
+
 
       if (
         selectedDurationFilter &&
@@ -118,17 +119,16 @@ const ListingSection = ({ selectedCurrency }) => {
         return (
           tourPrice >= selectedPriceRange[0] &&
           tourPrice <= selectedPriceRange[1] &&
-          tourDiscount >= selectedRatingFilter 
+          tourDiscount >= selectedRatingFilter
         );
       }
       return false; // Exclude items that don't match the duration filter
     })
     : [];
-    const showPagination = filteredData.length > itemsPerPage;
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const itemsToShow = filteredData.slice(startIndex, endIndex);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
     <div>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
@@ -152,7 +152,7 @@ const ListingSection = ({ selectedCurrency }) => {
                     <div className="productactive">{filteredData.length} activities found</div>
                     <div>
                       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                      <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>
+                        <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>
                         <li className="nav-item" role="presentation">
                           <button
                             className="nav-link active"
@@ -367,32 +367,32 @@ const ListingSection = ({ selectedCurrency }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="paginationSec">
-                  {showPagination && (
-          <nav aria-label="...">
-            <ul className="pagination">
-              <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                <Link
-                  className="page-link"
-                  onClick={() => handlePageChange(-1)}
-                  to="#"
-                >
-                  Previous
-                </Link>
-              </li>
-              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                <Link
-                  className="page-link"
-                  onClick={() => handlePageChange(1)}
-                  to="#"
-                >
-                  Next
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        )}
-                  </div>
+                  {filteredData.length > itemsPerPage && (
+                    <div className="paginationSec">
+                      <nav aria-label="...">
+                        <ul className="pagination">
+                          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                            <Link
+                              className="page-link"
+                              onClick={() => handlePageChange(-1)}
+                              to="#"
+                            >
+                              Previous
+                            </Link>
+                          </li>
+                          <li className={`page-item ${endIndex >= filteredData.length ? 'disabled' : ''}`}>
+                            <Link
+                              className="page-link"
+                              onClick={() => handlePageChange(1)}
+                              to="#"
+                            >
+                              Next
+                            </Link>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

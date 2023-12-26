@@ -176,7 +176,7 @@ const PersonDetail = ({ selectedCurrency }) => {
             const token = localStorage.getItem('token');
             if (token) {
                 try {
-                    const response = await fetch('http://127.0.0.1:9900/welcome', {
+                    const response = await fetch(`${config.baseUrl}/welcome`, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
