@@ -32,14 +32,15 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
   
 
     const handleCurrencyChange = (currency) => {
-        // Clear localStorage when changing currency
-        localStorage.clear();
-
+        // Remove only cartdata from localStorage
+        localStorage.removeItem('cartdata');
+    
         // Update the selected currency
         setCurrency(currency);
-
+    
         // Additional logic to update prices in the UI or fetch new data if needed
     };
+    
 
     useEffect(() => {
         const token = localStorage.getItem("token");

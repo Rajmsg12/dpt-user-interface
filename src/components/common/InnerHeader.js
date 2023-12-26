@@ -86,10 +86,11 @@ const InnerHeader = ({ selectedCurrency, setCurrency }) => {
     setSearchCountry(country);
   };
   const handleCurrencyChange = (currency) => {
-    localStorage.clear();
+    // Remove only cartdata from localStorage
+    localStorage.removeItem('cartdata');
     setCurrency(currency);
+};
 
-  };
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
