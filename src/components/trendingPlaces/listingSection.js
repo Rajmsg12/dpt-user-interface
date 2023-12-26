@@ -21,14 +21,13 @@ const ListingSection = ({ selectedCurrency }) => {
   const totalItems = data.TourListing.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  // const handlePageChange = (page) => {
-  //   if (page >= 1 && page <= totalPages) {
-  //     setCurrentPage(page);
-  //   }
-  // };
+  const handlePageChange = (increment) => {
+    const nextPage = currentPage + increment;
+    const newStartIndex = (nextPage - 1) * itemsPerPage;
+    if (newStartIndex >= 0 && newStartIndex < filteredData.length) {
+      setCurrentPage(nextPage);
+    }
+  };
 
   const handleDurationFilterChange = (duration) => {
     setSelectedDurationFilter(duration);
@@ -88,7 +87,7 @@ const ListingSection = ({ selectedCurrency }) => {
         });
     }
   }, []);
-  
+
 
   const filteredData = apiData && apiData.tour_info
     ? apiData.tour_info.filter((tour) => {
@@ -115,6 +114,8 @@ const ListingSection = ({ selectedCurrency }) => {
     })
     : [];
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
   const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
     <div>
@@ -353,38 +354,23 @@ const ListingSection = ({ selectedCurrency }) => {
                       </div>
                     </div>
                   </div>
-                {/*}  <div className="paginationSec">
+
+                  <div className="paginationSec">
                     <nav aria-label="...">
                       <ul className="pagination">
-                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-
+                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                           <Link
                             className="page-link"
-                            onClick={() => handlePageChange(currentPage - 1)}
+                            onClick={() => handlePageChange(-1)}
                             to="#"
                           >
                             Previous
                           </Link>
                         </li>
-                        {[...Array(totalPages)].map((_, page) => (
-                          <li
-                            key={page}
-                            className={`page-item ${currentPage === page + 1 ? 'active' : ''}`}
-                          >
-                            <Link
-                              className="page-link"
-                              onClick={() => handlePageChange(page + 1)}
-                              to="#"
-                            >
-                              {page + 1}
-                            </Link>
-                          </li>
-                        ))}
-                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-
+                        <li className={`page-item ${endIndex >= filteredData.length ? 'disabled' : ''}`}>
                           <Link
                             className="page-link"
-                            onClick={() => handlePageChange(currentPage + 1)}
+                            onClick={() => handlePageChange(1)}
                             to="#"
                           >
                             Next
@@ -392,7 +378,7 @@ const ListingSection = ({ selectedCurrency }) => {
                         </li>
                       </ul>
                     </nav>
-                  </div>*/}
+                  </div>
                 </div>
               </div>
             )}

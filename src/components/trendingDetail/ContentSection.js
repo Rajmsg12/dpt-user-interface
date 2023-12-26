@@ -594,6 +594,7 @@ function ContentSection({ selectedCurrency }) {
                                         onClick={(e) => e.target.blur()} // Hide the keyboard upon click (optional)
                                       />
                                     }
+                                    readOnly
                                   />
 
                                 </div>

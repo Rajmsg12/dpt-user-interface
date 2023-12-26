@@ -221,7 +221,7 @@ const PersonDetail = ({ selectedCurrency }) => {
             [name]: value,
         }));
     };
-
+    
 
     return (
         <div>
