@@ -290,6 +290,25 @@
     .HomePageMin .bannerSearchWrapper ul.options li {
         font-size: 14px;
         font-weight: 400;
+        padding: 7px;
+        border-bottom: 1px solid #dbdbdb;
+        cursor: pointer;
+    }
+    .HomePageMin .bannerSearchWrapper ul.options li:hover {
+        background-color: #eee;
+    }
+    .HomePageMin .bannerSearchWrapper ul.options {
+        padding: 0px !important;
+        overflow: hidden;
+        min-width:170px;
+        width: auto !important;
+    }
+    .HomePageMin .bannerSearchWrapper ul.options li:empty {
+        padding: 0px;
+        border: 0px;
+    }
+    .HomePageMin .bannerSearchWrapper ul.options li:last-child{
+        border:0px;
     }
     
     .HomePageMin .bannerSearchWrapper .iconwithText {
@@ -1461,12 +1480,26 @@
     .searchinputformobile.popupSearchbar ul {
         z-index: 2;
         text-align: left;
-        font-size: 14px;
-        color: #000;
-        padding: 8px !important;
-        font-weight: 400;
-        line-height: 22px;
         border: 1px solid rgba(0, 0, 0, 0.3);
+        padding: 0px !important;
+        overflow: hidden;
+        width: auto !important;
+        left:0;
+        right:0;
+    }
+    .searchinputformobile.popupSearchbar ul li {
+        font-size: 14px;
+        font-weight: 400;
+        padding: 7px;
+        border-bottom: 1px solid #dbdbdb;
+        cursor: pointer;
+    }
+    .searchinputformobile.popupSearchbar ul li:empty {
+        padding: 0px;
+        border: 0px;
+    }
+    .searchinputformobile.popupSearchbar ul li:last-child {
+        border: 0px;
     }
     .searchinputformobile.popupSearchbar .searchable-select, .searchinputformobile.popupSearchbar .SelectdateField {
         width: 100%;

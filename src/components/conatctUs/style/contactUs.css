@@ -110,6 +110,9 @@
 }
 
 /*new*/
+.ContactInfoMain .InfoText {
+  line-break: anywhere;
+}
 .ContactInfoMain .ContactInfoWrapper {
   display: flex;
   align-items: center;
@@ -144,7 +147,7 @@
 .SocialIconNew {
   display: flex;
   align-items: center;
-  column-gap: 10px;
+  gap: 10px;
   color: #000;
   font-size: 14px;
   font-weight: 500;

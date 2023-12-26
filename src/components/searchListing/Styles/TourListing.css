@@ -141,10 +141,40 @@ input {
   height: 48px;
   border-radius: 100px;
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
+  position: relative;
   padding: 0px 0px 0px 25px;
   gap: 10px;
   justify-content: space-between;
+}
+
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch ul {
+  z-index: 2;
+  text-align: left;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 0px !important;
+  overflow: hidden;
+  left: auto;
+  right: auto;
+  width: calc(100% - 20%) !important;
+}
+
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch ul li {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 7px;
+  border-bottom: 1px solid #dbdbdb;
+  cursor: pointer;
+}
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch ul li:empty {
+  padding: 0px;
+  border: 0px;
+}
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch ul li:last-child {
+  border: 0px;
+}
+.innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch ul li:hover {
+  background-color: #eee;
 }
 
 .innerpageHeader .innerHeader .innerHeaderWrapper .HeaderLHS .HeaderSearch .form input {
