@@ -123,13 +123,14 @@ const ListingSection = ({ selectedCurrency }) => {
       return false; // Exclude items that don't match the duration filter
     })
     : [];
+  const showPagination = filteredData.length > itemsPerPage;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = filteredData.slice(startIndex, endIndex);
   return (
     <div>
-       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
+      <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
         <div className="container">
           <div className="listingPageWrapper">
             <LeftSideFilter
@@ -150,7 +151,7 @@ const ListingSection = ({ selectedCurrency }) => {
                     <div className="productactive">{filteredData.length} activities found</div>
                     <div>
                       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                      <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>
+                        <div className="filterDiv" onClick={handleToggleSidebarMenu}></div>
                         <li className="nav-item" role="presentation">
                           <button
                             className="nav-link active"
@@ -367,28 +368,30 @@ const ListingSection = ({ selectedCurrency }) => {
                   </div>
 
                   <div className="paginationSec">
-                    <nav aria-label="...">
-                      <ul className="pagination">
-                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                          <Link
-                            className="page-link"
-                            onClick={() => handlePageChange(-1)}
-                            to="#"
-                          >
-                            Previous
-                          </Link>
-                        </li>
-                        <li className={`page-item ${endIndex >= filteredData.length ? 'disabled' : ''}`}>
-                          <Link
-                            className="page-link"
-                            onClick={() => handlePageChange(1)}
-                            to="#"
-                          >
-                            Next
-                          </Link>
-                        </li>
-                      </ul>
-                    </nav>
+                    {showPagination && (
+                      <nav aria-label="...">
+                        <ul className="pagination">
+                          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                            <Link
+                              className="page-link"
+                              onClick={() => handlePageChange(-1)}
+                              to="#"
+                            >
+                              Previous
+                            </Link>
+                          </li>
+                          <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                            <Link
+                              className="page-link"
+                              onClick={() => handlePageChange(1)}
+                              to="#"
+                            >
+                              Next
+                            </Link>
+                          </li>
+                        </ul>
+                      </nav>
+                    )}
                   </div>
                 </div>
               </div>
@@ -397,7 +400,7 @@ const ListingSection = ({ selectedCurrency }) => {
         </div>
         <div className="menuOverlay"></div>
       </div>
-    
+
     </div>
   );
   function getUserPrice(tour) {

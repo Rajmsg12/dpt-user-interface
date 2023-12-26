@@ -78,7 +78,6 @@ const ListingSection = ({ selectedCurrency }) => {
 
     fetchData();
   }, []);
-  console.log(apiData)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -125,8 +124,7 @@ const ListingSection = ({ selectedCurrency }) => {
       return false; // Exclude items that don't match the duration filter
     })
     : [];
-    console.log("filtered Data", filteredData)
-
+    const showPagination = filteredData.length > itemsPerPage;
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -370,28 +368,30 @@ const ListingSection = ({ selectedCurrency }) => {
                     </div>
                   </div>
                   <div className="paginationSec">
-                    <nav aria-label="...">
-                      <ul className="pagination">
-                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                          <Link
-                            className="page-link"
-                            onClick={() => handlePageChange(-1)}
-                            to="#"
-                          >
-                            Previous
-                          </Link>
-                        </li>
-                        <li className={`page-item ${endIndex >= filteredData.length ? 'disabled' : ''}`}>
-                          <Link
-                            className="page-link"
-                            onClick={() => handlePageChange(1)}
-                            to="#"
-                          >
-                            Next
-                          </Link>
-                        </li>
-                      </ul>
-                    </nav>
+                  {showPagination && (
+          <nav aria-label="...">
+            <ul className="pagination">
+              <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                <Link
+                  className="page-link"
+                  onClick={() => handlePageChange(-1)}
+                  to="#"
+                >
+                  Previous
+                </Link>
+              </li>
+              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                <Link
+                  className="page-link"
+                  onClick={() => handlePageChange(1)}
+                  to="#"
+                >
+                  Next
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        )}
                   </div>
                 </div>
               </div>
