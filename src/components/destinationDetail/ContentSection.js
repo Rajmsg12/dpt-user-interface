@@ -906,6 +906,7 @@ function ContentSection({ selectedCurrency }) {
                                   name="preferredDriver"
                                   min="1"
                                   max="9"
+                                  maxLength={2}
                                   onChange={(e) => {
                                     const driverValue = parseInt(e.target.value);
                                     setDriverNumber(driverValue >= 0 ? driverValue : 0);
@@ -1049,7 +1050,7 @@ function ContentSection({ selectedCurrency }) {
                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
                                 <label>Special Request</label>
-                                <textarea className="form-control" placeholder="Select Special Seat" rows="3" name="request"></textarea>
+                                <textarea className="form-control" placeholder="Select Special Seat" rows="3" maxLength={200} name="request"></textarea>
                               </div>{/* formGroup */}
                             </div>
                             <div className="submitcta">

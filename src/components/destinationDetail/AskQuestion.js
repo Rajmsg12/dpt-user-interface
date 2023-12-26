@@ -299,7 +299,9 @@ const AskQuestion = () => {
                                             name="message"
                                             value={formData.message}
                                             onChange={handleInputChange}
+                                            maxLength={200}
                                             required></textarea>
+                                            
                                     </div>{/* formGroup */}
                                 </div>
 

@@ -1052,7 +1052,7 @@ function ContentSection({ selectedCurrency }) {
                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
                                 <label>Special Request</label>
-                                <textarea className="form-control" placeholder="Select Special Seat" rows="3" name="request"></textarea>
+                                <textarea className="form-control" placeholder="Select Special Seat"  maxLength={200} rows="3" name="request"></textarea>
                               </div>{/* formGroup */}
                             </div>
                             <div className="submitcta">
