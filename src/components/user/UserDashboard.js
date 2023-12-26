@@ -165,7 +165,6 @@ const UserProfile = () => {
 // Update useEffect blocks for fetching latest and canceled bookings count
 useEffect(() => {
   const token = localStorage.getItem('token');
-  console.log(token)
   if (token) {
     fetch(`${config.baseUrl}/booking/latest/orders`, {
       headers: {

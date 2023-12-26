@@ -43,11 +43,12 @@ const Register = () => {
       } else {
         // Registration failed - handle the error scenario here
         const errorData = await response.json(); // Parse error response JSON
-        if (errorData && errorData.msg === 'This email allresy exist') {
+        if (errorData && errorData.msg === 'This email already exists') {
           setError('This email is already in use');
         } else {
           setError('Registration failed');
         }
+        
       }
     } catch (error) {
       setError('Registration Failed', error);
