@@ -195,31 +195,31 @@ const Cart = () => {
                         <div className="BookingInfotableData">
                           <div className="BookingInfotableDiv">
                             <div className="BookingInfotablerow">
-                              <span>Tour Date*</span>
+                              <span>Tour Date</span>
                               <span>{formatDate(item.tourDate)}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
-                              <span>Pickup Location*</span>
+                              <span>Pickup Location</span>
                               <span>{item.preferredPickupLocation}</span>
                             </div>
                             <div className="BookingInfotablerow">
-                              <span>Hotel Name*</span>
+                              <span>Hotel Name</span>
                               <span>{item.preferredHotelName}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
-                              <span>Preferred Language*</span>
+                              <span>Preferred Language</span>
                               <span>{item.preferredGuideLanguage}</span>
                             </div>
                            
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
-                              <span>Adults*</span>
+                              <span>Adults</span>
                               <span>{item.adults}</span>
                             </div>
                             <div className="BookingInfotablerow">
-                              <span>Adults Price*</span>
+                              <span>Adults Price</span>
                               <span>{item.preferredCurrency} {item.adultPrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
@@ -252,26 +252,26 @@ const Cart = () => {
                           {/*BookingInfotableDiv*/}
                           <div className="BookingInfotableDiv">
                             <div className="BookingInfotablerow">
-                              <span>Preferred Pickup Time* </span>
+                              <span>Preferred Pickup Time</span>
 
                               <span>{item.preferredPickupTime}</span>
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
 
-                              <span>End Location*</span>
+                              <span>End Location</span>
 
-                              {item.preferredEndLocation === "Any Other Places in Dubai" ? (
+                              <span>{item.preferredEndLocation === "Any Other Places in Dubai" ? (
                                 <>
                                   {item.otherPlaceName}, {item.otherPlaceAddress} , {item.otherPlaceTelephone}
                                 </>
                               ) :
                                 item.preferredEndLocation
-                              }
+                              }</span>
 
                             </div>
                             <div className="BookingInfotablerow">
-                              <span>Preferred Language Price*</span>
+                              <span>Preferred Language Price</span>
                               <span>{item.preferredCurrency} {item.languagePrice}</span>
                             </div>
                             {/*BookingInfotablerow*/}
@@ -291,7 +291,7 @@ const Cart = () => {
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
-                              <span>Payment Mode*</span>
+                              <span>Payment Mode</span>
                               <span>{item.preferredPay}</span>
                             </div>
                             <div className="BookingInfotablerow">

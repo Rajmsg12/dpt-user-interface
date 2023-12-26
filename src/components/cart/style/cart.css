@@ -245,10 +245,13 @@
   overflow: hidden;
   text-overflow: ellipsis; */
 }
+.CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow span:last-child{
+  font-weight: 500 !important;
+}
 
-.CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow span:last-child {
+.CartBottomBox .BookingInfotableData .BookingInfotableDiv .BookingInfotablerow span:first-child {
   width:50%;
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 @media screen and (max-width: 991.33px) {
