@@ -1258,26 +1258,28 @@ function ContentSection({ selectedCurrency }) {
                       <div className="widSSPAll">
                         <ul className="widSSPReadReview">
                           <li>
-                            <a
-                              href="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                            <Link
+                            target="_blank"
+                              to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
                               id="allreviews"
                               onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
                               rel="nofollow"
                             >
                               Read reviews
-                            </a>
+                            </Link>
                           </li>
                         </ul>
                         <ul className="widSSPWriteReview">
                           <li>
-                            <a
-                              href="https://www.tripadvisor.com/UserReview-g295424-d2510773-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
+                            <Link
+                            target="_blank"
+                              to="https://www.tripadvisor.com/UserReview-g295424-d2510773-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
                               id="writereview"
                               onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
                               rel="nofollow"
                             >
                               Write a review
-                            </a>
+                            </Link>
                           </li>
                         </ul>
                       </div>
