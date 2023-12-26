@@ -19,6 +19,7 @@ const EditProfile = () => {
     const [successMessage, setSuccessMessage] = useState('');
 
     const [first_name, setUserName] = useState('');
+    const [last_name, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [myphone, setMyPhone] = useState('');
     const [address, setAddress] = useState('');
@@ -39,6 +40,7 @@ const EditProfile = () => {
     
     const [formData, setFormData] = useState({
         first_name: first_name,
+        last_name: last_name,
         lastName: '',
         email: email,
         country: country,
@@ -49,12 +51,13 @@ const EditProfile = () => {
         setFormData({
             ...formData,
             first_name: first_name,
+            last_name: last_name,
             email: email,
             country: country,
             phoneno: myphone,
             address: address,
         });
-    }, [first_name, email, country, myphone, address]);
+    }, [first_name,last_name, email, country, myphone, address]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -67,6 +70,7 @@ const EditProfile = () => {
                 .then((response) => response.json())
                 .then((data) => {
                     setUserName(data.data.first_name);
+                    setLastName(data.data.last_name);
                     setEmail(data.data.email);
                     setMyPhone(data.data.phoneno);
                     setAddress(data.data.address);
@@ -75,6 +79,7 @@ const EditProfile = () => {
                     setFormData({
                         ...formData,
                         first_name: data.data.first_name,
+                        last_name: data.data.last_name,
                         email: data.data.email,
                         country: data.data.country,
                         phoneno: data.data.phoneno,
@@ -294,6 +299,18 @@ const EditProfile = () => {
                                                 placeholder="First Name"
                                                 value={formData.first_name} // Use formData.first_name here
                                                 onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                                                required
+                                            />
+
+                                        </div>
+                                        <div className="mb-3">
+                                            <label className="form-label">Last Name</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Last Name"
+                                                value={formData.last_name} // Use formData.last_name here
+                                                onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
                                                 required
                                             />
 

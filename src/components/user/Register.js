@@ -9,6 +9,7 @@ import config from '../../config';
 const Register = () => {
   // Define state variables to hold user input
   const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm_password, setConfirmPassword] = useState('');
@@ -21,6 +22,7 @@ const Register = () => {
     // Create a data object to send in the request body
     const data = {
       first_name,
+      last_name,
       email,
       password,
       confirm_password: confirm_password,
@@ -68,14 +70,25 @@ const Register = () => {
             </div>
             <form onSubmit={handleFormSubmit}>
               <div className="mb-3 formGroup">
-                <label>Full Name</label>
+                <label>First Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Full Name"
+                  placeholder="First Name"
                   required
                   value={first_name}
                   onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+              <div className="mb-3 formGroup">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Last Name"
+                  required
+                  value={first_name}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
               <div className="mb-3 formGroup">

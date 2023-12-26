@@ -46,25 +46,25 @@ const PersonDetail = ({ selectedCurrency }) => {
         }, 0)
         : 0;
 
-        const calculateTotal = (selectedCurrency) => {
-            const subtotal = Array.isArray(MyCartDetail)
-              ? MyCartDetail.reduce((total, item) => {
-                  return total + (selectedCurrency === 'AED' ? parseFloat(particularItemPriceAed(item)) : parseFloat(particularItemPriceUsd(item)));
-                }, 0)
-              : 0;
-          
-            const taxPercentage = 0.18; // 18% tax
-            const total = subtotal * taxPercentage;
-            const fullTotal = subtotal + total;
-          
-            return {
-              subtotal,
-              taxPercentage,
-              fullTotal,
-              total
-            };
-          };
-          
+    const calculateTotal = (selectedCurrency) => {
+        const subtotal = Array.isArray(MyCartDetail)
+            ? MyCartDetail.reduce((total, item) => {
+                return total + (selectedCurrency === 'AED' ? parseFloat(particularItemPriceAed(item)) : parseFloat(particularItemPriceUsd(item)));
+            }, 0)
+            : 0;
+
+        const taxPercentage = 0.18; // 18% tax
+        const total = subtotal * taxPercentage;
+        const fullTotal = subtotal + total;
+
+        return {
+            subtotal,
+            taxPercentage,
+            fullTotal,
+            total
+        };
+    };
+
 
     //   const storedCurrency = localStorage.getItem('selectedCurrency');
     //   const parsedCurrency = storedCurrency ? JSON.parse(storedCurrency) : 'AED';
@@ -105,7 +105,7 @@ const PersonDetail = ({ selectedCurrency }) => {
             newErrors.last_name = 'Last name is required';
             valid = false;
         }
-     
+
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const formattedEmail = formData.email.trim().toLowerCase(); // Convert email to lowercase
@@ -160,7 +160,7 @@ const PersonDetail = ({ selectedCurrency }) => {
         discover_us: '',
         country: '',
         cell_no: '',
-        tax:0.18,
+        tax: 0.18,
         currency: ourSelectedCurrency,
         special_equest: '',
         cart_data: MyCartDetail,
@@ -169,29 +169,64 @@ const PersonDetail = ({ selectedCurrency }) => {
         total: calculateTotal().fullTotal,
 
     });
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const response = await fetch('http://127.0.0.1:9900/welcome', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+    
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Fetched user data:', data.data); // Log fetched data to console
+                        
+                        if (data.success && data.data) {
+                            const { first_name,last_name, email } = data.data;
+                            setFormData((prevFormData) => ({
+                                ...prevFormData,
+                                first_name: first_name || '',
+                                last_name: last_name || '',
+                                email: email || '',
+                                confirm_email: email || '', // Assuming email and confirm email are the same initially
+                            }));
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            }
+        };
+    
+        fetchUserData();
+    }, []);
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         const isFormValid = validateForm();
-        
+
         if (isFormValid) {
             const token = localStorage.getItem("token");
             const headers = {
                 'Content-Type': 'application/json',
             };
-    
+
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
             }
-    
+
             try {
                 const response = await fetch(`${config.baseUrl}/cart/add`, {
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify(formData),
                 });
-    
+
                 if (response.ok) {
                     console.log('Booking successful');
                     localStorage.removeItem("cartdata");
@@ -206,7 +241,7 @@ const PersonDetail = ({ selectedCurrency }) => {
             console.log('Form has validation errors');
         }
     };
-    
+
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
@@ -221,7 +256,8 @@ const PersonDetail = ({ selectedCurrency }) => {
             [name]: value,
         }));
     };
-    
+
+
 
     return (
         <div>
@@ -245,8 +281,8 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             className="form-control"
                                                             placeholder="Enter First Name"
                                                             required=""
-                                                            name="first_name" // Make sure the name attribute is correct
-                                                            value={formData.first_name} // Ensure the value is controlled
+                                                            name="first_name"
+                                                            value={formData.first_name} // Bind the first name value from state
                                                             onChange={handleChange}
                                                         />
                                                         {errors.first_name && <div className="error">{errors.first_name}</div>}
@@ -278,8 +314,8 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             className="form-control"
                                                             placeholder="Enter Email"
                                                             required=""
-                                                            name="email" // Make sure the name attribute is correct
-                                                            value={formData.email} // Ensure the value is controlled
+                                                            name="email"
+                                                            value={formData.email} // Bind the email value from state
                                                             onChange={handleChange}
                                                         />
                                                         {errors.email && <div className="error">{errors.email}</div>}
@@ -476,7 +512,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     Book Now
                                                 </button>
                                             </div>
-                                            
+
                                             {/*ProceedCheckoutCta*/}
                                             {/*PaymentMethodGroup*/}
                                         </div>
@@ -492,7 +528,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                     </div>
                     {/*container*/}
                 </div>
-               
+
             </form>
         </div>
     )
