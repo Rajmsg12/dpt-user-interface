@@ -179,13 +179,13 @@ const PersonDetail = ({ selectedCurrency }) => {
                             Authorization: `Bearer ${token}`,
                         },
                     });
-    
+
                     if (response.ok) {
                         const data = await response.json();
                         console.log('Fetched user data:', data.data); // Log fetched data to console
-                        
+
                         if (data.success && data.data) {
-                            const { first_name,last_name, email } = data.data;
+                            const { first_name, last_name, email } = data.data;
                             setFormData((prevFormData) => ({
                                 ...prevFormData,
                                 first_name: first_name || '',
@@ -200,10 +200,10 @@ const PersonDetail = ({ selectedCurrency }) => {
                 }
             }
         };
-    
+
         fetchUserData();
     }, []);
-    
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -284,6 +284,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             name="first_name"
                                                             value={formData.first_name} // Bind the first name value from state
                                                             onChange={handleChange}
+                                                            disabled={formData.first_name !== ''} // Disable input if there's a default value
                                                         />
                                                         {errors.first_name && <div className="error">{errors.first_name}</div>}
                                                     </div>
@@ -298,7 +299,8 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             placeholder="Enter Last Name"
                                                             required=""
                                                             name="last_name" // Make sure the name attribute is correct
-                                                            value={formData.last_name} // Ensure the value is controlled
+                                                            value={formData.last_name}
+                                                            disabled={formData.last_name !== ''}  // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
                                                         {errors.last_name && <div className="error">{errors.localStorage_name}</div>}
@@ -310,13 +312,14 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     <div className="mb-3 formGroup">
                                                         <label>Email*</label>
                                                         <input
-                                                            type="mail"
+                                                            type="email"
                                                             className="form-control"
                                                             placeholder="Enter Email"
                                                             required=""
                                                             name="email"
                                                             value={formData.email} // Bind the email value from state
                                                             onChange={handleChange}
+                                                            disabled={formData.email !== ''} // Disable input if there's a default value
                                                         />
                                                         {errors.email && <div className="error">{errors.email}</div>}
 
@@ -332,7 +335,8 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             placeholder="Confirm Email"
                                                             required=""
                                                             name="confirm_email" // Make sure the name attribute is correct
-                                                            value={formData.confirm_email} // Ensure the value is controlled
+                                                            value={formData.confirm_email} 
+                                                            disabled={formData.confirm_email !== ''} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
                                                         {errors.confirm_email && <div className="error">{errors.confirm_email}</div>}
