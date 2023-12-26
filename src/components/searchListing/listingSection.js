@@ -339,7 +339,7 @@ const ListingSection = ({ selectedCurrency }) => {
                                 <div className="discount">
                                   <span>{tour.discount} %</span>
                                 </div>
-                                <div className="wishlistIcon"></div>
+                                <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
                               </div>
                               <div className="imgBottomRow">
                                 <div className="lhstext">

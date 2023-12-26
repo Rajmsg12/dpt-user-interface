@@ -53,7 +53,7 @@ function ContentSection({ selectedCurrency }) {
   const [metaKeywords, setMetaKeywords] = useState('');
   const [noOfPax, setNoOfPax] = useState('');
   const [language, setLanguage] = useState([]);
-
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   const [tourImage, setTourImage] = useState("");
 
 
@@ -66,6 +66,11 @@ function ContentSection({ selectedCurrency }) {
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        // If user is not logged in, navigate to the login page
+        navigate("/login");
+        return;
+      }
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body
@@ -121,7 +126,7 @@ function ContentSection({ selectedCurrency }) {
     preferredPickupLocation: '0',
     pickupLocation: '0',
     endLocation: '0',
-    preferredEndLocation:'0',
+    preferredEndLocation: '0',
     preferredHotelName: '0',
     preferredGuideLanguage: '0',
     aedPrice: '0',
@@ -210,7 +215,7 @@ function ContentSection({ selectedCurrency }) {
       (selectedCurrency === 'AED' ? parseFloat(selectedLanguage.aedprice) : parseFloat(selectedLanguage.usdprice)) +
       parseFloat(adultPrice)
     ).toFixed(2);
-    
+
     const formElements = event.target.elements;
 
     for (let i = 0; i < formElements.length; i++) {
@@ -296,6 +301,23 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, [slug]);
+  const CustomInput = React.forwardRef(({ value, onClick, placeholder }, ref) => (
+    <input
+      type="text"
+      value={value}
+      onClick={onClick}
+      readOnly={true}
+      ref={ref}
+      placeholder={placeholder}
+      style={{
+        width: '100%',
+        paddingLeft: '10px',
+        cursor: 'pointer',
+        userSelect: 'none',
+        // Add any other styles you need here
+      }}
+    />
+  ));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -420,13 +442,13 @@ function ContentSection({ selectedCurrency }) {
   };
   const handleInputChange3 = (event, name) => {
     const { value } = event.target;
-  
+
     // Find the selected language object from the languages array using the language name
     const selectedLang = language.find(lang => lang.lnname === value);
-  
+
     if (selectedLang) {
       setSelectedLanguage(selectedLang); // Update the selected language
-  
+
       setFormData(prevData => ({
         ...prevData,
         preferredGuideLanguage: selectedLang.lnname, // Update with the language name
@@ -436,12 +458,13 @@ function ContentSection({ selectedCurrency }) {
       console.error("Selected language not found!");
     }
   };
-  
-  
-  
+  const removeFromWishlist = () => {
+    // Perform logic to remove item from wishlist
+    // ...
 
-
-
+    // Once removed from wishlist, update state accordingly
+    setIsAddedToWishlist(false);
+  };
 
 
   return (
@@ -507,9 +530,7 @@ function ContentSection({ selectedCurrency }) {
                             <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
-                        <div className="wishlistTag" onClick={() => addToWishlist(tour.id)}>
-                          <span>Wishlist</span>
-                        </div>
+
                       </div>
                     </div>
                     <div className="item">
@@ -537,12 +558,13 @@ function ContentSection({ selectedCurrency }) {
                             <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
-                        <div className="wishlistTag" onClick={() => addToWishlist(tour.id)}>
-                          <span>Wishlist</span>
-                        </div>
+
                       </div>
                     </div>
                   </Carousel>
+                </div>
+                <div className={`wishlistTag ${isAddedToWishlist ? 'wishlistTagFill' : ''}`} onClick={isAddedToWishlist ? removeFromWishlist : () => addToWishlist(tour.id)}>
+                  <span>{isAddedToWishlist ? 'Remove from Wishlist' : 'Wishlist'}</span>
                 </div>
               </div>
 
@@ -576,26 +598,16 @@ function ContentSection({ selectedCurrency }) {
                               <div className="mb-3 formGroup">
                                 <label>Tour Date*</label>
                                 <div className="input-group date" id="datepicker">
-                                <DatePicker
+                                  <DatePicker
                                     selected={formData.tourDate}
                                     onChange={(date) => setFormData((prevData) => ({ ...prevData, tourDate: date }))}
                                     dateFormat="MM/dd/yyyy"
                                     minDate={new Date()}
                                     placeholderText="Select Date"
-                                    customInput={
-                                      <input
-                                        style={{
-                                          width: '100%',
-                                          paddingLeft: '10px',
-                                          cursor: 'pointer', // Hide text color (to avoid showing typed text)
-                                          userSelect: 'none', // Disable text selection
-                                        }}
-                                        readOnly // Make the input read-only to prevent typing
-                                        onClick={(e) => e.target.blur()} // Hide the keyboard upon click (optional)
-                                      />
-                                    }
+                                    customInput={<CustomInput />}
                                   />
-                                 
+
+
                                 </div>
                               </div>{/* formGroup */}
                             </div>
@@ -1049,7 +1061,7 @@ function ContentSection({ selectedCurrency }) {
                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
                                 <label>Special Request</label>
-                                <textarea className="form-control" placeholder="Select Special Seat" rows="3"  maxLength={200} name="request"></textarea>
+                                <textarea className="form-control" placeholder="Select Special Seat" rows="3" maxLength={200} name="request"></textarea>
                               </div>{/* formGroup */}
                             </div>
                             <div className="submitcta">
@@ -1114,7 +1126,7 @@ function ContentSection({ selectedCurrency }) {
                   </span>
                 </div>
                 <div className="Person">
-                   {tour.no_of_pax} <strong>({tour.tour_duration})</strong>
+                  {tour.no_of_pax} <strong>({tour.tour_duration})</strong>
                 </div>
                 {/*     <div className="right">
                   <Link to="#">View Offers</Link>

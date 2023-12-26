@@ -335,6 +335,23 @@ function ContentSection({ selectedCurrency }) {
     fetchData();
   }, [slug]);
   const [attractions, setAttractions] = useState([]);
+  const CustomInput = React.forwardRef(({ value, onClick, placeholder }, ref) => (
+    <input
+      type="text"
+      value={value}
+      onClick={onClick}
+      readOnly={true}
+      ref={ref}
+      placeholder={placeholder}
+      style={{
+        width: '100%',
+        paddingLeft: '10px',
+        cursor: 'pointer',
+        userSelect: 'none',
+        // Add any other styles you need here
+      }}
+    />
+  ));
 
 
   useEffect(() => {
@@ -582,18 +599,7 @@ function ContentSection({ selectedCurrency }) {
                                     dateFormat="MM/dd/yyyy"
                                     minDate={new Date()}
                                     placeholderText="Select Date"
-                                    customInput={
-                                      <input
-                                        style={{
-                                          width: '100%',
-                                          paddingLeft: '10px',
-                                          cursor: 'pointer', // Hide text color (to avoid showing typed text)
-                                          userSelect: 'none', // Disable text selection
-                                        }}
-                                        readOnly // Make the input read-only to prevent typing
-                                        onClick={(e) => e.target.blur()} // Hide the keyboard upon click (optional)
-                                      />
-                                    }
+                                    customInput={<CustomInput />}
                                   />
                                 </div>
                               </div>{/* formGroup */}
