@@ -101,7 +101,7 @@ const ListingSection = ({ selectedCurrency }) => {
 
   const filteredData = apiData && apiData.tour_info
     ? apiData.tour_info.filter((tour) => {
-      const tourPrice = parseInt(tour.tour_tour_price_aed.replace(',', ''));
+      const tourPrice = parseInt(tour.tour_tour_price_aed);
       const tourDiscount = parseInt(tour.tour_discount); // Use the field you want for filtering
 
       if (
