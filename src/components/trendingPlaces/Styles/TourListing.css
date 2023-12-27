@@ -2269,6 +2269,10 @@ input {
 .page-link:focus{
   box-shadow: none;
 }
+.paginationSec ul li.page-item.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
 
 /*add new css*/
 
