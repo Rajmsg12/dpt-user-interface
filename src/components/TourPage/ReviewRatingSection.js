@@ -6,6 +6,10 @@ import config from '../../config';
 const ReviewRatingSection = () => {
   const [reviews, setReviews] = useState([]);  
   const [totalFourStarReviews, setTotalFourStarReviews] = useState(0);
+  const [totalFirstStarReviews, setTotalFirstStarReviews] = useState(0);
+  const [totalSecondStarReviews, setTotalSecondStarReviews] = useState(0);
+  const [totalThirdStarReviews, setTotalThirdStarReviews] = useState(0);
+  const [totalFifthStarReviews, setTotalFifthStarReviews] = useState(0);
   let totalFourStarRating = 0;
 
   useEffect(() => {
@@ -40,6 +44,14 @@ const ReviewRatingSection = () => {
     if (reviews.length > 0) {
       const fourStarReviews = reviews.filter(review => review.rating === 4);
       setTotalFourStarReviews(fourStarReviews.length);
+      const firstStarReviews = reviews.filter(review => review.rating === 1);
+      setTotalFirstStarReviews(firstStarReviews.length);
+      const secondStarReviews = reviews.filter(review => review.rating === 2);
+      setTotalSecondStarReviews(secondStarReviews.length);
+      const thirdStarReviews = reviews.filter(review => review.rating === 3);
+      setTotalThirdStarReviews(thirdStarReviews.length);
+      const fifthStarReviews = reviews.filter(review => review.rating === 6);
+      setTotalFifthStarReviews(fifthStarReviews.length);
 
       if (totalFourStarReviews > 0) {
         totalFourStarRating = fourStarReviews.reduce((acc, curr) => acc + curr.rating, 0) / totalFourStarReviews;
@@ -102,15 +114,15 @@ const ReviewRatingSection = () => {
                 <div className="ProgressRow">
                   <span>5 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "80%" }} aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "100%" }} aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>25</span>
+                  <span>{totalFifthStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
                 <div className="ProgressRow">
                   <span>4 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: `${(totalFourStarRating * 20)}%` }} aria-valuenow={totalFourStarRating * 20} aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "80%" }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                   <span>{totalFourStarReviews}</span>
                 </div>
@@ -118,25 +130,25 @@ const ReviewRatingSection = () => {
                 <div className="ProgressRow">
                   <span>3 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "30%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "60%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>13</span>
+                  <span>{totalThirdStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
                 <div className="ProgressRow">
                   <span>2 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "30%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "40%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>5</span>
+                  <span>{totalSecondStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
                 <div className="ProgressRow">
                   <span>1 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "10%" }} aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "20%" }} aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>2</span>
+                  <span>{totalFirstStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
               </div>
