@@ -1,8 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Assuming you're using React Router for routing
 import './Style/TourPage.css'
 
 const ReviewRatingSection = () => {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    // Function to fetch data with authorization header
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await fetch('http://127.0.0.1:9900/tour/review/list/37', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await response.json();
+          if (data.status === 'success') {
+            setReviews(data.data);
+          } else {
+            console.error('Error fetching reviews');
+          }
+        } catch (error) {
+          console.error('Error fetching reviews:', error);
+        }
+      } else {
+        console.error('No token found in local storage');
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const generateStarRating = (rating) => {
+    const totalStars = 5;
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 !== 0;
+    const emptyStars = totalStars - fullStars - (halfStar ? 1 : 0);
+
+    const stars = [];
+
+    // Adding full stars
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(<span key={i} className="star">&#9733;</span>);
+    }
+
+    // Adding half star if needed
+    if (halfStar) {
+      stars.push(<span key="half" className="star">&#9733;&#189;</span>);
+    }
+
+    // Adding empty stars
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(<span key={`empty-${i}`} className="star">&#9734;</span>);
+    }
+
+    return stars;
+  };
+
+
+
+  console.log('Rendered reviews:', reviews);
   return (
     <div>
       <div className="ReviewRatingSection">
@@ -11,7 +70,7 @@ const ReviewRatingSection = () => {
             <div className="ReviewsLhs">
               <div className="Title">Reviews</div>
               <div className="RatingPoint">
-                <span>5.0 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /></span>
+                <span>5.0 </span>
               </div>
               <div className="reviewText"> 4.5 | 500 Reviews </div>
             </div>
@@ -68,37 +127,24 @@ const ReviewRatingSection = () => {
           <div className="ShowingReview">
             <p>Showing 1-2 of 2 reviews with 4 stars.</p>
             <div className="ShowingReviewWidget">
-              <div className="ShowingReviewRow">
-                <div className="starwithtext">
-                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /> Best Tour Experience Ever!
+              {reviews.map((review) => (
+                <div key={review.id} className="ShowingReviewRow">
+                  <div className="starRating">
+                    {generateStarRating(review.rating)}
+                  </div>
+                  <span>{review.name}</span>
+                  <p>{review.comments}</p>
                 </div>
-                <span>John Doe</span>
-                <p>Our tour was an unforgettable experience that I would highly recommend. Our organizer, Ms. Fatima, our tour guide Ms. Maricar, and our safari driver, Mr. Waheed, made it even more special. The journey was hassle-free and truly one for the books.</p>
-              </div>
-              {/* ShowingReviewRow */}
-              <div className="ShowingReviewRow">
-                <div className="starwithtext">
-                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /> Time out with family!
-                </div>
-                <span>Sofia Negiri</span>
-                <p>Had an amazing time with my wife at the desert safari hosted by Dubai Private Tour. Our guide, Waheed, was an expert desert safari driver with 13 years of experience and explained every single detail of the tour to us during the entire trip. Thank you Waheed for making this trip a memorable one. Will definitely recommend anyone looking for an awesome and unforgettable desert safari experience in Dubai!</p>
-              </div>
-              {/* ShowingReviewRow */}
-              <div className="ShowingReviewRow">
-                <div className="starwithtext">
-                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /> Time out with family!
-                </div>
-                <span>Rahul Yadav</span>
-                <p>Wow!!! What an experience of a life time!!! Ateeb my safari driver was simply amazing!!! He was extremely knowledgeable, entertaining and a great fun guy to be around. I highly recommend if anyone is in the Dubai area please do the safari and please ask for Ateeb!!! A life time of memories!!!</p>
-              </div>
+              ))}
+
               {/* ShowingReviewRow */}
             </div>
             {/* ShowingReviewWidget */}
-         {/*  <div className="center">
+            {/*  <div className="center">
               <div className="cta">
                 <Link to="#"><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697705131/down-arrow_wuatf6.png"} alt="" /></Link>
               </div>
-            </div>*/}  
+            </div>*/}
           </div>
           {/* ShowingReview */}
         </div>

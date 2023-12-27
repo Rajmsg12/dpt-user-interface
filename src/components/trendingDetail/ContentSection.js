@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef , memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Select from "react-select";
@@ -1359,4 +1359,4 @@ const mapStateToProps = (state) => ({
   // ... (other state mappings)
 });
 
-export default connect(mapStateToProps)(ContentSection);
+export default connect(mapStateToProps)(React.memo(ContentSection));

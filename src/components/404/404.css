@@ -1,0 +1,35 @@
+.notfoundpage {
+    padding: 40px 0px;
+    text-align: center;
+    background-color:#fff;
+}
+.notfoundpage h1 {
+    color: #f25928;
+    font-weight:700;
+    font-size:70px;
+    margin:0px 0px 30px;
+}
+
+.notfoundpage h2{
+    color: #000;
+    font-weight:700;
+    font-size:30px;
+    margin:0px 0px 10px;
+}
+
+.notfoundpage p{
+    color: #000;
+    font-weight:400;
+    font-size:15px;
+    margin:0px 0px 25px;
+}
+.notfoundpage button.cta {
+    border: 0px;
+    padding: 12px 25px;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    background-color: #f25928;
+    cursor: pointer;
+}

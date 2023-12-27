@@ -3,6 +3,7 @@ import { ReactComponent as IconDoorClosedFill } from "bootstrap-icons/icons/door
 import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import moment from 'moment'
 import config from '../../config';
 import { useNavigate } from 'react-router-dom';
@@ -107,6 +108,8 @@ const Review = () => {
     useEffect(() => {
         fetchBookingDetailById();
     }, []);
+
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
     
@@ -117,7 +120,7 @@ const Review = () => {
         };
     
         // Make a POST request to the backend API
-        fetch(`${config.baseUrl}/review/add/4`, {
+        fetch(`${config.baseUrl}/review/add/${slug}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -127,8 +130,12 @@ const Review = () => {
         })
         .then(response => {
             if (response.ok) {
-                // Handle success, maybe show a success message
-                console.log('Review submitted successfully');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Review submitted successfully!',
+                    showConfirmButton: false,
+                    timer: 2500 // You can adjust the timer to control how long the message is displayed
+                });
                 setReviewData({
                     rating: '',
                     comments: '',

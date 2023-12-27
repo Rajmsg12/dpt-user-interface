@@ -293,7 +293,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             name="first_name"
                                                             value={formData.first_name} // Bind the first name value from state
                                                             onChange={handleChange}
-                                                            disabled={userLoggedIn && formData.first_name !== ''} // Disable if user logged in and default value exists
+                                                           
                                                         />
                                                         {errors.first_name && <div className="error">{errors.first_name}</div>}
                                                     </div>
@@ -309,7 +309,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             required=""
                                                             name="last_name" // Make sure the name attribute is correct
                                                             value={formData.last_name}
-                                                            disabled={userLoggedIn && formData.last_name !== ''} // Ensure the value is controlled
+                                                            // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
                                                         {errors.last_name && <div className="error">{errors.localStorage_name}</div>}
@@ -328,7 +328,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             name="email"
                                                             value={formData.email} // Bind the email value from state
                                                             onChange={handleChange}
-                                                            disabled={userLoggedIn && formData.email !== ''} // Disable input if there's a default value
+                                                           
                                                         />
                                                         {errors.email && <div className="error">{errors.email}</div>}
 
@@ -345,7 +345,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             required=""
                                                             name="confirm_email" // Make sure the name attribute is correct
                                                             value={formData.confirm_email}
-                                                            disabled={userLoggedIn && formData.confirm_email !== ''} // Ensure the value is controlled
+                                                            
                                                             onChange={handleChange}
                                                         />
                                                         {errors.confirm_email && <div className="error">{errors.confirm_email}</div>}
@@ -487,9 +487,14 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     {/*formGroup*/}
                                                 </div>
                                             </div>
-                                            <div className="TopArrow" onClick={scrollToTop}>Continue</div>
+                                         
                                             {/*row*/}
                                         </form>
+                                         <div className="ProceedCheckoutCta">
+                                                <button type="submit" className="TopArrow">
+                                                    Continue
+                                                </button>
+                                            </div>
 
                                         {/*ProfileDetailsForm*/}
                                     </div>

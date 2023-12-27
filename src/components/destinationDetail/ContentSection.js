@@ -1358,4 +1358,4 @@ const mapStateToProps = (state) => ({
   // ... (other state mappings)
 });
 
-export default connect(mapStateToProps)(ContentSection);
+export default connect(mapStateToProps)(React.memo(ContentSection));

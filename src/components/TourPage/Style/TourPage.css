@@ -3167,3 +3167,6 @@ position: relative;
 .widSSP.widSSPnarrow {
   width: 100% !important;
 }
+.star {
+  color: yellow; /* Change this to your desired star color */
+}
