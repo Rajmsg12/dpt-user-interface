@@ -13,7 +13,7 @@ const thankyouPage = () => {
     <div className="thankyouWrapper">
       <h2>thank you!</h2>
       <h1>We wish you a happy journey.</h1>
-      <Link href="#" className="cta">
+      <Link to="/tour/dubai" className="cta">
         Explore Dubai
       </Link>
     </div>

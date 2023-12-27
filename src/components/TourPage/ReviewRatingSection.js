@@ -5,6 +5,7 @@ import config from '../../config';
 
 const ReviewRatingSection = () => {
   const [reviews, setReviews] = useState([]);  
+  const [backendData, setBackendData] = useState(null);
   const [totalFourStarReviews, setTotalFourStarReviews] = useState(0);
   const [totalFirstStarReviews, setTotalFirstStarReviews] = useState(0);
   const [totalSecondStarReviews, setTotalSecondStarReviews] = useState(0);
@@ -12,19 +13,38 @@ const ReviewRatingSection = () => {
   const [totalFifthStarReviews, setTotalFifthStarReviews] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
   let totalFourStarRating = 0;
+  const url = window.location.href;
+  const spliturl = url.split("/");
+  const slug = spliturl[4];
+
 
   useEffect(() => {
-    // Function to fetch data with authorization header
     const fetchData = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
+      try {
+        const response = await fetch(`${config.baseUrl}/${slug}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setBackendData(data.data[0].id);
+   
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error.message);
+      }
+    };
+
+    fetchData();
+  }, [slug]);
+  console.log(backendData)
+
+  useEffect(() => {
+    if (backendData !== null) {
+      const fetchData = async () => {
         try {
-          const response = await fetch(`${config.baseUrl}/tour/review/list/37`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          const response = await fetch(`${config.baseUrl}/tour/review/list/${backendData}`);
           const data = await response.json();
+          
           if (data.status === 'success') {
             setReviews(data.data);
           } else {
@@ -33,13 +53,11 @@ const ReviewRatingSection = () => {
         } catch (error) {
           console.error('Error fetching reviews:', error);
         }
-      } else {
-        console.error('No token found in local storage');
-      }
-    };
-
-    fetchData();
-  }, []);
+      };
+    
+      fetchData();
+    }
+  }, [backendData]);
 
   useEffect(() => {
     if (reviews.length > 0) {
@@ -51,7 +69,7 @@ const ReviewRatingSection = () => {
       setTotalSecondStarReviews(secondStarReviews.length);
       const thirdStarReviews = reviews.filter(review => review.rating === 3);
       setTotalThirdStarReviews(thirdStarReviews.length);
-      const fifthStarReviews = reviews.filter(review => review.rating === 6);
+      const fifthStarReviews = reviews.filter(review => review.rating === 5);
       setTotalFifthStarReviews(fifthStarReviews.length);
 
       if (totalFourStarReviews > 0) {

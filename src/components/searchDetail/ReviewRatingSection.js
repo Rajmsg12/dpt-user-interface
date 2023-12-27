@@ -1,8 +1,130 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Assuming you're using React Router for routing
 import './Style/TourPage.css'
+import config from '../../config';
 
 const ReviewRatingSection = () => {
+  const [reviews, setReviews] = useState([]);  
+  const [backendData, setBackendData] = useState(null);
+  const [totalFourStarReviews, setTotalFourStarReviews] = useState(0);
+  const [totalFirstStarReviews, setTotalFirstStarReviews] = useState(0);
+  const [totalSecondStarReviews, setTotalSecondStarReviews] = useState(0);
+  const [totalThirdStarReviews, setTotalThirdStarReviews] = useState(0);
+  const [totalFifthStarReviews, setTotalFifthStarReviews] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
+  let totalFourStarRating = 0;
+  const url = window.location.href;
+  const spliturl = url.split("/");
+  const slug = spliturl[5];
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${config.baseUrl}/${slug}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setBackendData(data.data[0].id);
+   
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error.message);
+      }
+    };
+
+    fetchData();
+  }, [slug]);
+  console.log(backendData)
+
+  useEffect(() => {
+    if (backendData !== null) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`${config.baseUrl}/tour/review/list/${backendData}`);
+          const data = await response.json();
+          
+          if (data.status === 'success') {
+            setReviews(data.data);
+          } else {
+            console.error('Error fetching reviews');
+          }
+        } catch (error) {
+          console.error('Error fetching reviews:', error);
+        }
+      };
+    
+      fetchData();
+    }
+  }, [backendData]);
+
+  useEffect(() => {
+    if (reviews.length > 0) {
+      const fourStarReviews = reviews.filter(review => review.rating === 4);
+      setTotalFourStarReviews(fourStarReviews.length);
+      const firstStarReviews = reviews.filter(review => review.rating === 1);
+      setTotalFirstStarReviews(firstStarReviews.length);
+      const secondStarReviews = reviews.filter(review => review.rating === 2);
+      setTotalSecondStarReviews(secondStarReviews.length);
+      const thirdStarReviews = reviews.filter(review => review.rating === 3);
+      setTotalThirdStarReviews(thirdStarReviews.length);
+      const fifthStarReviews = reviews.filter(review => review.rating === 5);
+      setTotalFifthStarReviews(fifthStarReviews.length);
+
+      if (totalFourStarReviews > 0) {
+        totalFourStarRating = fourStarReviews.reduce((acc, curr) => acc + curr.rating, 0) / totalFourStarReviews;
+      }
+    }
+  }, [reviews, totalFourStarReviews]); 
+
+  const generateStarRating = (rating) => {
+    const totalStars = 5;
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 !== 0;
+    const emptyStars = totalStars - fullStars - (halfStar ? 1 : 0);
+  
+    const stars = [];
+  
+    // Inline styles for the stars
+    const starStyle = {
+      color: '#F4E877', // Change this to your desired star color
+      fontSize: '24px', // Change this to your desired star size
+      display: 'inline-block', // Display stars horizontally
+    };
+  
+    // Adding full stars
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(<span key={i} className="star" style={starStyle}>&#9733;</span>);
+    }
+  
+    // Adding half star if needed
+    if (halfStar) {
+      stars.push(<span key="half" className="star" style={starStyle}>&#9733;&#189;</span>);
+    }
+  
+    // Adding empty stars
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(<span key={`empty-${i}`} className="star" style={starStyle}>&#9734;</span>);
+    }
+  
+    return stars;
+  };
+  useEffect(() => {
+    if (reviews.length > 0) {
+      const totalRatingsCount = reviews.length;
+      const totalRatingSum = reviews.reduce((acc, curr) => acc + curr.rating, 0);
+
+      const averageRating = totalRatingSum / totalRatingsCount;
+      const averageRatingFixed = averageRating.toFixed(1); // Fix to one decimal place
+
+      // Update the state with the calculated average rating
+      setAverageRating(parseFloat(averageRatingFixed));
+    }
+  }, [reviews]);
+  
+
+
   return (
     <div>
       <div className="ReviewRatingSection">
@@ -11,9 +133,10 @@ const ReviewRatingSection = () => {
             <div className="ReviewsLhs">
               <div className="Title">Reviews</div>
               <div className="RatingPoint">
-                <span>5.0 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /></span>
+                <span>5.0 </span>
               </div>
-              <div className="reviewText"> 4.5 | 500 Reviews </div>
+              
+              <div className="reviewText"> <span>{averageRating.toFixed(1)}</span> | {reviews.length} Reviews </div>
             </div>
             {/* ReviewsLhs */}
             <div className="ReviewsRhs">
@@ -22,41 +145,41 @@ const ReviewRatingSection = () => {
                 <div className="ProgressRow">
                   <span>5 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "80%" }} aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "100%" }} aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>25</span>
+                  <span>{totalFifthStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
                 <div className="ProgressRow">
                   <span>4 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "50%" }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "80%" }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>20</span>
+                  <span>{totalFourStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
                 <div className="ProgressRow">
                   <span>3 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "30%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "60%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>13</span>
+                  <span>{totalThirdStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
                 <div className="ProgressRow">
                   <span>2 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "30%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "40%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>5</span>
+                  <span>{totalSecondStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
                 <div className="ProgressRow">
                   <span>1 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "10%" }} aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: "20%" }} aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>2</span>
+                  <span>{totalFirstStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
               </div>
@@ -66,39 +189,26 @@ const ReviewRatingSection = () => {
           </div>
           {/* ReviewRatingWrapper */}
           <div className="ShowingReview">
-            <p>Showing 1-2 of 2 reviews with 4 stars.</p>
+          <p>Showing total {reviews.length} reviews</p>
             <div className="ShowingReviewWidget">
-              <div className="ShowingReviewRow">
-                <div className="starwithtext">
-                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /> Best Tour Experience Ever!
+              {reviews.map((review) => (
+                <div key={review.id} className="ShowingReviewRow">
+                  <div className="starRating">
+                    {generateStarRating(review.rating)} {review.name}
+                  </div> 
+               
+                  <p>{review.comments}</p>
                 </div>
-                <span>John Doe</span>
-                <p>Our tour was an unforgettable experience that I would highly recommend. Our organizer, Ms. Fatima, our tour guide Ms. Maricar, and our safari driver, Mr. Waheed, made it even more special. The journey was hassle-free and truly one for the books.</p>
-              </div>
-              {/* ShowingReviewRow */}
-              <div className="ShowingReviewRow">
-                <div className="starwithtext">
-                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /> Time out with family!
-                </div>
-                <span>Sofia Negiri</span>
-                <p>Had an amazing time with my wife at the desert safari hosted by Dubai Private Tour. Our guide, Waheed, was an expert desert safari driver with 13 years of experience and explained every single detail of the tour to us during the entire trip. Thank you Waheed for making this trip a memorable one. Will definitely recommend anyone looking for an awesome and unforgettable desert safari experience in Dubai!</p>
-              </div>
-              {/* ShowingReviewRow */}
-              <div className="ShowingReviewRow">
-                <div className="starwithtext">
-                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" /> Time out with family!
-                </div>
-                <span>Rahul Yadav</span>
-                <p>Wow!!! What an experience of a life time!!! Ateeb my safari driver was simply amazing!!! He was extremely knowledgeable, entertaining and a great fun guy to be around. I highly recommend if anyone is in the Dubai area please do the safari and please ask for Ateeb!!! A life time of memories!!!</p>
-              </div>
+              ))}
+
               {/* ShowingReviewRow */}
             </div>
             {/* ShowingReviewWidget */}
-           {/* <div className="center">
+            {/*  <div className="center">
               <div className="cta">
-                <Link to="#"> <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697705131/down-arrow_wuatf6.png"} alt="" /></Link>
+                <Link to="#"><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697705131/down-arrow_wuatf6.png"} alt="" /></Link>
               </div>
-            </div>*/} 
+            </div>*/}
           </div>
           {/* ShowingReview */}
         </div>
