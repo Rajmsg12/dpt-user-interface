@@ -235,7 +235,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                     navigate('/thankyou');
                 } else {
                     const errorData = await response.json();
-                    if (errorData.msg === 'Email already exists. Please log in.') {
+                    if (errorData.msg === 'Email already exists. Please log in') {
                         // Set the state to display the error message
                         setEmailExistsError(errorData.msg);
                     } else {
@@ -258,12 +258,40 @@ const PersonDetail = ({ selectedCurrency }) => {
         });
     };
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
+
+        if (name === 'email') {
+            if (value.trim() !== '') {
+                try {
+                    const response = await fetch('http://127.0.0.1:9900/check/user-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email: value }),
+                    });
+
+                    if (response.ok) {
+                        // Assuming the API returns JSON with a status field
+                        const data = await response.json();
+                        if (data.status === 'Email already exists. Please log in.') {
+                            setEmailExistsError(data.status);
+                        } else {
+                            setEmailExistsError(''); // Clear the error message if email is valid
+                        }
+                    } else {
+                        setEmailExistsError('Error checking email'); // Handle error response
+                    }
+                } catch (error) {
+                    setEmailExistsError('Network error'); // Handle network errors
+                }
+            }
+        }
     };
 
 
@@ -293,7 +321,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             name="first_name"
                                                             value={formData.first_name} // Bind the first name value from state
                                                             onChange={handleChange}
-                                                           
+
                                                         />
                                                         {errors.first_name && <div className="error">{errors.first_name}</div>}
                                                     </div>
@@ -318,6 +346,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     {/*formGroup*/}
                                                 </div>
                                                 <div className="col-md-6">
+                                                    {/* Inside the form */}
                                                     <div className="mb-3 formGroup">
                                                         <label>Email*</label>
                                                         <input
@@ -326,13 +355,16 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             placeholder="Enter Email"
                                                             required=""
                                                             name="email"
-                                                            value={formData.email} // Bind the email value from state
+                                                            value={formData.email}
                                                             onChange={handleChange}
-                                                           
+                                                            onBlur={handleChange} // Call handleChange on blur
                                                         />
                                                         {errors.email && <div className="error">{errors.email}</div>}
-
+                                                        <p style={{ color: 'red' }} className={emailExistsError ? 'error-message' : ''}>
+                                                            {emailExistsError}
+                                                        </p>{/* Display API error message */}
                                                     </div>
+
                                                     {/*formGroup*/}
                                                 </div>
                                                 <div className="col-md-6">
@@ -345,7 +377,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             required=""
                                                             name="confirm_email" // Make sure the name attribute is correct
                                                             value={formData.confirm_email}
-                                                            
+
                                                             onChange={handleChange}
                                                         />
                                                         {errors.confirm_email && <div className="error">{errors.confirm_email}</div>}
@@ -487,14 +519,14 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                     {/*formGroup*/}
                                                 </div>
                                             </div>
-                                         
+
                                             {/*row*/}
                                         </form>
-                                         <div className="ProceedCheckoutCta">
-                                                <button type="submit" className="TopArrow">
-                                                    Continue
-                                                </button>
-                                            </div>
+                                        <div className="ProceedCheckoutCta">
+                                            <button type="submit" className="TopArrow">
+                                                Continue
+                                            </button>
+                                        </div>
 
                                         {/*ProfileDetailsForm*/}
                                     </div>
@@ -529,9 +561,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                 <button type="submit" className="cta">
                                                     Book Now
                                                 </button>
-                                                <p style={{ textAlign: 'center', color: 'red' }} className={emailExistsError ? 'error-message' : ''}>
-                                                    {emailExistsError}
-                                                </p>
+
                                             </div>
 
 

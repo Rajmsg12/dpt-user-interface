@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Assuming you're using React Router for routing
 import './Style/TourPage.css'
+import config from '../../config';
 
 const ReviewRatingSection = () => {
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState([]);  
+  const [totalFourStarReviews, setTotalFourStarReviews] = useState(0);
+  let totalFourStarRating = 0;
 
   useEffect(() => {
     // Function to fetch data with authorization header
@@ -11,7 +14,7 @@ const ReviewRatingSection = () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await fetch('http://127.0.0.1:9900/tour/review/list/37', {
+          const response = await fetch(`${config.baseUrl}/tour/review/list/37`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -33,35 +36,52 @@ const ReviewRatingSection = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (reviews.length > 0) {
+      const fourStarReviews = reviews.filter(review => review.rating === 4);
+      setTotalFourStarReviews(fourStarReviews.length);
+
+      if (totalFourStarReviews > 0) {
+        totalFourStarRating = fourStarReviews.reduce((acc, curr) => acc + curr.rating, 0) / totalFourStarReviews;
+      }
+    }
+  }, [reviews, totalFourStarReviews]); 
+
   const generateStarRating = (rating) => {
     const totalStars = 5;
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 !== 0;
     const emptyStars = totalStars - fullStars - (halfStar ? 1 : 0);
-
+  
     const stars = [];
-
+  
+    // Inline styles for the stars
+    const starStyle = {
+      color: '#F4E877', // Change this to your desired star color
+      fontSize: '24px', // Change this to your desired star size
+      display: 'inline-block', // Display stars horizontally
+    };
+  
     // Adding full stars
     for (let i = 0; i < fullStars; i++) {
-      stars.push(<span key={i} className="star">&#9733;</span>);
+      stars.push(<span key={i} className="star" style={starStyle}>&#9733;</span>);
     }
-
+  
     // Adding half star if needed
     if (halfStar) {
-      stars.push(<span key="half" className="star">&#9733;&#189;</span>);
+      stars.push(<span key="half" className="star" style={starStyle}>&#9733;&#189;</span>);
     }
-
+  
     // Adding empty stars
     for (let i = 0; i < emptyStars; i++) {
-      stars.push(<span key={`empty-${i}`} className="star">&#9734;</span>);
+      stars.push(<span key={`empty-${i}`} className="star" style={starStyle}>&#9734;</span>);
     }
-
+  
     return stars;
   };
+  
 
 
-
-  console.log('Rendered reviews:', reviews);
   return (
     <div>
       <div className="ReviewRatingSection">
@@ -72,7 +92,8 @@ const ReviewRatingSection = () => {
               <div className="RatingPoint">
                 <span>5.0 </span>
               </div>
-              <div className="reviewText"> 4.5 | 500 Reviews </div>
+              
+              <div className="reviewText"> 4.5 | {reviews.length} Reviews </div>
             </div>
             {/* ReviewsLhs */}
             <div className="ReviewsRhs">
@@ -89,9 +110,9 @@ const ReviewRatingSection = () => {
                 <div className="ProgressRow">
                   <span>4 Stars</span>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{ width: "50%" }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" style={{ width: `${(totalFourStarRating * 20)}%` }} aria-valuenow={totalFourStarRating * 20} aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <span>20</span>
+                  <span>{totalFourStarReviews}</span>
                 </div>
                 {/* ProgressRow */}
                 <div className="ProgressRow">
@@ -125,14 +146,14 @@ const ReviewRatingSection = () => {
           </div>
           {/* ReviewRatingWrapper */}
           <div className="ShowingReview">
-            <p>Showing 1-2 of 2 reviews with 4 stars.</p>
+          <p>Showing total {reviews.length} reviews</p>
             <div className="ShowingReviewWidget">
               {reviews.map((review) => (
                 <div key={review.id} className="ShowingReviewRow">
                   <div className="starRating">
-                    {generateStarRating(review.rating)}
-                  </div>
-                  <span>{review.name}</span>
+                    {generateStarRating(review.rating)} {review.name}
+                  </div> 
+               
                   <p>{review.comments}</p>
                 </div>
               ))}

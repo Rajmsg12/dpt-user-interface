@@ -3167,6 +3167,10 @@ position: relative;
 .widSSP.widSSPnarrow {
   width: 100% !important;
 }
-.star {
+.starRating .star {
   color: yellow; /* Change this to your desired star color */
+  font-size: 24px; /* Change this to your desired star size */
+  display: inline-block; /* Display stars horizontally */
 }
+
+
