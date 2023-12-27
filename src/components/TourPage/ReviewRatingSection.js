@@ -10,6 +10,7 @@ const ReviewRatingSection = () => {
   const [totalSecondStarReviews, setTotalSecondStarReviews] = useState(0);
   const [totalThirdStarReviews, setTotalThirdStarReviews] = useState(0);
   const [totalFifthStarReviews, setTotalFifthStarReviews] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
   let totalFourStarRating = 0;
 
   useEffect(() => {
@@ -91,6 +92,18 @@ const ReviewRatingSection = () => {
   
     return stars;
   };
+  useEffect(() => {
+    if (reviews.length > 0) {
+      const totalRatingsCount = reviews.length;
+      const totalRatingSum = reviews.reduce((acc, curr) => acc + curr.rating, 0);
+
+      const averageRating = totalRatingSum / totalRatingsCount;
+      const averageRatingFixed = averageRating.toFixed(1); // Fix to one decimal place
+
+      // Update the state with the calculated average rating
+      setAverageRating(parseFloat(averageRatingFixed));
+    }
+  }, [reviews]);
   
 
 
@@ -105,7 +118,7 @@ const ReviewRatingSection = () => {
                 <span>5.0 </span>
               </div>
               
-              <div className="reviewText"> 4.5 | {reviews.length} Reviews </div>
+              <div className="reviewText"> <span>{averageRating.toFixed(1)}</span> | {reviews.length} Reviews </div>
             </div>
             {/* ReviewsLhs */}
             <div className="ReviewsRhs">
