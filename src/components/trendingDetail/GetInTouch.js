@@ -6,19 +6,58 @@ import { useParams } from 'react-router-dom';
 const GetInTouch = () => {
   const [destinationInfo, setDestinationInfo] = useState();
   const [duration, setDuration] = useState();
-  // const { slug } = useParams();
-  // const formattedTitle = slug
-  // .split('-') // Split by hyphens
-  // .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-  // .join(' ');
+  const { title } = useParams();
+  const [reviews, setReviews] = useState([]);  
+  const [averageRating, setAverageRating] = useState(0);
+  const [backendData, setBackendData] = useState(null);
   const url = window.location.href;
   const spliturl = url.split("/");
-  const slug1 = spliturl[5];
+  const slug = spliturl[5];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/${slug1}`);
+        const response = await fetch(`${config.baseUrl}/${slug}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setBackendData(data.data[0].id);
+   
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error.message);
+      }
+    };
+
+    fetchData();
+  }, [slug]);
+  useEffect(() => {
+    if (backendData !== null) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`${config.baseUrl}/tour/review/list/${backendData}`);
+          const data = await response.json();
+          
+          if (data.status === 'success') {
+            setReviews(data.data);
+          } else {
+            console.error('Error fetching reviews');
+          }
+        } catch (error) {
+          console.error('Error fetching reviews:', error);
+        }
+      };
+    
+      fetchData();
+    }
+  }, [backendData]);
+  console.log("breadcrum review", backendData)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${config.baseUrl}/${slug}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -26,7 +65,6 @@ const GetInTouch = () => {
         const data = await response.json();
         setDestinationInfo(data.data[0].destination_info[0].name)
         setDuration(data.data[0].tour_duration)
-        console.log(data.data[0].tour_duration)
 
       } catch (error) {
         console.error("Error fetching data from the backend:", error.message);
@@ -63,6 +101,53 @@ const GetInTouch = () => {
   const shareOnWhatsApp = () => {
     window.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`;
   };
+  const generateStarRating = (rating) => {
+    const totalStars = 5;
+    const fullStars = Math.floor(rating);
+    const decimalPart = rating - fullStars;
+    const halfStar = decimalPart >= 0.2 && decimalPart <= 0.7;
+    const emptyStars = totalStars - fullStars - (halfStar ? 1 : 0);
+  
+    const stars = [];
+  
+    // Inline styles for the stars
+    const starStyle = {
+      color: '#F4E877', // Change this to your desired star color
+      fontSize: '24px', // Change this to your desired star size
+      display: 'inline-block', // Display stars horizontally
+    };
+  
+    // Adding full stars
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(<span key={i} className="star" style={starStyle}>&#9733;</span>);
+    }
+  
+    // Adding half star if needed
+    if (halfStar) {
+      const halfStarContent = decimalPart >= 0.2 && decimalPart < 0.5 ? '&#9733;&#188;' : '&#9733;&#190;';
+      stars.push(<span key="half" className="star" style={starStyle} dangerouslySetInnerHTML={{ __html: halfStarContent }} />);
+    }
+  
+    // Adding empty stars
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(<span key={`empty-${i}`} className="star" style={starStyle}>&#9734;</span>);
+    }
+  
+    return stars;
+  };
+  
+  useEffect(() => {
+    if (reviews.length > 0) {
+      const totalRatingsCount = reviews.length;
+      const totalRatingSum = reviews.reduce((acc, curr) => acc + curr.rating, 0);
+
+      const averageRating = totalRatingSum / totalRatingsCount;
+      const averageRatingFixed = averageRating.toFixed(1); // Fix to one decimal place
+
+      // Update the state with the calculated average rating
+      setAverageRating(parseFloat(averageRatingFixed));
+    }
+  }, [reviews]);
 
   return (
     <div>
@@ -71,7 +156,7 @@ const GetInTouch = () => {
           <div className="time">{duration}</div>
           <div className="location">{destinationInfo}</div>
           <div className="review">
-            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />4.5 | 500 Reviews
+          {generateStarRating(averageRating)} {averageRating.toFixed(1)} | {reviews.length} Reviews
           </div>
           <div className="SocialIcon">
             <div className="shareTag">Share with your friends</div>

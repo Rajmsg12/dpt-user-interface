@@ -36,7 +36,7 @@ const ReviewRatingSection = () => {
 
     fetchData();
   }, [slug]);
-  console.log(backendData)
+
 
   useEffect(() => {
     if (backendData !== null) {

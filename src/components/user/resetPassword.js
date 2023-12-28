@@ -1,68 +1,66 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import InnerHeader from '../common/InnerHeader';
 import Footer from '../common/Footer';
 import './Style/login.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import config from '../../config';
 import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
+    const tokenFromURL = queryParams.get('token') || ''; // Get token from URL query param
+
+    const [token, setToken] = useState(tokenFromURL);
+    const [newPassword, setNewPassword] = useState('');
     const [error, setError] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordMatchError, setPasswordMatchError] = useState('');
+
     const handleRememberMe = (e) => {
-        setRememberMe(e.target.checked); 
+        setRememberMe(e.target.checked);
     };
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
+        if (newPassword !== confirmPassword) {
+            setPasswordMatchError("Passwords don't match");
+            return;
+        }
+
         try {
-            const response = await fetch(`${config.baseUrl}/login`, {
+            const response = await fetch(`${config.baseUrl}/reset-password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ token, newPassword }),
             });
 
             if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem('token', data.token);
-
-                // Save login details if Remember Me is checked
-                if (rememberMe) {
-                    localStorage.setItem('rememberedEmail', email);
-                    localStorage.setItem('rememberedPassword', password);
-                } else {
-                    // If not checked, clear remembered details
-                    localStorage.removeItem('rememberedEmail');
-                    localStorage.removeItem('rememberedPassword');
-                }
-
-                // navigate('/user-dashboard');
-                navigate(-1)
+                setPasswordResetSuccess(true); // Set state to show success message
+                setTimeout(() => {
+                    setPasswordResetSuccess(false); // Hide success message after 5 seconds
+                }, 5000);
+                setToken(''); // Clear token input
+                setNewPassword(''); // Clear newPassword input
+                setConfirmPassword(''); // Clear confirmPassword input
+                setPasswordMatchError(''); // Clear password match error
             } else {
-                setError('Invalid email or password. Please try again.');
+                setPasswordResetSuccess(false); // Hide success message on error
+                setError('Invalid token');
             }
         } catch (error) {
+            setPasswordResetSuccess(false); // Hide success message on error
             setError('An error occurred. Please try again later.');
         }
     };
 
-    // Fetch remembered login details if present
-    useEffect(() => {
-        const rememberedEmail = localStorage.getItem('rememberedEmail');
-        const rememberedPassword = localStorage.getItem('rememberedPassword');
 
-        if (rememberedEmail && rememberedPassword) {
-            setEmail(rememberedEmail);
-            setPassword(rememberedPassword);
-            setRememberMe(true);
-        }
-    }, []);
 
     return (
         <div>
@@ -76,15 +74,25 @@ const ResetPassword = () => {
                             {/* <p>Explore a world of Dubai with DPT</p> */}
                         </div>
                         <form onSubmit={handleLogin}>
+                            <div className={`formGroup ${token ? '' : 'hideInput'}`}>
+                                <label>Token</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter Token"
+                                    value={token}
+                                    onChange={(e) => setToken(e.target.value)}
+                                />
+                            </div>
                             <div className="mb-3 formGroup">
                                 <label>New Password</label>
                                 <input
-                                    type="email"
+                                    type="password"
                                     className="form-control"
-                                    placeholder="Enter Mail"
+                                    placeholder="New Password"
                                     required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
                                 />
                             </div>
                             <div className="formGroup">
@@ -92,14 +100,29 @@ const ResetPassword = () => {
                                 <input
                                     type="password"
                                     className="form-control"
-                                    placeholder="Enter Password"
+                                    placeholder="Confirm Password"
                                     required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
                             </div>
-                            {error && <div className="error-message" style={{ color: "red" }}>{error}</div>}
-                          
+                            {(passwordMatchError && !passwordResetSuccess && !error) && (
+                                <div className="error-message" style={{ color: 'red' }}>
+                                    {passwordMatchError}
+                                </div>
+                            )}
+
+                            {(passwordResetSuccess && !error && !passwordMatchError) && (
+                                <div className="success-message" style={{ color: 'green' }}>
+                                    Password reset successfully!
+                                </div>
+                            )}
+                            {(!passwordResetSuccess && error && !passwordMatchError) && (
+                                <div className="error-message" style={{ color: 'red' }}>
+                                    {error}
+                                </div>
+                            )}
+
                             <div className="formGroup">
                                 <button type="submit" className="btn">
                                     Login
@@ -114,10 +137,10 @@ const ResetPassword = () => {
                         </form>
                     </div>
                 </div>
-            </div>
+            </div >
             {/* FOOTER */}
-            <Footer />
-        </div>
+            < Footer />
+        </div >
     );
 };
 
