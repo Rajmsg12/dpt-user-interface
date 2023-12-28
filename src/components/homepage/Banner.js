@@ -575,7 +575,7 @@ const Banner = ({selectedCurrency}) => {
                     const titleWithHyphens = wedding.slug; // Declare it here
   
                     return (
-                      <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
+                      <Link to={`/wedding-on-yatch/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
                           <img src={`${config.imageUrl}/${wedding.image}`} alt="" />
                           <div className="discountrow">
@@ -662,7 +662,7 @@ const Banner = ({selectedCurrency}) => {
             </div>
             <div className="tab-pane fade" id="nav-luxurytour" role="tabpanel" aria-labelledby="nav-luxurytour-tab">
               <div className="Title">
-                <h2>Luxury Tours</h2>
+                <h2>Luxury Tour</h2>
               </div>
               <div className="TabLayer">
               <div className="TabWrapper">
@@ -670,7 +670,7 @@ const Banner = ({selectedCurrency}) => {
                   const titleWithHyphens = luxury.slug; // Declare it here
 
                   return (
-                    <Link to={`/luxury-tours/${titleWithHyphens}`} className="TabBox" key={index}>
+                    <Link to={`/luxury-tour/${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
                         <img src={`${config.imageUrl}/${luxury.image}`} alt="" />
                         <div className="discountrow">
