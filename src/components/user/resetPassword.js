@@ -74,7 +74,7 @@ const ResetPassword = () => {
                             {/* <p>Explore a world of Dubai with DPT</p> */}
                         </div>
                         <form onSubmit={handleLogin}>
-                            <div className={`formGroup ${token ? '' : 'hideInput'}`}>
+                            <div className={ 'hideInput'}>
                                 <label>Token</label>
                                 <input
                                     type="text"
