@@ -495,7 +495,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             required=""
                                                             name="cell_no" // Make sure the name attribute is correct
                                                             pattern="[0-9]*" // Accepts only numerical values
-                                                            maxLength={13}
+                                                            maxLength={15}
                                                             value={formData.cell_no} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />
@@ -511,7 +511,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                             placeholder="Special Request"
                                                             required=""
                                                             name="special_equest" // Make sure the name attribute is correct
-                                                            maxLength={200}
+                                                            maxLength={500}
                                                             value={formData.special_equest} // Ensure the value is controlled
                                                             onChange={handleChange}
                                                         />

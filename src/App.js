@@ -38,6 +38,7 @@ const ViewDetail = lazy(() => import("./components/user/viewDetail"));
 const Visa = lazy(() => import('./components/pages/tourVisa'));
 const ScrollToTop = lazy(() => import("./components/ScrollToTop"));
 const ViewBookingTour = lazy(() => import("./components/user/viewBookingTour"));
+const ResetPassword= lazy(()=> import("./components/user/resetPassword"))
 
 
 const App = () => {
@@ -51,6 +52,7 @@ const App = () => {
             <Route exact path='/login' element={<Login />} />
             <Route exact path='/register' element={<Register />} />
             <Route exact path='/forget-password' element={<Forget />} />
+            <Route exact path='/reset-password' element={<ResetPassword/>} />
             <Route exact path='/user-dashboard' element={<UserProfile />} />
             <Route exact path="/desert-safari/:title" element={<DetailPage />} />
             <Route exact path="/private-jet/:title" element={<DetailPage />} />

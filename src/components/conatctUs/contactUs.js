@@ -444,6 +444,8 @@ const ContactUs = () => {
                                                         placeholder="Cell No"
                                                         name="call_no"
                                                         value={formData.call_no}
+                                                        pattern="[0-9]*" // Accepts only numerical values
+                                                        maxLength={15} 
                                                         onChange={handleInputChange}
                                                         required />
                                                 </div>
@@ -456,6 +458,7 @@ const ContactUs = () => {
                                                         rows="3"
                                                         name="address"
                                                         value={formData.address}
+                                                        maxLength={500}
                                                         onChange={handleInputChange}
                                                         required></textarea>
                                                 </div>
