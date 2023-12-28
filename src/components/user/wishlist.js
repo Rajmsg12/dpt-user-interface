@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import config from '../../config';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import './Style/dashboard.css';
 
 const Wishlist = ({ selectedCurrency }) => {
     const [formData, setFormData] = useState({

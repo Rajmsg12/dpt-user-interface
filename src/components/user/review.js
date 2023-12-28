@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import moment from 'moment'
 import config from '../../config';
 import { useNavigate } from 'react-router-dom';
+import './Style/dashboard.css';
 
 const Review = () => {
     const [reviewData, setReviewData] = useState({

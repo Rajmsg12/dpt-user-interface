@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import config from '../../config';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import './Style/dashboard.css';
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({

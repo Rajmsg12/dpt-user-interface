@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import config from '../../config';
 
+
 const Register = () => {
   // Define state variables to hold user input
   const [first_name, setFirstName] = useState('');

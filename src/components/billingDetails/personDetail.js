@@ -268,7 +268,7 @@ const PersonDetail = ({ selectedCurrency }) => {
         if (name === 'email') {
             if (value.trim() !== '') {
                 try {
-                    const response = await fetch('http://127.0.0.1:9900/check/user-email', {
+                    const response = await fetch(`${config.baseUrl}/check/user-email`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

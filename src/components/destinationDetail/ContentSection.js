@@ -66,6 +66,11 @@ function ContentSection({ selectedCurrency }) {
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        // If user is not logged in, navigate to the login page
+        navigate("/login");
+        return;
+      }
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body

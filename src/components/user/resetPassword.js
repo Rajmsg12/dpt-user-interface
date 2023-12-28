@@ -5,6 +5,7 @@ import './Style/login.css';
 import { Link, useLocation } from 'react-router-dom';
 import config from '../../config';
 import { useNavigate } from 'react-router-dom';
+import './Style/dashboard.css';
 
 const ResetPassword = () => {
     const navigate = useNavigate();

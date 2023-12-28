@@ -66,6 +66,12 @@ function ContentSection({ selectedCurrency }) {
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        // If user is not logged in, navigate to the login page
+        navigate("/login");
+        console.log(token)
+        return;
+      }
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body
@@ -97,7 +103,6 @@ function ContentSection({ selectedCurrency }) {
       console.error('Error adding tour to wishlist:', error);
     }
   };
-
 
   useEffect(() => {
     // Fetch hotel data from the backend API

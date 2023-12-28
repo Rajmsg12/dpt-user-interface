@@ -5,6 +5,7 @@ import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import config from '../../config';
+import './Style/dashboard.css';
 import { useNavigate } from 'react-router-dom';
 
 const Booking = () => {

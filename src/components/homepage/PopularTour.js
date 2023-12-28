@@ -78,40 +78,46 @@ const PopularTour = ({ selectedCurrency }) => {
         }
     }, []);
     const addToWishlist = async (tourId) => {
+        console.log('Adding to wishlist:', tourId); // Check if function is triggered
     
         try {
-            const token = localStorage.getItem("token");
-            if (token) {
-                const requestBody = {
-                    tour_id: tourId // Setting tour.id as tour_id in the request body
-                };
+          const token = localStorage.getItem("token");
+          if (!token) {
+            // If user is not logged in, navigate to the login page
+            navigate("/login");
+            return;
+          }
+          if (token) {
+            const requestBody = {
+              tour_id: tourId // Setting tour.id as tour_id in the request body
+            };
     
-                const response = await fetch(`${config.baseUrl}/wishlist/add`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                    body: JSON.stringify(requestBody),
-                });
+            const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(requestBody),
+            });
     
-                if (response.ok) {
-                    // Wishlist addition successful
-                    console.log('Tour added to wishlist!');
-                    setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
-                    navigate("/wishlist");
-                } else {
-                    // Handle errors if the addition fails
-                    console.error('Failed to add tour to wishlist');
-                }
+            if (response.ok) {
+              // Wishlist addition successful
+              console.log('Tour added to wishlist!');
+              setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
+              navigate("/wishlist");
             } else {
-                console.error('User not logged in.'); // Log if the user is not logged in
-                // You might want to handle this scenario by redirecting the user to the login page or showing a message
+              // Handle errors if the addition fails
+              console.error('Failed to add tour to wishlist');
             }
+          } else {
+            console.error('User not logged in.'); // Log if the user is not logged in
+            // You might want to handle this scenario by redirecting the user to the login page or showing a message
+          }
         } catch (error) {
-            console.error('Error adding tour to wishlist:', error);
+          console.error('Error adding tour to wishlist:', error);
         }
-    };
+      };
     
     return (
         <div>

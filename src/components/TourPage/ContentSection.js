@@ -563,9 +563,9 @@ function ContentSection({ selectedCurrency }) {
                     </div>
                   </Carousel>
                 </div>
-                <div className={`wishlistTag ${isAddedToWishlist ? 'wishlistTagFill' : ''}`} onClick={isAddedToWishlist ? removeFromWishlist : () => addToWishlist(tour.id)}>
+                <button className={`wishlistTag ${isAddedToWishlist ? 'wishlistTagFill' : ''}`} onClick={isAddedToWishlist ? removeFromWishlist : () => addToWishlist(tour.id)}>
                   <span>{isAddedToWishlist ? 'Remove from Wishlist' : 'Wishlist'}</span>
-                </div>
+                </button>
               </div>
 
               {/*BANNER TABS */}
