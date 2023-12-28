@@ -53,7 +53,7 @@ function ContentSection({ selectedCurrency }) {
   const [metaKeywords, setMetaKeywords] = useState('');
   const [noOfPax, setNoOfPax] = useState('');
   const [language, setLanguage] = useState([]);
-
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   const [tourImage, setTourImage] = useState("");
 
 
@@ -459,11 +459,13 @@ function ContentSection({ selectedCurrency }) {
     }
   };
   
-  
-  
+  const removeFromWishlist = () => {
+    // Perform logic to remove item from wishlist
+    // ...
 
-
-
+    // Once removed from wishlist, update state accordingly
+    setIsAddedToWishlist(false);
+  };
 
 
   return (
@@ -529,9 +531,7 @@ function ContentSection({ selectedCurrency }) {
                             <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
-                        <div className="wishlistTag" onClick={() => addToWishlist(tour.id)}>
-                          <span>Wishlist</span>
-                        </div>
+                     
                       </div>
                     </div>
                     <div className="item">
@@ -559,13 +559,14 @@ function ContentSection({ selectedCurrency }) {
                             <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
-                        <div className="wishlistTag" onClick={() => addToWishlist(tour.id)}>
-                          <span>Wishlist</span>
-                        </div>
+                    
                       </div>
                     </div>
                   </Carousel>
                 </div>
+                <button className={`wishlistTag ${isAddedToWishlist ? 'wishlistTagFill' : ''}`} onClick={isAddedToWishlist ? removeFromWishlist : () => addToWishlist(tour.id)}>
+                  <span>{isAddedToWishlist ? 'Remove from Wishlist' : 'Wishlist'}</span>
+                </button>
               </div>
 
               {/*BANNER TABS */}
