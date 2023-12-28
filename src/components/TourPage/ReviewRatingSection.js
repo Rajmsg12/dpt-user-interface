@@ -81,7 +81,8 @@ const ReviewRatingSection = () => {
   const generateStarRating = (rating) => {
     const totalStars = 5;
     const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 !== 0;
+    const decimalPart = rating - fullStars;
+    const halfStar = decimalPart >= 0.2 && decimalPart <= 0.7;
     const emptyStars = totalStars - fullStars - (halfStar ? 1 : 0);
   
     const stars = [];
@@ -100,7 +101,8 @@ const ReviewRatingSection = () => {
   
     // Adding half star if needed
     if (halfStar) {
-      stars.push(<span key="half" className="star" style={starStyle}>&#9733;&#189;</span>);
+      const halfStarContent = decimalPart >= 0.2 && decimalPart < 0.5 ? '&#9733;&#188;' : '&#9733;&#190;';
+      stars.push(<span key="half" className="star" style={starStyle} dangerouslySetInnerHTML={{ __html: halfStarContent }} />);
     }
   
     // Adding empty stars
@@ -110,6 +112,7 @@ const ReviewRatingSection = () => {
   
     return stars;
   };
+  
   useEffect(() => {
     if (reviews.length > 0) {
       const totalRatingsCount = reviews.length;
@@ -137,6 +140,7 @@ const ReviewRatingSection = () => {
               </div>
               
               <div className="reviewText"> <span>{averageRating.toFixed(1)}</span> | {reviews.length} Reviews </div>
+              {generateStarRating(averageRating)}
             </div>
             {/* ReviewsLhs */}
             <div className="ReviewsRhs">
