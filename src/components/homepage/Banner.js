@@ -857,14 +857,14 @@ const Banner = ({selectedCurrency}) => {
             </div>
             <div className="tab-pane fade" id="nav-attractiontickets" role="tabpanel" aria-labelledby="nav-attractiontickets-tab">
               <div className="Title">
-                <h2>Attraction Tickets</h2>
+                <h2>Attraction Ticket</h2>
                 <div className="TabLayer">
                 <div className="TabWrapper">
                 {attraction.map((attraction, index) => {
                   const titleWithHyphens = attraction.slug; // Declare it here
 
                   return (
-                    <Link to={`/attraction-tickets/${titleWithHyphens}`} className="TabBox" key={index}>
+                    <Link to={`/attraction-ticket/${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
                         <img src={`${config.imageUrl}/${attraction.image}`} alt="" />
                         <div className="discountrow">
