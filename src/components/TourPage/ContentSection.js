@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef , memo} from "react";
+import React, { useEffect, useState, useRef, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Select from "react-select";
@@ -17,7 +17,7 @@ import GetInTouch from "./GetInTouch";
 import AdditionalChargesInfo from "./AdditionalChargesInfo";
 import { useParams } from "react-router-dom";
 import { data } from "../../data/Category";
-import { addToCart } from "../cart/CartActions";
+// import { addToCart } from "../cart/CartActions";
 import axios from 'axios';
 import config from "../../config";
 import AskQuestion from './AskQuestion'
@@ -55,7 +55,7 @@ function ContentSection({ selectedCurrency }) {
   const [language, setLanguage] = useState([]);
   const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   const [tourImage, setTourImage] = useState("");
-
+  const [wishlistData, setWishlistData] = useState(null);
 
   const formRef = useRef(null);
 
@@ -252,7 +252,6 @@ function ContentSection({ selectedCurrency }) {
     localStorage.setItem('cartdata', JSON.stringify(MyCartData));
 
     setIsFormValid(true);
-    AddToCart(/* pass your item here */);
     navigate('/cart');
   };
 
@@ -301,6 +300,7 @@ function ContentSection({ selectedCurrency }) {
 
     fetchData();
   }, [slug]);
+
   const CustomInput = React.forwardRef(({ value, onClick, placeholder }, ref) => (
     <input
       type="text"
@@ -396,6 +396,42 @@ function ContentSection({ selectedCurrency }) {
     }
   }, []);
 
+  useEffect(() => {
+    const checkTokenAndFetchData = async () => {
+      const token = localStorage.getItem('token');
+
+      // Check if token exists before making the API call
+      if (token) {
+        try {
+          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.data.status === 'success') {
+            const wishlistData = response.data.data;
+
+            // Update state or perform logic with wishlistData here
+            console.log('Fetched wishlist data:', wishlistData);
+            // setWishlistData(wishlistData);
+          } else {
+            console.error('Failed to fetch wishlist data');
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist data:', error);
+        }
+      } else {
+        console.log('User not logged in or token not found.'); // Handle not logged in scenario
+      }
+    };
+
+    checkTokenAndFetchData();
+  }, []);
+
+  console.log("this tour id", tour_id)
+
+
 
   const responsive = {
     superLargeDesktop: {
@@ -416,10 +452,10 @@ function ContentSection({ selectedCurrency }) {
     },
   };
 
-  const AddToCart = (item) => {
-    dispatch(addToCart(item));
-  };
-  const cart = useSelector((state) => state.cart);
+  // const AddToCart = (item) => {
+  //   dispatch(addToCart(item));
+  // };
+  // const cart = useSelector((state) => state.cart);
 
   const options = itineraryData.map((itinerary) => ({
     value: itinerary.name, // Assuming 'id' is a unique identifier
@@ -465,6 +501,7 @@ function ContentSection({ selectedCurrency }) {
     // Once removed from wishlist, update state accordingly
     setIsAddedToWishlist(false);
   };
+  console.log("this is our",tour_id)
 
 
   return (
@@ -563,9 +600,26 @@ function ContentSection({ selectedCurrency }) {
                     </div>
                   </Carousel>
                 </div>
-                <button className={`wishlistTag ${isAddedToWishlist ? 'wishlistTagFill' : ''}`} onClick={isAddedToWishlist ? removeFromWishlist : () => addToWishlist(tour.id)}>
-                  <span>{isAddedToWishlist ? 'Remove from Wishlist' : 'Wishlist'}</span>
+                <button
+                  className={
+                    wishlistData && wishlistData.some(item => item.tour_id === tour_id)
+                      ? "wishlistTagFill"
+                      : "wishlistTag"
+                  }
+                  onClick={
+                    wishlistData && wishlistData.some(item => item.tour_id === tour_id)
+                      ? removeFromWishlist
+                      : () => addToWishlist(tour_id)
+                  }
+                >
+                  <span>
+                    {wishlistData && wishlistData.some(item => item.tour_id === tour_id)
+                      ? "Remove from Wishlist"
+                      : "Wishlist"}
+                  </span>
                 </button>
+
+
               </div>
 
               {/*BANNER TABS */}
@@ -1061,7 +1115,7 @@ function ContentSection({ selectedCurrency }) {
                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
                                 <label>Special Request</label>
-                                <textarea className="form-control" placeholder="Select Special Seat" rows="3"  maxLength={500} name="request"></textarea>
+                                <textarea className="form-control" placeholder="Select Special Seat" rows="3" maxLength={500} name="request"></textarea>
                               </div>{/* formGroup */}
                             </div>
                             <div className="submitcta">
@@ -1264,7 +1318,7 @@ function ContentSection({ selectedCurrency }) {
                         <ul className="widSSPReadReview">
                           <li>
                             <Link
-                            target="_blank"
+                              target="_blank"
                               to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
                               id="allreviews"
                               onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
@@ -1277,7 +1331,7 @@ function ContentSection({ selectedCurrency }) {
                         <ul className="widSSPWriteReview">
                           <li>
                             <Link
-                            target="_blank"
+                              target="_blank"
                               to="https://www.tripadvisor.com/UserReview-g295424-d2510773-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
                               id="writereview"
                               onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"

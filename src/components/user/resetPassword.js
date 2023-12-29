@@ -126,7 +126,7 @@ const ResetPassword = () => {
 
                             <div className="formGroup">
                                 <button type="submit" className="btn">
-                                    Login
+                                    Change Password
                                 </button>
                             </div>
 

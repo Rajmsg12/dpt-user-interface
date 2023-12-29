@@ -452,7 +452,7 @@ const Banner = ({selectedCurrency}) => {
                   aria-selected="true"><img  src="images/homepage/jet.png" alt="" />Desert Safari</button>
                 <button className="nav-link" id="nav-weddingonyatch-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-weddingonyatch" type="button" role="tab" aria-controls="nav-weddingonyatch"
-                  aria-selected="false"><img src="images/homepage/yatch.png" alt="" />Wedding on yacht</button>
+                  aria-selected="false"><img src="images/homepage/yatch.png" alt="" />Wedding On Yacht</button>
                 <button className="nav-link" id="nav-luxurytour-tab" data-bs-toggle="tab" data-bs-target="#nav-luxurytour"
                   type="button" role="tab" aria-controls="nav-luxurytour" aria-selected="false"><img
                     src="images/homepage/diamond.png" alt="" />Luxury Tour</button>
@@ -574,7 +574,7 @@ const Banner = ({selectedCurrency}) => {
             </div>
             <div className="tab-pane fade" id="nav-weddingonyatch" role="tabpanel" aria-labelledby="nav-weddingonyatch-tab">
               <div className="Title">
-                <h2>Wedding on yacht</h2>
+                <h2>Wedding On Yacht</h2>
                 <div className="TabLayer">
                 <div className="TabWrapper">
                   {wedding.map((wedding, index) => {

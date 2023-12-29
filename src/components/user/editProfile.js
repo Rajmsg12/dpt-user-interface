@@ -4,6 +4,7 @@ import { ReactComponent as House } from "bootstrap-icons/icons/house.svg";
 import { ReactComponent as Person } from "bootstrap-icons/icons/person.svg";
 import { Link } from 'react-router-dom';
 import config from '../../config';
+import countriesList from './countryList';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import './Style/dashboard.css';
@@ -38,7 +39,7 @@ const EditProfile = () => {
     const closeMenu = () => {
         setMenuOpen(false);
     };
-    
+
     const [formData, setFormData] = useState({
         first_name: first_name,
         last_name: last_name,
@@ -58,7 +59,7 @@ const EditProfile = () => {
             phoneno: myphone,
             address: address,
         });
-    }, [first_name,last_name, email, country, myphone, address]);
+    }, [first_name, last_name, email, country, myphone, address]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -138,7 +139,7 @@ const EditProfile = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-    
+
         const token = localStorage.getItem('token');
         if (token) {
             fetch(`${config.baseUrl}/profile/update`, {
@@ -158,15 +159,15 @@ const EditProfile = () => {
                         showConfirmButton: false,
                         timer: 2500, // You can adjust the timer to control how long the message is displayed
                     });
-    
+
                     if (data.success) {
                         setSuccessMessage('Profile updated successfully!');
                         // Display success message with Swal
-                       
+
                     } else {
                         setSuccessMessage('Failed to update profile. Please try again.');
                     }
-    
+
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -175,7 +176,17 @@ const EditProfile = () => {
                 });
         }
     };
-    
+    const countryOptions = [
+        <option key="default" value="">
+            Select Country
+        </option>,
+        ...countriesList.map((country) => (
+            <option key={country.code} value={country.name}>
+                {country.name}
+            </option>
+        )),
+    ];
+
     return (
         <div>
             <header className="userHeader">
@@ -257,7 +268,7 @@ const EditProfile = () => {
                                     {" "}
                                     <img src="images/homepage/innerlogo.svg" alt="" />
                                 </Link>
-                                <span className="closeIcon" onClick={closeMenu}/>
+                                <span className="closeIcon" onClick={closeMenu} />
                             </div>
                             <Link to="/user-dashboard" className="nav-link  DashboardIcon">
                                 <img src="images/homepage/dashboardicon.png" alt="" /> Dashboard
@@ -277,14 +288,14 @@ const EditProfile = () => {
                                 Change Password
                             </Link>
                             <div className="logoutDiv">
-                            <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
-                        </div>
+                                <Link onClick={handleLogout}><img src="images/homepage/logouticon.png" alt="" />Logout</Link>
+                            </div>
                             {/*        <Link href="/help" className="nav-link HelpIcon">
                                 <img src="images/customer-supporticon.png" alt="" /> Help
                             </Link> */}
                         </div>
                         {/*topSidebar*/}
-                       
+
                     </div>
                     {/*userboardLHS*/}
                     <div className="tab-content userboardRHS">
@@ -327,7 +338,7 @@ const EditProfile = () => {
                                                 pattern="[0-9]*" // Accepts only numerical values
                                                 maxLength={13}
                                                 onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
-                                                required
+                                        
                                             />
                                         </div>
 
@@ -339,7 +350,7 @@ const EditProfile = () => {
                                                 placeholder="Address"
                                                 value={formData.address}
                                                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                                                required
+                                            
                                             />
                                         </div>
 
@@ -356,14 +367,14 @@ const EditProfile = () => {
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label">Country</label>
-                                            <input
-                                                type="country"
-                                                className="form-control"
-                                                placeholder="Country"
+                                            <select
+                                                className="form-select"
                                                 value={formData.country}
                                                 onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                                                 required
-                                            />
+                                            >
+                                                {countryOptions}
+                                            </select>
                                         </div>
 
                                         {/*    <div className="mb-3">
