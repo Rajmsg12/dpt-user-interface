@@ -79,8 +79,11 @@
   font-size: 12px;
   font-weight: 500;
   color: #000;
+  transition:all 0.3s;
 }
-
+.FormWrapper .CheckBoxrow .forgotepassword:hover{
+ color: #F25928;
+}
 .FormWrapper .formGroup .btn {
   background-color: #F25928;
   font-size: 18px;
@@ -107,7 +110,12 @@
   font-weight: 600;
   text-align: center;
   color: #000;
+  transition: all 0.3s;
 }
+.FormWrapper .CreateAccountLabel:hover{
+  color: #F25928;
+}
+
 
 .FormWrapper .CreateAccountLabel a {
   color: #F25928;
@@ -135,7 +143,4 @@
   .FormWrapper .CreateAccountLabel {
     font-size: 12px;
   }
-}
-.hideInput {
-  display: none;
 }

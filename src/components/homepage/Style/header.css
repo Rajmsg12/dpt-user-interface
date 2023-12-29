@@ -118,10 +118,15 @@
         padding: 2px 10px;
         font-size: 12px;
         color: #000;
-        width: auto;
+        width:100%;
         height: auto;
         background-color: #fff;
         border-radius: 0px;
+        transition: all 0.3s;
+    }
+  .HomePageMin .HomePageHeader .dropdown-menu .dropdown-item:hover, .HomePageMin .HomePageHeader .dropdown-menu .dropdown-item span:hover{
+        color: #f25928 !important;
+        transition: all 0.3s;
     }
     .HomePageMin .HomePageHeader .Headerdropdownmenu .dropdown-toggle::after{
         border:0px;
@@ -1007,7 +1012,9 @@
     }
     .HomePageMin .tags a:hover{
         text-decoration:underline;
+        color: #F25928;
     }
+   
     .HomePageMin .tags a::after {
         content: "";
         border-right: 1px solid #D1D0D0;
@@ -1207,6 +1214,10 @@
         font-weight: 400;
         position: relative;
         padding: 2px 0px 2px 45px;
+        transition: all 0.3s;
+    }
+    .footerWidget .fInfo a:hover{
+        color: #F25928;
     }
     .footerWidget .fInfo a::after{
         content:"";
@@ -1361,6 +1372,10 @@
         font-size: 12px;
         margin: 0px;
         position: relative;
+        transition: all 0.3s;
+    }
+    .footerBottomRhs a:hover{
+        color: #f25928;
     }
     
     .footerBottomRhs a::after {
@@ -1854,6 +1869,16 @@
     @media screen and (max-width:767px) {
         .HomePageMin .TabWrapper, .HomePageMin .chooseDptWrapper, .HomePageMin .menuWrapper {
             grid-template-columns: repeat(2,1fr);
+        }
+        .HomePageMin .chooseDptWrapper .chooseBox {
+            text-align: center;
+        }
+        .HomePageMin .chooseDptWrapper .chooseBox .Icon {
+            width: 90px;
+            min-width: 90px;
+            height: 90px;
+            min-height: 90px;
+            margin: 0 auto 15px;
         }
         .HomePageMin .customersaysrow{
             flex-direction: column;

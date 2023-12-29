@@ -346,8 +346,9 @@
   color: #000;
 }
 
-.OrderSummaryTable .OrderSummaryTablebody .OrderSummaryTablerow span:last-child {
-  font-weight: 700;
+.OrderSummaryTable .OrderSummaryTablebody .OrderSummaryTablerow span:last-child, .OrderSummaryTable .OrderSummaryTablebody .OrderSummaryTablerow span b, .OrderSummaryTable .OrderSummaryTablebody .OrderSummaryTablerow span strong
+{
+  font-weight: 600;
 }
 
 .OrderSummaryTable .OrderSummaryTablebody .ProceedCheckoutCta .cta {
@@ -361,6 +362,11 @@
   text-align: center;
   border-radius: 5px;
   margin: 10px 0px 15px;
+  transition: all 0.3s;
+}
+
+.OrderSummaryTable .OrderSummaryTablebody .ProceedCheckoutCta .cta:hover{
+  background-color: #3EABD5;
 }
 
 .OrderSummaryTable .OrderSummaryTablebody .PaymentMethodGroup {
@@ -405,9 +411,11 @@
   color: #000000;
   font-size: 13px;
   font-weight: 500;
+  transition: all 0.3s;
 }
 .BreadcrumbSection .breadcrumb li a:hover {
   text-decoration: underline;
+  color: #F25928;
 }
 
 .breadcrumb-item + .breadcrumb-item {

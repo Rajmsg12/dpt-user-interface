@@ -754,7 +754,7 @@ header.userHeader {
 
 /*userboard new css*/
 .topSidebar{
-  height: calc(100vh - 190px);
+  /* height: calc(100vh - 190px); */
 }
 .topSidebar::-webkit-scrollbar{
   display: none;
@@ -842,6 +842,7 @@ header.userHeader {
   align-items: center;
   column-gap: 2px;
   text-transform: capitalize;
+  display: inline-flex !important;
 }
 
 

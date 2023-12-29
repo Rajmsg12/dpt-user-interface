@@ -11,9 +11,12 @@
     color: #000000;
     font-size: 13px;
     font-weight: 500;
+    transition: all 0.3s;
   }
+ 
   .BreadcrumbSection .breadcrumb li a:hover {
     text-decoration: underline;
+    color: #f25928;
   }
   
   .breadcrumb-item + .breadcrumb-item {
@@ -583,15 +586,21 @@
     }
   }
   .TopArrow {
-    border: 2px solid #F25928; /* Border width and color */
+    /* border: 2px solid #F25928; */
     background-color: #F25928; /* Background color */
-    color: white; /* Text color */
+    color: #fff; /* Text color */
     padding: 10px 20px; /* Adjust padding as needed */
     border-radius: 5px; /* Optional: Rounded corners */
     margin-top: 15px;
     width: 25%; /* Fixed width */
     text-align: center; /* Center the text horizontally */
     cursor: pointer; /* Show cursor as pointer on hover */
+    transition: all 0.3s;
+    border:0px;
+    font-weight: 500;
+  }
+  .TopArrow:hover{
+    background-color:#3EABD5;
   }
   
   

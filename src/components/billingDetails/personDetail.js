@@ -279,7 +279,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                     if (response.ok) {
                         // Assuming the API returns JSON with a status field
                         const data = await response.json();
-                        if (data.status === 'Email already exists. Please log in.') {
+                        if (data.status === `Email already exists. Please log in.`) {
                             setEmailExistsError(data.status);
                         } else {
                             setEmailExistsError(''); // Clear the error message if email is valid
@@ -293,6 +293,9 @@ const PersonDetail = ({ selectedCurrency }) => {
             }
         }
     };
+    const loginNavigate = () => {
+        navigate("/login")
+    }
 
 
 
@@ -362,6 +365,20 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                         {errors.email && <div className="error">{errors.email}</div>}
                                                         <p style={{ color: 'red' }} className={emailExistsError ? 'error-message' : ''}>
                                                             {emailExistsError}
+                                                            {emailExistsError && ( // Render the button only if emailExistsError exists
+                                                                <button
+                                                                    onClick={loginNavigate}
+                                                                    style={{
+                                                                        color: 'red',
+                                                                        backgroundColor: 'transparent', // Set your desired background color
+                                                                        border: 'none', // Remove button border
+                                                                        borderColor: '#f25e2e', // Set border color
+                                                                        // Add other styles as needed
+                                                                    }}
+                                                                >
+                                                                    Log In
+                                                                </button>
+                                                            )}
                                                         </p>{/* Display API error message */}
                                                     </div>
 

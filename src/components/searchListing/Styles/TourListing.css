@@ -776,8 +776,11 @@ input {
   color: #000;
   font-weight: 400;
   display: block;
+  transition: all 0.3s;
 }
-
+.sidebarCategoriesSec ul li a:hover{
+  color: #f25928;
+}
 .sidebarCategoriesSec ul li ul {
   display: none;
   transition: 0.5s;
@@ -2230,9 +2233,10 @@ input {
   margin: 30px 0px 0px;
   column-gap: 10px;
 }
-.paginationSec ul .page-item:first-child .page-link,  .paginationSec ul .page-item:last-child .page-link{
+.paginationSec ul .page-item:first-child .page-link, .paginationSec ul .page-item:last-child .page-link {
   padding: 0px;
   border-radius: 50%;
+  background-color: #3EABD5;
 }
 
 .paginationSec ul a{
