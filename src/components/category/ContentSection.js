@@ -4,7 +4,7 @@ import { data } from '../../data/Category'
 import CategoryLHS from './categoryLHS'
 import Overview from './Overview'
 import { Link } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
+import { useParams , useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import config from '../../config'
 import { Helmet } from 'react-helmet'
@@ -26,6 +26,9 @@ const ContentSection = ({ selectedCurrency }) => {
   const [metaDescription, setMetaDescription] = useState('');
   const [metaKeywords, setMetaKeywords] = useState('');
   const { categoryName } = useParams()
+  const [clickedTourId, setClickedTourId] = useState(null);
+  const navigate = useNavigate()
+
   const formattedCategory = categoryName
     .split('-') // Split by hyphens
     .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
@@ -144,6 +147,48 @@ const ContentSection = ({ selectedCurrency }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = filteredData.slice(startIndex, endIndex);
+
+  const addToWishlist = async (tourId) => {
+    console.log('Adding to wishlist:', tourId); // Check if function is triggered
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // If user is not logged in, navigate to the login page
+        navigate("/login");
+        return;
+      }
+      if (token) {
+        const requestBody = {
+          tour_id: tourId // Setting tour.id as tour_id in the request body
+        };
+
+        const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (response.ok) {
+          // Wishlist addition successful
+          console.log('Tour added to wishlist!');
+          setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
+          navigate("/wishlist");
+        } else {
+          // Handle errors if the addition fails
+          console.error('Failed to add tour to wishlist');
+        }
+      } else {
+        console.error('User not logged in.'); // Log if the user is not logged in
+        // You might want to handle this scenario by redirecting the user to the login page or showing a message
+      }
+    } catch (error) {
+      console.error('Error adding tour to wishlist:', error);
+    }
+  };
   return (
     <>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
@@ -196,14 +241,14 @@ const ContentSection = ({ selectedCurrency }) => {
                       <div className="listingRow GridRowWrapper">
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
-                            <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.id}`}>
+                            <div className="parenttabbox">
+                            <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.tour_id}`}>
                               <div className="img">
                                 <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                                 <div className="discountrow">
                                   <div className="discount">
                                     <span>{tour.tour_discount} %</span>
                                   </div>
-                                  <div className="wishlistIcon"></div>
                                 </div>
                                 <div className="imgBottomRow">
                                   <div className="lhstext">
@@ -270,6 +315,8 @@ const ContentSection = ({ selectedCurrency }) => {
                                 <div className="aedRHS">{tour.tour_tour_duration}</div>
                               </div>
                             </Link>
+                               <div className="wishlistIcon" onClick={() => addToWishlist(tour.tour_id)}></div>
+                               </div>
                           ))
                         ) : (
                           <p>No Tour Found</p>
@@ -279,14 +326,14 @@ const ContentSection = ({ selectedCurrency }) => {
                     <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                       <div className="listingRow">
                         {itemsToShow.map((tour) => (
-                          <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.id}`}>
+                                <div className="parenttabbox">
+                          <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.tour_id}`}>
                             <div className="listingBoxImg">
                               <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                               <div className="discountrow">
                                 <div className="discount">
                                   <span>{tour.tour_discount} %</span>
                                 </div>
-                                <div className="wishlistIcon"></div>
                               </div>
                               <div className="imgBottomRow">
                                 <div className="lhstext">
@@ -322,6 +369,7 @@ const ContentSection = ({ selectedCurrency }) => {
                                 </div>
                               </div>
                             </div>
+                         
                             <div className="listingBoxContent">
                               <div className="listingBoxTop">
                                 <h4>{tour.Tour_name}</h4>
@@ -363,6 +411,8 @@ const ContentSection = ({ selectedCurrency }) => {
                               </div>
                             </div>
                           </Link>
+                          <div className="wishlistIcon" onClick={() => addToWishlist(tour.tour_id)}></div>
+                               </div>
                         ))}
                       </div>
                     </div>

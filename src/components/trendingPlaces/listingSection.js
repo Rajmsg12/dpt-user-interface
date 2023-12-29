@@ -6,6 +6,7 @@ import LeftSideFilter from './LeftSideFilter';
 import { useParams } from 'react-router-dom';
 import config from '../../config';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const itemsPerPage = 9;
 const ListingSection = ({ selectedCurrency }) => {
@@ -21,6 +22,8 @@ const ListingSection = ({ selectedCurrency }) => {
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const totalItems = data.TourListing.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const [clickedTourId, setClickedTourId] = useState(null);
+  const navigate = useNavigate()
 
   const handlePageChange = (increment) => {
     const nextPage = currentPage + increment;
@@ -127,6 +130,48 @@ const ListingSection = ({ selectedCurrency }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = filteredData.slice(startIndex, endIndex);
+
+  const addToWishlist = async (tourId) => {
+    console.log('Adding to wishlist:', tourId); // Check if function is triggered
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // If user is not logged in, navigate to the login page
+        navigate("/login");
+        return;
+      }
+      if (token) {
+        const requestBody = {
+          tour_id: tourId // Setting tour.id as tour_id in the request body
+        };
+
+        const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (response.ok) {
+          // Wishlist addition successful
+          console.log('Tour added to wishlist!');
+          setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
+          navigate("/wishlist");
+        } else {
+          // Handle errors if the addition fails
+          console.error('Failed to add tour to wishlist');
+        }
+      } else {
+        console.error('User not logged in.'); // Log if the user is not logged in
+        // You might want to handle this scenario by redirecting the user to the login page or showing a message
+      }
+    } catch (error) {
+      console.error('Error adding tour to wishlist:', error);
+    }
+  };
   return (
     <div>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
@@ -188,14 +233,15 @@ const ListingSection = ({ selectedCurrency }) => {
                       <div className="listingRow GridRowWrapper">
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
-                            <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.id}`}>
+                            <div className="parenttabbox">
+                            <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.tour_id}`}>
                               <div className="img">
                                 <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                                 <div className="discountrow">
                                   <div className="discount">
                                     <span>{tour.tour_discount} %</span>
                                   </div>
-                                  <div className="wishlistIcon"></div>
+                               
                                 </div>
                                 <div className="imgBottomRow">
                                   <div className="lhstext">
@@ -266,6 +312,8 @@ const ListingSection = ({ selectedCurrency }) => {
                                 <div className="aedRHS">{tour.tour_tour_duration}</div>
                               </div>
                             </Link>
+                               <div className="wishlistIcon" onClick={() => addToWishlist(tour.tour_id)}></div>
+                               </div>
                           ))
                         ) : (
                           <p>No items within the selected price range.</p>
@@ -275,14 +323,15 @@ const ListingSection = ({ selectedCurrency }) => {
                     <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
                       <div className="listingRow">
                         {itemsToShow.map((tour) => (
-                          <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.id}`}>
+                            <div className="parenttabbox">
+                          <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.tour_id}`}>
                             <div className="listingBoxImg">
                               <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                               <div className="discountrow">
                                 <div className="discount">
                                   <span>{tour.tour_discount} %</span>
                                 </div>
-                                <div className="wishlistIcon"></div>
+
                               </div>
                               <div className="imgBottomRow">
                                 <div className="lhstext">
@@ -361,6 +410,8 @@ const ListingSection = ({ selectedCurrency }) => {
                               </div>
                             </div>
                           </Link>
+                            <div className="wishlistIcon" onClick={() => addToWishlist(tour.tour_id)}></div>
+                            </div>
                         ))}
                       </div>
                     </div>
