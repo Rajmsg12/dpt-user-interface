@@ -1,10 +1,12 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import InnerHeader from '../common/InnerHeader';
 import Footer from '../common/Footer';
 import './Style/login.css';
 import { Link } from 'react-router-dom';
 import config from '../../config';
 import { useNavigate } from 'react-router-dom';
+import SuccessPopup from '../popup/login';
+import '../popup/login.css';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -12,8 +14,14 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const handleCloseSuccessPopup = () => {
+        setShowSuccessPopup(false);
+        // Optionally, you can navigate the user to another page after closing the popup.
+        // navigate('/user-dashboard');
+    };
     const handleRememberMe = (e) => {
-        setRememberMe(e.target.checked); 
+        setRememberMe(e.target.checked);
     };
 
     const handleLogin = async (e) => {
@@ -29,8 +37,13 @@ const Login = () => {
             });
 
             if (response.ok) {
+                setShowSuccessPopup(true);
+                setTimeout(() => {
+                    setShowSuccessPopup(false);
+                }, 5000);
                 const data = await response.json();
                 localStorage.setItem('token', data.token);
+
 
                 // Save login details if Remember Me is checked
                 if (rememberMe) {
@@ -123,6 +136,9 @@ const Login = () => {
                                     Login
                                 </button>
                             </div>
+                            {showSuccessPopup && (
+                                <SuccessPopup handleClose={handleCloseSuccessPopup} className="success-popup" />
+                            )}
 
                             <div className="formGroup">
                                 <div className="CreateAccountLabel">

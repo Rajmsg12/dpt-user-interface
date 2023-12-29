@@ -604,5 +604,11 @@
   }
   
   
-
+  .formGroup p button {
+    color: #3DAAD5 !important;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 0px 0px 0px 2px;
+}
   

@@ -484,6 +484,7 @@ const Banner = ({selectedCurrency}) => {
                     const titleWithHyphens = tour.slug; // Declare it here
 
                     return (
+                      <div className="parenttabbox">
                       <Link to={`/desert-safari/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
                           <img src={`${config.imageUrl}/${tour.image}`} alt="" />
@@ -491,7 +492,6 @@ const Banner = ({selectedCurrency}) => {
                             <div className="discount">
                               <span>{`${tour.discount}%`}</span>
                             </div>
-                            <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
                           </div>
                           <div class="imgBottomRow">
                             <div class="lhstext">
@@ -563,6 +563,8 @@ const Banner = ({selectedCurrency}) => {
                           <div className="aedRHS">{tour.tour_duration}</div>
                         </div>
                       </Link>
+                      <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
+                      </div>
                     );
                   })}
                 </div>
@@ -581,6 +583,8 @@ const Banner = ({selectedCurrency}) => {
                     const titleWithHyphens = wedding.slug; // Declare it here
   
                     return (
+                      <div className="parenttabbox">
+                     
                       <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
                           <img src={`${config.imageUrl}/${wedding.image}`} alt="" />
@@ -588,7 +592,7 @@ const Banner = ({selectedCurrency}) => {
                             <div className="discount">
                               <span>{`${wedding.discount}%`}</span>
                             </div>
-                            <div className="wishlistIcon" onClick={() => addToWishlist(wedding.id)}></div>
+                          
                           </div>
                           <div class="imgBottomRow">
                             <div class="lhstext">
@@ -660,6 +664,8 @@ const Banner = ({selectedCurrency}) => {
                           <div className="aedRHS">{wedding.tour_duration}</div>
                         </div>
                       </Link>
+                      <div className="wishlistIcon" onClick={() => addToWishlist(wedding.id)}></div>
+                      </div>
                     );
                   })}
                 </div>
@@ -676,6 +682,8 @@ const Banner = ({selectedCurrency}) => {
                   const titleWithHyphens = luxury.slug; // Declare it here
 
                   return (
+                    <div className="parenttabbox">
+                    
                     <Link to={`/luxury-tour/${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
                         <img src={`${config.imageUrl}/${luxury.image}`} alt="" />
@@ -683,7 +691,7 @@ const Banner = ({selectedCurrency}) => {
                           <div className="discount">
                             <span>{`${luxury.discount}%`}</span>
                           </div>
-                          <div className="wishlistIcon" onClick={() => addToWishlist(luxury.id)}></div>
+                         
                         </div>
                         <div class="imgBottomRow">
                           <div class="lhstext">
@@ -755,6 +763,8 @@ const Banner = ({selectedCurrency}) => {
                         <div className="aedRHS">{luxury.tour_duration}</div>
                       </div>
                     </Link>
+                    <div className="wishlistIcon" onClick={() => addToWishlist(luxury.id)}></div>
+                     </div>
                   );
                 })}
               </div>
@@ -770,6 +780,8 @@ const Banner = ({selectedCurrency}) => {
                     const titleWithHyphens = privates.slug; // Declare it here
 
                     return (
+                      <div className="parenttabbox">
+                     
                       <Link to={`/private-tour/${titleWithHyphens}`} className="TabBox" key={index}>
                         <div className="img">
                           <img src={`${config.imageUrl}/${privates.image}`} alt="" />
@@ -777,7 +789,7 @@ const Banner = ({selectedCurrency}) => {
                             <div className="discount">
                               <span>{`${privates.discount}%`}</span>
                             </div>
-                            <div className="wishlistIcon" onClick={() => addToWishlist(privates.id)}></div>
+                           
                           </div>
                           <div class="imgBottomRow">
                             <div class="lhstext">
@@ -849,6 +861,8 @@ const Banner = ({selectedCurrency}) => {
                           <div className="aedRHS">{privates.tour_duration}</div>
                         </div>
                       </Link>
+                      <div className="wishlistIcon" onClick={() => addToWishlist(privates.id)}></div>
+                      </div>
                     );
                   })}
                 </div>
@@ -864,6 +878,8 @@ const Banner = ({selectedCurrency}) => {
                   const titleWithHyphens = attraction.slug; // Declare it here
 
                   return (
+                    <div className="parenttabbox">
+                     
                     <Link to={`/attraction-ticket/${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
                         <img src={`${config.imageUrl}/${attraction.image}`} alt="" />
@@ -871,7 +887,7 @@ const Banner = ({selectedCurrency}) => {
                           <div className="discount">
                             <span>{`${attraction.discount}%`}</span>
                           </div>
-                          <div className="wishlistIcon" onClick={() => addToWishlist(attraction.id)}></div>
+                         
                         </div>
                         <div class="imgBottomRow">
                           <div class="lhstext">
@@ -943,6 +959,8 @@ const Banner = ({selectedCurrency}) => {
                         <div className="aedRHS">{attraction.tour_duration}</div>
                       </div>
                     </Link>
+                    <div className="wishlistIcon" onClick={() => addToWishlist(attraction.id)}></div>
+                    </div>
                   );
                 })}
               </div>
@@ -959,6 +977,7 @@ const Banner = ({selectedCurrency}) => {
                   const titleWithHyphens = chauffeur.slug; // Declare it here
 
                   return (
+                    <div className="parenttabbox">
                     <Link to={`/chauffeur/${titleWithHyphens}`} className="TabBox" key={index}>
                       <div className="img">
                         <img src={`${config.imageUrl}/${chauffeur.image}`} alt="" />
@@ -966,7 +985,7 @@ const Banner = ({selectedCurrency}) => {
                           <div className="discount">
                             <span>{`${chauffeur.discount}%`}</span>
                           </div>
-                          <div className="wishlistIcon" onClick={() => addToWishlist(chauffeur.id)}></div>
+                        
                         </div>
                         <div class="imgBottomRow">
                           <div class="lhstext">
@@ -1038,6 +1057,7 @@ const Banner = ({selectedCurrency}) => {
                         <div className="aedRHS">{chauffeur.tour_duration}</div>
                       </div>
                     </Link>
+                    <div className="wishlistIcon" onClick={() => addToWishlist(chauffeur.id)}></div></div>
                   );
                 })}
               </div>

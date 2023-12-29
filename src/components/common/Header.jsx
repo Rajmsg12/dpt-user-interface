@@ -78,6 +78,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                 console.error('Logout failed', error);
             });
     };
+    console.log("token", localStorage.getItem("token"))
 
     return (
 
@@ -174,36 +175,35 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                 <FontAwesomeIcon icon={faUser} className="text-light" />
                                             </button>
                                             <ul className="dropdown-menu">
-                                                {isLoggedIn ? (
-                                                    <div>
-                                                        <Link to="/user-dashboard" className="dropdown-item">
-                                                            <div>
-                                                                <Person className="text-danger" />
-                                                                <span className="userName" style={{ color: "black" }}>{first_name}</span>
-                                                            </div>
-                                                        </Link>
-                                                        <li>
-                                                            <hr className="dropdown-divider" />
-                                                        </li>
-                                                        <li>
-                                                            <Link to="/bookings" className="dropdown-item">
-                                                                <House className="text-danger" /> Bookings
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <hr className="dropdown-divider" />
-                                                        </li>
-                                                        <li>
-                                                            <button className="dropdown-item" onClick={handleLogout}>
-                                                                <IconDoorClosedFill className="text-danger" /> Logout
-                                                            </button>
-                                                        </li>
-                                                    </div>
-                                                ) : (
-                                                    <li>
-                                                        <Link to="/login" className="dropdown-item">Login/SignUp</Link>
-                                                    </li>
-                                                )}
+                                            {isLoggedIn ? (
+                        <div>
+                          <Link to="/user-dashboard" className="dropdown-item">
+                            <div >
+                              <Person className="text-danger" />
+                              <span className="userName" style={{ color: "black" }}>{first_name}</span>
+                            </div>
+                          </Link>
+                          <li>
+                            <hr className="dropdown-divider" />
+                          </li>
+                          <li>
+                            <Link to="/booking" className="dropdown-item">
+                              <House className="text-danger" /> Bookings
+                            </Link>
+                          </li>
+                          <li>
+                            <hr className="dropdown-divider" />
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" onClick={handleLogout}>
+                              <IconDoorClosedFill className="text-danger" /> Logout
+                            </Link>
+                          </li>
+                        </div>
+
+                      ) : (
+                        <Link to="/login" className="dropdown-item">Login/SignUp</Link>
+                      )}
                                             </ul>
                                         </div>
                                     </div>
@@ -331,7 +331,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                         <hr className="dropdown-divider" />
                                                     </li>
                                                     <li>
-                                                        <Link to="/bookings" className="dropdown-item">
+                                                        <Link to="/booking" className="dropdown-item">
                                                             <House className="text-danger" /> Bookings
                                                         </Link>
                                                     </li>

@@ -274,7 +274,7 @@ const InnerHeader = ({ selectedCurrency, setCurrency }) => {
                             <hr className="dropdown-divider" />
                           </li>
                           <li>
-                            <Link to="/bookings" className="dropdown-item">
+                            <Link to="/booking" className="dropdown-item">
                               <House className="text-danger" /> Bookings
                             </Link>
                           </li>
