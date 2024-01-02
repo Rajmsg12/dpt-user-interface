@@ -34,9 +34,9 @@ const TopListing = () => {
             <div className="GetinTouchWrapper">
               <div className="time">5 Hours</div>
               <div className="location">{formattedTittle}</div>
-              <div className="review">
+              {/* <div className="review">
                 <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />4.5 | 500 Reviews
-              </div>
+              </div> */}
             </div>
             {/* GetinTouchWrapper */}
           </div>

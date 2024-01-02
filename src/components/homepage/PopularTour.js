@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../../Style/header.css'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { data } from '../../data/index'
 import { Link } from 'react-router-dom'
@@ -15,6 +16,7 @@ const PopularTour = ({ selectedCurrency }) => {
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
     const [clickedTourId, setClickedTourId] = useState(null);
+    const [wishlistData, setWishlistData] = useState(null);
     const navigate = useNavigate()
 
     const responsive = {
@@ -133,6 +135,39 @@ const PopularTour = ({ selectedCurrency }) => {
           popup.remove();
         }, 5000);
       };
+      useEffect(() => {
+        const checkTokenAndFetchData = async () => {
+          const token = localStorage.getItem('token');
+    
+          // Check if token exists before making the API call
+          if (token) {
+            try {
+              const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+    
+              if (response.data.status === 'success') {
+                const wishlistData = response.data.data.map(item => item.tour_id);
+    
+                // Update state or perform logic with wishlistData here
+                console.log('Fetched wishlist data:', wishlistData);
+                setWishlistData(wishlistData);
+                // setWishlistData(wishlistData);
+              } else {
+                console.error('Failed to fetch wishlist data');
+              }
+            } catch (error) {
+              console.error('Error fetching wishlist data:', error);
+            }
+          } else {
+            console.log('User not logged in or token not found.'); // Handle not logged in scenario
+          }
+        };
+    
+        checkTokenAndFetchData();
+      }, [wishlistData]);
 
     return (
         <div>
