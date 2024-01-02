@@ -316,7 +316,15 @@ const AskQuestion = () => {
                     <div className="col-md-6">
                         <div className="mb-3 formGroup">
                             <label>Confirm Email*</label>
-                            <input type="email" className="form-control" placeholder="Confirm Email Address" required />
+                            <input
+                                type="email"
+                                className="form-control"
+                                placeholder="Confirm Email Address"
+                                name="confirmEmail" // Set value to match the email input value
+                                onChange={handleInputChange} // Mirror changes made in the email input
+                                required
+                            />
+
                         </div>
                         {/* formGroup */}
                     </div>
