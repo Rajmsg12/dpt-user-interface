@@ -69,12 +69,12 @@ function ContentSection({ selectedCurrency }) {
         navigate("/login");
         return;
       }
-  
+
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body
         };
-  
+
         const response = await fetch(`${config.baseUrl}/wishlist/add`, {
           method: 'POST',
           headers: {
@@ -83,12 +83,12 @@ function ContentSection({ selectedCurrency }) {
           },
           body: JSON.stringify(requestBody),
         });
-  
+
         if (response.ok) {
           // Wishlist addition successful
           const responseData = await response.json();
           console.log('Tour added to wishlist!');
-  
+
           // Display success message in popup
           displayMessage(responseData.msg);
           setClickedTourId(tourId);
@@ -104,15 +104,16 @@ function ContentSection({ selectedCurrency }) {
       console.error('Error adding tour to wishlist:', error);
     }
   };
-  
+  console.log("tour id personal", tour_id)
+
   // Function to display message as a popup
   const displayMessage = (message) => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
     popup.textContent = message;
-  
+
     document.body.appendChild(popup);
-  
+
     setTimeout(() => {
       popup.remove();
     }, 5000);
@@ -306,6 +307,7 @@ function ContentSection({ selectedCurrency }) {
         const parsedLanguage = JSON.parse(languageString); // Parse the string to an array
 
         setLanguage(parsedLanguage);
+        console.log("inner tour id personal", data.data[0].id)
 
 
       } catch (error) {
@@ -425,10 +427,11 @@ function ContentSection({ selectedCurrency }) {
           });
 
           if (response.data.status === 'success') {
-            const wishlistData = response.data.data.map(item => item.id);
+            const wishlistData = response.data.data.map(item => item.tour_id);
 
             // Update state or perform logic with wishlistData here
             console.log('Fetched wishlist data:', wishlistData);
+            setWishlistData(wishlistData);
             // setWishlistData(wishlistData);
           } else {
             console.error('Failed to fetch wishlist data');
@@ -442,9 +445,8 @@ function ContentSection({ selectedCurrency }) {
     };
 
     checkTokenAndFetchData();
-  }, []);
+  },[wishlistData])
 
-  console.log(wishlistData)
 
 
   const responsive = {
@@ -508,13 +510,7 @@ function ContentSection({ selectedCurrency }) {
       console.error("Selected language not found!");
     }
   };
-  const removeFromWishlist = () => {
-    // Perform logic to remove item from wishlist
-    // ...
-
-    // Once removed from wishlist, update state accordingly
-    setIsAddedToWishlist(false);
-  };
+  console.log("wishlist id detail", wishlistData)
 
 
   return (
@@ -615,23 +611,18 @@ function ContentSection({ selectedCurrency }) {
                 </div>
                 <button
                   className={
-                    wishlistData && wishlistData.some(item => item.tour_id === tour_id)
-                      ? "wishlistTag"
-                      : "wishlistTag wishlistTagFill"
+                    wishlistData && wishlistData.some(item => item === String(tour_id))
+                      ? "wishlistTag wishlistTagFill"
+                      : "wishlistTag"
                   }
-                  onClick={
-                    wishlistData && wishlistData.some(item => item.tour_id === tour_id)
-                      ? removeFromWishlist
-                      : () => addToWishlist(tour_id)
-                  }
+                  onClick={() => addToWishlist(tour_id)}
                 >
                   <span>
-                    {wishlistData && wishlistData.some(item => item.tour_id === tour_id)
-                      ? "Remove from Wishlist"
+                    {wishlistData && wishlistData.some(item => item === String(tour_id))
+                      ? "Wishlist"
                       : "Wishlist"}
                   </span>
                 </button>
-
 
 
               </div>
