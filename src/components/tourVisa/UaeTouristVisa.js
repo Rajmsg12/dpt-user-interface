@@ -18,12 +18,13 @@ const UaeTouristVisa = () => {
         upload_your_flight_ticket: '',
         upload_passport_copy: ''
     });
-    const handleFileUpload = (fileName, uploadType) => {
+    const handleFileUpload = (fileNames, uploadType) => {
         setFormData({
-            ...formData,
-            [uploadType]: fileName
+          ...formData,
+          [uploadType]: fileNames,
         });
-    };
+      };
+    
 
 
     const handleChange = (e) => {
@@ -45,7 +46,9 @@ const UaeTouristVisa = () => {
             discover_us: e.target.value
         });
     };
-
+    const convertFilenamesToString = (filenamesArray) => {
+        return JSON.stringify(filenamesArray);
+      };
 
 
     const handleSelectChange = (selectedOption, fieldName) => {
@@ -54,58 +57,67 @@ const UaeTouristVisa = () => {
             [fieldName]: selectedOption.value
         });
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
+        // Convert upload data to string format
+        const formattedHotelBooking = convertFilenamesToString(formData.upload_hotel_booking);
+        const formattedPassportCopy = convertFilenamesToString(formData.upload_passport_copy);
+        const formattedFlightTicket = convertFilenamesToString(formData.upload_your_flight_ticket);
+    
         try {
-            // Get the uploaded image names from localStorage or wherever they're stored
-            const uploadedImages = JSON.parse(localStorage.getItem('filedata'));
-
-            // Add the uploaded image names to the form data
-            const formDataWithImages = {
-                ...formData,
-                uploadedImages: uploadedImages // Assuming the field name is 'uploadedImages'
-            };
-            const response = await fetch(`${config.baseUrl}/tourist-visa/add`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
+          const formDataWithImages = {
+            ...formData,
+            upload_hotel_booking: formattedHotelBooking,
+            upload_passport_copy: formattedPassportCopy,
+            upload_your_flight_ticket: formattedFlightTicket,
+            // Include other form fields here...
+          };
+    
+          const response = await fetch(`${config.baseUrl}/tourist-visa/add`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formDataWithImages),
+          });
+    
+          if (response.ok) {
+            const responseData = await response.json();
+            console.log('Form data sent:', responseData);
+            setFormData({
+              // Reset form fields
+              name: '',
+              email: '',
+              country: '',
+              nationality: '',
+              how_did_you_discover_us: '',
+              cell_no: '',
+              arrival_date: '',
+              departure_date: '',
+              upload_hotel_booking: [],
+              upload_your_flight_ticket: [],
+              upload_passport_copy: [],
+              // ... other form fields
             });
-
-            if (response.ok) {
-                const responseData = await response.json();
-                console.log('Form data sent:', responseData);
-                // Clear form fields and show success message
-                setFormData({
-                    name: '',
-                    email: '',
-                    country: '',
-                    nationality: '',
-                    how_did_you_discover_us: '',
-                    cell_no: '',
-                    arrival_date: '',
-                    departure_date: '',
-                    upload_hotel_booking: '',
-                    upload_your_flight_ticket: '',
-                    upload_passport_copy: ''
-                });
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Form submitted successfully!',
-                    showConfirmButton: false,
-                    timer: 2500 // You can adjust the timer to control how long the message is displayed
-                });
-            } else {
-                console.error('Error submitting form:', response.statusText);
-                // Optionally, handle error state here
-            }
+    
+            // Show success message
+            Swal.fire({
+              icon: 'success',
+              title: 'Form submitted successfully!',
+              showConfirmButton: false,
+              timer: 2500,
+            });
+          } else {
+            console.error('Error submitting form:', response.statusText);
+            // Optionally, handle error state here
+          }
         } catch (error) {
-            console.error('Error submitting form:', error);
-            // Handle fetch error
+          console.error('Error submitting form:', error);
+          // Handle fetch error
         }
-    };
+      };
+    
     const handleClear = () => {
         setFormData({
             name: '',
@@ -116,9 +128,9 @@ const UaeTouristVisa = () => {
             cell_no: '',
             arrival_date: '',
             departure_date: '',
-            upload_hotel_booking: '',
-            upload_your_flight_ticket: '',
-            upload_passport_copy: ''
+            upload_hotel_booking: [], // Store multiple hotel booking file names in an array
+            upload_your_flight_ticket: [], // Store multiple flight ticket file names in an array
+            upload_passport_copy: [],
         });
     };
 
