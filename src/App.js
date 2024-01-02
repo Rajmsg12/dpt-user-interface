@@ -65,7 +65,6 @@ const App = () => {
             <Route exact path='/destination/:country/:title' element={<DestinationPage />} />
             <Route exact path='trending-tour/:title' element={<TrendingPlaces />} />
             <Route exact path='/trending-tour/:location/:title' element={<TrendingDetails />} />
-
             <Route exact path='tour/:title' element={<SearchListing />} />
             <Route exact path='/tour/:location/:title' element={<SearchDetail />} />
             <Route exact path='/desert-safari/:title' element={<DetailPage />} />

@@ -370,7 +370,7 @@ const Wishlist = ({ selectedCurrency }) => {
                                 {wishlistData.length === 0 ? (
                                     <p>Wishlist is Empty</p>
                                 ) : (
-                                    wishlistData.map((item, index) => (
+                                    wishlistData.reverse().map((item, index) => (
                                         <div key={index} className="CartBoxXArea">
                                             <div className="CartBoxWrapper">
                                                 <div className="CartTopBox">

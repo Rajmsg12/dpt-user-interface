@@ -320,7 +320,7 @@ const Booking = () => {
                                                 <div className="Action">Detail</div>
                                             </div>
 
-                                            {bookingDetails.map((booking, index) => (
+                                            {bookingDetails.reverse().map((booking, index) => (
                                                 <div className="BookingDetailRow">
                                                     <div className="srno">{index + 1}</div>
 

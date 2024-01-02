@@ -62,7 +62,6 @@ function ContentSection({ selectedCurrency }) {
   const navigate = useNavigate()
   const [clickedTourId, setClickedTourId] = useState(null);
   const addToWishlist = async (tourId) => {
-    console.log('Adding to wishlist:', tourId); // Check if function is triggered
 
     try {
       const token = localStorage.getItem("token");
@@ -410,7 +409,7 @@ function ContentSection({ selectedCurrency }) {
           });
 
           if (response.data.status === 'success') {
-            const wishlistData = response.data.data;
+            const wishlistData = response.data.data.map(item => item.id);
 
             // Update state or perform logic with wishlistData here
             console.log('Fetched wishlist data:', wishlistData);
@@ -428,10 +427,9 @@ function ContentSection({ selectedCurrency }) {
 
     checkTokenAndFetchData();
   }, []);
-
-  console.log("this tour id", tour_id)
-
-
+  
+console.log(wishlistData)
+  
 
   const responsive = {
     superLargeDesktop: {
@@ -501,7 +499,7 @@ function ContentSection({ selectedCurrency }) {
     // Once removed from wishlist, update state accordingly
     setIsAddedToWishlist(false);
   };
-  console.log("this is our",tour_id)
+  console.log("this is our", tour_id)
 
 
   return (
@@ -603,8 +601,8 @@ function ContentSection({ selectedCurrency }) {
                 <button
                   className={
                     wishlistData && wishlistData.some(item => item.tour_id === tour_id)
-                      ? "wishlistTagFill"
-                      : "wishlistTag"
+                      ? "wishlistTag"
+                      : "wishlistTag wishlistTagFill"
                   }
                   onClick={
                     wishlistData && wishlistData.some(item => item.tour_id === tour_id)
@@ -618,6 +616,7 @@ function ContentSection({ selectedCurrency }) {
                       : "Wishlist"}
                   </span>
                 </button>
+
 
 
               </div>
@@ -1361,7 +1360,7 @@ function ContentSection({ selectedCurrency }) {
                   Check Out
                 </Link>*/}
               </div>
-              <div className="TouristDiv">
+              <Link to="/tourist-visa" className="TouristDiv">
                 <div className="img">
                   <img
                     src={
@@ -1377,7 +1376,7 @@ function ContentSection({ selectedCurrency }) {
                     Apply Now
                   </Link>*/}
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>

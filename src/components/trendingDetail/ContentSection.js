@@ -1309,7 +1309,7 @@ function ContentSection({ selectedCurrency }) {
                   Check Out
                 </Link>*/}
               </div>
-              <div className="TouristDiv">
+              <Link to="/tourist-visa" className="TouristDiv">
                 <div className="img">
                   <img
                     src={
@@ -1325,7 +1325,7 @@ function ContentSection({ selectedCurrency }) {
                     Apply Now
                   </Link>*/}
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>

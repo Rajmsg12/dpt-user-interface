@@ -124,7 +124,11 @@
   font-weight: 500;
   padding: 0px 30px;
 }
-
+.CategoryTopSectionLHS .Attractions ul li {
+  padding: 0px;
+  background-image: none;
+  border: 0px;
+}
 .CategoryTopSectionLHS .Attractions ul li a{
   font-size: 12px;
   position: relative;
