@@ -14,13 +14,17 @@ export default class UploadGalleryFiles extends Component {
       currentFile: undefined,
       progress: 0,
       message: "",
-      /*fileInfos: this.props.filedata? this.props.filedata: [], */
-      fileInfos: this.props.filedata ? JSON.parse(this.props.filedata) : [],
+      fileInfos: [],
     };
   }
 
   componentDidMount() {
-       
+    const { uploadType } = this.props;
+    const storageKey = `filedata_${uploadType}`;
+    let filedata = localStorage.getItem(storageKey);
+    this.setState({
+      fileInfos: filedata ? JSON.parse(filedata) : [],
+    });
   }
 
   selectFile(event) {
@@ -37,8 +41,8 @@ export default class UploadGalleryFiles extends Component {
     });
   }
   
-
   upload() {
+    const { uploadType, onFileUpload } = this.props;
     let currentFile = this.state.selectedFiles[0];
 
     this.setState({
@@ -52,17 +56,21 @@ export default class UploadGalleryFiles extends Component {
       });
     })
       .then((response) => {
-        let filedata = localStorage.getItem("filedata");
-        let galleryData = filedata ? JSON.parse(filedata) : []
+        const storageKey = `filedata_${uploadType}`;
+        let filedata = localStorage.getItem(storageKey);
+        let galleryData = filedata ? JSON.parse(filedata) : [];
         galleryData.push(response.data.filename);
-        localStorage.setItem('filedata', JSON.stringify(galleryData))
+        localStorage.setItem(storageKey, JSON.stringify(galleryData));
       
-        
         this.setState({
           message: response.data.message,
           fileInfos: galleryData
         });
-         
+
+        // Update the form data with the uploaded file name
+        if (onFileUpload && typeof onFileUpload === 'function') {
+          onFileUpload(response.data.filename, uploadType);
+        }
       })
       .catch(() => {
         this.setState({
@@ -80,8 +88,9 @@ export default class UploadGalleryFiles extends Component {
   removeFile(index) {
     let fileInfos = this.state.fileInfos.slice();
     fileInfos.splice(index, 1);
-
-    localStorage.setItem('filedata', JSON.stringify(fileInfos));
+    const { uploadType } = this.props;
+    const storageKey = `filedata_${uploadType}`;
+    localStorage.setItem(storageKey, JSON.stringify(fileInfos));
 
     this.setState({
       fileInfos: fileInfos,
@@ -108,9 +117,7 @@ export default class UploadGalleryFiles extends Component {
               aria-valuemin="0"
               aria-valuemax="100"
               style={{ width: progress + "%" }}
-            >
-              {/* {progress}% */}
-            </div>
+            ></div>
           </div>
         )}
 
@@ -131,7 +138,6 @@ export default class UploadGalleryFiles extends Component {
         </div>
 
         <div className="card">
-        { /*<div className="card-header">Gallery List</div> */ }
           <ul className="list-group list-group-flush">
             {fileInfos &&
               fileInfos.map((file, index) => (

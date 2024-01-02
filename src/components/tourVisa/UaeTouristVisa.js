@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import config from '../../config';
 import Swal from 'sweetalert2'
 import UploadGalleryFiles from '../UploadFiles/upload-gallery-files'
-
 const UaeTouristVisa = () => {
-  
+
 
     const [formData, setFormData] = useState({
         name: '',
@@ -15,10 +14,17 @@ const UaeTouristVisa = () => {
         cell_no: '',
         arrival_date: '',
         departure_date: '',
-        upload_hotel_booking:'',
-        upload_your_flight_ticket:'',
-        upload_passport_copy:''
+        upload_hotel_booking: '',
+        upload_your_flight_ticket: '',
+        upload_passport_copy: ''
     });
+    const handleFileUpload = (fileName, uploadType) => {
+        setFormData({
+            ...formData,
+            [uploadType]: fileName
+        });
+    };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -81,9 +87,9 @@ const UaeTouristVisa = () => {
                     cell_no: '',
                     arrival_date: '',
                     departure_date: '',
-                    upload_hotel_booking:'',
-                    upload_your_flight_ticket:'',
-                    upload_passport_copy:''
+                    upload_hotel_booking: '',
+                    upload_your_flight_ticket: '',
+                    upload_passport_copy: ''
                 });
                 Swal.fire({
                     icon: 'success',
@@ -99,6 +105,21 @@ const UaeTouristVisa = () => {
             console.error('Error submitting form:', error);
             // Handle fetch error
         }
+    };
+    const handleClear = () => {
+        setFormData({
+            name: '',
+            email: '',
+            country: '',
+            nationality: '',
+            how_did_you_discover_us: '',
+            cell_no: '',
+            arrival_date: '',
+            departure_date: '',
+            upload_hotel_booking: '',
+            upload_your_flight_ticket: '',
+            upload_passport_copy: ''
+        });
     };
 
     return (
@@ -124,7 +145,7 @@ const UaeTouristVisa = () => {
                             <div className="mb-3 formGroup">
                                 <label>Email*</label>
                                 <input
-                                    type="text"
+                                    type="email"
                                     placeholder="Email"
                                     required=""
                                     name="email"
@@ -165,10 +186,7 @@ const UaeTouristVisa = () => {
                                     <option value={+297}> Aruba (+297) </option>{" "}
                                     <option value={+61}> Australia (+61) </option>{" "}
                                     <option value={+43}> Austria (+43) </option>{" "}
-                                    <option value={+1}>
-                                        {" "}
-                                        Turks and Caicos Islands (+1){" "}
-                                    </option>{" "}
+                                    <option value={+91}>India (+91)</option>{" "}
                                     <option value={+688}> Tuvalu (+688) </option>{" "}
                                     <option value={+256}> Uganda (+256) </option>{" "}
                                     <option value={+380}> Ukraine (+380) </option>{" "}
@@ -213,11 +231,12 @@ const UaeTouristVisa = () => {
                             <div className="mb-3 formGroup">
                                 <label>Cell No*</label>
                                 <input
-                                    type="text"
+                                    type="tel"
                                     placeholder="Cell No"
                                     required=""
                                     name="cell_no"
                                     value={formData.cell_no}
+                                    maxLength={15}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -312,7 +331,9 @@ const UaeTouristVisa = () => {
                                     name="arrival_date"
                                     value={formData.arrival_date}
                                     onChange={handleChange}
+                                    min={new Date().toISOString().split('T')[0]} // Set min attribute to today's date
                                 />
+
                             </div>
                         </div>
                         {/*col-md-6*/}
@@ -326,7 +347,9 @@ const UaeTouristVisa = () => {
                                     name="departure_date"
                                     value={formData.departure_date}
                                     onChange={handleChange}
+                                    min={formData.arrival_date ? formData.arrival_date : new Date().toISOString().split('T')[0]} // Set min attribute to arrival date if available, else today's date
                                 />
+
                             </div>
                         </div>
                         {/*col-md-6*/}
@@ -374,7 +397,10 @@ const UaeTouristVisa = () => {
                                     Upload Hotel Booking*{" "}
                                     <small>(You can choose multiple files here)</small>
                                 </label>
-                                <UploadGalleryFiles/>
+                                <UploadGalleryFiles
+                                    uploadType="upload_hotel_booking"
+                                    onFileUpload={handleFileUpload}
+                                />
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -383,7 +409,10 @@ const UaeTouristVisa = () => {
                                     Upload Your Flight Ticket*{" "}
                                     <small>(You can choose multiple files here)</small>
                                 </label>
-                                <UploadGalleryFiles />
+                                <UploadGalleryFiles
+                                    uploadType="upload_your_flight_ticket"
+                                    onFileUpload={handleFileUpload}
+                                />
                             </div>
                         </div>
                         <div className="col-md-12">
@@ -392,7 +421,10 @@ const UaeTouristVisa = () => {
                                     Upload Passport Copy{" "}
                                     <small>(You can choose multiple files here)</small>
                                 </label>
-                                <UploadGalleryFiles/>
+                                <UploadGalleryFiles
+                                    uploadType="upload_passport_copy"
+                                    onFileUpload={handleFileUpload}
+                                />
                             </div>
                         </div>
                         <div className="col-md-12">
@@ -400,7 +432,7 @@ const UaeTouristVisa = () => {
                                 <button type="submit" className="cta">
                                     Apply
                                 </button>
-                                <button type="reset" className="cta">
+                                <button type="button" className="cta" onClick={handleClear}>
                                     Clear
                                 </button>
                             </div>
