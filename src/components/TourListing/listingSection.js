@@ -133,8 +133,6 @@ const ListingSection = ({ selectedCurrency }) => {
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = filteredData.slice(startIndex, endIndex);
   const addToWishlist = async (tourId) => {
-    console.log('Adding to wishlist:', tourId); // Check if function is triggered
-
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -142,11 +140,12 @@ const ListingSection = ({ selectedCurrency }) => {
         navigate("/login");
         return;
       }
+  
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body
         };
-
+  
         const response = await fetch(`${config.baseUrl}/wishlist/add`, {
           method: 'POST',
           headers: {
@@ -155,12 +154,15 @@ const ListingSection = ({ selectedCurrency }) => {
           },
           body: JSON.stringify(requestBody),
         });
-
+  
         if (response.ok) {
           // Wishlist addition successful
+          const responseData = await response.json();
           console.log('Tour added to wishlist!');
-          setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
-          navigate("/wishlist");
+  
+          // Display success message in popup
+          displayMessage(responseData.msg);
+          setClickedTourId(tourId);
         } else {
           // Handle errors if the addition fails
           console.error('Failed to add tour to wishlist');
@@ -172,6 +174,19 @@ const ListingSection = ({ selectedCurrency }) => {
     } catch (error) {
       console.error('Error adding tour to wishlist:', error);
     }
+  };
+  
+  // Function to display message as a popup
+  const displayMessage = (message) => {
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+    popup.textContent = message;
+  
+    document.body.appendChild(popup);
+  
+    setTimeout(() => {
+      popup.remove();
+    }, 5000);
   };
   return (
     <div>
