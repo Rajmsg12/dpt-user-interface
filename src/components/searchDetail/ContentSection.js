@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Select from "react-select";
@@ -17,7 +17,7 @@ import GetInTouch from "./GetInTouch";
 import AdditionalChargesInfo from "./AdditionalChargesInfo";
 import { useParams } from "react-router-dom";
 import { data } from "../../data/Category";
-import { addToCart } from "../cart/CartActions";
+// import { addToCart } from "../cart/CartActions";
 import axios from 'axios';
 import config from "../../config";
 import AskQuestion from './AskQuestion'
@@ -55,21 +55,19 @@ function ContentSection({ selectedCurrency }) {
   const [language, setLanguage] = useState([]);
   const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   const [tourImage, setTourImage] = useState("");
-
+  const [wishlistData, setWishlistData] = useState(null);
 
   const formRef = useRef(null);
 
   const navigate = useNavigate()
   const [clickedTourId, setClickedTourId] = useState(null);
   const addToWishlist = async (tourId) => {
-    console.log('Adding to wishlist:', tourId); // Check if function is triggered
 
     try {
       const token = localStorage.getItem("token");
       if (!token) {
         // If user is not logged in, navigate to the login page
         navigate("/login");
-        console.log(token)
         return;
       }
       if (token) {
@@ -104,6 +102,7 @@ function ContentSection({ selectedCurrency }) {
     }
   };
 
+
   useEffect(() => {
     // Fetch hotel data from the backend API
     const fetchHotels = async () => {
@@ -126,7 +125,7 @@ function ContentSection({ selectedCurrency }) {
     preferredPickupLocation: '0',
     pickupLocation: '0',
     endLocation: '0',
-    preferredEndLocation:'0',
+    preferredEndLocation: '0',
     preferredHotelName: '0',
     preferredGuideLanguage: '0',
     aedPrice: '0',
@@ -215,7 +214,7 @@ function ContentSection({ selectedCurrency }) {
       (selectedCurrency === 'AED' ? parseFloat(selectedLanguage.aedprice) : parseFloat(selectedLanguage.usdprice)) +
       parseFloat(adultPrice)
     ).toFixed(2);
-    
+
     const formElements = event.target.elements;
 
     for (let i = 0; i < formElements.length; i++) {
@@ -252,7 +251,6 @@ function ContentSection({ selectedCurrency }) {
     localStorage.setItem('cartdata', JSON.stringify(MyCartData));
 
     setIsFormValid(true);
-    AddToCart(/* pass your item here */);
     navigate('/cart');
   };
 
@@ -302,23 +300,6 @@ function ContentSection({ selectedCurrency }) {
     fetchData();
   }, [slug]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${config.baseUrl}/${slug}`);
-        const data = await response.json();
-        if (data.status === 'success' && data.data.length > 0) {
-          setItineraryData(data.data[0].itinerary_info);
-        } else {
-          console.error('Failed to fetch itinerary data');
-        }
-      } catch (error) {
-        console.error('Error fetching itinerary data:', error);
-      }
-    };
-
-    fetchData();
-  }, [slug]); // Empty dependency array to fetch data only once when the component mounts
   const CustomInput = React.forwardRef(({ value, onClick, placeholder }, ref) => (
     <input
       type="text"
@@ -336,6 +317,24 @@ function ContentSection({ selectedCurrency }) {
       }}
     />
   ));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${config.baseUrl}/${slug}`);
+        const data = await response.json();
+        if (data.status === 'success' && data.data.length > 0) {
+          setItineraryData(data.data[0].itinerary_info);
+        } else {
+          console.error('Failed to fetch itinerary data');
+        }
+      } catch (error) {
+        console.error('Error fetching itinerary data:', error);
+      }
+    };
+
+    fetchData();
+  }, [slug]); // Empty dependency array to fetch data only once when the component mounts
 
 
 
@@ -396,6 +395,41 @@ function ContentSection({ selectedCurrency }) {
     }
   }, []);
 
+  useEffect(() => {
+    const checkTokenAndFetchData = async () => {
+      const token = localStorage.getItem('token');
+
+      // Check if token exists before making the API call
+      if (token) {
+        try {
+          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.data.status === 'success') {
+            const wishlistData = response.data.data.map(item => item.id);
+
+            // Update state or perform logic with wishlistData here
+            console.log('Fetched wishlist data:', wishlistData);
+            // setWishlistData(wishlistData);
+          } else {
+            console.error('Failed to fetch wishlist data');
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist data:', error);
+        }
+      } else {
+        console.log('User not logged in or token not found.'); // Handle not logged in scenario
+      }
+    };
+
+    checkTokenAndFetchData();
+  }, []);
+
+  console.log(wishlistData)
+
 
   const responsive = {
     superLargeDesktop: {
@@ -416,10 +450,10 @@ function ContentSection({ selectedCurrency }) {
     },
   };
 
-  const AddToCart = (item) => {
-    dispatch(addToCart(item));
-  };
-  const cart = useSelector((state) => state.cart);
+  // const AddToCart = (item) => {
+  //   dispatch(addToCart(item));
+  // };
+  // const cart = useSelector((state) => state.cart);
 
   const options = itineraryData.map((itinerary) => ({
     value: itinerary.name, // Assuming 'id' is a unique identifier
@@ -442,13 +476,13 @@ function ContentSection({ selectedCurrency }) {
   };
   const handleInputChange3 = (event, name) => {
     const { value } = event.target;
-  
+
     // Find the selected language object from the languages array using the language name
     const selectedLang = language.find(lang => lang.lnname === value);
-  
+
     if (selectedLang) {
       setSelectedLanguage(selectedLang); // Update the selected language
-  
+
       setFormData(prevData => ({
         ...prevData,
         preferredGuideLanguage: selectedLang.lnname, // Update with the language name
@@ -458,7 +492,6 @@ function ContentSection({ selectedCurrency }) {
       console.error("Selected language not found!");
     }
   };
-  
   const removeFromWishlist = () => {
     // Perform logic to remove item from wishlist
     // ...
@@ -531,7 +564,7 @@ function ContentSection({ selectedCurrency }) {
                             <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
-                     
+
                       </div>
                     </div>
                     <div className="item">
@@ -559,14 +592,32 @@ function ContentSection({ selectedCurrency }) {
                             <h2>{tour.tour_name}</h2>
                           </div>
                         </div>
-                    
+
                       </div>
                     </div>
                   </Carousel>
                 </div>
-                <button className={`wishlistTag ${isAddedToWishlist ? 'wishlistTagFill' : ''}`} onClick={isAddedToWishlist ? removeFromWishlist : () => addToWishlist(tour.id)}>
-                  <span>{isAddedToWishlist ? 'Remove from Wishlist' : 'Wishlist'}</span>
+                <button
+                  className={
+                    wishlistData && wishlistData.some(item => item.tour_id === tour_id)
+                      ? "wishlistTag"
+                      : "wishlistTag wishlistTagFill"
+                  }
+                  onClick={
+                    wishlistData && wishlistData.some(item => item.tour_id === tour_id)
+                      ? removeFromWishlist
+                      : () => addToWishlist(tour_id)
+                  }
+                >
+                  <span>
+                    {wishlistData && wishlistData.some(item => item.tour_id === tour_id)
+                      ? "Remove from Wishlist"
+                      : "Wishlist"}
+                  </span>
                 </button>
+
+
+
               </div>
 
               {/*BANNER TABS */}
@@ -599,7 +650,7 @@ function ContentSection({ selectedCurrency }) {
                               <div className="mb-3 formGroup">
                                 <label>Tour Date*</label>
                                 <div className="input-group date" id="datepicker">
-                                <DatePicker
+                                  <DatePicker
                                     selected={formData.tourDate}
                                     onChange={(date) => setFormData((prevData) => ({ ...prevData, tourDate: date }))}
                                     dateFormat="MM/dd/yyyy"
@@ -607,6 +658,8 @@ function ContentSection({ selectedCurrency }) {
                                     placeholderText="Select Date"
                                     customInput={<CustomInput />}
                                   />
+
+
                                 </div>
                               </div>{/* formGroup */}
                             </div>
@@ -722,7 +775,6 @@ function ContentSection({ selectedCurrency }) {
                                       maxLength={13} // Restricts input to a maximum length of 13 characters
                                       required
                                     />
-
                                   </div>
                                 )}
 
@@ -827,13 +879,22 @@ function ContentSection({ selectedCurrency }) {
                                   name="adults"
                                   min="1"
                                   max="15"
-                                  oninput="validity.valid||(value='');"
-                                  onChange={(e) => {
-                                    const adultsValue = parseInt(e.target.value);
+                                  maxLength="2" // Restrict the input to a maximum of 2 characters
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 15
+                                    inputValue = Math.min(parseInt(inputValue), 15);
+
+                                    // Validate and limit input to a maximum of 2 digits
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const adultsValue = parseInt(inputValue || 0);
                                     setAdultsNumber(adultsValue >= 0 ? adultsValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -858,12 +919,22 @@ function ContentSection({ selectedCurrency }) {
                                   name="children"
                                   min="1"
                                   max="10"
-                                  onChange={(e) => {
-                                    const childrenValue = parseInt(e.target.value);
+                                  maxLength="2" // Restrict the input to a maximum of 2 characters
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 15
+                                    inputValue = Math.min(parseInt(inputValue), 10);
+
+                                    // Validate and limit input to a maximum of 2 digits
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const childrenValue = parseInt(inputValue || 0);
                                     setChildrenNumber(childrenValue >= 0 ? childrenValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -887,12 +958,22 @@ function ContentSection({ selectedCurrency }) {
                                   name="infants"
                                   min="1"
                                   max="10"
-                                  onChange={(e) => {
-                                    const infantsValue = parseInt(e.target.value);
+                                  maxLength="2" // Restrict the input to a maximum of 2 characters
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 15
+                                    inputValue = Math.min(parseInt(inputValue), 10);
+
+                                    // Validate and limit input to a maximum of 2 digits
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const infantsValue = parseInt(inputValue || 0);
                                     setInfantsNumber(infantsValue >= 0 ? infantsValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -918,12 +999,22 @@ function ContentSection({ selectedCurrency }) {
                                   name="preferredDriver"
                                   min="1"
                                   max="9"
-                                  onChange={(e) => {
-                                    const driverValue = parseInt(e.target.value);
+                                  maxLength="1" // Restrict the input to a maximum of 1 character (since max is 9)
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 9
+                                    inputValue = Math.min(parseInt(inputValue), 9);
+
+                                    // Validate and limit input to a maximum of 1 digit
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const driverValue = parseInt(inputValue || 0);
                                     setDriverNumber(driverValue >= 0 ? driverValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -949,12 +1040,22 @@ function ContentSection({ selectedCurrency }) {
                                   name="preferredLunc"
                                   min="1"
                                   max="10"
-                                  onChange={(e) => {
-                                    const lunchValue = parseInt(e.target.value);
+                                  maxLength="2" // Restrict the input to a maximum of 2 characters (since max is 10)
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 10
+                                    inputValue = Math.min(parseInt(inputValue), 10);
+
+                                    // Validate and limit input to a maximum of 2 digits
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const lunchValue = parseInt(inputValue || 0);
                                     setLunchNumber(lunchValue >= 0 ? lunchValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -999,12 +1100,22 @@ function ContentSection({ selectedCurrency }) {
                                     name="ticket"
                                     min="1"
                                     max="10"
-                                    onChange={(e) => {
-                                      const ticketValue = parseInt(e.target.value);
+                                    maxLength="2" // Restrict the input to a maximum of 2 characters (since max is 10)
+                                    onInput={(e) => {
+                                      let inputValue = e.target.value;
+
+                                      // Ensure the input value doesn't exceed 10
+                                      inputValue = Math.min(parseInt(inputValue), 10);
+
+                                      // Validate and limit input to a maximum of 2 digits
+                                      e.target.value = inputValue;
+
+                                      // Update state accordingly (if needed)
+                                      const ticketValue = parseInt(inputValue || 0);
                                       setTicketNumber(ticketValue >= 0 ? ticketValue : 0);
                                     }}
-
                                   />
+
 
                                   {selectedItinerary && (
                                     <div>
@@ -1061,7 +1172,7 @@ function ContentSection({ selectedCurrency }) {
                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
                                 <label>Special Request</label>
-                                <textarea className="form-control" placeholder="Select Special Seat"  maxLength={500} rows="3" name="request"></textarea>
+                                <textarea className="form-control" placeholder="Select Special Seat" rows="3" maxLength={500} name="request"></textarea>
                               </div>{/* formGroup */}
                             </div>
                             <div className="submitcta">
@@ -1126,7 +1237,7 @@ function ContentSection({ selectedCurrency }) {
                   </span>
                 </div>
                 <div className="Person">
-                   {tour.no_of_pax} <strong>({tour.tour_duration})</strong>
+                  {tour.no_of_pax} <strong>({tour.tour_duration})</strong>
                 </div>
                 {/*     <div className="right">
                   <Link to="#">View Offers</Link>
@@ -1264,7 +1375,7 @@ function ContentSection({ selectedCurrency }) {
                         <ul className="widSSPReadReview">
                           <li>
                             <Link
-                            target="_blank"
+                              target="_blank"
                               to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
                               id="allreviews"
                               onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"
@@ -1277,7 +1388,7 @@ function ContentSection({ selectedCurrency }) {
                         <ul className="widSSPWriteReview">
                           <li>
                             <Link
-                            target="_blank"
+                              target="_blank"
                               to="https://www.tripadvisor.com/UserReview-g295424-d2510773-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html"
                               id="writereview"
                               onclick="ta.cds.handleTALink(11900,this);window.open(this.href, 'newTAWindow', 'toolbar=1,resizable=1,menubar=1,location=1,status=1,scrollbars=1,width=800,height=600'); return false"

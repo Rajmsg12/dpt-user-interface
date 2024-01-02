@@ -427,9 +427,9 @@ function ContentSection({ selectedCurrency }) {
 
     checkTokenAndFetchData();
   }, []);
-  
-console.log(wishlistData)
-  
+
+  console.log(wishlistData)
+
 
   const responsive = {
     superLargeDesktop: {
@@ -499,7 +499,6 @@ console.log(wishlistData)
     // Once removed from wishlist, update state accordingly
     setIsAddedToWishlist(false);
   };
-  console.log("this is our", tour_id)
 
 
   return (
@@ -880,13 +879,22 @@ console.log(wishlistData)
                                   name="adults"
                                   min="1"
                                   max="15"
-                                  oninput="validity.valid||(value='');"
-                                  onChange={(e) => {
-                                    const adultsValue = parseInt(e.target.value);
+                                  maxLength="2" // Restrict the input to a maximum of 2 characters
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 15
+                                    inputValue = Math.min(parseInt(inputValue), 15);
+
+                                    // Validate and limit input to a maximum of 2 digits
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const adultsValue = parseInt(inputValue || 0);
                                     setAdultsNumber(adultsValue >= 0 ? adultsValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -911,12 +919,22 @@ console.log(wishlistData)
                                   name="children"
                                   min="1"
                                   max="10"
-                                  onChange={(e) => {
-                                    const childrenValue = parseInt(e.target.value);
+                                  maxLength="2" // Restrict the input to a maximum of 2 characters
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 15
+                                    inputValue = Math.min(parseInt(inputValue), 10);
+
+                                    // Validate and limit input to a maximum of 2 digits
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const childrenValue = parseInt(inputValue || 0);
                                     setChildrenNumber(childrenValue >= 0 ? childrenValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -940,12 +958,22 @@ console.log(wishlistData)
                                   name="infants"
                                   min="1"
                                   max="10"
-                                  onChange={(e) => {
-                                    const infantsValue = parseInt(e.target.value);
+                                  maxLength="2" // Restrict the input to a maximum of 2 characters
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 15
+                                    inputValue = Math.min(parseInt(inputValue), 10);
+
+                                    // Validate and limit input to a maximum of 2 digits
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const infantsValue = parseInt(inputValue || 0);
                                     setInfantsNumber(infantsValue >= 0 ? infantsValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -971,12 +999,22 @@ console.log(wishlistData)
                                   name="preferredDriver"
                                   min="1"
                                   max="9"
-                                  onChange={(e) => {
-                                    const driverValue = parseInt(e.target.value);
+                                  maxLength="1" // Restrict the input to a maximum of 1 character (since max is 9)
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 9
+                                    inputValue = Math.min(parseInt(inputValue), 9);
+
+                                    // Validate and limit input to a maximum of 1 digit
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const driverValue = parseInt(inputValue || 0);
                                     setDriverNumber(driverValue >= 0 ? driverValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -1002,12 +1040,22 @@ console.log(wishlistData)
                                   name="preferredLunc"
                                   min="1"
                                   max="10"
-                                  onChange={(e) => {
-                                    const lunchValue = parseInt(e.target.value);
+                                  maxLength="2" // Restrict the input to a maximum of 2 characters (since max is 10)
+                                  onInput={(e) => {
+                                    let inputValue = e.target.value;
+
+                                    // Ensure the input value doesn't exceed 10
+                                    inputValue = Math.min(parseInt(inputValue), 10);
+
+                                    // Validate and limit input to a maximum of 2 digits
+                                    e.target.value = inputValue;
+
+                                    // Update state accordingly (if needed)
+                                    const lunchValue = parseInt(inputValue || 0);
                                     setLunchNumber(lunchValue >= 0 ? lunchValue : 0);
                                   }}
-
                                 />
+
 
                                 {selectedHotel && (
                                   <div>
@@ -1052,12 +1100,22 @@ console.log(wishlistData)
                                     name="ticket"
                                     min="1"
                                     max="10"
-                                    onChange={(e) => {
-                                      const ticketValue = parseInt(e.target.value);
+                                    maxLength="2" // Restrict the input to a maximum of 2 characters (since max is 10)
+                                    onInput={(e) => {
+                                      let inputValue = e.target.value;
+
+                                      // Ensure the input value doesn't exceed 10
+                                      inputValue = Math.min(parseInt(inputValue), 10);
+
+                                      // Validate and limit input to a maximum of 2 digits
+                                      e.target.value = inputValue;
+
+                                      // Update state accordingly (if needed)
+                                      const ticketValue = parseInt(inputValue || 0);
                                       setTicketNumber(ticketValue >= 0 ? ticketValue : 0);
                                     }}
-
                                   />
+
 
                                   {selectedItinerary && (
                                     <div>
