@@ -25,6 +25,7 @@ export default class UploadGalleryFiles extends Component {
       fileInfos: filedata ? JSON.parse(filedata) : [],
     });
   }
+  
 
   selectFile(event) {
     const selectedFiles = event.target.files;
@@ -70,7 +71,8 @@ export default class UploadGalleryFiles extends Component {
         let filedata = localStorage.getItem(storageKey);
         let galleryData = filedata ? JSON.parse(filedata) : [];
         galleryData.push(...fileNames);
-        localStorage.setItem(storageKey,(galleryData));
+        localStorage.setItem(storageKey, JSON.stringify(galleryData));
+
 
         this.setState({
           message: "Files uploaded successfully",
