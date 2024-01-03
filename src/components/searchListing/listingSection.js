@@ -49,6 +49,7 @@ const ListingSection = ({ selectedCurrency }) => {
       return rating;
     });
   };
+  
   const addToWishlist = async (tourId) => {
     try {
       const token = localStorage.getItem("token");
