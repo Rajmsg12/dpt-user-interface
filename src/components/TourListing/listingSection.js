@@ -134,65 +134,9 @@ const ListingSection = ({ selectedCurrency }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = filteredData.slice(startIndex, endIndex);
-  const addToWishlist = async (tourId) => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        // If user is not logged in, navigate to the login page
-        navigate("/login");
-        return;
-      }
-  
-      if (token) {
-        const requestBody = {
-          tour_id: tourId // Setting tour.id as tour_id in the request body
-        };
-  
-        const response = await fetch(`${config.baseUrl}/wishlist/add`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(requestBody),
-        });
-  
-        if (response.ok) {
-          // Wishlist addition successful
-          const responseData = await response.json();
-          console.log('Tour added to wishlist!');
-  
-          // Display success message in popup
-          displayMessage(responseData.msg);
-          setClickedTourId(tourId);
-        } else {
-          // Handle errors if the addition fails
-          console.error('Failed to add tour to wishlist');
-        }
-      } else {
-        console.error('User not logged in.'); // Log if the user is not logged in
-        // You might want to handle this scenario by redirecting the user to the login page or showing a message
-      }
-    } catch (error) {
-      console.error('Error adding tour to wishlist:', error);
-    }
-  };
-  
-  // Function to display message as a popup
-  const displayMessage = (message) => {
-    const popup = document.createElement('div');
-    popup.classList.add('popup');
-    popup.textContent = message;
-  
-    document.body.appendChild(popup);
-  
-    setTimeout(() => {
-      popup.remove();
-    }, 5000);
-  };
-  useEffect(() => {
-    const checkTokenAndFetchData = async () => {
-      const token = localStorage.getItem('token');
+
+  const checkTokenAndFetchData = async () => {
+    const token = localStorage.getItem('token');
 
       // Check if token exists before making the API call
       if (token) {
@@ -219,8 +163,66 @@ const ListingSection = ({ selectedCurrency }) => {
       }
     };
 
-    checkTokenAndFetchData();
-  }, [wishlistData]);
+
+  const addToWishlist = async (tourId) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // If user is not logged in, navigate to the login page
+        navigate("/login");
+        return;
+      }
+  
+      if (token) {
+        const requestBody = {
+          tour_id: tourId // Setting tour.id as tour_id in the request body
+        };
+  
+        const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(requestBody),
+        });
+  
+        if (response.ok) {
+          // Wishlist addition successful
+          const responseData = await response.json();
+  
+          checkTokenAndFetchData();
+          displayMessage(responseData.msg);
+          setClickedTourId(tourId);
+  
+        
+        } else {
+          // Handle errors if the addition fails
+          console.error('Failed to add tour to wishlist');
+        }
+      } else {
+        console.error('User not logged in.'); // Log if the user is not logged in
+        // You might want to handle this scenario by redirecting the user to the login page or showing a message
+      }
+    } catch (error) {
+      console.error('Error adding tour to wishlist:', error);
+    }
+  };
+  
+  
+  // Function to display message as a popup
+  const displayMessage = (message) => {
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+    popup.textContent = message;
+  
+    document.body.appendChild(popup);
+  
+    setTimeout(() => {
+      popup.remove();
+    }, 5000);
+  };
+ 
   return (
     <div>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>

@@ -51,6 +51,34 @@ const ListingSection = ({ selectedCurrency }) => {
       return rating;
     });
   };
+  const checkTokenAndFetchData = async () => {
+    const token = localStorage.getItem('token');
+
+      // Check if token exists before making the API call
+      if (token) {
+        try {
+          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.data.status === 'success') {
+            const wishlistData = response.data.data.map(item => item.tour_id);
+
+            setWishlistData(wishlistData);
+            // setWishlistData(wishlistData);
+          } else {
+            console.error('Failed to fetch wishlist data');
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist data:', error);
+        }
+      } else {
+        console.log('User not logged in or token not found.'); // Handle not logged in scenario
+      }
+    };
+
 
   const addToWishlist = async (tourId) => {
     try {
@@ -60,12 +88,12 @@ const ListingSection = ({ selectedCurrency }) => {
         navigate("/login");
         return;
       }
-
+  
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body
         };
-
+  
         const response = await fetch(`${config.baseUrl}/wishlist/add`, {
           method: 'POST',
           headers: {
@@ -74,15 +102,16 @@ const ListingSection = ({ selectedCurrency }) => {
           },
           body: JSON.stringify(requestBody),
         });
-
+  
         if (response.ok) {
           // Wishlist addition successful
           const responseData = await response.json();
-          console.log('Tour added to wishlist!');
-
-          // Display success message in popup
+  
+          checkTokenAndFetchData();
           displayMessage(responseData.msg);
           setClickedTourId(tourId);
+  
+        
         } else {
           // Handle errors if the addition fails
           console.error('Failed to add tour to wishlist');
@@ -95,19 +124,21 @@ const ListingSection = ({ selectedCurrency }) => {
       console.error('Error adding tour to wishlist:', error);
     }
   };
-
+  
+  
   // Function to display message as a popup
   const displayMessage = (message) => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
     popup.textContent = message;
-
+  
     document.body.appendChild(popup);
-
+  
     setTimeout(() => {
       popup.remove();
     }, 5000);
   };
+ 
   const url = window.location.href;
   const splitUrl = url.split("/");
   const slug = splitUrl[4];
@@ -117,7 +148,6 @@ const ListingSection = ({ selectedCurrency }) => {
   };
 
   const handleCloseSidebar = () => {
-    console.log('Closing sidebar');
     setIsSidebarMenuOpen(false);
   };
   const words = slug.split('-');
@@ -199,37 +229,7 @@ const ListingSection = ({ selectedCurrency }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = filteredData.slice(startIndex, endIndex);
-  useEffect(() => {
-    const checkTokenAndFetchData = async () => {
-      const token = localStorage.getItem('token');
-
-      // Check if token exists before making the API call
-      if (token) {
-        try {
-          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.data.status === 'success') {
-            const wishlistData = response.data.data.map(item => item.tour_id);
-
-            setWishlistData(wishlistData);
-            // setWishlistData(wishlistData);
-          } else {
-            console.error('Failed to fetch wishlist data');
-          }
-        } catch (error) {
-          console.error('Error fetching wishlist data:', error);
-        }
-      } else {
-        console.log('User not logged in or token not found.'); // Handle not logged in scenario
-      }
-    };
-
-    checkTokenAndFetchData();
-  }, [wishlistData]);
+  
   return (
     <div>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>

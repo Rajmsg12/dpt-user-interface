@@ -150,6 +150,35 @@ const ContentSection = ({ selectedCurrency }) => {
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = filteredData.slice(startIndex, endIndex);
 
+  const checkTokenAndFetchData = async () => {
+    const token = localStorage.getItem('token');
+
+      // Check if token exists before making the API call
+      if (token) {
+        try {
+          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.data.status === 'success') {
+            const wishlistData = response.data.data.map(item => item.tour_id);
+
+            setWishlistData(wishlistData);
+            // setWishlistData(wishlistData);
+          } else {
+            console.error('Failed to fetch wishlist data');
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist data:', error);
+        }
+      } else {
+        console.log('User not logged in or token not found.'); // Handle not logged in scenario
+      }
+    };
+
+
   const addToWishlist = async (tourId) => {
     try {
       const token = localStorage.getItem("token");
@@ -176,11 +205,12 @@ const ContentSection = ({ selectedCurrency }) => {
         if (response.ok) {
           // Wishlist addition successful
           const responseData = await response.json();
-          console.log('Tour added to wishlist!');
   
-          // Display success message in popup
+          checkTokenAndFetchData();
           displayMessage(responseData.msg);
           setClickedTourId(tourId);
+  
+        
         } else {
           // Handle errors if the addition fails
           console.error('Failed to add tour to wishlist');
@@ -194,6 +224,7 @@ const ContentSection = ({ selectedCurrency }) => {
     }
   };
   
+  
   // Function to display message as a popup
   const displayMessage = (message) => {
     const popup = document.createElement('div');
@@ -206,36 +237,7 @@ const ContentSection = ({ selectedCurrency }) => {
       popup.remove();
     }, 5000);
   };
-  useEffect(() => {
-    const checkTokenAndFetchData = async () => {
-      const token = localStorage.getItem('token');
-      // Check if token exists before making the API call
-      if (token) {
-        try {
-          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.data.status === 'success') {
-            const wishlistData = response.data.data.map(item => item.tour_id);
-
-            setWishlistData(wishlistData);
-            // setWishlistData(wishlistData);
-          } else {
-            console.error('Failed to fetch wishlist data');
-          }
-        } catch (error) {
-          console.error('Error fetching wishlist data:', error);
-        }
-      } else {
-        console.log('User not logged in or token not found.'); // Handle not logged in scenario
-      }
-    };
-
-    checkTokenAndFetchData();
-  }, [wishlistData]);
+ 
   return (
     <>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>

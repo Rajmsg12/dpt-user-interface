@@ -87,7 +87,6 @@ function ContentSection({ selectedCurrency }) {
         if (response.ok) {
           // Wishlist addition successful
           const responseData = await response.json();
-          console.log('Tour added to wishlist!');
 
           // Display success message in popup
           displayMessage(responseData.msg);
@@ -104,7 +103,6 @@ function ContentSection({ selectedCurrency }) {
       console.error('Error adding tour to wishlist:', error);
     }
   };
-  console.log("tour id personal", tour_id)
 
   // Function to display message as a popup
   const displayMessage = (message) => {
@@ -437,8 +435,6 @@ function ContentSection({ selectedCurrency }) {
           if (response.data.status === 'success') {
             const wishlistData = response.data.data.map(item => item.tour_id);
 
-            // Update state or perform logic with wishlistData here
-            console.log('Fetched wishlist data:', wishlistData);
             setWishlistData(wishlistData);
             // setWishlistData(wishlistData);
           } else {
@@ -453,7 +449,7 @@ function ContentSection({ selectedCurrency }) {
     };
 
     checkTokenAndFetchData();
-  }, [wishlistData]);
+  }, []);
 
 
 
@@ -518,7 +514,6 @@ function ContentSection({ selectedCurrency }) {
       console.error("Selected language not found!");
     }
   };
-  console.log("wishlist id detail", wishlistData)
 
 
   return (

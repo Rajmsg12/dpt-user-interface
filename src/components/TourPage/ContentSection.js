@@ -104,7 +104,6 @@ function ContentSection({ selectedCurrency }) {
       console.error('Error adding tour to wishlist:', error);
     }
   };
-  console.log("tour id personal", tour_id)
 
   // Function to display message as a popup
   const displayMessage = (message) => {
@@ -280,8 +279,6 @@ function ContentSection({ selectedCurrency }) {
   };
 
 
-
-
   const url = window.location.href;
   const spliturl = url.split("/");
   const slug = spliturl[4];
@@ -315,7 +312,6 @@ function ContentSection({ selectedCurrency }) {
         const parsedLanguage = JSON.parse(languageString); // Parse the string to an array
 
         setLanguage(parsedLanguage);
-        console.log("inner tour id personal", data.data[0].id)
 
 
       } catch (error) {
@@ -437,8 +433,6 @@ function ContentSection({ selectedCurrency }) {
           if (response.data.status === 'success') {
             const wishlistData = response.data.data.map(item => item.tour_id);
 
-            // Update state or perform logic with wishlistData here
-            console.log('Fetched wishlist data:', wishlistData);
             setWishlistData(wishlistData);
             // setWishlistData(wishlistData);
           } else {
@@ -453,7 +447,7 @@ function ContentSection({ selectedCurrency }) {
     };
 
     checkTokenAndFetchData();
-  }, [wishlistData]);
+  }, []);
 
 
 
@@ -518,7 +512,6 @@ function ContentSection({ selectedCurrency }) {
       console.error("Selected language not found!");
     }
   };
-  console.log("wishlist id detail", wishlistData)
 
 
   return (
