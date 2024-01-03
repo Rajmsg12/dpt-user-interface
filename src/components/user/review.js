@@ -444,6 +444,7 @@ console.log(reviews)
                                                                     rows={3}
                                                                     required
                                                                     value={reviewData.comments}
+                                                                    maxLength={500}
                                                                     onChange={(e) => setReviewData({ ...reviewData, comments: e.target.value })}
                                                                 />
                                                             </div>
