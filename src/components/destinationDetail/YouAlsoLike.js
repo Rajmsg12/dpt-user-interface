@@ -105,7 +105,10 @@ const YouAlsoLike = ({ selectedCurrency }) => {
           console.error('Error adding tour to wishlist:', error);
         }
       };
-      
+      useEffect(() => {
+        checkTokenAndFetchData();
+    }, []); // Empty dependency array to ensure it runs only once after the initial render
+    
       
       // Function to display message as a popup
       const displayMessage = (message) => {
@@ -119,7 +122,7 @@ const YouAlsoLike = ({ selectedCurrency }) => {
           popup.remove();
         }, 5000);
       };
-     
+
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.

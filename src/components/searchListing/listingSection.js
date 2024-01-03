@@ -138,6 +138,9 @@ const ListingSection = ({ selectedCurrency }) => {
       popup.remove();
     }, 5000);
   };
+  useEffect(() => {
+    checkTokenAndFetchData();
+}, []);
  
   const url = window.location.href;
   const splitUrl = url.split("/");

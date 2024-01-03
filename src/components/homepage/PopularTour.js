@@ -152,7 +152,10 @@ const PopularTour = ({ selectedCurrency }) => {
           console.error('Error adding tour to wishlist:', error);
         }
       };
-      
+      useEffect(() => {
+        checkTokenAndFetchData();
+    }, []); // Empty dependency array to ensure it runs only once after the initial render
+    
       
       // Function to display message as a popup
       const displayMessage = (message) => {

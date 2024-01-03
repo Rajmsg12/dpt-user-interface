@@ -217,6 +217,9 @@ const ListingSection = ({ selectedCurrency }) => {
       popup.remove();
     }, 5000);
   };
+  useEffect(() => {
+    checkTokenAndFetchData();
+}, []);
  
 
   return (

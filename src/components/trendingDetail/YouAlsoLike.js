@@ -173,6 +173,9 @@ const YouAlsoLike = ({ selectedCurrency }) => {
                 });
         }
     }, []);
+    useEffect(() => {
+        checkTokenAndFetchData();
+    }, []);
 
 
     return (

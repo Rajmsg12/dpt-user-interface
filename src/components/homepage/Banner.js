@@ -350,6 +350,9 @@ const Banner = ({ selectedCurrency }) => {
       console.error('Error adding tour to wishlist:', error);
     }
   };
+  useEffect(() => {
+    checkTokenAndFetchData();
+}, []);
   
   
   // Function to display message as a popup

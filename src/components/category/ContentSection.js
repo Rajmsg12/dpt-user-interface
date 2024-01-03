@@ -237,6 +237,9 @@ const ContentSection = ({ selectedCurrency }) => {
       popup.remove();
     }, 5000);
   };
+  useEffect(() => {
+    checkTokenAndFetchData();
+}, []);
  
   return (
     <>
