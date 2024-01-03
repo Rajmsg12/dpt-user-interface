@@ -1,10 +1,11 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../components/TourListing/Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import config from '../../config';
+import axios from 'axios';
 
 
 const itemsPerPage = 9;
@@ -20,6 +21,7 @@ const ListingSection = ({ selectedCurrency }) => {
   // Initial price value as a number
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
   const [clickedTourId, setClickedTourId] = useState(null);
+  const [wishlistData, setWishlistData] = useState(null);
   const navigate = useNavigate()
 
   const handlePageChange = (increment) => {
@@ -136,12 +138,12 @@ const ListingSection = ({ selectedCurrency }) => {
         navigate("/login");
         return;
       }
-  
+
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body
         };
-  
+
         const response = await fetch(`${config.baseUrl}/wishlist/add`, {
           method: 'POST',
           headers: {
@@ -150,12 +152,12 @@ const ListingSection = ({ selectedCurrency }) => {
           },
           body: JSON.stringify(requestBody),
         });
-  
+
         if (response.ok) {
           // Wishlist addition successful
           const responseData = await response.json();
           console.log('Tour added to wishlist!');
-  
+
           // Display success message in popup
           displayMessage(responseData.msg);
           setClickedTourId(tourId);
@@ -171,19 +173,50 @@ const ListingSection = ({ selectedCurrency }) => {
       console.error('Error adding tour to wishlist:', error);
     }
   };
-  
+
   // Function to display message as a popup
   const displayMessage = (message) => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
     popup.textContent = message;
-  
+
     document.body.appendChild(popup);
-  
+
     setTimeout(() => {
       popup.remove();
     }, 5000);
   };
+  useEffect(() => {
+    const checkTokenAndFetchData = async () => {
+      const token = localStorage.getItem('token');
+      // Check if token exists before making the API call
+      if (token) {
+        try {
+          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.data.status === 'success') {
+            const wishlistData = response.data.data.map(item => item.tour_id);
+
+            setWishlistData(wishlistData);
+            // setWishlistData(wishlistData);
+          } else {
+            console.error('Failed to fetch wishlist data');
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist data:', error);
+        }
+      } else {
+        console.log('User not logged in or token not found.'); // Handle not logged in scenario
+      }
+    };
+
+    checkTokenAndFetchData();
+  }, [wishlistData]);
+
   return (
     <div>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
@@ -246,14 +279,112 @@ const ListingSection = ({ selectedCurrency }) => {
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
                             <div className="parenttabbox">
-                            <Link to={`/tour/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.tour_id}`}>
-                              <div className="img">
+                              <Link to={`/tour/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.tour_id}`}>
+                                <div className="img">
+                                  <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
+                                  <div className="discountrow">
+                                    <div className="discount">
+                                      <span>{tour.tour_discount} %</span>
+                                    </div>
+
+                                  </div>
+                                  <div className="imgBottomRow">
+                                    <div className="lhstext">
+                                      <span>{tour.tour_hastag}</span>
+                                    </div>
+                                    <div className="rhsimg">
+                                      <div>
+                                        {tour.sticker_info[0].id === '1' && (
+                                          <img
+                                            src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                            alt=""
+                                          />
+                                        )}
+                                        {tour.sticker_info[0].id === '2' && (
+                                          <img
+                                            src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                            alt=""
+                                          />
+                                        )}
+                                        {tour.sticker_info[0].id === '3' && (
+                                          <img
+                                            src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                            alt=""
+                                          />
+                                        )}
+                                        {tour.sticker_info.length > 1 && (
+                                          <img
+                                            src={tour.sticker_info[1].id}
+                                            alt=""
+                                          />
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="TabBoxBody">
+                                  <h4>{tour.Tour_name}</h4>
+                                  <p>{tour.tour_intro}</p>
+                                  <div className="ReviewRow">
+                                    <span className="location">{tour.destination_info[0].name}</span>
+                                  </div>
+                                </div>
+                                <div className="TabBoxFooter">
+                                  <div className="aedLHS">
+                                    <span>Starting from</span>
+                                    <div className="aedtext">
+                                      {isLoggedIn ? (
+                                        <div className="aedtext">
+                                          {selectedCurrency === "AED" ? (
+                                            <span>AED</span>
+                                          ) : (
+                                            <span>USD</span>
+                                          )}
+                                          <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                        </div>
+                                      ) : (
+                                        <div className="aedtext">
+                                          {selectedCurrency === "AED" ? (
+                                            <span>AED</span>
+                                          ) : (
+                                            <span>USD</span>
+                                          )}
+                                          <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div className="aedRHS">{tour.tour_tour_duration}</div>
+                                </div>
+                              </Link>
+                              <button
+                                className={
+                                  wishlistData && wishlistData.some(item => item === String(tour.tour_id))
+                                    ? "wishlistIcon wishlistTagFill"
+                                    : "wishlistIcon"
+                                }
+                                onClick={() => addToWishlist(tour.tour_id)}
+                              >
+                              </button>
+                            </div>
+                          ))
+                        ) : (
+                          <p>No items within the selected price range.</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
+                      <div className="listingRow">
+                        {itemsToShow.map((tour) => (
+                          <div className="parenttabbox">
+                            <Link to={`/tour/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.tour_id}`}>
+                              <div className="listingBoxImg">
                                 <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                                 <div className="discountrow">
                                   <div className="discount">
                                     <span>{tour.tour_discount} %</span>
                                   </div>
-                               
+
                                 </div>
                                 <div className="imgBottomRow">
                                   <div className="lhstext">
@@ -289,141 +420,59 @@ const ListingSection = ({ selectedCurrency }) => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="TabBoxBody">
-                                <h4>{tour.Tour_name}</h4>
-                                <p>{tour.tour_intro}</p>
-                                <div className="ReviewRow">
-                                  <span className="location">{tour.destination_info[0].name}</span>
-                                </div>
-                              </div>
-                              <div className="TabBoxFooter">
-                                <div className="aedLHS">
-                                  <span>Starting from</span>
-                                  <div className="aedtext">
-                                    {isLoggedIn ? (
-                                      <div className="aedtext">
-                                        {selectedCurrency === "AED" ? (
-                                          <span>AED</span>
-                                        ) : (
-                                          <span>USD</span>
-                                        )}
-                                        <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
-                                      </div>
-                                    ) : (
-                                      <div className="aedtext">
-                                        {selectedCurrency === "AED" ? (
-                                          <span>AED</span>
-                                        ) : (
-                                          <span>USD</span>
-                                        )}
-                                        <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
-                                      </div>
-                                    )}
+                              <div className="listingBoxContent">
+                                <div className="listingBoxTop">
+                                  <h4>{tour.Tour_name}</h4>
+                                  <div className="ReviewsDivrow">
+                                    <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
+                                    <span>{tour.rating} | 500 Reviews</span>
+                                  </div>
+                                  <div className="descrition">
+                                    <p>{tour.tour_intro}</p>
                                   </div>
                                 </div>
-                                <div className="aedRHS">{tour.tour_tour_duration}</div>
+                                <div className="listingBoxFooter">
+                                  <div className="listboxlhs">
+                                    <span>Free Cancellation</span>
+                                    <span>6 Days</span>
+                                  </div>
+                                  <div className="listboxrhs">
+                                    <div className="startingFromTag">Starting from</div>
+                                    <div className="price">
+                                      {isLoggedIn ? (
+                                        <div className="aedtext">
+                                          {selectedCurrency === "AED" ? (
+                                            <span>AED</span>
+                                          ) : (
+                                            <span>USD</span>
+                                          )}
+                                          <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
+                                        </div>
+                                      ) : (
+                                        <div className="aedtext">
+                                          {selectedCurrency === "AED" ? (
+                                            <span>AED</span>
+                                          ) : (
+                                            <span>USD</span>
+                                          )}
+                                          <strong>{getUserPrice(tour)}</strong>{tour.tour_no_of_pax}
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </Link>
-                               <div className="wishlistIcon" onClick={() => addToWishlist(tour.tour_id)}></div>
-                               </div>
-                          ))
-                        ) : (
-                          <p>No items within the selected price range.</p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
-                      <div className="listingRow">
-                        {itemsToShow.map((tour) => (
-                            <div className="parenttabbox">
-                          <Link to={`/tour/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.tour_id}`}>
-                            <div className="listingBoxImg">
-                              <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
-                              <div className="discountrow">
-                                <div className="discount">
-                                  <span>{tour.tour_discount} %</span>
-                                </div>
-
-                              </div>
-                              <div className="imgBottomRow">
-                                <div className="lhstext">
-                                  <span>{tour.tour_hastag}</span>
-                                </div>
-                                <div className="rhsimg">
-                                  <div>
-                                    {tour.sticker_info[0].id === '1' && (
-                                      <img
-                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                        alt=""
-                                      />
-                                    )}
-                                    {tour.sticker_info[0].id === '2' && (
-                                      <img
-                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                        alt=""
-                                      />
-                                    )}
-                                    {tour.sticker_info[0].id === '3' && (
-                                      <img
-                                        src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                        alt=""
-                                      />
-                                    )}
-                                    {tour.sticker_info.length > 1 && (
-                                      <img
-                                        src={tour.sticker_info[1].id}
-                                        alt=""
-                                      />
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="listingBoxContent">
-                              <div className="listingBoxTop">
-                                <h4>{tour.Tour_name}</h4>
-                                <div className="ReviewsDivrow">
-                                  <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
-                                  <span>{tour.rating} | 500 Reviews</span>
-                                </div>
-                                <div className="descrition">
-                                  <p>{tour.tour_intro}</p>
-                                </div>
-                              </div>
-                              <div className="listingBoxFooter">
-                                <div className="listboxlhs">
-                                  <span>Free Cancellation</span>
-                                  <span>6 Days</span>
-                                </div>
-                                <div className="listboxrhs">
-                                  <div className="startingFromTag">Starting from</div>
-                                  <div className="price">
-                                    {isLoggedIn ? (
-                                      <div className="aedtext">
-                                        {selectedCurrency === "AED" ? (
-                                          <span>AED</span>
-                                        ) : (
-                                          <span>USD</span>
-                                        )}
-                                        <strong>{getUserPrice(tour)}</strong> {tour.tour_no_of_pax}
-                                      </div>
-                                    ) : (
-                                      <div className="aedtext">
-                                        {selectedCurrency === "AED" ? (
-                                          <span>AED</span>
-                                        ) : (
-                                          <span>USD</span>
-                                        )}
-                                        <strong>{getUserPrice(tour)}</strong>{tour.tour_no_of_pax}
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </Link>
-                            <div className="wishlistIcon" onClick={() => addToWishlist(tour.tour_id)}></div>
-                            </div>
+                            <button
+                              className={
+                                wishlistData && wishlistData.some(item => item === String(tour.tour_id))
+                                  ? "wishlistIcon wishlistTagFill"
+                                  : "wishlistIcon"
+                              }
+                              onClick={() => addToWishlist(tour.tour_id)}
+                            >
+                            </button>
+                          </div>
                         ))}
                       </div>
                     </div>

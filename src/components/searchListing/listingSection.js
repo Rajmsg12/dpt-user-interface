@@ -6,6 +6,7 @@ import LeftSideFilter from './LeftSideFilter';
 import { useParams } from 'react-router-dom';
 import config from '../../config';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 
 const itemsPerPage = 9;
@@ -21,6 +22,7 @@ const ListingSection = ({ selectedCurrency }) => {
   const navigate = useNavigate()
   const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(false);
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(null);
+  const [wishlistData, setWishlistData] = useState(null);
   const totalItems = data.TourListing.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -49,7 +51,7 @@ const ListingSection = ({ selectedCurrency }) => {
       return rating;
     });
   };
-  
+
   const addToWishlist = async (tourId) => {
     try {
       const token = localStorage.getItem("token");
@@ -58,12 +60,12 @@ const ListingSection = ({ selectedCurrency }) => {
         navigate("/login");
         return;
       }
-  
+
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body
         };
-  
+
         const response = await fetch(`${config.baseUrl}/wishlist/add`, {
           method: 'POST',
           headers: {
@@ -72,12 +74,12 @@ const ListingSection = ({ selectedCurrency }) => {
           },
           body: JSON.stringify(requestBody),
         });
-  
+
         if (response.ok) {
           // Wishlist addition successful
           const responseData = await response.json();
           console.log('Tour added to wishlist!');
-  
+
           // Display success message in popup
           displayMessage(responseData.msg);
           setClickedTourId(tourId);
@@ -93,15 +95,15 @@ const ListingSection = ({ selectedCurrency }) => {
       console.error('Error adding tour to wishlist:', error);
     }
   };
-  
+
   // Function to display message as a popup
   const displayMessage = (message) => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
     popup.textContent = message;
-  
+
     document.body.appendChild(popup);
-  
+
     setTimeout(() => {
       popup.remove();
     }, 5000);
@@ -197,6 +199,37 @@ const ListingSection = ({ selectedCurrency }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = filteredData.slice(startIndex, endIndex);
+  useEffect(() => {
+    const checkTokenAndFetchData = async () => {
+      const token = localStorage.getItem('token');
+
+      // Check if token exists before making the API call
+      if (token) {
+        try {
+          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.data.status === 'success') {
+            const wishlistData = response.data.data.map(item => item.tour_id);
+
+            setWishlistData(wishlistData);
+            // setWishlistData(wishlistData);
+          } else {
+            console.error('Failed to fetch wishlist data');
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist data:', error);
+        }
+      } else {
+        console.log('User not logged in or token not found.'); // Handle not logged in scenario
+      }
+    };
+
+    checkTokenAndFetchData();
+  }, [wishlistData]);
   return (
     <div>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
@@ -339,7 +372,15 @@ const ListingSection = ({ selectedCurrency }) => {
                                   <div className="aedRHS">{tour.tour_duration}</div>
                                 </div>
                               </Link>
-                              <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
+                              <button
+                                className={
+                                  wishlistData && wishlistData.some(item => item === String(tour.id))
+                                    ? "wishlistIcon wishlistTagFill"
+                                    : "wishlistIcon"
+                                }
+                                onClick={() => addToWishlist(tour.id)}
+                              >
+                              </button>
                             </div>
                           ))
                         ) : (
@@ -438,7 +479,15 @@ const ListingSection = ({ selectedCurrency }) => {
                                 </div>
                               </div>
                             </Link>
-                            <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
+                            <button
+                              className={
+                                wishlistData && wishlistData.some(item => item === String(tour.id))
+                                  ? "wishlistIcon wishlistTagFill"
+                                  : "wishlistIcon"
+                              }
+                              onClick={() => addToWishlist(tour.id)}
+                            >
+                            </button>
                           </div>
                         ))}
                       </div>

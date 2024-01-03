@@ -151,8 +151,6 @@ const PopularTour = ({ selectedCurrency }) => {
               if (response.data.status === 'success') {
                 const wishlistData = response.data.data.map(item => item.tour_id);
     
-                // Update state or perform logic with wishlistData here
-                console.log('Fetched wishlist data:', wishlistData);
                 setWishlistData(wishlistData);
                 // setWishlistData(wishlistData);
               } else {
@@ -271,7 +269,16 @@ const PopularTour = ({ selectedCurrency }) => {
                                                     </div>
                                                 </div>
                                             </Link>
-                                            <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
+                                            
+                                            <button
+                                                className={
+                                                    wishlistData && wishlistData.some(item => item === String(tour.id))
+                                                        ? "wishlistIcon wishlistTagFill"
+                                                        : "wishlistIcon"
+                                                }
+                                                onClick={() => addToWishlist(tour.id)}
+                                            >
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import config from '../../config';
+import axios from 'axios';
 
 const SearchableSelect = ({ options, placeholder, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -64,7 +65,7 @@ const SearchableSelect = ({ options, placeholder, onSelect }) => {
 
 
 
-const Banner = ({selectedCurrency}) => {
+const Banner = ({ selectedCurrency }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [searchCountry, setSearchCountry] = useState('');
   const [userType, setUserType] = useState(null);
@@ -79,6 +80,7 @@ const Banner = ({selectedCurrency}) => {
   const [chauffeur, setChauffeur] = useState([]);
   const navigate = useNavigate();
   const [destinations, setDestinations] = useState([]);
+  const [wishlistData, setWishlistData] = useState(null);
 
   const CustomInput = React.forwardRef(({ value, onClick, placeholder }, ref) => (
     <input
@@ -125,7 +127,7 @@ const Banner = ({selectedCurrency}) => {
     }
 
 
-    if (searchCountry ) {
+    if (searchCountry) {
       // This condition should work for navigation.
       const encodedCountry = encodeURIComponent(searchCountry.replace(/\s+/g, '-').toLowerCase());
       navigate(`/tour/${encodedCountry}`);
@@ -283,12 +285,12 @@ const Banner = ({selectedCurrency}) => {
         navigate("/login");
         return;
       }
-  
+
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body
         };
-  
+
         const response = await fetch(`${config.baseUrl}/wishlist/add`, {
           method: 'POST',
           headers: {
@@ -297,12 +299,12 @@ const Banner = ({selectedCurrency}) => {
           },
           body: JSON.stringify(requestBody),
         });
-  
+
         if (response.ok) {
           // Wishlist addition successful
           const responseData = await response.json();
           console.log('Tour added to wishlist!');
-  
+
           // Display success message in popup
           displayMessage(responseData.msg);
           setClickedTourId(tourId);
@@ -319,19 +321,52 @@ const Banner = ({selectedCurrency}) => {
     }
   };
 
-  
+
   // Function to display message as a popup
   const displayMessage = (message) => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
     popup.textContent = message;
-  
+
     document.body.appendChild(popup);
-  
+
     setTimeout(() => {
       popup.remove();
     }, 5000);
   };
+  useEffect(() => {
+    const checkTokenAndFetchData = async () => {
+      const token = localStorage.getItem('token');
+
+      // Check if token exists before making the API call
+      if (token) {
+        try {
+          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.data.status === 'success') {
+            const wishlistData = response.data.data.map(item => item.tour_id);
+
+            // Update state or perform logic with wishlistData here
+            console.log('Fetched wishlist data:', wishlistData);
+            setWishlistData(wishlistData);
+            // setWishlistData(wishlistData);
+          } else {
+            console.error('Failed to fetch wishlist data');
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist data:', error);
+        }
+      } else {
+        console.log('User not logged in or token not found.'); // Handle not logged in scenario
+      }
+    };
+
+    checkTokenAndFetchData();
+  }, [wishlistData]);
   return (
     <div className={`homepageContent`}>
       <div >
@@ -379,7 +414,7 @@ const Banner = ({selectedCurrency}) => {
                                   minDate={new Date()}
                                   placeholderText="Select Date"
                                   customInput={<CustomInput />}
-                                
+
                                 />
 
 
@@ -388,7 +423,7 @@ const Banner = ({selectedCurrency}) => {
                           </div>
                         </div>
 
-                        
+
 
                         {/* Replace the <button> with a <Link> */}
                         <div className="SearchBtn">
@@ -445,7 +480,7 @@ const Banner = ({selectedCurrency}) => {
                               />
                             </div>
 
-                            
+
 
                             <div className="PopupSubmitBtn">
 
@@ -472,7 +507,7 @@ const Banner = ({selectedCurrency}) => {
               <div className="nav nav-tabs" id="nav-tab" role="tablist">
                 <button className="nav-link active" id="nav-privatejet-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-privatejet" type="button" role="tab" aria-controls="nav-privatejet"
-                  aria-selected="true"><img  src="images/homepage/jet.png" alt="" />Desert Safari</button>
+                  aria-selected="true"><img src="images/homepage/jet.png" alt="" />Desert Safari</button>
                 <button className="nav-link" id="nav-weddingonyatch-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-weddingonyatch" type="button" role="tab" aria-controls="nav-weddingonyatch"
                   aria-selected="false"><img src="images/homepage/yatch.png" alt="" />Wedding On Yacht</button>
@@ -508,85 +543,93 @@ const Banner = ({selectedCurrency}) => {
 
                     return (
                       <div className="parenttabbox">
-                      <Link to={`/desert-safari/${titleWithHyphens}`} className="TabBox" key={index}>
-                        <div className="img">
-                          <img src={`${config.imageUrl}/${tour.image}`} alt="" />
-                          <div className="discountrow">
-                            <div className="discount">
-                              <span>{`${tour.discount}%`}</span>
-                            </div>
-                          </div>
-                          <div class="imgBottomRow">
-                            <div class="lhstext">
-
-                              <span>{tour.hastag}</span>
-                            </div>
-                            <div className="rhsimg">
-                               
-                                  {tour.sticker_info[0].id === '1' && (
-                                    <img
-                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                      alt=""
-                                    />
-                                  )}
-                                  {tour.sticker_info[0].id === '2' && (
-                                    <img
-                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                      alt=""
-                                    />
-                                  )}
-                                  {tour.sticker_info[0].id === '3' && (
-                                    <img
-                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                      alt=""
-                                    />
-                                  )}
-                                  {tour.sticker_info.length > 1 && (
-                                    <img
-                                      src={tour.sticker_info[1].id}
-                                      alt=""
-                                    />
-                                  )}
-                             
+                        <Link to={`/desert-safari/${titleWithHyphens}`} className="TabBox" key={index}>
+                          <div className="img">
+                            <img src={`${config.imageUrl}/${tour.image}`} alt="" />
+                            <div className="discountrow">
+                              <div className="discount">
+                                <span>{`${tour.discount}%`}</span>
                               </div>
-                          </div>
-                        </div>
-                        <div className="TabBoxBody">
-                          <h4>{tour.tour_name}</h4>
-                          <p>{tour.intro}</p>
-                          <div className="ReviewRow">
-                            {tour.destination_info && tour.destination_info.length > 0 && (
-                              <span className="location">{tour.destination_info[0].name}</span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="TabBoxFooter">
-                        <div className="aedLHS">
-                        <span>Starting from</span>
-                        {isLoggedIn ? (
-                            <div className="aedtext">
-                                {selectedCurrency === "AED" ? (
-                                    <span>AED</span>
-                                ) : (
-                                    <span>USD</span>
-                                )}
-                                <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax} 
                             </div>
-                        ) : (
-                            <div className="aedtext">
-                                {selectedCurrency === "AED" ? (
-                                    <span>AED</span>
-                                ) : (
-                                    <span>USD</span>
+                            <div class="imgBottomRow">
+                              <div class="lhstext">
+
+                                <span>{tour.hastag}</span>
+                              </div>
+                              <div className="rhsimg">
+
+                                {tour.sticker_info[0].id === '1' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                    alt=""
+                                  />
                                 )}
-                                <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax} 
+                                {tour.sticker_info[0].id === '2' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info[0].id === '3' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                    alt=""
+                                  />
+                                )}
+                                {tour.sticker_info.length > 1 && (
+                                  <img
+                                    src={tour.sticker_info[1].id}
+                                    alt=""
+                                  />
+                                )}
+
+                              </div>
                             </div>
-                        )}
-                    </div>
-                          <div className="aedRHS">{tour.tour_duration}</div>
-                        </div>
-                      </Link>
-                      <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
+                          </div>
+                          <div className="TabBoxBody">
+                            <h4>{tour.tour_name}</h4>
+                            <p>{tour.intro}</p>
+                            <div className="ReviewRow">
+                              {tour.destination_info && tour.destination_info.length > 0 && (
+                                <span className="location">{tour.destination_info[0].name}</span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="TabBoxFooter">
+                            <div className="aedLHS">
+                              <span>Starting from</span>
+                              {isLoggedIn ? (
+                                <div className="aedtext">
+                                  {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                  ) : (
+                                    <span>USD</span>
+                                  )}
+                                  <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                </div>
+                              ) : (
+                                <div className="aedtext">
+                                  {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                  ) : (
+                                    <span>USD</span>
+                                  )}
+                                  <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                </div>
+                              )}
+                            </div>
+                            <div className="aedRHS">{tour.tour_duration}</div>
+                          </div>
+                        </Link>
+                        <button
+                          className={
+                            wishlistData && wishlistData.some(item => item === String(tour.id))
+                              ? "wishlistIcon wishlistTagFill"
+                              : "wishlistIcon"
+                          }
+                          onClick={() => addToWishlist(tour.id)}
+                        >
+                        </button>
                       </div>
                     );
                   })}
@@ -601,29 +644,29 @@ const Banner = ({selectedCurrency}) => {
               <div className="Title">
                 <h2>Wedding On Yacht</h2>
                 <div className="TabLayer">
-                <div className="TabWrapper">
-                  {wedding.map((wedding, index) => {
-                    const titleWithHyphens = wedding.slug; // Declare it here
-  
-                    return (
-                      <div className="parenttabbox">
-                     
-                      <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
-                        <div className="img">
-                          <img src={`${config.imageUrl}/${wedding.image}`} alt="" />
-                          <div className="discountrow">
-                            <div className="discount">
-                              <span>{`${wedding.discount}%`}</span>
-                            </div>
-                          
-                          </div>
-                          <div class="imgBottomRow">
-                            <div class="lhstext">
-  
-                              <span>{wedding.hastag}</span>
-                            </div>
-                            <div className="rhsimg">
-                               
+                  <div className="TabWrapper">
+                    {wedding.map((wedding, index) => {
+                      const titleWithHyphens = wedding.slug; // Declare it here
+
+                      return (
+                        <div className="parenttabbox">
+
+                          <Link to={`/wedding-on-yacht/${titleWithHyphens}`} className="TabBox" key={index}>
+                            <div className="img">
+                              <img src={`${config.imageUrl}/${wedding.image}`} alt="" />
+                              <div className="discountrow">
+                                <div className="discount">
+                                  <span>{`${wedding.discount}%`}</span>
+                                </div>
+
+                              </div>
+                              <div class="imgBottomRow">
+                                <div class="lhstext">
+
+                                  <span>{wedding.hastag}</span>
+                                </div>
+                                <div className="rhsimg">
+
                                   {wedding.sticker_info[0].id === '1' && (
                                     <img
                                       src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
@@ -648,51 +691,59 @@ const Banner = ({selectedCurrency}) => {
                                       alt=""
                                     />
                                   )}
-                             
+
+                                </div>
                               </div>
-                          </div>
-                        </div>
-                        <div className="TabBoxBody">
-                          <h4>{wedding.tour_name}</h4>
-                          <p>{wedding.intro}</p>
-                          <div className="ReviewRow">
-                            {wedding.destination_info && wedding.destination_info.length > 0 && (
-                              <span className="location">{wedding.destination_info[0].name}</span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="TabBoxFooter">
-                        <div className="aedLHS">
-                        <span>Starting from</span>
-                        {isLoggedIn ? (
-                            <div className="aedtext">
-                                {selectedCurrency === "AED" ? (
-                                    <span>AED</span>
-                                ) : (
-                                    <span>USD</span>
-                                )}
-                                <strong>{getUserPrice(wedding)}</strong> {wedding.no_of_pax} 
                             </div>
-                        ) : (
-                            <div className="aedtext">
-                                {selectedCurrency === "AED" ? (
-                                    <span>AED</span>
-                                ) : (
-                                    <span>USD</span>
+                            <div className="TabBoxBody">
+                              <h4>{wedding.tour_name}</h4>
+                              <p>{wedding.intro}</p>
+                              <div className="ReviewRow">
+                                {wedding.destination_info && wedding.destination_info.length > 0 && (
+                                  <span className="location">{wedding.destination_info[0].name}</span>
                                 )}
-                                <strong>{getUserPrice(wedding)}</strong> {wedding.no_of_pax}
+                              </div>
                             </div>
-                        )}
-                    </div>
-                          <div className="aedRHS">{wedding.tour_duration}</div>
+                            <div className="TabBoxFooter">
+                              <div className="aedLHS">
+                                <span>Starting from</span>
+                                {isLoggedIn ? (
+                                  <div className="aedtext">
+                                    {selectedCurrency === "AED" ? (
+                                      <span>AED</span>
+                                    ) : (
+                                      <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(wedding)}</strong> {wedding.no_of_pax}
+                                  </div>
+                                ) : (
+                                  <div className="aedtext">
+                                    {selectedCurrency === "AED" ? (
+                                      <span>AED</span>
+                                    ) : (
+                                      <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(wedding)}</strong> {wedding.no_of_pax}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="aedRHS">{wedding.tour_duration}</div>
+                            </div>
+                          </Link>
+                          <button
+                            className={
+                              wishlistData && wishlistData.some(item => item === String(wedding.id))
+                                ? "wishlistIcon wishlistTagFill"
+                                : "wishlistIcon"
+                            }
+                            onClick={() => addToWishlist(wedding.id)}
+                          >
+                          </button>
                         </div>
-                      </Link>
-                      <div className="wishlistIcon" onClick={() => addToWishlist(wedding.id)}></div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
             <div className="tab-pane fade" id="nav-luxurytour" role="tabpanel" aria-labelledby="nav-luxurytour-tab">
@@ -700,225 +751,241 @@ const Banner = ({selectedCurrency}) => {
                 <h2>Luxury Tour</h2>
               </div>
               <div className="TabLayer">
-              <div className="TabWrapper">
-                {luxury.map((luxury, index) => {
-                  const titleWithHyphens = luxury.slug; // Declare it here
+                <div className="TabWrapper">
+                  {luxury.map((luxury, index) => {
+                    const titleWithHyphens = luxury.slug; // Declare it here
 
-                  return (
-                    <div className="parenttabbox">
-                    
-                    <Link to={`/luxury-tour/${titleWithHyphens}`} className="TabBox" key={index}>
-                      <div className="img">
-                        <img src={`${config.imageUrl}/${luxury.image}`} alt="" />
-                        <div className="discountrow">
-                          <div className="discount">
-                            <span>{`${luxury.discount}%`}</span>
-                          </div>
-                         
-                        </div>
-                        <div class="imgBottomRow">
-                          <div class="lhstext">
+                    return (
+                      <div className="parenttabbox">
 
-                            <span>{luxury.hastag}</span>
-                          </div>
-                          <div className="rhsimg">
-                               
-                                  {luxury.sticker_info[0].id === '1' && (
-                                    <img
-                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                      alt=""
-                                    />
-                                  )}
-                                  {luxury.sticker_info[0].id === '2' && (
-                                    <img
-                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                      alt=""
-                                    />
-                                  )}
-                                  {luxury.sticker_info[0].id === '3' && (
-                                    <img
-                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                      alt=""
-                                    />
-                                  )}
-                                  {luxury.sticker_info.length > 1 && (
-                                    <img
-                                      src={luxury.sticker_info[1].id}
-                                      alt=""
-                                    />
-                                  )}
-                             
+                        <Link to={`/luxury-tour/${titleWithHyphens}`} className="TabBox" key={index}>
+                          <div className="img">
+                            <img src={`${config.imageUrl}/${luxury.image}`} alt="" />
+                            <div className="discountrow">
+                              <div className="discount">
+                                <span>{`${luxury.discount}%`}</span>
                               </div>
-                        </div>
-                      </div>
-                      <div className="TabBoxBody">
-                        <h4>{luxury.tour_name}</h4>
-                        <p>{luxury.intro}</p>
-                        <div className="ReviewRow">
-                          {luxury.destination_info && luxury.destination_info.length > 0 && (
-                            <span className="location">{luxury.destination_info[0].name}</span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="TabBoxFooter">
-                      <div className="aedLHS">
-                      <span>Starting from</span>
-                      {isLoggedIn ? (
-                          <div className="aedtext">
-                              {selectedCurrency === "AED" ? (
-                                  <span>AED</span>
-                              ) : (
-                                  <span>USD</span>
-                              )}
-                              <strong>{getUserPrice(luxury)}</strong> {luxury.no_of_pax}
+
+                            </div>
+                            <div class="imgBottomRow">
+                              <div class="lhstext">
+
+                                <span>{luxury.hastag}</span>
+                              </div>
+                              <div className="rhsimg">
+
+                                {luxury.sticker_info[0].id === '1' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                    alt=""
+                                  />
+                                )}
+                                {luxury.sticker_info[0].id === '2' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                    alt=""
+                                  />
+                                )}
+                                {luxury.sticker_info[0].id === '3' && (
+                                  <img
+                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                    alt=""
+                                  />
+                                )}
+                                {luxury.sticker_info.length > 1 && (
+                                  <img
+                                    src={luxury.sticker_info[1].id}
+                                    alt=""
+                                  />
+                                )}
+
+                              </div>
+                            </div>
                           </div>
-                      ) : (
-                          <div className="aedtext">
-                              {selectedCurrency === "AED" ? (
-                                  <span>AED</span>
-                              ) : (
-                                  <span>USD</span>
+                          <div className="TabBoxBody">
+                            <h4>{luxury.tour_name}</h4>
+                            <p>{luxury.intro}</p>
+                            <div className="ReviewRow">
+                              {luxury.destination_info && luxury.destination_info.length > 0 && (
+                                <span className="location">{luxury.destination_info[0].name}</span>
                               )}
-                              <strong>{getUserPrice(luxury)}</strong> {luxury.no_of_pax}
+                            </div>
                           </div>
-                      )}
-                  </div>
-                        <div className="aedRHS">{luxury.tour_duration}</div>
+                          <div className="TabBoxFooter">
+                            <div className="aedLHS">
+                              <span>Starting from</span>
+                              {isLoggedIn ? (
+                                <div className="aedtext">
+                                  {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                  ) : (
+                                    <span>USD</span>
+                                  )}
+                                  <strong>{getUserPrice(luxury)}</strong> {luxury.no_of_pax}
+                                </div>
+                              ) : (
+                                <div className="aedtext">
+                                  {selectedCurrency === "AED" ? (
+                                    <span>AED</span>
+                                  ) : (
+                                    <span>USD</span>
+                                  )}
+                                  <strong>{getUserPrice(luxury)}</strong> {luxury.no_of_pax}
+                                </div>
+                              )}
+                            </div>
+                            <div className="aedRHS">{luxury.tour_duration}</div>
+                          </div>
+                        </Link>
+                        <button
+                          className={
+                            wishlistData && wishlistData.some(item => item === String(luxury.id))
+                              ? "wishlistIcon wishlistTagFill"
+                              : "wishlistIcon"
+                          }
+                          onClick={() => addToWishlist(luxury.id)}
+                        >
+                        </button>
                       </div>
-                    </Link>
-                    <div className="wishlistIcon" onClick={() => addToWishlist(luxury.id)}></div>
-                     </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
-            </div>
 
             </div>
             <div className="tab-pane fade" id="nav-privatetour" role="tabpanel" aria-labelledby="nav-privatetour-tab">
               <div className="Title">
                 <h2>Private Tour</h2>
                 <div className="TabLayer">
-                <div className="TabWrapper">
-                  {privates.map((privates, index) => {
-                    const titleWithHyphens = privates.slug; // Declare it here
+                  <div className="TabWrapper">
+                    {privates.map((privates, index) => {
+                      const titleWithHyphens = privates.slug; // Declare it here
 
-                    return (
-                      <div className="parenttabbox">
-                     
-                      <Link to={`/private-tour/${titleWithHyphens}`} className="TabBox" key={index}>
-                        <div className="img">
-                          <img src={`${config.imageUrl}/${privates.image}`} alt="" />
-                          <div className="discountrow">
-                            <div className="discount">
-                              <span>{`${privates.discount}%`}</span>
-                            </div>
-                           
-                          </div>
-                          <div class="imgBottomRow">
-                            <div class="lhstext">
+                      return (
+                        <div className="parenttabbox">
 
-                              <span>{privates.hastag}</span>
+                          <Link to={`/private-tour/${titleWithHyphens}`} className="TabBox" key={index}>
+                            <div className="img">
+                              <img src={`${config.imageUrl}/${privates.image}`} alt="" />
+                              <div className="discountrow">
+                                <div className="discount">
+                                  <span>{`${privates.discount}%`}</span>
+                                </div>
+
+                              </div>
+                              <div class="imgBottomRow">
+                                <div class="lhstext">
+
+                                  <span>{privates.hastag}</span>
+                                </div>
+                                <div className="rhsimg">
+
+                                  {privates.sticker_info[0].id === '1' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {privates.sticker_info[0].id === '2' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {privates.sticker_info[0].id === '3' && (
+                                    <img
+                                      src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                      alt=""
+                                    />
+                                  )}
+                                  {privates.sticker_info.length > 1 && (
+                                    <img
+                                      src={privates.sticker_info[1].id}
+                                      alt=""
+                                    />
+                                  )}
+
+                                </div>
+                              </div>
                             </div>
-                            <div className="rhsimg">
-                               
-                            {privates.sticker_info[0].id === '1' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                alt=""
-                              />
-                            )}
-                            {privates.sticker_info[0].id === '2' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                alt=""
-                              />
-                            )}
-                            {privates.sticker_info[0].id === '3' && (
-                              <img
-                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                alt=""
-                              />
-                            )}
-                            {privates.sticker_info.length > 1 && (
-                              <img
-                                src={privates.sticker_info[1].id}
-                                alt=""
-                              />
-                            )}
-                       
-                        </div>
-                          </div>
-                        </div>
-                        <div className="TabBoxBody">
-                          <h4>{privates.tour_name}</h4>
-                          <p>{privates.intro}</p>
-                          <div className="ReviewRow">
-                            {privates.destination_info && privates.destination_info.length > 0 && (
-                              <span className="location">{privates.destination_info[0].name}</span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="TabBoxFooter">
-                        <div className="aedLHS">
-                        <span>Starting from</span>
-                        {isLoggedIn ? (
-                            <div className="aedtext">
-                                {selectedCurrency === "AED" ? (
-                                    <span>AED</span>
-                                ) : (
-                                    <span>USD</span>
+                            <div className="TabBoxBody">
+                              <h4>{privates.tour_name}</h4>
+                              <p>{privates.intro}</p>
+                              <div className="ReviewRow">
+                                {privates.destination_info && privates.destination_info.length > 0 && (
+                                  <span className="location">{privates.destination_info[0].name}</span>
                                 )}
-                                <strong>{getUserPrice(privates)}</strong> {privates.no_of_pax} 
+                              </div>
                             </div>
-                        ) : (
-                            <div className="aedtext">
-                                {selectedCurrency === "AED" ? (
-                                    <span>AED</span>
+                            <div className="TabBoxFooter">
+                              <div className="aedLHS">
+                                <span>Starting from</span>
+                                {isLoggedIn ? (
+                                  <div className="aedtext">
+                                    {selectedCurrency === "AED" ? (
+                                      <span>AED</span>
+                                    ) : (
+                                      <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(privates)}</strong> {privates.no_of_pax}
+                                  </div>
                                 ) : (
-                                    <span>USD</span>
+                                  <div className="aedtext">
+                                    {selectedCurrency === "AED" ? (
+                                      <span>AED</span>
+                                    ) : (
+                                      <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(privates)}</strong> {privates.no_of_pax}
+                                  </div>
                                 )}
-                                <strong>{getUserPrice(privates)}</strong> {privates.no_of_pax} 
+                              </div>
+                              <div className="aedRHS">{privates.tour_duration}</div>
                             </div>
-                        )}
-                    </div>
-                          <div className="aedRHS">{privates.tour_duration}</div>
+                          </Link>
+                          <button
+                            className={
+                              wishlistData && wishlistData.some(item => item === String(privates.id))
+                                ? "wishlistIcon wishlistTagFill"
+                                : "wishlistIcon"
+                            }
+                            onClick={() => addToWishlist(privates.id)}
+                          >
+                          </button>
                         </div>
-                      </Link>
-                      <div className="wishlistIcon" onClick={() => addToWishlist(privates.id)}></div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
             <div className="tab-pane fade" id="nav-attractiontickets" role="tabpanel" aria-labelledby="nav-attractiontickets-tab">
               <div className="Title">
                 <h2>Attraction Ticket</h2>
                 <div className="TabLayer">
-                <div className="TabWrapper">
-                {attraction.map((attraction, index) => {
-                  const titleWithHyphens = attraction.slug; // Declare it here
+                  <div className="TabWrapper">
+                    {attraction.map((attraction, index) => {
+                      const titleWithHyphens = attraction.slug; // Declare it here
 
-                  return (
-                    <div className="parenttabbox">
-                     
-                    <Link to={`/attraction-ticket/${titleWithHyphens}`} className="TabBox" key={index}>
-                      <div className="img">
-                        <img src={`${config.imageUrl}/${attraction.image}`} alt="" />
-                        <div className="discountrow">
-                          <div className="discount">
-                            <span>{`${attraction.discount}%`}</span>
-                          </div>
-                         
-                        </div>
-                        <div class="imgBottomRow">
-                          <div class="lhstext">
+                      return (
+                        <div className="parenttabbox">
 
-                            <span>{attraction.hastag}</span>
-                          </div>
-                          <div className="rhsimg">
-                               
+                          <Link to={`/attraction-ticket/${titleWithHyphens}`} className="TabBox" key={index}>
+                            <div className="img">
+                              <img src={`${config.imageUrl}/${attraction.image}`} alt="" />
+                              <div className="discountrow">
+                                <div className="discount">
+                                  <span>{`${attraction.discount}%`}</span>
+                                </div>
+
+                              </div>
+                              <div class="imgBottomRow">
+                                <div class="lhstext">
+
+                                  <span>{attraction.hastag}</span>
+                                </div>
+                                <div className="rhsimg">
+
                                   {attraction.sticker_info[0].id === '1' && (
                                     <img
                                       src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
@@ -943,50 +1010,58 @@ const Banner = ({selectedCurrency}) => {
                                       alt=""
                                     />
                                   )}
-                             
+
+                                </div>
                               </div>
+                            </div>
+                            <div className="TabBoxBody">
+                              <h4>{attraction.tour_name}</h4>
+                              <p>{attraction.intro}</p>
+                              <div className="ReviewRow">
+                                {attraction.destination_info && attraction.destination_info.length > 0 && (
+                                  <span className="location">{attraction.destination_info[0].name}</span>
+                                )}
+                              </div>
+                            </div>
+                            <div className="TabBoxFooter">
+                              <div className="aedLHS">
+                                <span>Starting from</span>
+                                {isLoggedIn ? (
+                                  <div className="aedtext">
+                                    {selectedCurrency === "AED" ? (
+                                      <span>AED</span>
+                                    ) : (
+                                      <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(attraction)}</strong> {attraction.no_of_pax}
+                                  </div>
+                                ) : (
+                                  <div className="aedtext">
+                                    {selectedCurrency === "AED" ? (
+                                      <span>AED</span>
+                                    ) : (
+                                      <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(attraction)}</strong> {attraction.no_of_pax}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="aedRHS">{attraction.tour_duration}</div>
+                            </div>
+                          </Link>
+                          <button
+                            className={
+                              wishlistData && wishlistData.some(item => item === String(attraction.id))
+                                ? "wishlistIcon wishlistTagFill"
+                                : "wishlistIcon"
+                            }
+                            onClick={() => addToWishlist(attraction.id)}
+                          >
+                          </button>
                         </div>
-                      </div>
-                      <div className="TabBoxBody">
-                        <h4>{attraction.tour_name}</h4>
-                        <p>{attraction.intro}</p>
-                        <div className="ReviewRow">
-                          {attraction.destination_info && attraction.destination_info.length > 0 && (
-                            <span className="location">{attraction.destination_info[0].name}</span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="TabBoxFooter">
-                      <div className="aedLHS">
-                      <span>Starting from</span>
-                      {isLoggedIn ? (
-                          <div className="aedtext">
-                              {selectedCurrency === "AED" ? (
-                                  <span>AED</span>
-                              ) : (
-                                  <span>USD</span>
-                              )}
-                              <strong>{getUserPrice(attraction)}</strong> {attraction.no_of_pax} 
-                          </div>
-                      ) : (
-                          <div className="aedtext">
-                              {selectedCurrency === "AED" ? (
-                                  <span>AED</span>
-                              ) : (
-                                  <span>USD</span>
-                              )}
-                              <strong>{getUserPrice(attraction)}</strong> {attraction.no_of_pax} 
-                          </div>
-                      )}
+                      );
+                    })}
                   </div>
-                        <div className="aedRHS">{attraction.tour_duration}</div>
-                      </div>
-                    </Link>
-                    <div className="wishlistIcon" onClick={() => addToWishlist(attraction.id)}></div>
-                    </div>
-                  );
-                })}
-              </div>
                 </div>
               </div>
             </div>
@@ -995,28 +1070,28 @@ const Banner = ({selectedCurrency}) => {
               <div className="Title">
                 <h2>Chauffeur</h2>
                 <div className="TabLayer">
-                <div className="TabWrapper">
-                {chauffeur.map((chauffeur, index) => {
-                  const titleWithHyphens = chauffeur.slug; // Declare it here
+                  <div className="TabWrapper">
+                    {chauffeur.map((chauffeur, index) => {
+                      const titleWithHyphens = chauffeur.slug; // Declare it here
 
-                  return (
-                    <div className="parenttabbox">
-                    <Link to={`/chauffeur/${titleWithHyphens}`} className="TabBox" key={index}>
-                      <div className="img">
-                        <img src={`${config.imageUrl}/${chauffeur.image}`} alt="" />
-                        <div className="discountrow">
-                          <div className="discount">
-                            <span>{`${chauffeur.discount}%`}</span>
-                          </div>
-                        
-                        </div>
-                        <div class="imgBottomRow">
-                          <div class="lhstext">
+                      return (
+                        <div className="parenttabbox">
+                          <Link to={`/chauffeur/${titleWithHyphens}`} className="TabBox" key={index}>
+                            <div className="img">
+                              <img src={`${config.imageUrl}/${chauffeur.image}`} alt="" />
+                              <div className="discountrow">
+                                <div className="discount">
+                                  <span>{`${chauffeur.discount}%`}</span>
+                                </div>
 
-                            <span>{chauffeur.hastag}</span>
-                          </div>
-                          <div className="rhsimg">
-                               
+                              </div>
+                              <div class="imgBottomRow">
+                                <div class="lhstext">
+
+                                  <span>{chauffeur.hastag}</span>
+                                </div>
+                                <div className="rhsimg">
+
                                   {chauffeur.sticker_info[0].id === '1' && (
                                     <img
                                       src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
@@ -1041,49 +1116,57 @@ const Banner = ({selectedCurrency}) => {
                                       alt=""
                                     />
                                   )}
-                             
+
+                                </div>
                               </div>
-                        </div>
-                      </div>
-                      <div className="TabBoxBody">
-                        <h4>{chauffeur.tour_name}</h4>
-                        <p>{chauffeur.intro}</p>
-                        <div className="ReviewRow">
-                          {chauffeur.destination_info && chauffeur.destination_info.length > 0 && (
-                            <span className="location">{chauffeur.destination_info[0].name}</span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="TabBoxFooter">
-                      <div className="aedLHS">
-                      <span>Starting from</span>
-                      {isLoggedIn ? (
-                          <div className="aedtext">
-                              {selectedCurrency === "AED" ? (
-                                  <span>AED</span>
-                              ) : (
-                                  <span>USD</span>
-                              )}
-                              <strong>{getUserPrice(chauffeur)}</strong> {chauffeur.no_of_pax}
-                          </div>
-                      ) : (
-                          <div className="aedtext">
-                              {selectedCurrency === "AED" ? (
-                                  <span>AED</span>
-                              ) : (
-                                  <span>USD</span>
-                              )}
-                              <strong>{getUserPrice(chauffeur)}</strong> {chauffeur.no_of_pax}
-                          </div>
-                      )}
+                            </div>
+                            <div className="TabBoxBody">
+                              <h4>{chauffeur.tour_name}</h4>
+                              <p>{chauffeur.intro}</p>
+                              <div className="ReviewRow">
+                                {chauffeur.destination_info && chauffeur.destination_info.length > 0 && (
+                                  <span className="location">{chauffeur.destination_info[0].name}</span>
+                                )}
+                              </div>
+                            </div>
+                            <div className="TabBoxFooter">
+                              <div className="aedLHS">
+                                <span>Starting from</span>
+                                {isLoggedIn ? (
+                                  <div className="aedtext">
+                                    {selectedCurrency === "AED" ? (
+                                      <span>AED</span>
+                                    ) : (
+                                      <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(chauffeur)}</strong> {chauffeur.no_of_pax}
+                                  </div>
+                                ) : (
+                                  <div className="aedtext">
+                                    {selectedCurrency === "AED" ? (
+                                      <span>AED</span>
+                                    ) : (
+                                      <span>USD</span>
+                                    )}
+                                    <strong>{getUserPrice(chauffeur)}</strong> {chauffeur.no_of_pax}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="aedRHS">{chauffeur.tour_duration}</div>
+                            </div>
+                          </Link>
+                          <button
+                            className={
+                              wishlistData && wishlistData.some(item => item === String(chauffeur.id))
+                                ? "wishlistIcon wishlistTagFill"
+                                : "wishlistIcon"
+                            }
+                            onClick={() => addToWishlist(chauffeur.id)}
+                          >
+                          </button></div>
+                      );
+                    })}
                   </div>
-                        <div className="aedRHS">{chauffeur.tour_duration}</div>
-                      </div>
-                    </Link>
-                    <div className="wishlistIcon" onClick={() => addToWishlist(chauffeur.id)}></div></div>
-                  );
-                })}
-              </div>
 
                 </div>
               </div>
@@ -1099,27 +1182,27 @@ const Banner = ({selectedCurrency}) => {
     let price = 0;
 
     if (userType === 2) {
-        // Agent user type
-        price =
-            selectedCurrency === "AED"
-                ? tour.tour_price_aed - (tour.tour_price_aed * userDiscount) / 100
-                : tour.tour_price_usd - (tour.tour_price_usd * userDiscount) / 100;
+      // Agent user type
+      price =
+        selectedCurrency === "AED"
+          ? tour.tour_price_aed - (tour.tour_price_aed * userDiscount) / 100
+          : tour.tour_price_usd - (tour.tour_price_usd * userDiscount) / 100;
     } else if (userType === 3) {
-        // Normal user type
-        price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
+      // Normal user type
+      price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
     } else {
-        // Default case (handle other user types if needed)
-        price = selectedCurrency === "AED" ? tour.tour_price_aed :  tour.tour_price_usd;
+      // Default case (handle other user types if needed)
+      price = selectedCurrency === "AED" ? tour.tour_price_aed : tour.tour_price_usd;
     }
 
     // Remove decimal part
     return Math.floor(price);
-}
+  }
 
 }
 const mapStateToProps = (state) => ({
-selectedCurrency: state.currency.selectedCurrency,
-// ... (other state mappings)
+  selectedCurrency: state.currency.selectedCurrency,
+  // ... (other state mappings)
 });
 
 export default connect(mapStateToProps)(Banner);

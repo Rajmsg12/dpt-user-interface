@@ -8,6 +8,7 @@ import { useParams , useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import config from '../../config'
 import { Helmet } from 'react-helmet'
+import axios from 'axios';
 
 const ContentSection = ({ selectedCurrency }) => {
   const itemsPerPage = 9;
@@ -27,6 +28,7 @@ const ContentSection = ({ selectedCurrency }) => {
   const [metaKeywords, setMetaKeywords] = useState('');
   const { categoryName } = useParams()
   const [clickedTourId, setClickedTourId] = useState(null);
+  const [wishlistData, setWishlistData] = useState(null);
   const navigate = useNavigate()
 
   const formattedCategory = categoryName
@@ -204,6 +206,36 @@ const ContentSection = ({ selectedCurrency }) => {
       popup.remove();
     }, 5000);
   };
+  useEffect(() => {
+    const checkTokenAndFetchData = async () => {
+      const token = localStorage.getItem('token');
+      // Check if token exists before making the API call
+      if (token) {
+        try {
+          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.data.status === 'success') {
+            const wishlistData = response.data.data.map(item => item.tour_id);
+
+            setWishlistData(wishlistData);
+            // setWishlistData(wishlistData);
+          } else {
+            console.error('Failed to fetch wishlist data');
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist data:', error);
+        }
+      } else {
+        console.log('User not logged in or token not found.'); // Handle not logged in scenario
+      }
+    };
+
+    checkTokenAndFetchData();
+  }, [wishlistData]);
   return (
     <>
       <div className={`body ${isSidebarMenuOpen ? 'sidebarMenuOpen' : ''} listingPage`}>
@@ -330,7 +362,15 @@ const ContentSection = ({ selectedCurrency }) => {
                                 <div className="aedRHS">{tour.tour_tour_duration}</div>
                               </div>
                             </Link>
-                               <div className="wishlistIcon" onClick={() => addToWishlist(tour.tour_id)}></div>
+                            <button
+                              className={
+                                wishlistData && wishlistData.some(item => item === String(tour.tour_id))
+                                  ? "wishlistIcon wishlistTagFill"
+                                  : "wishlistIcon"
+                              }
+                              onClick={() => addToWishlist(tour.tour_id)}
+                            >
+                            </button>
                                </div>
                           ))
                         ) : (
@@ -426,7 +466,15 @@ const ContentSection = ({ selectedCurrency }) => {
                               </div>
                             </div>
                           </Link>
-                          <div className="wishlistIcon" onClick={() => addToWishlist(tour.tour_id)}></div>
+                          <button
+                              className={
+                                wishlistData && wishlistData.some(item => item === String(tour.tour_id))
+                                  ? "wishlistIcon wishlistTagFill"
+                                  : "wishlistIcon"
+                              }
+                              onClick={() => addToWishlist(tour.tour_id)}
+                            >
+                            </button>
                                </div>
                         ))}
                       </div>
