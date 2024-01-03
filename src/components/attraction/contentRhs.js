@@ -246,7 +246,7 @@ const ListingSection = ({ selectedCurrency }) => {
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
                             <div className="parenttabbox">
-                            <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.tour_id}`}>
+                            <Link to={`/tour/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.tour_id}`}>
                               <div className="img">
                                 <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                                 <div className="discountrow">
@@ -336,7 +336,7 @@ const ListingSection = ({ selectedCurrency }) => {
                       <div className="listingRow">
                         {itemsToShow.map((tour) => (
                             <div className="parenttabbox">
-                          <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.tour_id}`}>
+                          <Link to={`/tour/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.tour_id}`}>
                             <div className="listingBoxImg">
                               <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                               <div className="discountrow">
