@@ -80,6 +80,21 @@ const Banner = ({selectedCurrency}) => {
   const navigate = useNavigate();
   const [destinations, setDestinations] = useState([]);
 
+  const CustomInput = React.forwardRef(({ value, onClick, placeholder }, ref) => (
+    <input
+      type="text"
+      value={value}
+      onClick={onClick}
+      readOnly={true}
+      ref={ref}
+      placeholder={placeholder}
+      style={{
+        border: "none",
+        outline: "none",
+      }}
+    />
+  ));
+
   const handleCountrySearch = (country) => {
     setSearchCountry(country);
   };
@@ -303,6 +318,7 @@ const Banner = ({selectedCurrency}) => {
       console.error('Error adding tour to wishlist:', error);
     }
   };
+
   
   // Function to display message as a popup
   const displayMessage = (message) => {
@@ -362,14 +378,8 @@ const Banner = ({selectedCurrency}) => {
                                   onChange={(date) => setSelectedDate(date)}
                                   minDate={new Date()}
                                   placeholderText="Select Date"
-                                  customInput={
-                                    <input
-                                      style={{
-                                        border: "none",
-                                        outline: "none",
-                                      }}
-                                    />
-                                  }
+                                  customInput={<CustomInput />}
+                                
                                 />
 
 
