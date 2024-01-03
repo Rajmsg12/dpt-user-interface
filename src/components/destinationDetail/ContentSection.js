@@ -240,6 +240,14 @@ function ContentSection({ selectedCurrency }) {
         formData[element.name] = element.value;
       }
     }
+    if (!formData.tourDate) {
+      setIsFormValid(false);
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 5000);
+      return;
+    }
 
     if (!formData.preferredPay || formData.preferredPay === '0') {
       setIsFormValid(false);
@@ -445,7 +453,7 @@ function ContentSection({ selectedCurrency }) {
     };
 
     checkTokenAndFetchData();
-  },[wishlistData])
+  }, [wishlistData]);
 
 
 
@@ -1201,11 +1209,12 @@ function ContentSection({ selectedCurrency }) {
 
                         </form>
                         {showPopup && (
-                          <div className="popup" style={{ color: 'green' }}>
+                          <div className="popu" style={{ color: 'red' }}>
                             <p>Please fill in all the required fields.</p>
                             {/* Button to close the popup */}
                             {/* <button onClick={() => setShowPopup(false)}>Close</button> */}
                           </div>
+
                         )}
                       </div>{/*FormInnerDiv*/}
                     </div>{/*BookThisTourSec*/}
