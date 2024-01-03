@@ -37,7 +37,6 @@ const Review = () => {
     const url = window.location.href;
     const spliturl = url.split("/");
     const slug = spliturl[4];
-    console.log(slug)
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -178,8 +177,7 @@ const Review = () => {
             .then(response => response.json())
             .then(data => {
                 // Set the reviews state with the fetched data
-                setReviews(data.data); // Assuming your API returns an array of reviews
-                console.log(data.data);
+                setReviews(data.data); 
             })
             .catch(error => {
                 console.error('Error fetching reviews:', error);
@@ -187,7 +185,6 @@ const Review = () => {
         }
     }, []);
     
-console.log(reviews)
     return (
         <>
             <header className="userHeader">

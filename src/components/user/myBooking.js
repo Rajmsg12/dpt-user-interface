@@ -102,7 +102,6 @@ const Booking = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log('Change password response:', data);
 
                     if (data.success) {
                         // Optionally, handle success
@@ -142,7 +141,6 @@ const Booking = () => {
         fetchBookingDetails();
     }, []);
 
-    console.log(bookingDetails)
     const handleLogout = () => {
         fetch(`${config.baseUrl}/logout`, {
             method: 'POST',
@@ -175,7 +173,6 @@ const Booking = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log('Profile update response:', data);
 
                     if (data.success) {
                         setSuccessMessage('Profile updated successfully!');

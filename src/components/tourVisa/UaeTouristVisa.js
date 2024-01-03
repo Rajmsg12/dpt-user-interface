@@ -84,7 +84,6 @@ const UaeTouristVisa = () => {
     
           if (response.ok) {
             const responseData = await response.json();
-            console.log('Form data sent:', responseData);
             setFormData({
               // Reset form fields
               name: '',

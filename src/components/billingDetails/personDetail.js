@@ -184,7 +184,6 @@ const PersonDetail = ({ selectedCurrency }) => {
 
                     if (response.ok) {
                         const data = await response.json();
-                        console.log('Fetched user data:', data.data); // Log fetched data to console
 
                         if (data.success && data.data) {
                             setUserLoggedIn(true); // Set userLoggedIn to true if user data is fetched
@@ -230,7 +229,6 @@ const PersonDetail = ({ selectedCurrency }) => {
                 });
 
                 if (response.ok) {
-                    console.log('Booking successful');
                     localStorage.removeItem('cartdata');
                     navigate('/thankyou');
                 } else {

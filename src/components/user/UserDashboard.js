@@ -145,7 +145,6 @@ const UserProfile = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('Profile update response:', data);
 
           if (data.success) {
             setSuccessMessage('Profile updated successfully!');

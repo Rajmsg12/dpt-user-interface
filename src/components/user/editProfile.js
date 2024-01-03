@@ -152,7 +152,6 @@ const EditProfile = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log('Profile update response:', data);
                     Swal.fire({
                         icon: 'success',
                         title: 'Profile Update Successfully',

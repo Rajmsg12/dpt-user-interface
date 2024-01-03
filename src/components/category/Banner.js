@@ -17,7 +17,6 @@ const Banner = () => {
   
         if (data.status === 'success' && data.data.length > 0) {
           setTour(data.data[0].image);
-          console.log(data.data[0].image)
         } else {
           // Handle error or set default values for tour
         }
@@ -28,7 +27,6 @@ const Banner = () => {
   
     fetchTourData();
   }, [slug]);
-  console.log(tour)
   const backgroundImageUrl = `url(${config.imageUrl}/${tour})`
 
 

@@ -79,7 +79,6 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                 console.error('Logout failed', error);
             });
     };
-    console.log("token", localStorage.getItem("token"))
 
     return (
 

@@ -91,7 +91,6 @@ const ContactUs = () => {
 
             if (response.ok) {
                 const responseData = await response.json();
-                console.log('Form data sent:', responseData);
                 // Clear form fields and show success message
                 setFormData({
                     name: '',

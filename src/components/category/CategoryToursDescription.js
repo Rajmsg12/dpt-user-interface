@@ -23,7 +23,6 @@ const AdditionalChargesInfo = () => {
 
                 const data = await response.json();
                 setBackendData(data);
-                console.log(data.data[0])
             } catch (error) {
                 console.error("Error fetching data from the backend:", error.message);
             }

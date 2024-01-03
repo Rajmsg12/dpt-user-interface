@@ -8,7 +8,6 @@ const BookThisTour = () => {
     const url = window.location.href;
     const spliturl = url.split("=");
     const id = spliturl[1];
-    console.log(url)
 
     return (
         <>

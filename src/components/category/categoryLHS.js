@@ -33,7 +33,6 @@ const CategoryLHS = ({
       try {
         const response = await fetch(`${config.baseUrl}/tour-list`);
         const data = await response.json();
-        console.log('API Response:', data.data.map(item=>item.tour_name)); // Log the response
         setTourList(data.data);
       } catch (error) {
         console.error('Error fetching data:', error);

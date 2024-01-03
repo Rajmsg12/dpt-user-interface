@@ -119,7 +119,6 @@ const ChangePassword = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log('Change password response:', data);
                     Swal.fire({
                         icon: 'success',
                         title: 'Password Update Successfully',

@@ -236,12 +236,30 @@ function ContentSection({ selectedCurrency }) {
     formData.tourPriceAed = tourPriceAed;
     formData.tourPriceUsd = tourPriceUsd;
 
-    const driverTotalPrice = (selectedHotel?.driver_price_aed || 0) * driverNumber || 0;
-    const childrenPrice = (selectedHotel?.children_price_aed || 0) * childrenNumber || 0;
-    const adultPrice = (selectedHotel?.adults_price_aed || 0) * adultsNumber || 0;
-    const infantsPrice = (selectedHotel?.infants_price_aed || 0) * infantsNumber || 0;
-    const lunchPrice = (selectedHotel?.lunch_price_aed || 0) * lunchNumber || 0;
-    const ticketPrice = (selectedItinerary?.itinerary_ticket_price_aed || 0) * ticketNumber || 0;
+    const driverTotalPrice = (
+      (selectedCurrency === 'USD' ? selectedHotel?.driver_price_usd : selectedHotel?.driver_price_aed) || 0
+    ) * driverNumber || 0;
+    
+    const childrenPrice = (
+      (selectedCurrency === 'USD' ? selectedHotel?.children_price_usd : selectedHotel?.children_price_aed) || 0
+    ) * childrenNumber || 0;
+    
+    const adultPrice = (
+      (selectedCurrency === 'USD' ? selectedHotel?.adults_price_usd : selectedHotel?.adults_price_aed) || 0
+    ) * adultsNumber || 0;
+    
+    const infantsPrice = (
+      (selectedCurrency === 'USD' ? selectedHotel?.infants_price_usd : selectedHotel?.infants_price_aed) || 0
+    ) * infantsNumber || 0;
+    
+    const lunchPrice = (
+      (selectedCurrency === 'USD' ? selectedHotel?.lunch_price_usd : selectedHotel?.lunch_price_aed) || 0
+    ) * lunchNumber || 0;
+    
+    const ticketPrice = (
+      (selectedCurrency === 'USD' ? selectedItinerary?.itinerary_ticket_price_usd : selectedItinerary?.itinerary_ticket_price_aed) || 0
+    ) * ticketNumber || 0;
+    
 
     formData.lunchPrice = lunchPrice.toFixed(2);
     formData.preferredCurrency = selectedCurrency;
@@ -319,7 +337,6 @@ function ContentSection({ selectedCurrency }) {
   const spliturl = url.split("/");
   const slug = spliturl[5];
 
-  const ourData = data.CategoryList.filter((item) => item.slug === slug);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);
   const [userDiscount, setUserDiscount] = useState(null);
@@ -348,7 +365,6 @@ function ContentSection({ selectedCurrency }) {
         const parsedLanguage = JSON.parse(languageString); // Parse the string to an array
 
         setLanguage(parsedLanguage);
-        console.log("inner tour id personal", data.data[0].id)
 
 
       } catch (error) {
@@ -515,9 +531,7 @@ function ContentSection({ selectedCurrency }) {
     } else {
       // Handle the case when the selected language is not found
       console.error("Selected language not found!");
-    }
-  };
-  console.log("wishlist id detail", wishlistData)
+    }};
 
 
   return (

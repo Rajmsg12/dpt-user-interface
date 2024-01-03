@@ -104,7 +104,6 @@ const ViewDetail = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log('Change password response:', data);
 
                     if (data.success) {
                         // Optionally, handle success

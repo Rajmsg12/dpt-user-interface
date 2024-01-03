@@ -27,7 +27,6 @@ const Wishlist = ({ selectedCurrency }) => {
                         setIsLoggedIn(true);
                         setUserType(data.userType); // Assuming the userType is fetched from data
                         setUserDiscount(data.userDiscount);
-                        console.log(data.map(item => item.tour_info));
                     } else {
                         console.error("Invalid or empty wishlist data structure:", data);
                     }
@@ -41,7 +40,6 @@ const Wishlist = ({ selectedCurrency }) => {
         }
     }, []);
 
-    console.log(wishlistData)
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [expandedItemIndex, setExpandedItemIndex] = useState(null);
@@ -71,7 +69,6 @@ const Wishlist = ({ selectedCurrency }) => {
     }, []);
 
     const deleteItem = (id) => {
-        console.log(id)
         const token = localStorage.getItem("token");
         if (token) {
             fetch(`${config.baseUrl}/wishlist/delete/${id}`, {
@@ -86,7 +83,6 @@ const Wishlist = ({ selectedCurrency }) => {
                 if (data.status === "success") {
                     const updatedWishlist = wishlistData.filter(item => item.id !== id);
                     setWishlistData(updatedWishlist);
-                    console.log(`Item with ID ${id} deleted successfully`);
                 } else {
                     console.error("Failed to delete item:", data.error);
                 }

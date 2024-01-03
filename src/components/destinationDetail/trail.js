@@ -25,7 +25,7 @@ import { useNavigate } from "react-router-dom";
 import './Style/TourPage.css'
 
 function ContentSection({ selectedCurrency }) {
-  console.log(selectedCurrency)
+
   const { title } = useParams();
   const [backendData, setBackendData] = useState(null);
   const dispatch = useDispatch();
@@ -168,7 +168,6 @@ function ContentSection({ selectedCurrency }) {
     let MyCartData = cartdata ? JSON.parse(cartdata) : [];
     MyCartData.push(formData);
     localStorage.setItem('cartdata', JSON.stringify(MyCartData));
-    console.log(localStorage.getItem("cartdata"));
 
     // If all checks pass, proceed with adding to cart or other actions
     setIsFormValid(true);

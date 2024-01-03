@@ -40,8 +40,6 @@ const Register = () => {
       });
   
       if (response.ok) {
-        // Registration successful - handle the success scenario here
-        console.log('Registration successful');
         navigate('/login');
       } else {
         // Registration failed - handle the error scenario here

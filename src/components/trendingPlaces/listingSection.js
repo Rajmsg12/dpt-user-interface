@@ -61,7 +61,6 @@ const ListingSection = ({ selectedCurrency }) => {
   };
 
   const handleCloseSidebar = () => {
-    console.log('Closing sidebar');
     setIsSidebarMenuOpen(false);
   };
 

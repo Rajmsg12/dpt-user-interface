@@ -27,8 +27,7 @@ const Overview = () => {
         };
 
         fetchData();
-    }, []); // The empty dependency array ensures that the effect runs only once after the initial render.
-console.log(tourData)
+    }, []); 
     return (
         <>
             {tourData && (

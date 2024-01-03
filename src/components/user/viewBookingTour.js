@@ -54,7 +54,6 @@ const ViewBookingTour = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    console.log(bookingList)
 
     useEffect(() => {
         const token = localStorage.getItem("token");

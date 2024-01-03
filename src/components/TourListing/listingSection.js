@@ -61,7 +61,6 @@ const ListingSection = ({ selectedCurrency }) => {
   };
 
   const handleCloseSidebar = () => {
-    console.log('Closing sidebar');
     setIsSidebarMenuOpen(false);
   };
 
@@ -83,7 +82,6 @@ const ListingSection = ({ selectedCurrency }) => {
 
     fetchData();
   }, []);
-  console.log(apiData)
 
   useEffect(() => {
     const token = localStorage.getItem("token");

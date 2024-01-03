@@ -52,7 +52,6 @@ const GetInTouch = () => {
       fetchData();
     }
   }, [backendData]);
-  console.log("breadcrum review", backendData)
 
   useEffect(() => {
     const fetchData = async () => {
