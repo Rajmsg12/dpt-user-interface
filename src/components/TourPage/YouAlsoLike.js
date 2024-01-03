@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Style/TourPage.css'
 import Carousel from 'react-multi-carousel';
@@ -8,14 +8,16 @@ import config from '../../config';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
-const YouAlsoLike = ({selectedCurrency}) => {
+const YouAlsoLike = ({ selectedCurrency }) => {
     const [tourData, setTourData] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
     const [userDiscount, setUserDiscount] = useState(null);
     const navigate = useNavigate()
     const [clickedTourId, setClickedTourId] = useState(null);
+    const [wishlistData, setWishlistData] = useState(null);
     const location = useLocation();
     useEffect(() => {
         const fetchData = async () => {
@@ -27,45 +29,96 @@ const YouAlsoLike = ({selectedCurrency}) => {
                 console.error('Error fetching data:', error);
             }
         };
-    
+
         fetchData();
     }, [location]);
     const addToWishlist = async (tourId) => {
-      console.log('Adding to wishlist:', tourId); // Check if function is triggered
-  
-      try {
-          const token = localStorage.getItem("token");
-          if (token) {
-              const requestBody = {
-                  tour_id: tourId // Setting tour.id as tour_id in the request body
-              };
-  
-              const response = await fetch(`${config.baseUrl}/wishlist/add`, {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      Authorization: `Bearer ${token}`,
-                  },
-                  body: JSON.stringify(requestBody),
-              });
-  
-              if (response.ok) {
-                  // Wishlist addition successful
-                  console.log('Tour added to wishlist!');
-                  setClickedTourId(tourId); // Update clickedTourId for changing icon appearance
-                  navigate("/wishlist");
-              } else {
-                  // Handle errors if the addition fails
-                  console.error('Failed to add tour to wishlist');
-              }
-          } else {
-              console.error('User not logged in.'); // Log if the user is not logged in
-              // You might want to handle this scenario by redirecting the user to the login page or showing a message
-          }
-      } catch (error) {
-          console.error('Error adding tour to wishlist:', error);
-      }
-  };
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                // If user is not logged in, navigate to the login page
+                navigate("/login");
+                return;
+            }
+
+            if (token) {
+                const requestBody = {
+                    tour_id: tourId // Setting tour.id as tour_id in the request body
+                };
+
+                const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+
+                if (response.ok) {
+                    // Wishlist addition successful
+                    const responseData = await response.json();
+                    console.log('Tour added to wishlist!');
+
+                    // Display success message in popup
+                    displayMessage(responseData.msg);
+                    setClickedTourId(tourId);
+                } else {
+                    // Handle errors if the addition fails
+                    console.error('Failed to add tour to wishlist');
+                }
+            } else {
+                console.error('User not logged in.'); // Log if the user is not logged in
+                // You might want to handle this scenario by redirecting the user to the login page or showing a message
+            }
+        } catch (error) {
+            console.error('Error adding tour to wishlist:', error);
+        }
+    };
+
+    // Function to display message as a popup
+    const displayMessage = (message) => {
+        const popup = document.createElement('div');
+        popup.classList.add('popup');
+        popup.textContent = message;
+
+        document.body.appendChild(popup);
+
+        setTimeout(() => {
+            popup.remove();
+        }, 5000);
+    };
+    useEffect(() => {
+        const checkTokenAndFetchData = async () => {
+            const token = localStorage.getItem('token');
+
+            // Check if token exists before making the API call
+            if (token) {
+                try {
+                    const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (response.data.status === 'success') {
+                        const wishlistData = response.data.data.map(item => item.tour_id);
+
+                        setWishlistData(wishlistData);
+                        // setWishlistData(wishlistData);
+                    } else {
+                        console.error('Failed to fetch wishlist data');
+                    }
+                } catch (error) {
+                    console.error('Error fetching wishlist data:', error);
+                }
+            } else {
+                console.log('User not logged in or token not found.'); // Handle not logged in scenario
+            }
+        };
+
+        checkTokenAndFetchData();
+    }, [wishlistData]);
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -130,108 +183,119 @@ const YouAlsoLike = ({selectedCurrency}) => {
                     </div>
                     <div className="PopularToursSlider">
                         <Carousel responsive={responsive} infinite={true} itemclassName="carousel-item-padding-60-px" arrows={false}>
-                        {tourData.map((tour, index) => (
-                            <div className="carouselItem" key={tour.id}>
-                            <div className="item">
-                                <Link to={`/desert-safari/${tour.slug}`} className="TabBox">
-                                    <div className="img">
-                                        <img src={`${config.imageUrl}/${tour.image}`} alt="" />
-                                        {tour.discount && (
-                                            <div className="discountrow">
-                                                <div className="discount">
-                                                    <span>{`${tour.discount}%`}</span>
-                                                </div>
-                                                <div className="wishlistIcon" onClick={() => addToWishlist(tour.id)}></div>
-                                            </div>
-                                        )}
-                                        <div className="imgBottomRow">
-                                            <div className="lhs-text">
-                                                {tour.imgBottomRow && (
-                                                    <span>{tour.imgBottomRow.lhsText}</span>
-                                                )}
-                                                <div className="lhstext">
-                                                    <span>{tour.hastag}</span>
-                                                    <span>{tour.hastagHeading}</span>
-                                                </div>
-                                            </div>
-                                            <div className="rhsimg">
+                            {tourData.map((tour, index) => (
+                                <div className="carouselItem" key={tour.id}>
+                                    <div className="item">
+                                        <div className="parenttabbox">
+                                            <Link to={`/desert-safari/${tour.slug}`} className="TabBox">
+                                                <div className="img">
+                                                    <img src={`${config.imageUrl}/${tour.image}`} alt="" />
+                                                    {tour.discount && (
+                                                        <div className="discountrow">
+                                                            <div className="discount">
+                                                                <span>{`${tour.discount}%`}</span>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    <div className="imgBottomRow">
+                                                        <div className="lhs-text">
+                                                            {tour.imgBottomRow && (
+                                                                <span>{tour.imgBottomRow.lhsText}</span>
+                                                            )}
+                                                            <div className="lhstext">
+                                                                <span>{tour.hastag}</span>
+                                                                <span>{tour.hastagHeading}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="rhsimg">
 
-                                               
-                                            {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '1' && (
-                                                            <img
-                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
-                                                                alt=""
-                                                            />
-                                                        )}
-                                                        {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '2' && (
-                                                            <img
-                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
-                                                                alt=""
-                                                            />
-                                                        )}
-                                                           {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '3' && (
-                                                            <img
-                                                                src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
-                                                                alt=""
-                                                            />
-                                                        )}
-                                                        {tour.sticker_info.length > 1 && (
-                                                            <img
-                                                                src={tour.sticker_info[1].id}
-                                                                alt=""
-                                                            />
-                                                        )}
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="TabBoxBody">
-                                        <h4>{tour.tour_name}</h4>
-                                        <p>{tour.intro}</p>
-                                        <div className="ReviewRow">
-                                            {tour.destination_info && tour.destination_info.length > 0 && (
-                                                <span className="location">{tour.destination_info[0].name}</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="TabBoxFooter">
-                                        <div className="aedLHS">
-                                            <span>Starting from</span>
-                                            {isLoggedIn ? (
-                                                <div className="aedtext">
-                                                  {selectedCurrency === "AED" ? (
-                                                    <span>AED</span>
-                                                  ) : (
-                                                    <span>USD</span>
-                                                  )}
-                                                  <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                                            {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '1' && (
+                                                                <img
+                                                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
+                                                                    alt=""
+                                                                />
+                                                            )}
+                                                            {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '2' && (
+                                                                <img
+                                                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
+                                                                    alt=""
+                                                                />
+                                                            )}
+                                                            {tour.sticker_info && tour.sticker_info.length > 0 && tour.sticker_info[0].id === '3' && (
+                                                                <img
+                                                                    src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
+                                                                    alt=""
+                                                                />
+                                                            )}
+                                                            {tour.sticker_info.length > 1 && (
+                                                                <img
+                                                                    src={tour.sticker_info[1].id}
+                                                                    alt=""
+                                                                />
+                                                            )}
+
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                              ) : (
-                                                <div className="aedtext">
-                                                  {selectedCurrency === "AED" ? (
-                                                    <span>AED</span>
-                                                  ) : (
-                                                    <span>USD</span>
-                                                  )}
-                                                  <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                                <div className="TabBoxBody">
+                                                    <h4>{tour.tour_name}</h4>
+                                                    <p>{tour.intro}</p>
+                                                    <div className="ReviewRow">
+                                                        {tour.destination_info && tour.destination_info.length > 0 && (
+                                                            <span className="location">{tour.destination_info[0].name}</span>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                              )}
+                                                <div className="TabBoxFooter">
+                                                    <div className="aedLHS">
+                                                        <span>Starting from</span>
+                                                        {isLoggedIn ? (
+                                                            <div className="aedtext">
+                                                                {selectedCurrency === "AED" ? (
+                                                                    <span>AED</span>
+                                                                ) : (
+                                                                    <span>USD</span>
+                                                                )}
+                                                                <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                                            </div>
+                                                        ) : (
+                                                            <div className="aedtext">
+                                                                {selectedCurrency === "AED" ? (
+                                                                    <span>AED</span>
+                                                                ) : (
+                                                                    <span>USD</span>
+                                                                )}
+                                                                <strong>{getUserPrice(tour)}</strong> {tour.no_of_pax}
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="aedRHS">
+                                                        {tour.tour_duration}
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                            <button
+                                                className={
+                                                    wishlistData && wishlistData.some(item => item === String(tour.id))
+                                                        ? "wishlistIcon wishlistTagFill"
+                                                        : "wishlistIcon"
+                                                }
+                                                onClick={() => addToWishlist(tour.id)}
+                                            >
+                                            </button>
                                         </div>
 
-                                        <div className="aedRHS">
-                                            {tour.tour_duration}
-                                        </div>
                                     </div>
-                                </Link>
-                            </div>
-                        </div>
+                                </div>
                             ))}
                         </Carousel>
                     </div>
                 </div>
             </div>
         </>
-        
+
     )
     function getUserPrice(tour) {
         let price = 0;
