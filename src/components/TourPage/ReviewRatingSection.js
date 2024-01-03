@@ -4,7 +4,7 @@ import './Style/TourPage.css'
 import config from '../../config';
 
 const ReviewRatingSection = () => {
-  const [reviews, setReviews] = useState([]);  
+  const [reviews, setReviews] = useState([]);
   const [backendData, setBackendData] = useState(null);
   const [totalFourStarReviews, setTotalFourStarReviews] = useState(0);
   const [totalFirstStarReviews, setTotalFirstStarReviews] = useState(0);
@@ -12,6 +12,8 @@ const ReviewRatingSection = () => {
   const [totalThirdStarReviews, setTotalThirdStarReviews] = useState(0);
   const [totalFifthStarReviews, setTotalFifthStarReviews] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
+  const [displayedReviews, setDisplayedReviews] = useState(5);
+  const [showAllReviews, setShowAllReviews] = useState(false);
   let totalFourStarRating = 0;
   const url = window.location.href;
   const spliturl = url.split("/");
@@ -28,7 +30,7 @@ const ReviewRatingSection = () => {
 
         const data = await response.json();
         setBackendData(data.data[0].id);
-   
+
       } catch (error) {
         console.error("Error fetching data from the backend:", error.message);
       }
@@ -44,7 +46,7 @@ const ReviewRatingSection = () => {
         try {
           const response = await fetch(`${config.baseUrl}/tour/review/list/${backendData}`);
           const data = await response.json();
-          
+
           if (data.status === 'success') {
             setReviews(data.data);
           } else {
@@ -54,7 +56,7 @@ const ReviewRatingSection = () => {
           console.error('Error fetching reviews:', error);
         }
       };
-    
+
       fetchData();
     }
   }, [backendData]);
@@ -76,7 +78,7 @@ const ReviewRatingSection = () => {
         totalFourStarRating = fourStarReviews.reduce((acc, curr) => acc + curr.rating, 0) / totalFourStarReviews;
       }
     }
-  }, [reviews, totalFourStarReviews]); 
+  }, [reviews, totalFourStarReviews]);
 
   const generateStarRating = (rating) => {
     const totalStars = 5;
@@ -84,35 +86,35 @@ const ReviewRatingSection = () => {
     const decimalPart = rating - fullStars;
     const halfStar = decimalPart >= 0.2 && decimalPart <= 0.7;
     const emptyStars = totalStars - fullStars - (halfStar ? 1 : 0);
-  
+
     const stars = [];
-  
+
     // Inline styles for the stars
     const starStyle = {
       color: '#F4E877', // Change this to your desired star color
       fontSize: '24px', // Change this to your desired star size
       display: 'inline-block', // Display stars horizontally
     };
-  
+
     // Adding full stars
     for (let i = 0; i < fullStars; i++) {
       stars.push(<span key={i} className="star" style={starStyle}>&#9733;</span>);
     }
-  
+
     // Adding half star if needed
     if (halfStar) {
       const halfStarContent = decimalPart >= 0.2 && decimalPart < 0.5 ? '&#9733;&#188;' : '&#9733;&#190;';
       stars.push(<span key="half" className="star" style={starStyle} dangerouslySetInnerHTML={{ __html: halfStarContent }} />);
     }
-  
+
     // Adding empty stars
     for (let i = 0; i < emptyStars; i++) {
       stars.push(<span key={`empty-${i}`} className="star" style={starStyle}>&#9734;</span>);
     }
-  
+
     return stars;
   };
-  
+
   useEffect(() => {
     if (reviews.length > 0) {
       const totalRatingsCount = reviews.length;
@@ -131,6 +133,16 @@ const ReviewRatingSection = () => {
   const percentageThirdStarReviews = ((totalThirdStarReviews / reviews.length) * 100).toFixed(2);
   const percentageFourthStarReviews = ((totalFourStarReviews / reviews.length) * 100).toFixed(2);
   const percentageFifthStarReviews = ((totalFifthStarReviews / reviews.length) * 100).toFixed(2);
+
+  const handleViewToggle = () => {
+    // Toggle between showing all reviews and showing limited reviews
+    setShowAllReviews(!showAllReviews);
+    if (!showAllReviews) {
+      setDisplayedReviews(reviews.length); // Show all reviews
+    } else {
+      setDisplayedReviews(5); // Show only 5 reviews
+    }
+  };
   
 
 
@@ -144,7 +156,7 @@ const ReviewRatingSection = () => {
               <div className="RatingPoint">
                 <span>5.0 </span>
               </div>
-              
+
               <div className="reviewText"> <span>{averageRating.toFixed(1)}</span> | {reviews.length} Reviews </div>
               {generateStarRating(averageRating)}
             </div>
@@ -199,26 +211,37 @@ const ReviewRatingSection = () => {
           </div>
           {/* ReviewRatingWrapper */}
           <div className="ShowingReview">
-          <p>Showing total {reviews.length} reviews</p>
+            <p>Showing total {reviews.length} reviews</p>
             <div className="ShowingReviewWidget">
-              {reviews.map((review) => (
-                <div key={review.id} className="ShowingReviewRow">
-                  <div className="starRating">
-                    {generateStarRating(review.rating)} {review.name}
-                  </div> 
-               
-                  <p>{review.comments}</p>
+            {reviews.slice(0, displayedReviews).map((review) => (
+              <div key={review.id} className="ShowingReviewRow">
+                <div className="starRating">
+                  {generateStarRating(review.rating)} {review.name}
                 </div>
-              ))}
-
-              {/* ShowingReviewRow */}
-            </div>
-            {/* ShowingReviewWidget */}
-            {/*  <div className="center">
-              <div className="cta">
-                <Link to="#"><img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697705131/down-arrow_wuatf6.png"} alt="" /></Link>
+                <p>{review.comments}</p>
               </div>
-            </div>*/}
+            ))}
+          </div>
+          {reviews.length > 5 && (
+          <div className="center">
+            <button onClick={handleViewToggle} className="cta" style={{
+              backgroundColor: '#fff',
+              boxShadow: '0px 0px 9px 0px rgba(0, 0, 0, 0.1)',
+              borderRadius: '100px',
+              padding: '14px 41px',
+              fontSize: '17px',
+              color: '#000',
+              fontWeight: '500',
+              position: 'relative',
+              display: 'inline-block',
+              border: 'none'
+            }}>
+               
+              {showAllReviews ? 'View Less' : 'View More'}
+            </button>
+          </div>
+          )}
+
           </div>
           {/* ShowingReview */}
         </div>
