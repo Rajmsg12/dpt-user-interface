@@ -79,7 +79,7 @@ const ListingSection = ({ selectedCurrency }) => {
     };
 
     fetchData();
-  }, []);
+  }, [slug]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

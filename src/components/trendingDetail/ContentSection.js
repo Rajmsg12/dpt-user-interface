@@ -104,7 +104,6 @@ function ContentSection({ selectedCurrency }) {
       console.error('Error adding tour to wishlist:', error);
     }
   };
-  console.log("tour id personal", tour_id)
 
   // Function to display message as a popup
   const displayMessage = (message) => {
@@ -315,7 +314,6 @@ function ContentSection({ selectedCurrency }) {
         const parsedLanguage = JSON.parse(languageString); // Parse the string to an array
 
         setLanguage(parsedLanguage);
-        console.log("inner tour id personal", data.data[0].id)
 
 
       } catch (error) {

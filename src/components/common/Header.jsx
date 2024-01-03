@@ -25,22 +25,23 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
     const [first_name, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [cartCount, setCartCount] = useState("");
+    const [wishlistCount, setWishlistCount] = useState("");
     const { language, changeLanguage } = useLanguage();
     const { t } = useTranslation();
     let cartdata = localStorage.getItem("cartdata");
     let cartData = cartdata ? JSON.parse(cartdata) : [];
-  
+
 
     const handleCurrencyChange = (currency) => {
         // Remove only cartdata from localStorage
         localStorage.removeItem('cartdata');
-    
+
         // Update the selected currency
         setCurrency(currency);
-    
+
         // Additional logic to update prices in the UI or fetch new data if needed
     };
-    
+
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -157,11 +158,7 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                 )
                                             }
 
-
                                         </div>
-
-
-
 
                                         <div className="btn-group">
                                             <button
@@ -175,35 +172,35 @@ const Header = ({ user, isLoggedIn, setUser, logout, selectedCurrency, setCurren
                                                 <FontAwesomeIcon icon={faUser} className="text-light" />
                                             </button>
                                             <ul className="dropdown-menu">
-                                            {isLoggedIn ? (
-                        <div>
-                          <Link to="/user-dashboard" className="dropdown-item">
-                            <div >
-                              <Person className="text-danger" />
-                              <span className="userName" style={{ color: "black" }}>{first_name}</span>
-                            </div>
-                          </Link>
-                          <li>
-                            <hr className="dropdown-divider" />
-                          </li>
-                          <li>
-                            <Link to="/booking" className="dropdown-item">
-                              <House className="text-danger" /> Bookings
-                            </Link>
-                          </li>
-                          <li>
-                            <hr className="dropdown-divider" />
-                          </li>
-                          <li>
-                            <Link className="dropdown-item" onClick={handleLogout}>
-                              <IconDoorClosedFill className="text-danger" /> Logout
-                            </Link>
-                          </li>
-                        </div>
+                                                {isLoggedIn ? (
+                                                    <div>
+                                                        <Link to="/user-dashboard" className="dropdown-item">
+                                                            <div >
+                                                                <Person className="text-danger" />
+                                                                <span className="userName" style={{ color: "black" }}>{first_name}</span>
+                                                            </div>
+                                                        </Link>
+                                                        <li>
+                                                            <hr className="dropdown-divider" />
+                                                        </li>
+                                                        <li>
+                                                            <Link to="/booking" className="dropdown-item">
+                                                                <House className="text-danger" /> Bookings
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <hr className="dropdown-divider" />
+                                                        </li>
+                                                        <li>
+                                                            <Link className="dropdown-item" onClick={handleLogout}>
+                                                                <IconDoorClosedFill className="text-danger" /> Logout
+                                                            </Link>
+                                                        </li>
+                                                    </div>
 
-                      ) : (
-                        <Link to="/login" className="dropdown-item">Login/SignUp</Link>
-                      )}
+                                                ) : (
+                                                    <Link to="/login" className="dropdown-item">Login/SignUp</Link>
+                                                )}
                                             </ul>
                                         </div>
                                     </div>

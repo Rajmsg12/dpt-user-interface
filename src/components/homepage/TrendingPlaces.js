@@ -25,6 +25,7 @@ const TrendingPlaces = () => {
   useEffect(() => {
     fetchTrendingPlaces();
   }, []);
+  
 
   const responsive = {
     superLargeDesktop: {
