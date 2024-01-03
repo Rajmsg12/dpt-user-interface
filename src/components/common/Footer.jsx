@@ -125,21 +125,21 @@ const Footer = () => {
                 <div className="footerlogoWrapper">
                     <div className="footerlogoLhs">
                         <Link to="#">
-                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738421/footerimg1_zar3zu.png"} alt="" />
+                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738421/footerimg1_zar3zu.png"} alt="" target="_blank"/>
                         </Link>
-                        <Link to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html">
+                        <Link to="https://www.tripadvisor.com/Attraction_Review-g295424-d2510773-Reviews-Dubai_Private_Tour-Dubai_Emirate_of_Dubai.html" target="_blank">
                             <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738422/footerimg2_ywzywb.png"} alt="" />
                         </Link>
                         <Link to="#">
-                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738420/footerimg3_taqggo.png"} alt="" />
+                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738420/footerimg3_taqggo.png"} alt="" target="_blank"/>
                         </Link>
                         <Link to="#">
-                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738419/footerimg4_b8gxe1.png"} alt="" />
+                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738419/footerimg4_b8gxe1.png"} alt="" target="_blank"/>
                         </Link>
                     </div>
                     <div className="footerlogoRhs">
                         <Link to="/">
-                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738575/card1_c52961.png"} alt="" />
+                            <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738575/card1_c52961.png"} alt="" target="_blank"/>
                         </Link>
                         <Link to="/">
                             <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1698738574/card2_fzycza.png"} alt="" />
