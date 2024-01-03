@@ -134,7 +134,7 @@ const ReviewRatingSection = () => {
   
 
 
-  return (
+  return reviews.length === 0 ? null : (
     <div>
       <div className="ReviewRatingSection">
         <div className="container">
