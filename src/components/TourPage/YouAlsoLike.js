@@ -59,9 +59,7 @@ const YouAlsoLike = ({ selectedCurrency }) => {
             console.log('User not logged in or token not found.'); // Handle not logged in scenario
           }
         };
-        useEffect(()=>{
-            checkTokenAndFetchData()
-        })
+    
     
       const addToWishlist = async (tourId) => {
         try {

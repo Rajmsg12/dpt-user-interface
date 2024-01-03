@@ -61,6 +61,35 @@ function ContentSection({ selectedCurrency }) {
 
   const navigate = useNavigate()
   const [clickedTourId, setClickedTourId] = useState(null);
+  const checkTokenAndFetchData = async () => {
+    const token = localStorage.getItem('token');
+
+      // Check if token exists before making the API call
+      if (token) {
+        try {
+          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.data.status === 'success') {
+            const wishlistData = response.data.data.map(item => item.tour_id);
+
+            setWishlistData(wishlistData);
+            // setWishlistData(wishlistData);
+          } else {
+            console.error('Failed to fetch wishlist data');
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist data:', error);
+        }
+      } else {
+        console.log('User not logged in or token not found.'); // Handle not logged in scenario
+      }
+    };
+
+
   const addToWishlist = async (tourId) => {
     try {
       const token = localStorage.getItem("token");
@@ -69,12 +98,12 @@ function ContentSection({ selectedCurrency }) {
         navigate("/login");
         return;
       }
-
+  
       if (token) {
         const requestBody = {
           tour_id: tourId // Setting tour.id as tour_id in the request body
         };
-
+  
         const response = await fetch(`${config.baseUrl}/wishlist/add`, {
           method: 'POST',
           headers: {
@@ -83,15 +112,16 @@ function ContentSection({ selectedCurrency }) {
           },
           body: JSON.stringify(requestBody),
         });
-
+  
         if (response.ok) {
           // Wishlist addition successful
           const responseData = await response.json();
-          console.log('Tour added to wishlist!');
-
-          // Display success message in popup
+  
+          checkTokenAndFetchData();
           displayMessage(responseData.msg);
           setClickedTourId(tourId);
+  
+        
         } else {
           // Handle errors if the addition fails
           console.error('Failed to add tour to wishlist');
@@ -104,15 +134,19 @@ function ContentSection({ selectedCurrency }) {
       console.error('Error adding tour to wishlist:', error);
     }
   };
+  useEffect(() => {
+    checkTokenAndFetchData();
+}, []); // Empty dependency array to ensure it runs only once after the initial render
 
+  
   // Function to display message as a popup
   const displayMessage = (message) => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
     popup.textContent = message;
-
+  
     document.body.appendChild(popup);
-
+  
     setTimeout(() => {
       popup.remove();
     }, 5000);
@@ -314,6 +348,7 @@ function ContentSection({ selectedCurrency }) {
         const parsedLanguage = JSON.parse(languageString); // Parse the string to an array
 
         setLanguage(parsedLanguage);
+        console.log("inner tour id personal", data.data[0].id)
 
 
       } catch (error) {
@@ -418,40 +453,6 @@ function ContentSection({ selectedCurrency }) {
         });
     }
   }, []);
-
-  useEffect(() => {
-    const checkTokenAndFetchData = async () => {
-      const token = localStorage.getItem('token');
-
-      // Check if token exists before making the API call
-      if (token) {
-        try {
-          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.data.status === 'success') {
-            const wishlistData = response.data.data.map(item => item.tour_id);
-
-            // Update state or perform logic with wishlistData here
-            console.log('Fetched wishlist data:', wishlistData);
-            setWishlistData(wishlistData);
-            // setWishlistData(wishlistData);
-          } else {
-            console.error('Failed to fetch wishlist data');
-          }
-        } catch (error) {
-          console.error('Error fetching wishlist data:', error);
-        }
-      } else {
-        console.log('User not logged in or token not found.'); // Handle not logged in scenario
-      }
-    };
-
-    checkTokenAndFetchData();
-  }, [wishlistData]);
 
 
 
