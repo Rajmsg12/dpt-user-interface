@@ -140,7 +140,7 @@ const UaeTouristVisa = () => {
                     <div className="row">
                         <div className="col-md-6">
                             <div className="mb-3 formGroup">
-                                <label>Name*</label>
+                                <label>Name<span style={{color:'red'}}>*</span></label>
                                 <input
                                     type="text"
                                     placeholder="Name"
@@ -154,7 +154,7 @@ const UaeTouristVisa = () => {
                         {/*col-md-6*/}
                         <div className="col-md-6">
                             <div className="mb-3 formGroup">
-                                <label>Email*</label>
+                                <label>Email<span style={{color:'red'}}>*</span></label>
                                 <input
                                     type="email"
                                     placeholder="Email"
@@ -168,7 +168,7 @@ const UaeTouristVisa = () => {
                         {/*col-md-6*/}
                         <div className="col-md-6">
                             <div className="mb-3 formGroup">
-                                <label>Country Code*</label>
+                                <label>Country Code<span style={{color:'red'}}>*</span></label>
                                 <select
                                     name="country"
                                     id="country"
@@ -240,7 +240,7 @@ const UaeTouristVisa = () => {
                         {/*col-md-6*/}
                         <div className="col-md-6">
                             <div className="mb-3 formGroup">
-                                <label>Cell No*</label>
+                                <label>Cell No<span style={{color:'red'}}>*</span></label>
                                 <input
                                     type="tel"
                                     placeholder="Cell No"
@@ -255,7 +255,7 @@ const UaeTouristVisa = () => {
                         {/*col-md-6*/}
                         <div className="col-md-6">
                             <div className="mb-3 formGroup">
-                                <label>Nationality*</label>
+                                <label>Nationality<span style={{color:'red'}}>*</span></label>
                                 <select
                                     name="nationality"
                                     id="nat"
@@ -334,7 +334,7 @@ const UaeTouristVisa = () => {
                         {/*col-md-6*/}
                         <div className="col-md-6">
                             <div className="mb-3 formGroup">
-                                <label>Arrival Date*</label>
+                                <label>Arrival Date<span style={{color:'red'}}>*</span></label>
                                 <input
                                     type="date"
                                     placeholder="Arrival Date"
@@ -350,7 +350,7 @@ const UaeTouristVisa = () => {
                         {/*col-md-6*/}
                         <div className="col-md-6">
                             <div className="mb-3 formGroup">
-                                <label>Departure Date*</label>
+                                <label>Departure Date<span style={{color:'red'}}>*</span></label>
                                 <input
                                     type="date"
                                     placeholder="Departure Date"
@@ -366,7 +366,7 @@ const UaeTouristVisa = () => {
                         {/*col-md-6*/}
                         <div className="col-md-6">
                             <div className="mb-3 formGroup">
-                                <label>No of People*</label>
+                                <label>No of People<span style={{color:'red'}}>*</span></label>
                                 <input
                                     type="text"
                                     placeholder="No of People"
@@ -380,7 +380,7 @@ const UaeTouristVisa = () => {
                         {/*col-md-6*/}
                         <div className="col-md-6">
                             <div className="mb-3 formGroup">
-                                <label>How Did You Discover Us*</label>
+                                <label>How Did You Discover Us<span style={{color:'red'}}>*</span></label>
 
                                 <select
                                     id="hdu"
@@ -405,8 +405,8 @@ const UaeTouristVisa = () => {
                         <div className="col-md-6">
                             <div className="mb-3 formGroup fileattach">
                                 <label>
-                                    Upload Hotel Booking*{" "}
-                                    <small>(You can choose multiple files here)</small>
+                                    Upload Hotel Booking<span style={{color:'red'}}>*</span>{" "}
+                                    {/* <small>(You can choose multiple files here)</small> */}
                                 </label>
                                 <UploadGalleryFiles
                                     uploadType="upload_hotel_booking"
@@ -417,8 +417,8 @@ const UaeTouristVisa = () => {
                         <div className="col-md-6">
                             <div className="mb-3 formGroup fileattach">
                                 <label>
-                                    Upload Your Flight Ticket*{" "}
-                                    <small>(You can choose multiple files here)</small>
+                                    Upload Your Flight Ticket<span style={{color:'red'}}>*</span>{" "}
+                                    {/* <small>(You can choose multiple files here)</small> */}
                                 </label>
                                 <UploadGalleryFiles
                                     uploadType="upload_your_flight_ticket"
@@ -429,8 +429,8 @@ const UaeTouristVisa = () => {
                         <div className="col-md-12">
                             <div className="mb-3 formGroup fileattach">
                                 <label>
-                                    Upload Passport Copy{" "}
-                                    <small>(You can choose multiple files here)</small>
+                                    Upload Passport Copy<span style={{color:'red'}}>*</span>{" "}
+                                    {/* <small>(You can choose multiple files here)</small> */}
                                 </label>
                                 <UploadGalleryFiles
                                     uploadType="upload_passport_copy"

@@ -233,7 +233,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                     navigate('/thankyou');
                 } else {
                     const errorData = await response.json();
-                    if (errorData.msg === 'Email already exists. Please log in') {
+                    if (errorData.msg === `Email exists but doesn't match user's email.`) {
                         // Set the state to display the error message
                         setEmailExistsError(errorData.msg);
                     } else {

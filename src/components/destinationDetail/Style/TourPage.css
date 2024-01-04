@@ -2201,6 +2201,10 @@ ul.public-DraftStyleDefault-ul {
   background-repeat: no-repeat;
   background-position: left top 3px;
   background-size: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  margin: 2px 0px;
 }
 
 .TabBoxFooter {
