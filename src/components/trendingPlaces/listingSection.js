@@ -445,10 +445,13 @@ const ListingSection = ({ selectedCurrency }) => {
                               <div className="listingBoxContent">
                                 <div className="listingBoxTop">
                                   <h4>{tour.Tour_name}</h4>
-                                  <div className="ReviewsDivrow">
+                                  <div className="ReviewRow">
+                                    <span className="location">{tour.destination_info[0].name}</span>
+                                  </div>
+                                  {/* <div className="ReviewsDivrow">
                                     <img src={"https://res.cloudinary.com/dqslvlm0d/image/upload/v1697704991/ratingstar_p0ani1.png"} alt="" />
                                     <span>{tour.rating} | 500 Reviews</span>
-                                  </div>
+                                  </div> */}
                                   <div className="descrition">
                                     <p>{tour.tour_intro}</p>
                                   </div>
