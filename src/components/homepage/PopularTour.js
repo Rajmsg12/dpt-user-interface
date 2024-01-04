@@ -108,50 +108,67 @@ const PopularTour = ({ selectedCurrency }) => {
         };
     
     
-      const addToWishlist = async (tourId) => {
-        try {
-          const token = localStorage.getItem("token");
-          if (!token) {
-            // If user is not logged in, navigate to the login page
-            navigate("/login");
-            return;
-          }
-      
-          if (token) {
-            const requestBody = {
-              tour_id: tourId // Setting tour.id as tour_id in the request body
-            };
-      
-            const response = await fetch(`${config.baseUrl}/wishlist/add`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify(requestBody),
-            });
-      
-            if (response.ok) {
-              // Wishlist addition successful
-              const responseData = await response.json();
-      
-              checkTokenAndFetchData();
-              displayMessage(responseData.msg);
-              setClickedTourId(tourId);
-      
-            
-            } else {
-              // Handle errors if the addition fails
-              console.error('Failed to add tour to wishlist');
+        const addToWishlist = async (tourId) => {
+            try {
+              let token = localStorage.getItem("token");
+          
+              if (!token) {
+                // If token is not available, handle the scenario accordingly (e.g., navigate to the login page)
+                navigate("/login");
+                return;
+              }
+          
+              const isTokenValid = isTokenExpired(token);
+          
+              if (!isTokenValid) {
+                // If token is expired or invalid, handle the scenario accordingly (e.g., navigate to the login page)
+                navigate("/login");
+                return;
+              }
+          
+              // Token is available and valid, proceed with the API call
+              const requestBody = {
+                tour_id: tourId // Setting tour.id as tour_id in the request body
+              };
+          
+              const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(requestBody),
+              });
+          
+              if (response.ok) {
+                // Wishlist addition successful
+                const responseData = await response.json();
+          
+                checkTokenAndFetchData();
+                displayMessage(responseData.msg);
+                setClickedTourId(tourId);
+          
+                // Any other actions you want to perform after a successful addition
+              } else {
+                // Handle errors if the addition fails
+                console.error('Failed to add tour to wishlist');
+              }
+            } catch (error) {
+              console.error('Error adding tour to wishlist:', error);
             }
-          } else {
-            console.error('User not logged in.'); // Log if the user is not logged in
-            // You might want to handle this scenario by redirecting the user to the login page or showing a message
-          }
-        } catch (error) {
-          console.error('Error adding tour to wishlist:', error);
-        }
-      };
+          };
+          
+          // Function to validate token expiration
+          const isTokenExpired = (token) => {
+            try {
+              const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decoding the token payload
+              const currentTime = Math.floor(Date.now() / 1000);
+              return decodedToken.exp > currentTime; // Check if token is expired by comparing the expiration time
+            } catch (error) {
+              console.error('Token validation error:', error);
+              return false; // Return false in case of any error during validation
+            }
+          };  
       useEffect(() => {
         checkTokenAndFetchData();
     }, []); // Empty dependency array to ensure it runs only once after the initial render
