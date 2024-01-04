@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../../components/TourListing/Styles/TourListing.css';
 import LeftSideFilter from './LeftSideFilter';
 import { useNavigate } from 'react-router-dom';
+import './Style/attraction.css'
 import { connect } from 'react-redux';
 import config from '../../config';
 import axios from 'axios';
@@ -395,7 +396,7 @@ const ListingSection = ({ selectedCurrency }) => {
                       </div>
                     </div>
                     <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
-                      <div className="listingRow">
+                      <div className="listingRow listingfillwishlist">
                         {itemsToShow.map((tour) => (
                           <div className="parenttabbox">
                             <Link to={`/tour/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}/${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.tour_id}`}>

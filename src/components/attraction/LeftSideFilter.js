@@ -4,6 +4,7 @@ import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
 import { data } from '../../data/TourListing'
 import config from '../../config'
+import './Style/attraction.css'
 import { connect } from 'react-redux';
 
 const LeftSideFilter = ({

@@ -401,7 +401,7 @@ const ContentSection = ({ selectedCurrency }) => {
                       </div>
                     </div>
                     <div className="tab-pane fade" id="pills-listing" role="tabpanel" aria-labelledby="pills-listing-tab">
-                      <div className="listingRow">
+                      <div className="listingRow listingfillwishlist">
                         {itemsToShow.map((tour) => (
                                 <div className="parenttabbox">
                           <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.tour_id}`}>

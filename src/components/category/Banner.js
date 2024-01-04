@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import config from '../../config';
+import './Style/category.css'
 
 const Banner = () => {
   const { categoryName } = useParams();

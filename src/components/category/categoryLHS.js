@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'rc-slider'; // Import the Slider component
 import 'rc-slider/assets/index.css';
+import './Style/category.css'
 import { data } from '../../data/TourListing'
 import config from '../../config'
 import { connect } from 'react-redux';
@@ -434,18 +435,23 @@ const CategoryLHS = ({
             Check Out
           </Link> */}
         </div>
-        <Link to="/tourist-visa" className="TouristDiv">
-          <div className="img">
-            <img src="images/homepage/plane.png" alt="" />
-          </div>
-          <span>Dubai</span>
-          <span>Tourist Visa</span>
-          <div className="TouristFooter">
-          {/*  <Link href="#" className="cta">
-              Apply Now
-                      </Link>*/}
-          </div>
-        </Link>
+        <div className="TouristDiv">
+                <div className="img">
+                  <img
+                    src={
+                      "https://res.cloudinary.com/dqslvlm0d/image/upload/v1697702277/plane_lsvzcu.png"
+                    }
+                    alt=""
+                  />
+                </div>
+                <span>Dubai</span>
+                <span>Tourist Visa</span>
+                <div className="TouristFooter">
+                      <Link to="/tourist-visa" className="cta">
+                    Apply Now
+                  </Link>
+                </div>
+              </div>
       </div>
     </>
   );
