@@ -123,7 +123,7 @@ const Register = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
-              {error && <div className="error-message" style={{color:"green"}}>{error}</div>}
+              {error && <div className="error-message" style={{color:"red"}}>{error}</div>}
               <div className="CheckBoxrow">
             {/*    <div className="form-check">
                   <input

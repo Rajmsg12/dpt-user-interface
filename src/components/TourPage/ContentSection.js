@@ -676,7 +676,7 @@ function ContentSection({ selectedCurrency }) {
                           <div className="row">
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Tour Date*</label>
+                                <label>Tour Date<span style={{color:'red'}}>*</span></label>
                                 <div className="input-group date" id="datepicker">
                                   <DatePicker
                                     selected={formData.tourDate}
@@ -693,7 +693,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Preferred Pickup Time*</label>
+                                <label>Preferred Pickup Time<span style={{color:'red'}}>*</span></label>
                                 {/* Example for one select element, repeat for others */}
                                 <select
                                   className="form-select"
@@ -733,7 +733,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Pickup Location*</label>
+                                <label>Pickup Location<span style={{color:'red'}}>*</span></label>
                                 <select
                                   className="form-select"
                                   value={formData.preferredPickupLocation} // Set the value dynamically based on the state
@@ -760,7 +760,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>End Location*</label>
+                                <label>End Location<span style={{color:'red'}}>*</span></label>
                                 <select
                                   className="form-select"
                                   value={selectedEndLocation}
@@ -810,7 +810,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
-                                <label>Hotel Name*</label>
+                                <label>Hotel Name<span style={{color:'red'}}>*</span></label>
                                 <select
                                   className="form-select"
                                   value={formData.preferredHotelName}
@@ -833,7 +833,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Preferred Language*</label>
+                                <label>Preferred Language<span style={{color:'red'}}>*</span></label>
                                 <select
                                   className="form-select"
                                   value={formData.preferredGuideLanguage}
@@ -881,7 +881,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-3">
                               <div className="mb-3 formGroup">
-                                <label>Payment Mode*</label>
+                                <label>Payment Mode<span style={{color:'red'}}>*</span></label>
 
                                 <select
                                   className="form-select"

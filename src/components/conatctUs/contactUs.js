@@ -363,7 +363,7 @@ const ContactUs = () => {
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <div className="formGroup">
-                                                    <label>Name</label>
+                                                    <label>Name<span style={{ color: 'red' }}>*</span></label>
                                                     <input type="text"
                                                         className="form-control"
                                                         placeholder="Enter First Name"
@@ -375,7 +375,7 @@ const ContactUs = () => {
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="formGroup">
-                                                    <label>Your Email</label>
+                                                    <label>Your Email<span style={{ color: 'red' }}>*</span></label>
                                                     <input type="email"
                                                         className="form-control"
                                                         placeholder="Enter Email Address"
@@ -407,21 +407,23 @@ const ContactUs = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="mb-3 formGroup">
-                                                <label>How Did You Discover Us* </label>
-                                                <select
-                                                    className="form-select"
-                                                    name="discover_us"
-                                                    value={formData.discover_us}
-                                                    onChange={handleDiscoverChange}
-                                                    required
-                                                >
-                                                    <option value="">Select How Did You Discovered Us</option>
-                                                    <option value="Google Search">Google Search</option>
-                                                    <option value="Trip adviser">Trip adviser</option>
-                                                    <option value="Recommended by friend/relatives">Recommended by friend/relatives</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
+                                            <div className="col-md-6">
+                                                <div className="formGroup">
+                                                    <label>How Did You Discover Us<span style={{ color: 'red' }}>*</span></label>
+                                                    <select
+                                                        className="form-select"
+                                                        name="discover_us"
+                                                        value={formData.discover_us}
+                                                        onChange={handleDiscoverChange}
+                                                        required
+                                                    >
+                                                        <option value="">Select How Discovered Us</option>
+                                                        <option value="Google Search">Google Search</option>
+                                                        <option value="Trip adviser">Trip adviser</option>
+                                                        <option value="Recommended by friend/relatives">Recommended by friend/relatives</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="formGroup">
@@ -444,7 +446,7 @@ const ContactUs = () => {
                                                         name="call_no"
                                                         value={formData.call_no}
                                                         pattern="[0-9]*" // Accepts only numerical values
-                                                        maxLength={15} 
+                                                        maxLength={15}
                                                         onChange={handleInputChange}
                                                         required />
                                                 </div>

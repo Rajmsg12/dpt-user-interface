@@ -313,7 +313,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="mb-3 formGroup">
-                                                        <label>First Name*</label>
+                                                        <label>First Name<span style={{color:'red'}}>*</span></label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -330,7 +330,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="mb-3 formGroup">
-                                                        <label>Last Name*</label>
+                                                        <label>Last Name<span style={{color:'red'}}>*</span></label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -349,7 +349,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                 <div className="col-md-6">
                                                     {/* Inside the form */}
                                                     <div className="mb-3 formGroup">
-                                                        <label>Email*</label>
+                                                        <label>Email<span style={{color:'red'}}>*</span></label>
                                                         <input
                                                             type="email"
                                                             className="form-control"
@@ -384,7 +384,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="mb-3 formGroup">
-                                                        <label>Confirm Email*</label>
+                                                        <label>Confirm Email<span style={{color:'red'}}>*</span></label>
                                                         <input
                                                             type="mail"
                                                             className="form-control"
@@ -402,7 +402,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="mb-3 formGroup">
-                                                        <label>Nationality*</label>
+                                                        <label>Nationality<span style={{color:'red'}}>*</span></label>
                                                         <select
                                                             className="form-select"
                                                             name="nationality"
@@ -452,7 +452,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="mb-3 formGroup">
-                                                        <label>How Did You Discover Us* </label>
+                                                        <label>How Did You Discover Us<span style={{color:'red'}}>*</span></label>
                                                         <select
                                                             className="form-select"
                                                             name="discover_us"
@@ -472,7 +472,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="mb-3 formGroup">
-                                                        <label>Country Code*</label>
+                                                        <label>Country Code<span style={{color:'red'}}>*</span></label>
                                                         <select
                                                             className="form-select"
                                                             name="country"
@@ -502,7 +502,7 @@ const PersonDetail = ({ selectedCurrency }) => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="mb-3 formGroup">
-                                                        <label>Cell No*</label>
+                                                        <label>Cell No<span style={{color:'red'}}>*</span></label>
                                                         <input
                                                             type="tel"
                                                             className="form-control"
