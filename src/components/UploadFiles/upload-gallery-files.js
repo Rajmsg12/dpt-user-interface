@@ -43,8 +43,6 @@ export default class UploadGalleryFiles extends Component {
     }
   }
   
-  
-
   upload(event) {
     event.preventDefault();
     const { uploadType, onFileUpload } = this.props;

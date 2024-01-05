@@ -79,7 +79,7 @@ const CategoryLHS = ({
           </div>
           <ul>
           { tourList.slice(0, 8).map((item, index) => (
-            <li key={index}><Link to={`/tour/dubai/${item.tour_name.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: 'black' }}>{item.tour_name}</Link></li>
+            <li key={index}><Link to={`/tour/dubai/${item.slug}`} style={{ color: 'black' }}>{item.tour_name}</Link></li>
           ))}
         </ul>
 
