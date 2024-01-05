@@ -28,73 +28,65 @@ export default class UploadGalleryFiles extends Component {
   
 
   selectFile(event) {
-    const selectedFiles = event.target.files;
+    const selectedFile = event.target.files[0]; // Get the first selected file
     const allowedTypes = ['image/jpeg', 'image/png']; // Allowed file types
-
-    // Filter selected files to only allow JPG and PNG
-    const filteredFiles = [...selectedFiles].filter(file =>
-      allowedTypes.includes(file.type)
-    );
-
-    this.setState({
-      selectedFiles: filteredFiles.length > 0 ? filteredFiles : undefined,
-    });
+  
+    if (selectedFile && allowedTypes.includes(selectedFile.type)) {
+      this.setState({
+        selectedFiles: selectedFile,
+      });
+    } else {
+      this.setState({
+        selectedFiles: undefined,
+        message: "Please select a valid image file (JPEG/PNG).",
+      });
+    }
   }
+  
+  
 
   upload(event) {
     event.preventDefault();
     const { uploadType, onFileUpload } = this.props;
     const { selectedFiles } = this.state;
-
-    const uploadPromises = [];
-    selectedFiles.forEach(file => {
-      const uploadPromise = new Promise((resolve, reject) => {
-        UploadService.upload(file, (event) => {
-          // You can add progress updates here if needed
-          this.setState({
-            progress: Math.round((100 * event.loaded) / event.total),
-          });
-        })
-          .then((response) => {
-            resolve(response.data.filename);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-      uploadPromises.push(uploadPromise);
-    });
-
-    Promise.all(uploadPromises)
-      .then((fileNames) => {
-        const storageKey = `filedata_${uploadType}`;
-        let filedata = localStorage.getItem(storageKey);
-        let galleryData = filedata ? JSON.parse(filedata) : [];
-        galleryData.push(...fileNames);
-        localStorage.setItem(storageKey, JSON.stringify(galleryData));
-
-
+  
+    if (selectedFiles) {
+      UploadService.upload(selectedFiles, (event) => {
         this.setState({
-          message: "Files uploaded successfully",
-          fileInfos: galleryData,
-          selectedFiles: undefined, // Clear selected files after upload
-          progress: 0, // Reset progress after upload
+          progress: Math.round((100 * event.loaded) / event.total),
         });
-
-        // Update the form data with the uploaded file names
-        if (onFileUpload && typeof onFileUpload === 'function') {
-          onFileUpload(fileNames, uploadType);
-        }
       })
-      .catch(() => {
-        this.setState({
-          progress: 0,
-          message: "Could not upload the files!",
-          selectedFiles: undefined,
+        .then((response) => {
+          const fileName = response.data.filename;
+          const storageKey = `filedata_${uploadType}`;
+          localStorage.setItem(storageKey, JSON.stringify([fileName]));
+  
+          this.setState({
+            message: "File uploaded successfully",
+            fileInfos: [fileName],
+            selectedFiles: undefined, // Clear selected file after upload
+            progress: 0, // Reset progress after upload
+          });
+  
+          // Update the form data with the uploaded file name
+          if (onFileUpload && typeof onFileUpload === 'function') {
+            onFileUpload([fileName], uploadType);
+          }
+        })
+        .catch(() => {
+          this.setState({
+            progress: 0,
+            message: "Could not upload the file!",
+            selectedFiles: undefined,
+          });
         });
+    } else {
+      this.setState({
+        message: "Please select a file before uploading.",
       });
-      
+    }
   }
+  
 
   removeFile(event, index) {
     event.stopPropagation();

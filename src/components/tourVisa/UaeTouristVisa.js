@@ -24,7 +24,6 @@ const UaeTouristVisa = () => {
           [uploadType]: fileNames,
         });
       };
-    
 
 
     const handleChange = (e) => {
@@ -84,6 +83,7 @@ const UaeTouristVisa = () => {
     
           if (response.ok) {
             const responseData = await response.json();
+          
             setFormData({
               // Reset form fields
               name: '',
