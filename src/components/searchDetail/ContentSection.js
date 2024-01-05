@@ -56,6 +56,9 @@ function ContentSection({ selectedCurrency }) {
   const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   const [tourImage, setTourImage] = useState("");
   const [wishlistData, setWishlistData] = useState(null);
+  const [otherPlaceName, setOtherPlaceName] = useState('');
+  const [otherPlaceAddress, setOtherPlaceAddress] = useState('');
+  const [otherPlaceTelephone, setOtherPlaceTelephone] = useState('');
 
   const formRef = useRef(null);
 
@@ -64,106 +67,106 @@ function ContentSection({ selectedCurrency }) {
   const checkTokenAndFetchData = async () => {
     const token = localStorage.getItem('token');
 
-      // Check if token exists before making the API call
-      if (token) {
-        try {
-          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.data.status === 'success') {
-            const wishlistData = response.data.data.map(item => item.tour_id);
-
-            setWishlistData(wishlistData);
-            // setWishlistData(wishlistData);
-          } else {
-            console.error('Failed to fetch wishlist data');
-          }
-        } catch (error) {
-          console.error('Error fetching wishlist data:', error);
-        }
-      } else {
-        console.log('User not logged in or token not found.'); // Handle not logged in scenario
-      }
-    };
-
-
-    const addToWishlist = async (tourId) => {
+    // Check if token exists before making the API call
+    if (token) {
       try {
-        let token = localStorage.getItem("token");
-    
-        if (!token) {
-          // If token is not available, handle the scenario accordingly (e.g., navigate to the login page)
-          navigate("/login");
-          return;
-        }
-    
-        const isTokenValid = isTokenExpired(token);
-    
-        if (!isTokenValid) {
-          // If token is expired or invalid, handle the scenario accordingly (e.g., navigate to the login page)
-          navigate("/login");
-          return;
-        }
-    
-        // Token is available and valid, proceed with the API call
-        const requestBody = {
-          tour_id: tourId // Setting tour.id as tour_id in the request body
-        };
-    
-        const response = await fetch(`${config.baseUrl}/wishlist/add`, {
-          method: 'POST',
+        const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
           headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(requestBody),
         });
-    
-        if (response.ok) {
-          // Wishlist addition successful
-          const responseData = await response.json();
-    
-          checkTokenAndFetchData();
-          displayMessage(responseData.msg);
-          setClickedTourId(tourId);
-    
-          // Any other actions you want to perform after a successful addition
+
+        if (response.data.status === 'success') {
+          const wishlistData = response.data.data.map(item => item.tour_id);
+
+          setWishlistData(wishlistData);
+          // setWishlistData(wishlistData);
         } else {
-          // Handle errors if the addition fails
-          console.error('Failed to add tour to wishlist');
+          console.error('Failed to fetch wishlist data');
         }
       } catch (error) {
-        console.error('Error adding tour to wishlist:', error);
+        console.error('Error fetching wishlist data:', error);
       }
-    };
-    
-    // Function to validate token expiration
-    const isTokenExpired = (token) => {
-      try {
-        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decoding the token payload
-        const currentTime = Math.floor(Date.now() / 1000);
-        return decodedToken.exp > currentTime; // Check if token is expired by comparing the expiration time
-      } catch (error) {
-        console.error('Token validation error:', error);
-        return false; // Return false in case of any error during validation
+    } else {
+      console.log('User not logged in or token not found.'); // Handle not logged in scenario
+    }
+  };
+
+
+  const addToWishlist = async (tourId) => {
+    try {
+      let token = localStorage.getItem("token");
+
+      if (!token) {
+        // If token is not available, handle the scenario accordingly (e.g., navigate to the login page)
+        navigate("/login");
+        return;
       }
-    };  
+
+      const isTokenValid = isTokenExpired(token);
+
+      if (!isTokenValid) {
+        // If token is expired or invalid, handle the scenario accordingly (e.g., navigate to the login page)
+        navigate("/login");
+        return;
+      }
+
+      // Token is available and valid, proceed with the API call
+      const requestBody = {
+        tour_id: tourId // Setting tour.id as tour_id in the request body
+      };
+
+      const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        // Wishlist addition successful
+        const responseData = await response.json();
+
+        checkTokenAndFetchData();
+        displayMessage(responseData.msg);
+        setClickedTourId(tourId);
+
+        // Any other actions you want to perform after a successful addition
+      } else {
+        // Handle errors if the addition fails
+        console.error('Failed to add tour to wishlist');
+      }
+    } catch (error) {
+      console.error('Error adding tour to wishlist:', error);
+    }
+  };
+
+  // Function to validate token expiration
+  const isTokenExpired = (token) => {
+    try {
+      const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decoding the token payload
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decodedToken.exp > currentTime; // Check if token is expired by comparing the expiration time
+    } catch (error) {
+      console.error('Token validation error:', error);
+      return false; // Return false in case of any error during validation
+    }
+  };
   useEffect(() => {
     checkTokenAndFetchData();
-}, []); // Empty dependency array to ensure it runs only once after the initial render
+  }, []); // Empty dependency array to ensure it runs only once after the initial render
 
-  
+
   // Function to display message as a popup
   const displayMessage = (message) => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
     popup.textContent = message;
-  
+
     document.body.appendChild(popup);
-  
+
     setTimeout(() => {
       popup.remove();
     }, 5000);
@@ -256,27 +259,27 @@ function ContentSection({ selectedCurrency }) {
     const driverTotalPrice = (
       (selectedCurrency === 'USD' ? selectedHotel?.driver_price_usd : selectedHotel?.driver_price_aed) || 0
     ) * driverNumber || 0;
-    
+
     const childrenPrice = (
       (selectedCurrency === 'USD' ? selectedHotel?.children_price_usd : selectedHotel?.children_price_aed) || 0
     ) * childrenNumber || 0;
-    
+
     const adultPrice = (
       (selectedCurrency === 'USD' ? selectedHotel?.adults_price_usd : selectedHotel?.adults_price_aed) || 0
     ) * adultsNumber || 0;
-    
+
     const infantsPrice = (
       (selectedCurrency === 'USD' ? selectedHotel?.infants_price_usd : selectedHotel?.infants_price_aed) || 0
     ) * infantsNumber || 0;
-    
+
     const lunchPrice = (
       (selectedCurrency === 'USD' ? selectedHotel?.lunch_price_usd : selectedHotel?.lunch_price_aed) || 0
     ) * lunchNumber || 0;
-    
+
     const ticketPrice = (
       (selectedCurrency === 'USD' ? selectedItinerary?.itinerary_ticket_price_usd : selectedItinerary?.itinerary_ticket_price_aed) || 0
     ) * ticketNumber || 0;
-    
+
 
     formData.lunchPrice = lunchPrice.toFixed(2);
     formData.preferredCurrency = selectedCurrency;
@@ -290,6 +293,7 @@ function ContentSection({ selectedCurrency }) {
     formData.language = selectedLanguage.lnname;
     formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedprice : selectedLanguage.usdprice;
     formData.tourtotal = (
+      // (selectedCurrency === 'AED' ? parseFloat(tourPriceAed) : parseFloat(tourPriceUsd)) +
       parseFloat(additionalTicketPrice) +
       parseFloat(lunchPrice) +
       parseFloat(ticketPrice) +
@@ -548,7 +552,8 @@ function ContentSection({ selectedCurrency }) {
     } else {
       // Handle the case when the selected language is not found
       console.error("Selected language not found!");
-    }};
+    }
+  };
 
 
   return (
@@ -693,7 +698,7 @@ function ContentSection({ selectedCurrency }) {
                           <div className="row">
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Tour Date<span style={{color:'red'}}>*</span></label>
+                                <label>Tour Date<span style={{ color: 'red' }}>*</span></label>
                                 <div className="input-group date" id="datepicker">
                                   <DatePicker
                                     selected={formData.tourDate}
@@ -710,7 +715,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Preferred Pickup Time<span style={{color:'red'}}>*</span></label>
+                                <label>Preferred Pickup Time<span style={{ color: 'red' }}>*</span></label>
                                 {/* Example for one select element, repeat for others */}
                                 <select
                                   className="form-select"
@@ -750,7 +755,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Pickup Location<span style={{color:'red'}}>*</span></label>
+                                <label>Pickup Location<span style={{ color: 'red' }}>*</span></label>
                                 <select
                                   className="form-select"
                                   value={formData.preferredPickupLocation} // Set the value dynamically based on the state
@@ -777,7 +782,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>End Location<span style={{color:'red'}}>*</span></label>
+                                <label>End Location<span style={{ color: 'red' }}>*</span></label>
                                 <select
                                   className="form-select"
                                   value={selectedEndLocation}
@@ -804,21 +809,37 @@ function ContentSection({ selectedCurrency }) {
                                 </select>
                                 {selectedEndLocation === "Any Other Places in Dubai" && (
                                   <div className="col-md-12">
-
                                     <label>Place Name</label>
-                                    <input className="form-control" placeholder="Place Name" rows="3" name="otherPlaceName"></input>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Place Name"
+                                      rows="3"
+                                      name="otherPlaceName"
+                                      value={otherPlaceName}
+                                      onChange={(e) => setOtherPlaceName(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
                                     <label>Place Address</label>
-                                    <input className="form-control" placeholder="Residence Address" rows="3" ></input>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Residence Address"
+                                      rows="3"
+                                      name="otherPlaceAddress"
+                                      value={otherPlaceAddress}
+                                      onChange={(e) => setOtherPlaceAddress(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
                                     <label>Place Telephone</label>
                                     <input
                                       type="tel"
                                       className="form-control"
                                       placeholder="Residence Telephone"
-                                      name="otherPlaceAddress"
-                                      onChange={handleInputChange}
-                                      pattern="[0-9]*" // Accepts only numerical values
-                                      maxLength={13} // Restricts input to a maximum length of 13 characters
-                                      required
+                                      name="otherPlaceTelephone"
+                                      value={otherPlaceTelephone}
+                                      onChange={(e) => setOtherPlaceTelephone(e.target.value)}
+                                      pattern="[0-9]*"
+                                      maxLength={13}
+                                      required // Add the required attribute for HTML5 form validation
                                     />
                                   </div>
                                 )}
@@ -827,7 +848,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-12">
                               <div className="mb-3 formGroup">
-                                <label>Hotel Name<span style={{color:'red'}}>*</span></label>
+                                <label>Hotel Name<span style={{ color: 'red' }}>*</span></label>
                                 <select
                                   className="form-select"
                                   value={formData.preferredHotelName}
@@ -850,7 +871,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-6">
                               <div className="mb-3 formGroup">
-                                <label>Preferred Language<span style={{color:'red'}}>*</span></label>
+                                <label>Preferred Language<span style={{ color: 'red' }}>*</span></label>
                                 <select
                                   className="form-select"
                                   value={formData.preferredGuideLanguage}
@@ -898,7 +919,7 @@ function ContentSection({ selectedCurrency }) {
                             </div>
                             <div className="col-md-3">
                               <div className="mb-3 formGroup">
-                                <label>Payment Mode<span style={{color:'red'}}>*</span></label>
+                                <label>Payment Mode<span style={{ color: 'red' }}>*</span></label>
 
                                 <select
                                   className="form-select"
@@ -1476,7 +1497,7 @@ function ContentSection({ selectedCurrency }) {
                 <span>Dubai</span>
                 <span>Tourist Visa</span>
                 <div className="TouristFooter">
-                      <Link to="/tourist-visa" className="cta">
+                  <Link to="/tourist-visa" className="cta">
                     Apply Now
                   </Link>
                 </div>
