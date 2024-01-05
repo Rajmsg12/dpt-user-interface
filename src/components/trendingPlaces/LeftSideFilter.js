@@ -84,12 +84,12 @@ const LeftSideFilter = ({
                 {showAllCategories
                   ? categories.map((item, index) => (
                     <li key={index}>
-                      <Link to={`/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
+                      <Link to={`/${item.slug}`}>{item.name}</Link>
                     </li>
                   ))
                   : categories.slice(0, 8).map((item, index) => (
                     <li key={index}>
-                      <Link to={`/${item.name?.toLowerCase().replace(/\s+/g, '-')}`}>{item.name}</Link>
+                      <Link to={`/${item.slug}`}>{item.name}</Link>
                     </li>
                   ))}
               </ul>
