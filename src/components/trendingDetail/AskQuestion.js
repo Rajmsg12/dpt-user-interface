@@ -17,6 +17,8 @@ const customStyles = {
 const CountrySelect = () => {
     const [countries, setCountries] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState({});
+   
+
 
     useEffect(() => {
         fetch(
@@ -43,6 +45,8 @@ const CountrySelect = () => {
 
 
 const AskQuestion = () => {
+    const [confirmEmail, setConfirmEmail] = useState('');
+    const [emailMatchError, setEmailMatchError] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -86,6 +90,10 @@ const AskQuestion = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.email !== confirmEmail) {
+            setEmailMatchError(true);
+            return;
+        }
         try {
             const response = await fetch(`${config.baseUrl}/ask/add`, {
                 method: 'POST',
@@ -271,7 +279,7 @@ const AskQuestion = () => {
         { label: "Nicaragua (+505)", value: "NI" },
         { label: "Niger (+227)", value: "NE" },
         { label: "Nigeria (+234)", value: "NG" },
-   
+
         // Add more countries here
     ];
 
@@ -285,7 +293,7 @@ const AskQuestion = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
-                                        <label>First Name*</label>
+                                        <label>First Name<span style={{ color: 'red' }}>*</span></label>
                                         <input type="text"
                                             className="form-control"
                                             placeholder="Enter First Name"
@@ -298,16 +306,16 @@ const AskQuestion = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
-                                        <label>Last Name*</label>
+                                        <label>Last Name<span style={{ color: 'red' }}>*</span></label>
                                         <input type="text" className="form-control" placeholder="Enter Last Name" required />
                                     </div>
                                     {/* formGroup */}
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
-                                        <label>Email*</label>
+                                        <label>Email<span style={{ color: 'red' }}>*</span></label>
                                         <input type="email"
-                                            className="form-control"
+                                            className={`form-control ${emailMatchError ? 'is-invalid' : ''}`}
                                             placeholder="Enter Email Address"
                                             name="email"
                                             value={formData.email}
@@ -318,14 +326,24 @@ const AskQuestion = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
-                                        <label>Confirm Email*</label>
-                                        <input type="email" className="form-control" placeholder="Confirm Email Address" required />
+                                        <label>Confirm Email<span style={{ color: 'red' }}>*</span></label>
+                                        <input type="email"
+                                            className={`form-control ${emailMatchError ? 'is-invalid' : ''}`}
+                                            placeholder="Confirm Email Address"
+                                            value={confirmEmail}
+                                            onChange={(e) => {
+                                                setConfirmEmail(e.target.value);
+                                                setEmailMatchError(e.target.value !== formData.email);
+                                            }}
+                                            required />
+                                        {emailMatchError && <div className="invalid-feedback">Emails do not match.</div>}
                                     </div>
                                     {/* formGroup */}
                                 </div>
+
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup ">
-                                        <label>Nationality*</label>
+                                        <label>Nationality<span style={{ color: 'red' }}>*</span></label>
                                         <Select
                                             options={countries}
                                             placeholder="Select Nationality"
@@ -339,7 +357,7 @@ const AskQuestion = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
-                                        <label>How Did You Discover Us* </label>
+                                        <label>How Did You Discover Us<span style={{ color: 'red' }}>*</span></label>
                                         <select
                                             className="form-select"
                                             name="discover_us"
@@ -359,7 +377,7 @@ const AskQuestion = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
-                                        <label>Country Code*</label>
+                                        <label>Country Code<span style={{ color: 'red' }}>*</span></label>
                                         <Select
                                             options={countries}
                                             placeholder="Select Country code"
@@ -372,7 +390,7 @@ const AskQuestion = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="mb-3 formGroup">
-                                        <label>Cell No*</label>
+                                        <label>Cell No<span style={{ color: 'red' }}>*</span></label>
                                         <input
                                             type="tel"
                                             className="form-control"
@@ -384,6 +402,7 @@ const AskQuestion = () => {
                                             maxLength={15} // Restricts input to a maximum length of 13 characters
                                             required
                                         />
+
                                     </div>
                                     {/* formGroup */}
                                 </div>

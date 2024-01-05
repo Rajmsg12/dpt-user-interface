@@ -378,7 +378,7 @@ const UaeTouristVisa = () => {
                             </div>
                         </div>
                         {/*col-md-6*/}
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <div className="mb-3 formGroup">
                                 <label>How Did You Discover Us<span style={{color:'red'}}>*</span></label>
 

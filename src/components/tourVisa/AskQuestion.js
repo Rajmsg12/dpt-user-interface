@@ -43,6 +43,8 @@ const CountrySelect = () => {
 
 
 const AskQuestion = () => {
+    const [confirmEmail, setConfirmEmail] = useState('');
+    const [emailMatchError, setEmailMatchError] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -86,6 +88,10 @@ const AskQuestion = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.email !== confirmEmail) {
+            setEmailMatchError(true);
+            return;
+        }
         try {
             const response = await fetch(`${config.baseUrl}/ask/add`, {
                 method: 'POST',
@@ -314,16 +320,17 @@ const AskQuestion = () => {
                     </div>
                     <div className="col-md-6">
                         <div className="mb-3 formGroup">
-                            <label>Confirm Email*</label>
-                            <input
-                                type="email"
-                                className="form-control"
+                            <label>Confirm Email<span style={{ color: 'red' }}>*</span></label>
+                            <input type="email"
+                                className={`form-control ${emailMatchError ? 'is-invalid' : ''}`}
                                 placeholder="Confirm Email Address"
-                                name="confirmEmail" // Set value to match the email input value
-                                onChange={handleInputChange} // Mirror changes made in the email input
-                                required
-                            />
-
+                                value={confirmEmail}
+                                onChange={(e) => {
+                                    setConfirmEmail(e.target.value);
+                                    setEmailMatchError(e.target.value !== formData.email);
+                                }}
+                                required />
+                            {emailMatchError && <div className="invalid-feedback">Emails do not match.</div>}
                         </div>
                         {/* formGroup */}
                     </div>
