@@ -193,7 +193,7 @@ const Banner = ({ selectedCurrency }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/cat/wedding-on-yatch`);
+        const response = await fetch(`${config.baseUrl}/cat/wedding-on-yacht`);
         const data = await response.json();
         setWedding(data.data);
       } catch (error) {
@@ -280,113 +280,113 @@ const Banner = ({ selectedCurrency }) => {
   const checkTokenAndFetchData = async () => {
     const token = localStorage.getItem('token');
 
-      // Check if token exists before making the API call
-      if (token) {
-        try {
-          const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.data.status === 'success') {
-            const wishlistData = response.data.data.map(item => item.tour_id);
-
-            setWishlistData(wishlistData);
-            // setWishlistData(wishlistData);
-          } else {
-            console.error('Failed to fetch wishlist data');
-          }
-        } catch (error) {
-          console.error('Error fetching wishlist data:', error);
-        }
-      } else {
-        console.log('User not logged in or token not found.'); // Handle not logged in scenario
-      }
-    };
-
-
-    const addToWishlist = async (tourId) => {
+    // Check if token exists before making the API call
+    if (token) {
       try {
-        let token = localStorage.getItem("token");
-    
-        if (!token) {
-          // If token is not available, handle the scenario accordingly (e.g., navigate to the login page)
-          navigate("/login");
-          return;
-        }
-    
-        const isTokenValid = isTokenExpired(token);
-    
-        if (!isTokenValid) {
-          // If token is expired or invalid, handle the scenario accordingly (e.g., navigate to the login page)
-          navigate("/login");
-          return;
-        }
-    
-        // Token is available and valid, proceed with the API call
-        const requestBody = {
-          tour_id: tourId // Setting tour.id as tour_id in the request body
-        };
-    
-        const response = await fetch(`${config.baseUrl}/wishlist/add`, {
-          method: 'POST',
+        const response = await axios.get(`${config.baseUrl}/wishlist/detail`, {
           headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(requestBody),
         });
-    
-        if (response.ok) {
-          // Wishlist addition successful
-          const responseData = await response.json();
-    
-          checkTokenAndFetchData();
-          displayMessage(responseData.msg);
-          setClickedTourId(tourId);
-    
-          // Any other actions you want to perform after a successful addition
+
+        if (response.data.status === 'success') {
+          const wishlistData = response.data.data.map(item => item.tour_id);
+
+          setWishlistData(wishlistData);
+          // setWishlistData(wishlistData);
         } else {
-          // Handle errors if the addition fails
-          console.error('Failed to add tour to wishlist');
+          console.error('Failed to fetch wishlist data');
         }
       } catch (error) {
-        console.error('Error adding tour to wishlist:', error);
+        console.error('Error fetching wishlist data:', error);
       }
-    };
-    
-    // Function to validate token expiration
-    const isTokenExpired = (token) => {
-      try {
-        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decoding the token payload
-        const currentTime = Math.floor(Date.now() / 1000);
-        return decodedToken.exp > currentTime; // Check if token is expired by comparing the expiration time
-      } catch (error) {
-        console.error('Token validation error:', error);
-        return false; // Return false in case of any error during validation
+    } else {
+      console.log('User not logged in or token not found.'); // Handle not logged in scenario
+    }
+  };
+
+
+  const addToWishlist = async (tourId) => {
+    try {
+      let token = localStorage.getItem("token");
+
+      if (!token) {
+        // If token is not available, handle the scenario accordingly (e.g., navigate to the login page)
+        navigate("/login");
+        return;
       }
-    };   
-    
-    
+
+      const isTokenValid = isTokenExpired(token);
+
+      if (!isTokenValid) {
+        // If token is expired or invalid, handle the scenario accordingly (e.g., navigate to the login page)
+        navigate("/login");
+        return;
+      }
+
+      // Token is available and valid, proceed with the API call
+      const requestBody = {
+        tour_id: tourId // Setting tour.id as tour_id in the request body
+      };
+
+      const response = await fetch(`${config.baseUrl}/wishlist/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        // Wishlist addition successful
+        const responseData = await response.json();
+
+        checkTokenAndFetchData();
+        displayMessage(responseData.msg);
+        setClickedTourId(tourId);
+
+        // Any other actions you want to perform after a successful addition
+      } else {
+        // Handle errors if the addition fails
+        console.error('Failed to add tour to wishlist');
+      }
+    } catch (error) {
+      console.error('Error adding tour to wishlist:', error);
+    }
+  };
+
+  // Function to validate token expiration
+  const isTokenExpired = (token) => {
+    try {
+      const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decoding the token payload
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decodedToken.exp > currentTime; // Check if token is expired by comparing the expiration time
+    } catch (error) {
+      console.error('Token validation error:', error);
+      return false; // Return false in case of any error during validation
+    }
+  };
+
+
   useEffect(() => {
     checkTokenAndFetchData();
-}, []);
-  
-  
+  }, []);
+
+
   // Function to display message as a popup
   const displayMessage = (message) => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
     popup.textContent = message;
-  
+
     document.body.appendChild(popup);
-  
+
     setTimeout(() => {
       popup.remove();
     }, 5000);
   };
- 
+
   return (
     <div className={`homepageContent`}>
       <div >
@@ -687,19 +687,19 @@ const Banner = ({ selectedCurrency }) => {
                                 </div>
                                 <div className="rhsimg">
 
-                                  {wedding.sticker_info[0].id === '1' && (
+                                  {wedding.sticker_info && wedding.sticker_info.length > 0 && wedding.sticker_info[0].id === '1' && (
                                     <img
                                       src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise2_hxevxq.png"
                                       alt=""
                                     />
                                   )}
-                                  {wedding.sticker_info[0].id === '2' && (
+                                  {wedding.sticker_info && wedding.sticker_info.length > 0 && wedding.sticker_info[0].id === '2' && (
                                     <img
                                       src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211948/choise1_yir4hd.png"
                                       alt=""
                                     />
                                   )}
-                                  {wedding.sticker_info[0].id === '3' && (
+                                  {wedding.sticker_info && wedding.sticker_info.length > 0 && wedding.sticker_info[0].id === '3' && (
                                     <img
                                       src="https://res.cloudinary.com/dqslvlm0d/image/upload/v1698211949/choise3_u3nlou.png"
                                       alt=""
