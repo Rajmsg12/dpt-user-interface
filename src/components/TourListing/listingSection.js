@@ -303,7 +303,7 @@ const ListingSection = ({ selectedCurrency }) => {
                         {filteredData.length > 0 ? (
                           itemsToShow.map((tour) => (
                             <div className="parenttabbox">
-                              <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="TabBox" key={`grid-${tour.id}`}>
+                              <Link to={`${tour.tour_slug}`} className="TabBox" key={`grid-${tour.id}`}>
                                 <div className="img">
                                   <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                                   <div className="discountrow">
@@ -401,7 +401,7 @@ const ListingSection = ({ selectedCurrency }) => {
                       <div className="listingRow listingfillwishlist">
                         {itemsToShow.map((tour) => (
                           <div className="parenttabbox">
-                            <Link to={`${tour.Tour_name.toLowerCase().replace(/\s+/g, '-')}`} className="listingBox" key={`listing-${tour.id}`}>
+                            <Link to={`${tour.tour_slug}`} className="listingBox" key={`listing-${tour.id}`}>
                               <div className="listingBoxImg">
                                 <img src={`${config.imageUrl}/${tour.tour_image}`} alt="" />
                                 <div className="discountrow">

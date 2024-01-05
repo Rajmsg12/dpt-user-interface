@@ -7,10 +7,13 @@ import config from '../../config'
 const PersonDetail = ({ selectedCurrency }) => {
     let cartdata = localStorage.getItem("cartdata");
     const MyCartDetail = cartdata ? JSON.parse(cartdata) : [];
+
+ 
     const totalPrice = MyCartDetail.map(item => item.tourPriceAed).reduce((acc, price) => acc + price, 0);
     const navigate = useNavigate()
     const [userLoggedIn, setUserLoggedIn] = useState(false);
     const ourSelectedCurrency = MyCartDetail.length > 0 ? MyCartDetail[0].preferredCurrency : 'AED';
+
     const [emailExistsError, setEmailExistsError] = useState('');
 
     const particularItemPriceAed = (item) => {
@@ -47,25 +50,32 @@ const PersonDetail = ({ selectedCurrency }) => {
             return total + parseFloat(particularItemPriceAed(item)); // Calculate subtotal for AED prices
         }, 0)
         : 0;
+        
 
-    const calculateTotal = (selectedCurrency) => {
-        const subtotal = Array.isArray(MyCartDetail)
-            ? MyCartDetail.reduce((total, item) => {
-                return total + (selectedCurrency === 'AED' ? parseFloat(particularItemPriceAed(item)) : parseFloat(particularItemPriceUsd(item)));
-            }, 0)
-            : 0;
+const calculateTotal = () => {
+    const subtotal = Array.isArray(MyCartDetail)
+        ? MyCartDetail.reduce((total, item) => {
+              return (
+                  total +
+                  (ourSelectedCurrency === 'AED'
+                      ? parseFloat(particularItemPriceAed(item))
+                      : parseFloat(particularItemPriceUsd(item)))
+              );
+          }, 0)
+        : 0;
 
-        const taxPercentage = 0.18; // 18% tax
-        const total = subtotal * taxPercentage;
-        const fullTotal = subtotal + total;
+    const taxPercentage = 0.18; // 18% tax
+    const total = subtotal * taxPercentage;
+    const fullTotal = subtotal + total;
 
-        return {
-            subtotal,
-            taxPercentage,
-            fullTotal,
-            total
-        };
+    return {
+        subtotal,
+        taxPercentage,
+        fullTotal,
+        total,
     };
+};
+
 
 
     //   const storedCurrency = localStorage.getItem('selectedCurrency');

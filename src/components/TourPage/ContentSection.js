@@ -290,6 +290,7 @@ function ContentSection({ selectedCurrency }) {
     formData.language = selectedLanguage.lnname;
     formData.languagePrice = selectedCurrency === 'AED' ? selectedLanguage.aedprice : selectedLanguage.usdprice;
     formData.tourtotal = (
+      // (selectedCurrency === 'AED' ? parseFloat(tourPriceAed) : parseFloat(tourPriceUsd)) +
       parseFloat(additionalTicketPrice) +
       parseFloat(lunchPrice) +
       parseFloat(ticketPrice) +

@@ -11,15 +11,19 @@ import config from "../../config";
 const Cart = () => {
   const dispatch = useDispatch();
   let cartdata = localStorage.getItem("cartdata");
+  console.log(cartdata)
   const [cart, setCart] = useState([]);
   // const cart = useSelector((state) => state.cart.cart);
   const ourSelectedCurrency = cart.length > 0 ? cart[0].preferredCurrency : 'AED';
 
-  const navigate = useNavigate()
 
   const particularItemPriceAed = (item) => {
-    if (!item) return 0; // Check if item is undefined or null
-
+    if (!item) {
+      console.error("Item is undefined or null");
+      return 0;
+    }
+  
+  
     const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
     const totalAdultPrice = parseFloat(item.adultPrice || 0);
     const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
@@ -28,13 +32,23 @@ const Cart = () => {
     const totalTicketPrice = parseFloat(item.additionalTickets || 0);
     const totalLanguagePrice = parseFloat(item.languagePrice || 0);
     const itemPriceAED = parseFloat(item.tourPriceAed) || 0;
-    const totalPriceForItem = itemPriceAED + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalLunchPrice + totalTicketPrice + totalLanguagePrice;
-    return totalPriceForItem.toFixed(2); // Format the price to two decimal places
+  
+    const totalPriceForItem =
+      itemPriceAED +
+      totalInfantsPrice +
+      totalAdultPrice +
+      totalChildrenPrice +
+      totalDriverPrice +
+      totalTicketPrice +
+      totalLunchPrice +
+      totalLanguagePrice;
+  
+  
+    return totalPriceForItem.toFixed(2);
   };
-
+  
 
   const particularItemPriceUsd = (item) => {
-    if (!item) return 0; // Check if item is undefined or null
 
     const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
     const totalAdultPrice = parseFloat(item.adultPrice || 0);
@@ -45,12 +59,14 @@ const Cart = () => {
     const totalLanguagePrice = parseFloat(item.languagePrice || 0);
     const itemPriceUSD = parseFloat(item.tourPriceUsd) || 0;
     const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalTicketPrice + totalLunchPrice + totalLanguagePrice;
+  
     return totalPriceForItem.toFixed(2); // Format the price to two decimal places
   };
 
-  const calculateTotal = (selectedCurrency) => {
+  const calculateTotal = () => {
     const subtotal = cart.reduce((total, item) => {
-      return total + (selectedCurrency === 'AED' ? parseFloat(particularItemPriceAed(item)) : parseFloat(particularItemPriceUsd(item)));
+      const currency = item.preferredCurrency || 'AED'; // Assuming a default value if preferredCurrency is undefined
+      return total + (currency === 'AED' ? parseFloat(particularItemPriceAed(item)) : parseFloat(particularItemPriceUsd(item)));
     }, 0);
   
     const taxPercentage = 0.18; // 18% tax
@@ -64,6 +80,7 @@ const Cart = () => {
       total
     };
   };
+  
   
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -147,7 +164,7 @@ const Cart = () => {
                       <div className="Price">
                         {isLoggedIn ? (
                           <div className="aedtext">
-                            {item.selectedCurrency === "AED" ? (
+                            {item.preferredCurrency === "AED" ? (
                               <strong>{item.preferredCurrency} {particularItemPriceAed(item)}</strong>
                             ) : (
                               <strong>{item.preferredCurrency} {particularItemPriceUsd(item)}</strong>
@@ -155,7 +172,7 @@ const Cart = () => {
                           </div>
                         ) : (
                           <div className="aedtext">
-                            {item.selectedCurrency === "AED" ? (
+                            {item.preferredCurrency === "AED" ? (
                               <strong>{item.preferredCurrency} {particularItemPriceAed(item)}</strong>
                             ) : (
                               <strong>{item.preferredCurrency} {particularItemPriceUsd(item)}</strong>
