@@ -234,10 +234,13 @@ function ContentSection({ selectedCurrency }) {
   const handleFormSubmit = (event, tour) => {
     event.preventDefault();
 
-    const selectedItineraryNames = selectedItinerary.map(option => option.label);
-    formData.itinerary_name = selectedItineraryNames.join(', ');
+   
+  const selectedItineraryNames = selectedItinerary ? selectedItinerary.map(option => option.label) : [];
+  formData.itinerary_name = selectedItineraryNames.join(', ');
 
-    const additionalTicketPrice = selectedItinerary.reduce((total, selectedOption) => {
+  // Ensure selectedItinerary is not null and has elements before reducing
+  const additionalTicketPrice = selectedItinerary && selectedItinerary.length > 0 ? 
+    selectedItinerary.reduce((total, selectedOption) => {
       const itineraryPrice = itineraryData.find(itinerary => itinerary.name === selectedOption.label);
       return (
         total +
@@ -245,9 +248,9 @@ function ContentSection({ selectedCurrency }) {
           ? parseInt(itineraryPrice?.itinerary_ticket_price_aed) || 0
           : parseInt(itineraryPrice?.itinerary_ticket_price_usd) || 0) * ticketNumber)
       );
-    }, 0);
+    }, 0) : 0;
 
-    formData.additionalTickets = additionalTicketPrice.toFixed(2);
+  formData.additionalTickets = additionalTicketPrice.toFixed(2);
 
     formData.tour_id = tour_id;
     formData.tour_slug = tour_slug;
@@ -350,9 +353,6 @@ function ContentSection({ selectedCurrency }) {
     setIsFormValid(true);
     navigate('/cart');
   };
-
-
-
 
   const url = window.location.href;
   const spliturl = url.split("/");
@@ -814,6 +814,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Place Name"
                                       rows="3"
+                                      maxLength={20}
                                       name="otherPlaceName"
                                       value={otherPlaceName}
                                       onChange={(e) => setOtherPlaceName(e.target.value)}
@@ -824,6 +825,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Residence Address"
                                       rows="3"
+                                      maxLength={50}
                                       name="otherPlaceAddress"
                                       value={otherPlaceAddress}
                                       onChange={(e) => setOtherPlaceAddress(e.target.value)}
@@ -838,7 +840,7 @@ function ContentSection({ selectedCurrency }) {
                                       value={otherPlaceTelephone}
                                       onChange={(e) => setOtherPlaceTelephone(e.target.value)}
                                       pattern="[0-9]*"
-                                      maxLength={13}
+                                      maxLength={15}
                                       required // Add the required attribute for HTML5 form validation
                                     />
                                   </div>
