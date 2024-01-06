@@ -2231,7 +2231,9 @@ ul.public-DraftStyleDefault-ul {
   margin-bottom: 35px;
   color: #000;
 }
-
+img[src="2"] {
+  display: none;
+}
 @media screen and (max-width: 1199px) {
   .aedtext {
     font-size: 12px;

@@ -107,6 +107,9 @@
   font-weight: 500;
   text-transform: uppercase;
   margin: 2px;
+  text-align: center;
+  padding:10px 7px;
+
 }
 
 .TouristVisaTabSection ul li button.nav-link.active {
@@ -513,7 +516,7 @@ button, a {
 }
 
 @media only screen and (min-width:991.33px){
-  .TouristVisaTabSection ul{
+  /* .TouristVisaTabSection ul{
     position: relative;
     flex-flow: nowrap;
     white-space: nowrap;
@@ -523,7 +526,7 @@ button, a {
 
 .TouristVisaTabSection ul::-webkit-scrollbar{
   display: none;
-}
+} */
 }
 
 @media screen and (max-width: 1199px) {
@@ -531,10 +534,18 @@ button, a {
     font-size: 12px;
   }
 }
+
+@media screen and (max-width:1050px) {
+  .TouristVisaTabSection ul li button{
+    padding:10px 4px;
+    font-size:13px;
+  }
+}
 @media screen and (max-width: 1024px) {
   .TabBox {
     width: auto;
   }
+ 
 }
 @media screen and (max-width: 991px) {
   .Title h2 {
@@ -542,11 +553,18 @@ button, a {
     font-size: 25px;
     margin-bottom: 20px;
   }
+  .TouristVisaTabInner h2{
+    font-size:26px;
+  }
   .PopularTours {
     padding-bottom: 30px;
   }
   .TouristVisaTabSection ul li button {
     margin: 5px 2px;
+}
+.TouristVisaTabSection ul li button{
+  padding:10px 8px;
+  font-size:14px;
 }
 }
 @media screen and (max-width: 575px) {
