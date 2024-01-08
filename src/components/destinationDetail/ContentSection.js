@@ -37,6 +37,11 @@ function ContentSection({ selectedCurrency }) {
   const [tour_id, setTourId] = useState("");
   const [tour_slug, setTour_Slug] = useState("");
   const [selectedEndLocation, setSelectedEndLocation] = useState("0");
+  const [adults, setAdults] = useState(0);
+const [children, setChildren] = useState(0);
+const [infants, setInfants] = useState(0);
+const [preferredDriver, setPreferredDriver] = useState(0);
+const [preferredLunc, setPreferredLunc] = useState(0);
   const [childrenNumber, setChildrenNumber] = useState(0);
   const [infantsNumber, setInfantsNumber] = useState(0);
   const [driverNumber, setDriverNumber] = useState(0);
@@ -201,11 +206,11 @@ function ContentSection({ selectedCurrency }) {
     aedPrice: '0',
     usdPrice: '0',
     preferredPay: '0',
-    adults: '0',
-    children: '0',
-    infants: '0',
-    preferredDriver: '0',
-    preferredLunc: '0',
+    // adults: '0',
+    // children: '0',
+    // infants: '0',
+    // preferredDriver: '0',
+    // preferredLunc: '0',
     additionalTickets: '0',
     specialRequest: '',
     otherPlaceName: '',
@@ -258,6 +263,17 @@ function ContentSection({ selectedCurrency }) {
     formData.tourImage = tourImage;
     formData.tourPriceAed = tourPriceAed;
     formData.tourPriceUsd = tourPriceUsd;
+    const adultsValue = adults || '';
+  const childrenValue = children || '';
+  const infantsValue = infants || '';
+  const preferredDriverValue = preferredDriver || '';
+  const preferredLuncValue = preferredLunc || '';
+
+  formData.adults = adultsValue;
+  formData.children = childrenValue;
+  formData.infants = infantsValue;
+  formData.preferredDriver = preferredDriverValue;
+  formData.preferredLunc = preferredLuncValue;
 
     const driverTotalPrice = (
       (selectedCurrency === 'USD' ? selectedHotel?.driver_price_usd : selectedHotel?.driver_price_aed) || 0
@@ -950,16 +966,10 @@ function ContentSection({ selectedCurrency }) {
                                   maxLength="2" // Restrict the input to a maximum of 2 characters
                                   onInput={(e) => {
                                     let inputValue = e.target.value;
-
-                                    // Ensure the input value doesn't exceed 15
                                     inputValue = Math.min(parseInt(inputValue), 15);
-
-                                    // Validate and limit input to a maximum of 2 digits
                                     e.target.value = inputValue;
-
-                                    // Update state accordingly (if needed)
                                     const adultsValue = parseInt(inputValue || 0);
-                                    setAdultsNumber(adultsValue >= 0 ? adultsValue : 0);
+                                    setAdults(adultsValue >= 0 ? adultsValue : 0);
                                   }}
                                 />
 
