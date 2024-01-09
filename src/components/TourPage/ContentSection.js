@@ -969,7 +969,7 @@ const [preferredLunc, setPreferredLunc] = useState(0);
                                     inputValue = Math.min(parseInt(inputValue), 15);
                                     e.target.value = inputValue;
                                     const adultsValue = parseInt(inputValue || 0);
-                                    setAdults(adultsValue >= 0 ? adultsValue : 0);
+                                    setAdultsNumber(adultsValue >= 0 ? adultsValue : 0);
                                   }}
                                 />
 
