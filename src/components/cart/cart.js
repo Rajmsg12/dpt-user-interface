@@ -22,8 +22,8 @@ const Cart = () => {
       console.error("Item is undefined or null");
       return 0;
     }
-  
-  
+
+
     const totalInfantsPrice = parseFloat(item.infantsPrice || 0);
     const totalAdultPrice = parseFloat(item.adultPrice || 0);
     const totalChildrenPrice = parseFloat(item.childrenPrice || 0);
@@ -32,7 +32,7 @@ const Cart = () => {
     const totalTicketPrice = parseFloat(item.additionalTickets || 0);
     const totalLanguagePrice = parseFloat(item.languagePrice || 0);
     const itemPriceAED = parseFloat(item.tourPriceAed) || 0;
-  
+
     const totalPriceForItem =
       itemPriceAED +
       totalInfantsPrice +
@@ -42,11 +42,11 @@ const Cart = () => {
       totalTicketPrice +
       totalLunchPrice +
       totalLanguagePrice;
-  
-  
+
+
     return totalPriceForItem.toFixed(2);
   };
-  
+
 
   const particularItemPriceUsd = (item) => {
 
@@ -59,7 +59,7 @@ const Cart = () => {
     const totalLanguagePrice = parseFloat(item.languagePrice || 0);
     const itemPriceUSD = parseFloat(item.tourPriceUsd) || 0;
     const totalPriceForItem = itemPriceUSD + totalInfantsPrice + totalAdultPrice + totalChildrenPrice + totalDriverPrice + totalTicketPrice + totalLunchPrice + totalLanguagePrice;
-  
+
     return totalPriceForItem.toFixed(2); // Format the price to two decimal places
   };
 
@@ -68,11 +68,11 @@ const Cart = () => {
       const currency = item.preferredCurrency || 'AED'; // Assuming a default value if preferredCurrency is undefined
       return total + (currency === 'AED' ? parseFloat(particularItemPriceAed(item)) : parseFloat(particularItemPriceUsd(item)));
     }, 0);
-  
+
     const taxPercentage = 0.18; // 18% tax
     const total = subtotal * taxPercentage;
     const fullTotal = subtotal + total;
-  
+
     return {
       subtotal,
       taxPercentage,
@@ -80,8 +80,8 @@ const Cart = () => {
       total
     };
   };
-  
-  
+
+
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartCount, setCartCount] = useState("");
@@ -215,11 +215,37 @@ const Cart = () => {
                               <span>Tour Date</span>
                               <span>{formatDate(item.tourDate)}</span>
                             </div>
-                            {/*BookingInfotablerow*/}
+                           
                             <div className="BookingInfotablerow">
                               <span>Pickup Location</span>
-                              <span>{item.preferredPickupLocation}</span>
+                              <span>
+                                {item.preferredPickupLocation === "Hotel/Apartment" ? (
+                                  <>
+                                     {item.preferredPickupLocation} <br/>{item.pickupHotelName}, {item.pickupHotelAddress}, {item.pickupHotelTelephone}
+                                  </>
+                                
+                                ) : item.preferredPickupLocation === "Restaurant" ? (
+                                  <>
+                                    {item.preferredPickupLocation} <br/>{item.pickupRestaurantName}, {item.pickupRestaurantAddress}, {item.pickupRestaurantTelephone}
+                                  </>
+                                ) : item.preferredPickupLocation === "Local Residence" ? (
+                                  <>
+                                    {item.preferredPickupLocation} <br/>{item.pickupResidenceAddress}, {item.pickupResidenceTelephone}
+                                  </>
+                                ) : item.preferredPickupLocation === "DXB Airport Terminal 1" ||item.preferredPickupLocation === "DXB Airport Terminal 2" || item.preferredPickupLocation === "DXB Airport Terminal 3"|| item.preferredPickupLocation === "DWC Airport" || item.preferredPickupLocation==="Abu Dhabi Airport"? (
+                                  <>
+                                    {item.preferredPickupLocation} <br/>{item.pickupFlightNameNumber}, {item.pickupFlightArrivalTime}, {item.pickupFlightDepartureTime}
+                                  </>
+                                ) : item.preferredPickupLocation === "Dubai Cruise Ship Terminal" || item.preferredPickupLocation === "Abu Dhabi Cruise Ship Terminal" ? (
+                                  <>
+                                    {item.preferredPickupLocation} <br/>{item.pickupShipName}
+                                  </>
+                                ) : (
+                                  item.preferredPickupLocation
+                                )}
+                              </span>
                             </div>
+
                             <div className="BookingInfotablerow">
                               <span>Hotel Name</span>
                               <span>{item.preferredHotelName}</span>
@@ -229,7 +255,7 @@ const Cart = () => {
                               <span>Preferred Language</span>
                               <span>{item.preferredGuideLanguage}</span>
                             </div>
-                           
+
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Adults</span>
@@ -275,18 +301,39 @@ const Cart = () => {
                             </div>
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
-
                               <span>End Location</span>
-
-                              <span>{item.preferredEndLocation === "Any Other Places in Dubai" ? (
-                                <>
-                                  {item.otherPlaceName}, {item.otherPlaceAddress} , {item.otherPlaceTelephone}
-                                </>
-                              ) :
-                                item.preferredEndLocation
-                              }</span>
-
+                              <span>
+                                {item.preferredEndLocation === "Any Other Places in Dubai" ? (
+                                  <>
+                                    {item.preferredEndLocation}<br />
+                                    {item.otherPlaceName}, {item.otherPlaceAddress}, {item.otherPlaceTelephone}
+                                  </>
+                                ) : item.preferredEndLocation === "Hotel/Apartment" ? (
+                                  <>
+                                    {item.endHotelName}, {item.endHotelAddress}, {item.endHotelTelephone}
+                                  </>
+                                ) : item.preferredEndLocation === "Restaurant" ? (
+                                  <>
+                                    {item.endRestaurantName}, {item.endRestaurantAddress}, {item.endRestaurantTelephone}
+                                  </>
+                                ) : item.preferredEndLocation === "Local Residence" ? (
+                                  <>
+                                    {item.endResidenceAddress}, {item.endResidenceTelephone}
+                                  </>
+                                ) : item.preferredEndLocation === "DXB Airport Terminal 1" ? (
+                                  <>
+                                    {item.endFlightNameNumber}, {item.endFlightArrivalTime}, {item.endFlightDepartureTime}
+                                  </>
+                                ) : item.preferredEndLocation === "Dubai Cruise Ship Terminal" ? (
+                                  <>
+                                    {item.endShipName}
+                                  </>
+                                ) : (
+                                  item.preferredEndLocation
+                                )}
+                              </span>
                             </div>
+
                             <div className="BookingInfotablerow">
                               <span>Preferred Language Price</span>
                               <span>{item.preferredCurrency} {item.languagePrice}</span>
@@ -296,7 +343,7 @@ const Cart = () => {
                               <span>Pref.currency</span>
                               <span>{item.preferredCurrency}</span>
                             </div>
-                            
+
                             {/*BookingInfotablerow*/}
                             <div className="BookingInfotablerow">
                               <span>Infants</span>
