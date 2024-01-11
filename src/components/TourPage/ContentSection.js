@@ -75,6 +75,18 @@ function ContentSection({ selectedCurrency }) {
   const [pickupFlightArrivalTime, setPickupFlightArrivalTime] = useState('');
   const [pickupFlightDepartureTime, setPickupFlightDepartureTime] = useState('');
   const [pickupResidenceTelephone, setPickupResidenceTelephone] = useState('');
+  const [endResidenceAddress, setEndResidenceAddress] = useState('');
+  const [endHotelName, setEndHotelName] = useState('');
+  const [endHotelAddress, setEndHotelAddress] = useState('');
+  const [endHotelTelephone, setEndHotelTelephone] = useState('');
+  const [endFlightNameNumber, setEndFlightNameNumber] = useState('');
+  const [endShipName, setEndShipName] = useState('');
+  const [endRestaurantName, setEndRestaurantName] = useState('');
+  const [endRestaurantAddress, setEndRestaurantAddress] = useState('');
+  const [endRestaurantTelephone, setEndRestaurantTelephone] = useState('');
+  const [endFlightArrivalTime, setEndFlightArrivalTime] = useState('');
+  const [endFlightDepartureTime, setEndFlightDepartureTime] = useState('');
+  const [endResidenceTelephone, setEndResidenceTelephone] = useState('');
   const [otherPlaceAddress, setOtherPlaceAddress] = useState('');
   const [otherPlaceTelephone, setOtherPlaceTelephone] = useState('');
 
@@ -241,6 +253,18 @@ function ContentSection({ selectedCurrency }) {
     pickupFlightArrivalTime:'',
     pickupFlightDepartureTime:'',
     pickupShipName:'',
+    endHotelName: '',
+    endHotelAddress: '',
+    endHotelTelephone: '',
+    endRestaurantName:'',
+    endRestaurantAddress:'',
+    endRestaurantTelephone:'',
+    endResidenceAddress:'',
+    endResidenceTelephone:'',
+    endFlightNameNumber:'',
+    endFlightArrivalTime:'',
+    endFlightDepartureTime:'',
+    endShipName:'',
     //  tourPrice:"",
     //   tourName:"",
     //  tourImage:""
@@ -1003,6 +1027,159 @@ function ContentSection({ selectedCurrency }) {
                                   <option value="Restaurant">Restaurant</option>
                                   <option value="Any Other Places in Dubai">Any Other Places in Dubai</option>
                                 </select>
+                                {selectedEndLocation === "Hotel/Apartment" && (
+                                  <div className="col-md-12">
+                                    <label>Hotel Name<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Hotel Name"
+                                      rows="3"
+                                      maxLength={20}
+                                      name="endHotelName"
+                                      value={endHotelName}
+                                      onChange={(e) => setEndHotelName(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
+                                    <label>Hotel Address<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Hotel Address"
+                                      rows="3"
+                                      maxLength={50}
+                                      name="endHotelAddress"
+                                      value={endHotelAddress}
+                                      onChange={(e) => setEndHotelAddress(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
+                                    <label>Hotel Telephone<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Hotel Telephone"
+                                      rows="3"
+                                      maxLength={50}
+                                      name="endHotelTelephone"
+                                      value={endHotelTelephone}
+                                      onChange={(e) => setEndHotelTelephone(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
+                                  </div>
+                                )}
+                                {selectedEndLocation === "Restaurant" && (
+                                  <div className="col-md-12">
+                                    <label>Restaurant Name<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Restaurant Name"
+                                      rows="3"
+                                      maxLength={20}
+                                      name="endRestaurantName"
+                                      value={endRestaurantName}
+                                      onChange={(e) => setEndRestaurantName(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
+                                    <label>Restaurant Address<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Restaurant Address"
+                                      rows="3"
+                                      maxLength={50}
+                                      name="endRestaurantAddress"
+                                      value={endRestaurantAddress}
+                                      onChange={(e) => setEndRestaurantAddress(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
+                                    <label>Restaurant Telephone<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Restaurant Telephone"
+                                      rows="3"
+                                      maxLength={50}
+                                      name="endRestaurantTelephone"
+                                      value={endRestaurantTelephone}
+                                      onChange={(e) => setEndRestaurantTelephone(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
+                                  </div>
+                                )}
+                                {selectedEndLocation === "Local Residence" && (
+                                  <div className="col-md-12">
+                                    <label>Residence Address<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Residence Address"
+                                      rows="3"
+                                      maxLength={20}
+                                      name="endResidenceAddress"
+                                      value={endResidenceAddress}
+                                      onChange={(e) => setEndResidenceAddress(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
+                                    <label>Residence Telephone<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Residence Telephone"
+                                      rows="3"
+                                      maxLength={50}
+                                      name="endResidenceTelephone"
+                                      value={endResidenceTelephone}
+                                      onChange={(e) => setEndResidenceTelephone(e.target.value)}
+                                      required // Add the required attribute for HTML5 form validation
+                                    />
+                                  </div>
+                                )}
+                                {["DXB Airport Terminal 1", "Abu Dhabi Airport", "DWC Airport", "DXB Airport Terminal 2", "DXB Airport Terminal 3"].includes(selectedEndLocation) && (
+                                  <div className="col-md-12">
+                                    <label>Flight Name & Number<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Flight Name & Number"
+                                      rows="3"
+                                      maxLength={20}
+                                      name="endFlightNameNumber"
+                                      value={endFlightNameNumber}
+                                      onChange={(e) => setEndFlightNameNumber(e.target.value)}
+                                      required
+                                    />
+                                    <label>Arrival Time<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Arrival Time"
+                                      rows="3"
+                                      maxLength={10}
+                                      name="endFlightArrivalTime"
+                                      value={endFlightArrivalTime}
+                                      onChange={(e) => setEndFlightArrivalTime(e.target.value)}
+                                      required
+                                    />
+                                    <label>Departure Time<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Departure Time"
+                                      rows="3"
+                                      maxLength={10}
+                                      name="endFlightDepartureTime"
+                                      value={endFlightDepartureTime}
+                                      onChange={(e) => setEndFlightDepartureTime(e.target.value)}
+                                      required
+                                    />
+                                  </div>
+                                )}
+                                 {["Dubai Cruise Ship Terminal", "Abu Dhabi Cruise Ship Terminal"].includes(selectedEndLocation) && (
+                                  <div className="col-md-12">
+                                    <label>Ship Name<span style={{ color: 'red' }}>*</span></label>
+                                    <input
+                                      className="form-control"
+                                      placeholder="Ship Name"
+                                      rows="3"
+                                      maxLength={20}
+                                      name="endShipName"
+                                      value={endShipName}
+                                      onChange={(e) => setEndShipName(e.target.value)}
+                                      required
+                                    />
+                                  
+                                  </div>
+                                )}
                                 {selectedEndLocation === "Any Other Places in Dubai" && (
                                   <div className="col-md-12">
                                     <label>Place Name<span style={{ color: 'red' }}>*</span></label>
