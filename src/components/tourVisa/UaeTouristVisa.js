@@ -117,7 +117,8 @@ const UaeTouristVisa = () => {
         }
       };
     
-    const handleClear = () => {
+      const handleClear = () => {
+        // Clear state data
         setFormData({
             name: '',
             email: '',
@@ -127,11 +128,27 @@ const UaeTouristVisa = () => {
             cell_no: '',
             arrival_date: '',
             departure_date: '',
-            upload_hotel_booking: [], // Store multiple hotel booking file names in an array
-            upload_your_flight_ticket: [], // Store multiple flight ticket file names in an array
-            upload_passport_copy: [],
+            upload_hotel_booking: [], // Clear uploaded hotel booking images
+            upload_your_flight_ticket: [], // Clear uploaded flight ticket images
+            upload_passport_copy: [], // Clear uploaded passport copy images
         });
+    
+        // Clear uploaded images from view by updating state variables
+        setFormData({
+            ...formData,
+            upload_hotel_booking: [], // Clear uploaded hotel booking images from view
+            upload_your_flight_ticket: [], // Clear uploaded flight ticket images from view
+            upload_passport_copy: [], // Clear uploaded passport copy images from view
+        });
+    
+        // Clear localStorage data for uploaded images
+        localStorage.removeItem('filedata_upload_hotel_booking');
+        localStorage.removeItem('filedata_upload_your_flight_ticket');
+        localStorage.removeItem('filedata_upload_passport_copy');
     };
+    
+    
+    
 
     return (
         <>

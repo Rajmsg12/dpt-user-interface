@@ -2231,7 +2231,7 @@ ul.public-DraftStyleDefault-ul {
   margin-bottom: 35px;
   color: #000;
 }
-img[src="2"] {
+img[src="2"], img[src="1"], img[src="3"], img[src="4"], img[src="5"]{
   display: none;
 }
 @media screen and (max-width: 1199px) {
