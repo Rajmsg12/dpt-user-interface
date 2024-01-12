@@ -849,7 +849,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Hotel Name"
                                       rows="3"
-                                      maxLength={20}
+                                      maxLength={15}
                                       name="pickupHotelName"
                                       value={pickupHotelName}
                                       onChange={(e) => setPickupHotelName(e.target.value)}
@@ -860,7 +860,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Hotel Address"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={20}
                                       name="pickupHotelAddress"
                                       value={pickupHotelAddress}
                                       onChange={(e) => setPickupHotelAddress(e.target.value)}
@@ -871,7 +871,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Hotel Telephone"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={15}
                                       name="pickupHotelTelephone"
                                       value={pickupHotelTelephone}
                                       onChange={(e) => setPickupHotelTelephone(e.target.value)}
@@ -886,7 +886,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Restaurant Name"
                                       rows="3"
-                                      maxLength={20}
+                                      maxLength={15}
                                       name="pickupRestaurantName"
                                       value={pickupRestaurantName}
                                       onChange={(e) => setPickupRestaurantName(e.target.value)}
@@ -897,7 +897,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Restaurant Address"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={20}
                                       name="pickupRestaurantAddress"
                                       value={pickupRestaurantAddress}
                                       onChange={(e) => setPickupRestaurantAddress(e.target.value)}
@@ -908,7 +908,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Restaurant Telephone"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={15}
                                       name="pickupRestaurantTelephone"
                                       value={pickupRestaurantTelephone}
                                       onChange={(e) => setPickupRestaurantTelephone(e.target.value)}
@@ -934,7 +934,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Residence Telephone"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={15}
                                       name="pickupResidenceTelephone"
                                       value={pickupResidenceTelephone}
                                       onChange={(e) => setPickupResidenceTelephone(e.target.value)}
@@ -1034,7 +1034,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Hotel Name"
                                       rows="3"
-                                      maxLength={20}
+                                      maxLength={15}
                                       name="endHotelName"
                                       value={endHotelName}
                                       onChange={(e) => setEndHotelName(e.target.value)}
@@ -1045,7 +1045,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Hotel Address"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={25}
                                       name="endHotelAddress"
                                       value={endHotelAddress}
                                       onChange={(e) => setEndHotelAddress(e.target.value)}
@@ -1056,7 +1056,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Hotel Telephone"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={15}
                                       name="endHotelTelephone"
                                       value={endHotelTelephone}
                                       onChange={(e) => setEndHotelTelephone(e.target.value)}
@@ -1071,7 +1071,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Restaurant Name"
                                       rows="3"
-                                      maxLength={20}
+                                      maxLength={15}
                                       name="endRestaurantName"
                                       value={endRestaurantName}
                                       onChange={(e) => setEndRestaurantName(e.target.value)}
@@ -1082,7 +1082,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Restaurant Address"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={20}
                                       name="endRestaurantAddress"
                                       value={endRestaurantAddress}
                                       onChange={(e) => setEndRestaurantAddress(e.target.value)}
@@ -1093,7 +1093,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Restaurant Telephone"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={15}
                                       name="endRestaurantTelephone"
                                       value={endRestaurantTelephone}
                                       onChange={(e) => setEndRestaurantTelephone(e.target.value)}
@@ -1119,7 +1119,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Residence Telephone"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={15}
                                       name="endResidenceTelephone"
                                       value={endResidenceTelephone}
                                       onChange={(e) => setEndResidenceTelephone(e.target.value)}
@@ -1171,7 +1171,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Ship Name"
                                       rows="3"
-                                      maxLength={20}
+                                      maxLength={15}
                                       name="endShipName"
                                       value={endShipName}
                                       onChange={(e) => setEndShipName(e.target.value)}
@@ -1187,7 +1187,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Place Name"
                                       rows="3"
-                                      maxLength={20}
+                                      maxLength={15}
                                       name="otherPlaceName"
                                       value={otherPlaceName}
                                       onChange={(e) => setOtherPlaceName(e.target.value)}
@@ -1198,7 +1198,7 @@ function ContentSection({ selectedCurrency }) {
                                       className="form-control"
                                       placeholder="Residence Address"
                                       rows="3"
-                                      maxLength={50}
+                                      maxLength={20}
                                       name="otherPlaceAddress"
                                       value={otherPlaceAddress}
                                       onChange={(e) => setOtherPlaceAddress(e.target.value)}
