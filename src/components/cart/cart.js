@@ -320,11 +320,11 @@ const Cart = () => {
                                   <>
                                     {item.preferredEndLocation}<br />{item.endResidenceAddress}, {item.endResidenceTelephone}
                                   </>
-                                ) : item.preferredPickupLocation === "DXB Airport Terminal 1" ||item.preferredPickupLocation === "DXB Airport Terminal 2" || item.preferredPickupLocation === "DXB Airport Terminal 3"|| item.preferredPickupLocation === "DWC Airport" || item.preferredPickupLocation==="Abu Dhabi Airport" ? (
+                                ) : item.preferredEndLocation === "DXB Airport Terminal 1" ||item.preferredEndLocation === "DXB Airport Terminal 2" || item.preferredEndLocation === "DXB Airport Terminal 3"|| item.preferredEndLocation === "DWC Airport" || item.preferredEndLocation==="Abu Dhabi Airport" ? (
                                   <>
                                     {item.preferredEndLocation}<br />{item.endFlightNameNumber}, {item.endFlightArrivalTime}, {item.endFlightDepartureTime}
                                   </>
-                                ) :  item.preferredPickupLocation === "Dubai Cruise Ship Terminal" || item.preferredPickupLocation === "Abu Dhabi Cruise Ship Terminal" ? (
+                                ) :  item.preferredEndLocation === "Dubai Cruise Ship Terminal" || item.preferredEndLocation === "Abu Dhabi Cruise Ship Terminal" ? (
                                   <>
                                     {item.preferredEndLocation}<br />{item.endShipName}
                                   </>
