@@ -310,23 +310,23 @@ const Cart = () => {
                                   </>
                                 ) : item.preferredEndLocation === "Hotel/Apartment" ? (
                                   <>
-                                    {item.endHotelName}, {item.endHotelAddress}, {item.endHotelTelephone}
+                                    {item.preferredEndLocation}<br />{item.endHotelName}, {item.endHotelAddress}, {item.endHotelTelephone}
                                   </>
                                 ) : item.preferredEndLocation === "Restaurant" ? (
                                   <>
-                                    {item.endRestaurantName}, {item.endRestaurantAddress}, {item.endRestaurantTelephone}
+                                    {item.preferredEndLocation}<br />{item.endRestaurantName}, {item.endRestaurantAddress}, {item.endRestaurantTelephone}
                                   </>
                                 ) : item.preferredEndLocation === "Local Residence" ? (
                                   <>
-                                    {item.endResidenceAddress}, {item.endResidenceTelephone}
+                                    {item.preferredEndLocation}<br />{item.endResidenceAddress}, {item.endResidenceTelephone}
                                   </>
-                                ) : item.preferredEndLocation === "DXB Airport Terminal 1" ? (
+                                ) : item.preferredPickupLocation === "DXB Airport Terminal 1" ||item.preferredPickupLocation === "DXB Airport Terminal 2" || item.preferredPickupLocation === "DXB Airport Terminal 3"|| item.preferredPickupLocation === "DWC Airport" || item.preferredPickupLocation==="Abu Dhabi Airport" ? (
                                   <>
-                                    {item.endFlightNameNumber}, {item.endFlightArrivalTime}, {item.endFlightDepartureTime}
+                                    {item.preferredEndLocation}<br />{item.endFlightNameNumber}, {item.endFlightArrivalTime}, {item.endFlightDepartureTime}
                                   </>
-                                ) : item.preferredEndLocation === "Dubai Cruise Ship Terminal" ? (
+                                ) :  item.preferredPickupLocation === "Dubai Cruise Ship Terminal" || item.preferredPickupLocation === "Abu Dhabi Cruise Ship Terminal" ? (
                                   <>
-                                    {item.endShipName}
+                                    {item.preferredEndLocation}<br />{item.endShipName}
                                   </>
                                 ) : (
                                   item.preferredEndLocation

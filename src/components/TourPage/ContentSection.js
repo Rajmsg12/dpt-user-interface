@@ -244,27 +244,27 @@ function ContentSection({ selectedCurrency }) {
     pickupHotelName: '',
     pickupHotelAddress: '',
     pickupHotelTelephone: '',
-    pickupRestaurantName:'',
-    pickupRestaurantAddress:'',
-    pickupRestaurantTelephone:'',
-    pickupResidenceAddress:'',
-    pickupResidenceTelephone:'',
-    pickupFlightNameNumber:'',
-    pickupFlightArrivalTime:'',
-    pickupFlightDepartureTime:'',
-    pickupShipName:'',
+    pickupRestaurantName: '',
+    pickupRestaurantAddress: '',
+    pickupRestaurantTelephone: '',
+    pickupResidenceAddress: '',
+    pickupResidenceTelephone: '',
+    pickupFlightNameNumber: '',
+    pickupFlightArrivalTime: '',
+    pickupFlightDepartureTime: '',
+    pickupShipName: '',
     endHotelName: '',
     endHotelAddress: '',
     endHotelTelephone: '',
-    endRestaurantName:'',
-    endRestaurantAddress:'',
-    endRestaurantTelephone:'',
-    endResidenceAddress:'',
-    endResidenceTelephone:'',
-    endFlightNameNumber:'',
-    endFlightArrivalTime:'',
-    endFlightDepartureTime:'',
-    endShipName:'',
+    endRestaurantName: '',
+    endRestaurantAddress: '',
+    endRestaurantTelephone: '',
+    endResidenceAddress: '',
+    endResidenceTelephone: '',
+    endFlightNameNumber: '',
+    endFlightArrivalTime: '',
+    endFlightDepartureTime: '',
+    endShipName: '',
     //  tourPrice:"",
     //   tourName:"",
     //  tourImage:""
@@ -956,30 +956,78 @@ function ContentSection({ selectedCurrency }) {
                                       required
                                     />
                                     <label>Arrival Time<span style={{ color: 'red' }}>*</span></label>
-                                    <input
-                                      className="form-control"
-                                      placeholder="Arrival Time"
-                                      rows="3"
-                                      maxLength={10}
-                                      name="pickupFlightArrivalTime"
-                                      value={pickupFlightArrivalTime}
-                                      onChange={(e) => setPickupFlightArrivalTime(e.target.value)}
-                                      required
-                                    />
+                                  
+                                     <select
+                                      className="form-select"
+                                      value={formData.pickupFlightArrivalTime} // Set the value dynamically based on the state
+                                      onChange={(e) => handleInputChange(e, 'pickupFlightArrivalTime')} // Pass the name to handleInputChange
+                                    >
+                                      <option value="0">Select Departure Time</option>
+                                      <option value="12:00 AM">12:00 AM</option>
+                                      <option value="12:30 AM">12:30 AM</option>
+                                      <option value="01:00 AM">01:00 AM</option>
+                                      <option value="02:00 AM">02:00 AM</option>
+                                      <option value="03:00 AM">03:00 AM</option>
+                                      <option value="04:00 AM">04:00 AM</option>
+                                      <option value="05:00 AM">05:00 AM</option>
+                                      <option value="06:00 AM">06:00 AM</option>
+                                      <option value="07:00 AM">07:00 AM</option>
+                                      <option value="08:00 AM">08:00 AM</option>
+                                      <option value="09:00 AM">09:00 AM</option>
+                                      <option value="10:00 AM">10:00 AM</option>
+                                      <option value="11:00 AM">11:00 AM</option>
+                                      <option value="12:00 PM">12:00 PM</option>
+                                      <option value="01:00 PM">01:00 PM</option>
+                                      <option value="02:00 PM">02:00 PM</option>
+                                      <option value="03:00 PM">03:00 PM</option>
+                                      <option value="04:00 PM">04:00 PM</option>
+                                      <option value="05:00 PM">05:00 PM</option>
+                                      <option value="06:00 PM">06:00 PM</option>
+                                      <option value="07:00 PM">07:00 PM</option>
+                                      <option value="08:00 PM">08:00 PM</option>
+                                      <option value="09:00 PM">09:00 PM</option>
+                                      <option value="10:00 PM">10:00 PM</option>
+                                      <option value="11:00 PM">11:00 PM</option>
+                                      {/* ... (other options) */}
+                                    </select>
                                     <label>Departure Time<span style={{ color: 'red' }}>*</span></label>
-                                    <input
-                                      className="form-control"
-                                      placeholder="Departure Time"
-                                      rows="3"
-                                      maxLength={10}
-                                      name="pickupFlightDepartureTime"
-                                      value={pickupFlightDepartureTime}
-                                      onChange={(e) => setPickupFlightDepartureTime(e.target.value)}
-                                      required
-                                    />
+                                   
+                                    <select
+                                      className="form-select"
+                                      value={formData.pickupFlightDepartureTime} // Set the value dynamically based on the state
+                                      onChange={(e) => handleInputChange(e, 'pickupFlightDepartureTime')} // Pass the name to handleInputChange
+                                    >
+                                      <option value="0">Select Departure Time</option>
+                                      <option value="12:00 AM">12:00 AM</option>
+                                      <option value="12:30 AM">12:30 AM</option>
+                                      <option value="01:00 AM">01:00 AM</option>
+                                      <option value="02:00 AM">02:00 AM</option>
+                                      <option value="03:00 AM">03:00 AM</option>
+                                      <option value="04:00 AM">04:00 AM</option>
+                                      <option value="05:00 AM">05:00 AM</option>
+                                      <option value="06:00 AM">06:00 AM</option>
+                                      <option value="07:00 AM">07:00 AM</option>
+                                      <option value="08:00 AM">08:00 AM</option>
+                                      <option value="09:00 AM">09:00 AM</option>
+                                      <option value="10:00 AM">10:00 AM</option>
+                                      <option value="11:00 AM">11:00 AM</option>
+                                      <option value="12:00 PM">12:00 PM</option>
+                                      <option value="01:00 PM">01:00 PM</option>
+                                      <option value="02:00 PM">02:00 PM</option>
+                                      <option value="03:00 PM">03:00 PM</option>
+                                      <option value="04:00 PM">04:00 PM</option>
+                                      <option value="05:00 PM">05:00 PM</option>
+                                      <option value="06:00 PM">06:00 PM</option>
+                                      <option value="07:00 PM">07:00 PM</option>
+                                      <option value="08:00 PM">08:00 PM</option>
+                                      <option value="09:00 PM">09:00 PM</option>
+                                      <option value="10:00 PM">10:00 PM</option>
+                                      <option value="11:00 PM">11:00 PM</option>
+                                      {/* ... (other options) */}
+                                    </select>
                                   </div>
                                 )}
-                                 {["Dubai Cruise Ship Terminal", "Abu Dhabi Cruise Ship Terminal"].includes(formData.preferredPickupLocation) && (
+                                {["Dubai Cruise Ship Terminal", "Abu Dhabi Cruise Ship Terminal"].includes(formData.preferredPickupLocation) && (
                                   <div className="col-md-12">
                                     <label>Ship Name<span style={{ color: 'red' }}>*</span></label>
                                     <input
@@ -992,10 +1040,10 @@ function ContentSection({ selectedCurrency }) {
                                       onChange={(e) => setPickupShipName(e.target.value)}
                                       required
                                     />
-                                  
+
                                   </div>
                                 )}
-                                
+
 
 
                               </div>{/* formGroup */}
@@ -1141,30 +1189,78 @@ function ContentSection({ selectedCurrency }) {
                                       required
                                     />
                                     <label>Arrival Time<span style={{ color: 'red' }}>*</span></label>
-                                    <input
-                                      className="form-control"
-                                      placeholder="Arrival Time"
-                                      rows="3"
-                                      maxLength={10}
-                                      name="endFlightArrivalTime"
-                                      value={endFlightArrivalTime}
-                                      onChange={(e) => setEndFlightArrivalTime(e.target.value)}
-                                      required
-                                    />
+                                    
+                                      <select
+                                      className="form-select"
+                                      value={formData.endFlightArrivalTime} // Set the value dynamically based on the state
+                                      onChange={(e) => handleInputChange(e, 'endFlightArrivalTime')} // Pass the name to handleInputChange
+                                    >
+                                      <option value="0">Select Departure Time</option>
+                                      <option value="12:00 AM">12:00 AM</option>
+                                      <option value="12:30 AM">12:30 AM</option>
+                                      <option value="01:00 AM">01:00 AM</option>
+                                      <option value="02:00 AM">02:00 AM</option>
+                                      <option value="03:00 AM">03:00 AM</option>
+                                      <option value="04:00 AM">04:00 AM</option>
+                                      <option value="05:00 AM">05:00 AM</option>
+                                      <option value="06:00 AM">06:00 AM</option>
+                                      <option value="07:00 AM">07:00 AM</option>
+                                      <option value="08:00 AM">08:00 AM</option>
+                                      <option value="09:00 AM">09:00 AM</option>
+                                      <option value="10:00 AM">10:00 AM</option>
+                                      <option value="11:00 AM">11:00 AM</option>
+                                      <option value="12:00 PM">12:00 PM</option>
+                                      <option value="01:00 PM">01:00 PM</option>
+                                      <option value="02:00 PM">02:00 PM</option>
+                                      <option value="03:00 PM">03:00 PM</option>
+                                      <option value="04:00 PM">04:00 PM</option>
+                                      <option value="05:00 PM">05:00 PM</option>
+                                      <option value="06:00 PM">06:00 PM</option>
+                                      <option value="07:00 PM">07:00 PM</option>
+                                      <option value="08:00 PM">08:00 PM</option>
+                                      <option value="09:00 PM">09:00 PM</option>
+                                      <option value="10:00 PM">10:00 PM</option>
+                                      <option value="11:00 PM">11:00 PM</option>
+                                      {/* ... (other options) */}
+                                    </select>
                                     <label>Departure Time<span style={{ color: 'red' }}>*</span></label>
-                                    <input
-                                      className="form-control"
-                                      placeholder="Departure Time"
-                                      rows="3"
-                                      maxLength={10}
-                                      name="endFlightDepartureTime"
-                                      value={endFlightDepartureTime}
-                                      onChange={(e) => setEndFlightDepartureTime(e.target.value)}
-                                      required
-                                    />
+                                  
+                                      <select
+                                      className="form-select"
+                                      value={formData.endFlightDepartureTime} // Set the value dynamically based on the state
+                                      onChange={(e) => handleInputChange(e, 'endFlightDepartureTime')} // Pass the name to handleInputChange
+                                    >
+                                      <option value="0">Select Departure Time</option>
+                                      <option value="12:00 AM">12:00 AM</option>
+                                      <option value="12:30 AM">12:30 AM</option>
+                                      <option value="01:00 AM">01:00 AM</option>
+                                      <option value="02:00 AM">02:00 AM</option>
+                                      <option value="03:00 AM">03:00 AM</option>
+                                      <option value="04:00 AM">04:00 AM</option>
+                                      <option value="05:00 AM">05:00 AM</option>
+                                      <option value="06:00 AM">06:00 AM</option>
+                                      <option value="07:00 AM">07:00 AM</option>
+                                      <option value="08:00 AM">08:00 AM</option>
+                                      <option value="09:00 AM">09:00 AM</option>
+                                      <option value="10:00 AM">10:00 AM</option>
+                                      <option value="11:00 AM">11:00 AM</option>
+                                      <option value="12:00 PM">12:00 PM</option>
+                                      <option value="01:00 PM">01:00 PM</option>
+                                      <option value="02:00 PM">02:00 PM</option>
+                                      <option value="03:00 PM">03:00 PM</option>
+                                      <option value="04:00 PM">04:00 PM</option>
+                                      <option value="05:00 PM">05:00 PM</option>
+                                      <option value="06:00 PM">06:00 PM</option>
+                                      <option value="07:00 PM">07:00 PM</option>
+                                      <option value="08:00 PM">08:00 PM</option>
+                                      <option value="09:00 PM">09:00 PM</option>
+                                      <option value="10:00 PM">10:00 PM</option>
+                                      <option value="11:00 PM">11:00 PM</option>
+                                      {/* ... (other options) */}
+                                    </select>
                                   </div>
                                 )}
-                                 {["Dubai Cruise Ship Terminal", "Abu Dhabi Cruise Ship Terminal"].includes(selectedEndLocation) && (
+                                {["Dubai Cruise Ship Terminal", "Abu Dhabi Cruise Ship Terminal"].includes(selectedEndLocation) && (
                                   <div className="col-md-12">
                                     <label>Ship Name<span style={{ color: 'red' }}>*</span></label>
                                     <input
@@ -1177,7 +1273,7 @@ function ContentSection({ selectedCurrency }) {
                                       onChange={(e) => setEndShipName(e.target.value)}
                                       required
                                     />
-                                  
+
                                   </div>
                                 )}
                                 {selectedEndLocation === "Any Other Places in Dubai" && (
