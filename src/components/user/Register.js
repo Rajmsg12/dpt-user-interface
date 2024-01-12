@@ -74,6 +74,7 @@ const Register = () => {
                   type="text"
                   className="form-control"
                   placeholder="First Name"
+                  maxLength={15}
                   required
                   value={first_name}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -86,6 +87,7 @@ const Register = () => {
                   className="form-control"
                   placeholder="Last Name"
                   required
+                  maxLength={15}
                   value={last_name}
                   onChange={(e) => setLastName(e.target.value)}
                 />
@@ -109,6 +111,7 @@ const Register = () => {
                   placeholder="Password"
                   required
                   value={password}
+                  maxLength={20}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
@@ -119,6 +122,7 @@ const Register = () => {
                   className="form-control"
                   placeholder="Confirm Password"
                   required
+                  maxLength={20}
                   value={confirm_password}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />

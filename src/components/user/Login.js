@@ -108,6 +108,7 @@ const Login = () => {
                                     placeholder="Enter Password"
                                     required
                                     value={password}
+                                    maxLength={20}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
