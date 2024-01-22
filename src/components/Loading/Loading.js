@@ -6,19 +6,21 @@ import './loading.css';
 const LoadingSkeleton = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      // Simulating a delay to fetch data
-      await new Promise(resolve => setTimeout(resolve, 5000)); // Updated timeout to 5000 milliseconds
 
-      setDataLoaded(true);
-    };
-
-    fetchData();
-  }, []);
+    useEffect(() => {
+      const fetchData = async () => {
+        // Simulating a delay to fetch data
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        console.log('Data loaded');
+        setDataLoaded(true);
+      };
+      fetchData();
+    }, []);
+    
 
   return (
     <div className={`loading-skeleton ${dataLoaded ? 'hidden' : ''}`}>
+
       <div className="square"></div>
     </div>
   );

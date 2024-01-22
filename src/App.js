@@ -47,7 +47,7 @@ const App = () => {
     <Router basename={'/'}>
       <React.Fragment>
         <ScrollToTop />
-        <Suspense fallback={<LoadingFallback />}>
+        <Suspense fallback={<LoadingFallback className="full-page" />}>
           <Routes>
             <Route exact path='/' element={<Homepage />} />
             <Route exact path='/login' element={<Login />} />
