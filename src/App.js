@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import NotFound from './components/404/notFound';
 import Category from './components/pages/cateory';
 import Cart from './components/pages/cart';
+import LoadingFallback from './components/Loading/Loading'; 
 
 const TopMenu = lazy(() => import("./components/TopMenu"));
 const DetailSection = lazy(() => import("./components/pages/TourSection"));
@@ -46,7 +47,7 @@ const App = () => {
     <Router basename={'/'}>
       <React.Fragment>
         <ScrollToTop />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route exact path='/' element={<Homepage />} />
             <Route exact path='/login' element={<Login />} />
